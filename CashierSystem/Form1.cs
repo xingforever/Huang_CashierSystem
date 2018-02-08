@@ -43,9 +43,9 @@ namespace CashierSystem
 
         private void Huang_System_Load(object sender, EventArgs e)
         {
-            GetDgv(4);//默认商品信息页展示
-            tabMain.SelectedIndex = 4;
-            SelectIndex = 4;
+            GetDgv(0);//默认商品信息页展示
+            tabMain.SelectedIndex = 0;
+            SelectIndex = 0;
 
         }
         /// <summary>
@@ -92,11 +92,6 @@ namespace CashierSystem
         {
             SelectIndex = tabMain.SelectedIndex;//获取选中标签页的名字
             GetDgv(SelectIndex);
-        }
-
-        private void toolStripMenuItem10_Click(object sender, EventArgs e)
-        {
-
         }
 
         #region 商品单位表
@@ -331,6 +326,16 @@ namespace CashierSystem
         public void UnSelectedTips()
         {
             MessageBox.Show("未选中行,请单击表格某行 ", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void Huang_System_SizeChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label17_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
