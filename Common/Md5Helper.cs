@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace CaterCommon
+namespace Common
 {
     public partial class Md5Helper
     {

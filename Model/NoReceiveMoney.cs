@@ -35,8 +35,9 @@ namespace Model
 
         public   NoReceiveMoney()
         {
-            ModelName = "NoReceiveMoney";
+           
             SalesInfo = null;
+           
         }
 
         public override string GetSql()
@@ -85,7 +86,27 @@ namespace Model
             return Entitys;
         }
 
+        /// <summary>
+        /// 获取标题名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetHanderTxt()
+        {
+            return new List<string> { "ID编号", "售货单Id编号", "客户姓名", "联系电话", "时间", "备注", "是否删除" };
+        }
+        /// <summary>
+        /// 获取隐藏数据位置
+        /// </summary>
+        /// <returns></returns>
+        public override List<int> GetHideIndex()
+        {
+           return new List<int>() { 0, 6 };
+        }
 
+        public override string GetModelName()
+        {
+            return  "NoReceiveMoney"; 
+        }
 
 
 

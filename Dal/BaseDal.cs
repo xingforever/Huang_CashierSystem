@@ -13,7 +13,7 @@ namespace Dal
         public bool Add(T entity)
         {
             //表名字
-            string modelName = entity.ModelName;
+            string modelName = entity.GetModelName();
             int affected = 0;
             string sqls = entity.GetSql();
             string pamerSql = entity.GetAddSql();
@@ -31,7 +31,7 @@ namespace Dal
 
         public bool Edit(T entity)
         {
-            string modelName = entity.ModelName;
+            string modelName = entity.GetModelName();
             int affected = 0;
 
             string pamerSql = entity.GetEditSql();
@@ -57,7 +57,7 @@ namespace Dal
             T entity = new T();
             try
             {
-                string sql = "Select * from [" + entity.ModelName + "] where [ID]=" + id;
+                string sql = "Select * from [" + entity.GetModelName() + "] where [ID]=" + id;
                 var dataTable = SqlHelper.GetDataTable(sql);
                 var listEntity = entity.GetList(dataTable);
                 if (listEntity.Count == 1)
@@ -82,7 +82,7 @@ namespace Dal
             T entity = new T();
             try
             {
-                string sql = "Select * from [" + entity.ModelName + "] Where [DelFlag]=False";
+                string sql = "Select * from [" + entity.GetModelName() + "] Where [DelFlag]=False";
                 var dataTable = SqlHelper.GetDataTable(sql);
                 var listEntity = entity.GetList(dataTable);
                 if (listEntity.Count > 0)
@@ -111,12 +111,13 @@ namespace Dal
             T entity = new T();
             try
             {
-                string sql = "Select * from [" + entity.ModelName + "] Where [DelFlag]=False";
+                string sql = "Select * from [" + entity.GetModelName() + "] Where [DelFlag]=False";
                 var dataTable = SqlHelper.GetDataTable(sql);
                 return dataTable;
             }
-            catch
+            catch(Exception ex)
             {
+                var e = ex.Message; ;
                 return null;
             }
         }
@@ -139,7 +140,7 @@ namespace Dal
             T entity = new T();
             try
             {
-                string sql = "Update  [" + entity.ModelName + "] Set [DelFlag]= "+true+" Where [ID]=" + id + "";
+                string sql = "Update  [" + entity.GetModelName() + "] Set [DelFlag]= "+true+" Where [ID]=" + id + "";
                 var affected = SqlHelper.ExecuteNonQuery(sql);
                 if (affected > 0)
                 {
@@ -159,7 +160,7 @@ namespace Dal
         {
             try
             {
-                string sql = "Update  [" + entity.ModelName + "] Set [DelFlag]=" + true + "  Where [ID]=" + entity.Id + "";
+                string sql = "Update  [" + entity.GetModelName() + "] Set [DelFlag]=" + true + "  Where [ID]=" + entity.Id + "";
                 var affected = SqlHelper.ExecuteNonQuery(sql);
                 if (affected > 0)
                 {

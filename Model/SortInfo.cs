@@ -13,7 +13,29 @@ namespace Model
    
 
        public  SortInfo(){
-            ModelName = "SortInfo";
+           
+        }
+
+        public override string GetModelName()
+        {
+            return "SortInfo";
+        }
+        /// <summary>
+        /// 获取标题名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetHanderTxt()
+        {
+            return  new List<string> { "ID编号", "类别", "备注", "是否删除" };
+        }
+        /// <summary>
+        /// 获取隐藏数据位置
+        /// </summary>
+        /// <returns></returns>
+        public override List<int> GetHideIndex()
+        {
+
+            return new List<int>() { 0, 3 };
         }
 
         public override string GetSql()

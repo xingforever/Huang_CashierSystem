@@ -8,12 +8,7 @@ namespace Model
 {
   public   class UserInfo:BaseModel
     {
-       public  UserInfo()
-        {
-            ModelName = "UserInfo";
-            //Remark = " ";
-            //DelFlag = false;
-        }
+     
         /// <summary>
         /// 用户名
         /// </summary>
@@ -23,7 +18,32 @@ namespace Model
         /// 密码
         /// </summary>
         public  string PassWord { get; set; }
-    
+
+        public UserInfo()
+        {
+           
+        }
+
+        public override string GetModelName()
+        {
+            return "UserInfo";
+        }
+        /// <summary>
+        /// 获取标题名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetHanderTxt()
+        {
+            return new List<string> { "ID编号", "姓名", "密码", "备注", "是否删除" };
+        }
+        /// <summary>
+        /// 获取隐藏数据位置
+        /// </summary>
+        /// <returns></returns>
+        public override List<int> GetHideIndex()
+        {
+            return new List<int>() { 0, 2, 4 };
+        }
 
         public override string GetSql()
         {

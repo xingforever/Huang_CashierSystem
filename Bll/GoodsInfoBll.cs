@@ -9,7 +9,7 @@ namespace Bll
 {
    public  class GoodsInfoBll:BaseBll<GoodsInfo>
     {
-        GoodsInfoBll()
+       public  GoodsInfoBll()
         {
             this.CurrentDal = new GoodsInfoDal();
         }

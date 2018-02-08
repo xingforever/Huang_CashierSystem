@@ -44,9 +44,8 @@ namespace Model
      
         public WareHouse()
         {
-            ModelName = "WareHouse";
-            //Remark = " ";
-            //DelFlag = false;
+          
+         
         }
 
         public override string GetSql()

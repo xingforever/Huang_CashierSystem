@@ -7,10 +7,10 @@ using System.Text;
 
 namespace Bll
 {
-    class UserInfoBll:BaseBll<UserInfo>
+   public  class UserInfoBll:BaseBll<UserInfo>
     {
 
-        UserInfoBll()
+        public UserInfoBll()
         {
              this.CurrentDal=new UserInfoDal();
         }

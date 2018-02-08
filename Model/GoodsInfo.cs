@@ -70,32 +70,36 @@ namespace Model
 
       public   GoodsInfo()
         {
-            ModelName = "GoodsInfo";            
+                  
             WholeSalerInfo = null;
             SortInfo = null;
             UnitInfo = null;
-            
+           
+
         }
 
+        public  override string GetModelName()
+        {
+             return  "GoodsInfo";
+        }
         public override string GetSql()
         {
-            return "([UnitId],[SortId],[WholeSalerId],[GoodsName],[PurPrice],[PayPrice],[GoodsType],[Total],[SalesCount],[SurplusCount],[CreateTime],[LastTime],[Remark],[DelFlag])";
+            return "([GoodsName],[SortId],[UnitId],[GoodsType],[PurPrice],[PayPrice],[Total],[SalesCount],[SurplusCount],[WholeSalerId],[CreateTime],[LastTime],[Remark],[DelFlag])";
         }
 
         public override string GetAddSql()
         {
             
-
-            return "Values('" + this.UnitId + "','" + 
+            return "Values('" + this.GoodsName + "','" + 
                 this.SortId + "','" + 
-                this.WholeSalerId + "','" +
-                this.GoodsName + "','" + 
-                this.PurPrice + "','"+ 
-                this.PayPrice + "','" +
+                this.UnitId + "','" +
                 this.GoodsType + "','" + 
+                this.PurPrice + "','"+ 
+                this.PayPrice + "','" +                
                 this.Total + "','" +
                 this.SalesCount + "','" +
                 this.SurplusCount + "','" +
+                this.WholeSalerId + "','" +
                 this.CreateTime + "','" +
                 this.LastTime + "','" +
                 this.Remark +"',"+
@@ -148,7 +152,25 @@ namespace Model
         }
 
 
+        /// <summary>
+        /// 获取标题名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetHanderTxt()
+        {
+           
+           
+            return new List<string> { "ID编号", "商品名", "类别", "单位", "规格", "进货价", "售价", "总数量", "已经售出", "剩余数量", "供货商家", "进货时间", "保质时间", "备注", "是否删除" }; ;
+        }
+        /// <summary>
+        /// 获取隐藏数据位置
+        /// </summary>
+        /// <returns></returns>
+        public override List<int> GetHideIndex()
+        {
 
+            return  new List<int>() { 0, 5, 7, 8, 11, 12, 14 }; ;
+        }
 
 
 

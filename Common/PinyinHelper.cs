@@ -1,6 +1,6 @@
 ﻿using Microsoft.International.Converters.PinYinConverter;
 
-namespace CaterCommon
+namespace Common
 {
     public partial class PinyinHelper
     {

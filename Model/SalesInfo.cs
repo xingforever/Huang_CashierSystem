@@ -41,21 +41,44 @@ namespace Model
 
        public  SalesInfo()
         {
-            ModelName = "SalesInfo";
+         
             GoodsInfo = null;
+          
+        }
+        public override string GetModelName()
+        {
+            return "SalesInfo";
+        }
+
+        /// <summary>
+        /// 获取标题名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetHanderTxt()
+        { 
+            return new List<string> { "ID编号", "商品编号", "数量", "折扣", "价格", "售货时间", "是否支付", "备注", "是否删除" };
+        }
+        /// <summary>
+        /// 获取隐藏数据位置
+        /// </summary>
+        /// <returns></returns>
+        public override List<int> GetHideIndex()
+        {
+
+            return new List<int>() { 0, 8 };
         }
 
         public override string GetSql()
         {
-            return "([GoodsId],[Count],[DisCount],[Prices],[IsPay],[CreateTime],[Remark],[DelFlag]) ";
+            return "([GoodsId],[Count],[DisCount],[Prices],[CreateTime],[IsPay],[Remark],[DelFlag]) ";
         }
 
         public override string GetAddSql()
         {
             string sql = " Values ('" + this.GoodsId + "','"
                 + this.Count + "','" + this.DisCount + "','"
-                  + this.Prices + "'," + this.IsPay + ",'"
-                  + this.CreateTime + "','" + this.Remark + "',"
+                  + this.Prices + "'," + this.CreateTime + "','"
+                  + this.IsPay + ",'"  + this.Remark + "',"
                   +  this.DelFlag + ")";
 
             return sql;

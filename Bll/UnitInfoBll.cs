@@ -9,7 +9,7 @@ namespace Bll
 {
    public  class UnitInfoBll:BaseBll<UnitInfo>
     {
-        UnitInfoBll()
+        public  UnitInfoBll()
         {
             this.CurrentDal = new UnitInfoDal();
         }

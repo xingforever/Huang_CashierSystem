@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyTest", "MyTest\MyTest.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{089CBDBE-EF09-46E3-9507-0DC012175EDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common_Winform", "Common_Winform\Common_Winform.csproj", "{CBC06BBE-0AF3-4957-BDA9-1A2165A2ECA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,14 @@ Global
 		{089CBDBE-EF09-46E3-9507-0DC012175EDD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{089CBDBE-EF09-46E3-9507-0DC012175EDD}.Release|x86.ActiveCfg = Release|Any CPU
 		{089CBDBE-EF09-46E3-9507-0DC012175EDD}.Release|x86.Build.0 = Release|Any CPU
+		{CBC06BBE-0AF3-4957-BDA9-1A2165A2ECA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBC06BBE-0AF3-4957-BDA9-1A2165A2ECA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBC06BBE-0AF3-4957-BDA9-1A2165A2ECA3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CBC06BBE-0AF3-4957-BDA9-1A2165A2ECA3}.Debug|x86.Build.0 = Debug|Any CPU
+		{CBC06BBE-0AF3-4957-BDA9-1A2165A2ECA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBC06BBE-0AF3-4957-BDA9-1A2165A2ECA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBC06BBE-0AF3-4957-BDA9-1A2165A2ECA3}.Release|x86.ActiveCfg = Release|Any CPU
+		{CBC06BBE-0AF3-4957-BDA9-1A2165A2ECA3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

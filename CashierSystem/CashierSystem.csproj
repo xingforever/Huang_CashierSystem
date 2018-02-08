@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -42,16 +43,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataManager.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_Small.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Small.Designer.cs">
+      <DependentUpon>Frm_Small.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Small.resx">
+      <DependentUpon>Frm_Small.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -73,7 +84,38 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="image\" />
+    <ProjectReference Include="..\Bll\Bll.csproj">
+      <Project>{b94443df-cba5-4e66-9b62-9089bbafe7e0}</Project>
+      <Name>Bll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common_Winform\Common_Winform.csproj">
+      <Project>{cbc06bbe-0af3-4957-bda9-1a2165a2eca3}</Project>
+      <Name>Common_Winform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{d468b658-61b0-4012-b4d5-c934d32b73e4}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="image\icon\back.png" />
+    <Content Include="image\icon\blank.gif" />
+    <Content Include="image\icon\cancel.png" />
+    <Content Include="image\icon\cut.png" />
+    <Content Include="image\icon\edit_add.png" />
+    <Content Include="image\icon\edit_remove.png" />
+    <Content Include="image\icon\filesave.png" />
+    <Content Include="image\icon\help.png" />
+    <Content Include="image\icon\no.png" />
+    <Content Include="image\icon\ok.png" />
+    <Content Include="image\icon\pencil.png" />
+    <Content Include="image\icon\print.png" />
+    <Content Include="image\icon\redo.png" />
+    <Content Include="image\icon\reload.png" />
+    <Content Include="image\icon\search.png" />
+    <Content Include="image\icon\sum.png" />
+    <Content Include="image\icon\tip.png" />
+    <Content Include="image\icon\undo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

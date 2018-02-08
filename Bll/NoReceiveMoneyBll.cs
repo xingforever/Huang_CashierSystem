@@ -7,9 +7,9 @@ using System.Text;
 
 namespace Bll
 {
-    class NoReceiveMoneyBll:BaseBll<NoReceiveMoney>
+   public class NoReceiveMoneyBll:BaseBll<NoReceiveMoney>
     {
-        NoReceiveMoneyBll()
+      public  NoReceiveMoneyBll()
         {
             this.CurrentDal = new NoReceiveMoneyDal();
         }

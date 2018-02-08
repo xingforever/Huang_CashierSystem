@@ -27,14 +27,37 @@ namespace Model
         /// 联系电话
         /// </summary>
         public string TelePhone { get; set; }
-      
 
-       public  WholeSalerInfo()
+
+        public WholeSalerInfo()
         {
-            ModelName = "WholeSalerInfo";
-            //Remark = " ";
-            //DelFlag = false;
+
+
         }
+
+        public override string GetModelName()
+        {
+            return "WholeSalerInfo";
+        }
+
+        /// <summary>
+        /// 获取标题名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetHanderTxt()
+        {
+            return new List<string> { "ID编号", "供货商店名", "供货商地址", "负责人", "联系电话", "备注", "是否删除" };
+        }
+        /// <summary>
+        /// 获取隐藏数据位置
+        /// </summary>
+        /// <returns></returns>
+        public override List<int> GetHideIndex()
+        {
+            return new List<int>() { 0, 6 };
+        }
+
+
         public override string GetSql()
         {
             return "([SupName],[AddressInfo],[Management],[TelePhone],[Remark],[DelFlag]) ";
@@ -45,7 +68,7 @@ namespace Model
                 this.AddressInfo + "','" +
                 this.Management + "','" +
                 this.TelePhone + "','" +
-                this.Remark + "'," + 
+                this.Remark + "'," +
                 this.DelFlag + ")";
 
             return sql;
@@ -77,7 +100,7 @@ namespace Model
                 wholeSalerInfo.Management = Convert.ToString(dr["Management"]);
                 wholeSalerInfo.TelePhone = Convert.ToString(dr["TelePhone"]);
                 wholeSalerInfo.Remark = Convert.ToString(dr["Remark"]);
-               
+
                 Entitys.Add(wholeSalerInfo);
             }
 

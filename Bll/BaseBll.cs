@@ -47,5 +47,7 @@ namespace Bll
         {
             return CurrentDal.Delete(entity);
         }
+
+       
     }
 }

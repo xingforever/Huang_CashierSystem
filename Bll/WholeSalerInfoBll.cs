@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Bll
 {
-    class WholeSalerInfoBll:BaseBll<WholeSalerInfo>
+    public class WholeSalerInfoBll : BaseBll<WholeSalerInfo>
     {
-        WholeSalerInfoBll()
+        public WholeSalerInfoBll()
         {
-            this.CurrentDal =  new WholeSalerInfoDal();
+            this.CurrentDal = new WholeSalerInfoDal();
         }
     }
 }
