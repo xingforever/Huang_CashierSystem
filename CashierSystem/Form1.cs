@@ -27,6 +27,9 @@ namespace CashierSystem
         /// </summary>
         DataGridViewHelper dataGridViewHelper = new DataGridViewHelper();
 
+        public int SelectIndex = 0;
+
+
         /// <summary>
         /// 标签页选择
         /// </summary>
@@ -34,8 +37,7 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tabMain_Selected(object sender, TabControlEventArgs e)
         {
-            var id = tabMain.SelectedIndex;//获取选中标签页的名字
-            GetDgv(id);
+           
         }
        
 
@@ -43,9 +45,13 @@ namespace CashierSystem
         {
              GetDgv(4);//默认商品信息页展示
             tabMain.SelectedIndex = 4;
-            // this.dgvGoodsInfo.DataSource = DataManager.GoodsInfoBLL.GetDataTable();
+            SelectIndex = 4;
+           
         }
-
+        /// <summary>
+        /// 获取数据并展示在响应的标签页
+        /// </summary>
+        /// <param name="id"></param>
         public void GetDgv( int id )
         {
             DataTable dataTable = DataManager.LoadBySelectId(tabMain.SelectedIndex);
@@ -62,29 +68,39 @@ namespace CashierSystem
                 case 4:
                     this.dgvUnitInfo = dataGridViewHelper.Init(this.dgvUnitInfo, handerTxt, dataTable, hideIndex);
                     break;
+                case 5:
+                    this.dgvSortInfo = dataGridViewHelper.Init(this.dgvSortInfo, handerTxt, dataTable, hideIndex);
+                    break;
             }
           
 
 
         }
-        public  void GetHandTxtAndHideIndex( List<string>handText,List<int>hideIndex)
+
+        private void tabMain_SelectedIndexChanged(object sender, EventArgs e)
+        {
+             SelectIndex = tabMain.SelectedIndex;//获取选中标签页的名字
+            GetDgv(SelectIndex);
+        }
+
+        private void toolStripMenuItem10_Click(object sender, EventArgs e)
         {
 
         }
+
+        #region 商品单位表
         /// <summary>
-        /// 商品单位表添加
+        /// 单位表添加
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void tspAddUnitInfo_Click(object sender, EventArgs e)
         {
 
-            List<string> tags = new List<string>() { "UnitInfo", "单位", "备注" };
-
-            Frm_Samll frm_Add_Samll = Frm_Samll.Create(tags);
-            frm_Add_Samll.ShowDialog();
-            frm_Add_Samll.Focus();
+            List<string> tags = new List<string>();
+            Frm_UnitInfo frm_Samll = Frm_UnitInfo.Create(tags);
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
 
 
         }
@@ -96,12 +112,11 @@ namespace CashierSystem
         private void tspEditUnitInfo_Click(object sender, EventArgs e)
         {
             var dataRow = this.dgvUnitInfo.SelectedRows[0];
-            var dataId =  Convert.ToInt32( dataRow.Cells[0].Value);//获取Id
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
             UnitInfo unitInfo = DataManager.UnitInfoBLL.GetEntityById(dataId);
-            List<string> tags = new List<string>() { "UnitInfo", "单位", "备注",unitInfo.Id.ToString(),unitInfo.UnitName,unitInfo.Remark };
-
-            Frm_Samll frm_Samll = Frm_Samll.Create(tags);
-            frm_Samll.ShowDialog();
+            List<string> tags = new List<string>() {  unitInfo.Id.ToString(), unitInfo.UnitName, unitInfo.Remark };
+            Frm_UnitInfo frm_Samll = Frm_UnitInfo.Create(tags);
+            frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
         }
         /// <summary>
@@ -114,8 +129,8 @@ namespace CashierSystem
 
             var dataRow = this.dgvUnitInfo.SelectedRows[0];
             var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            var result= MessageBox.Show("确认删除该商品单位?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if(result==DialogResult.Yes )
+            var result = MessageBox.Show("确认删除该商品单位?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
             {
 
                 var isDelete = DataManager.UnitInfoBLL.Delete(dataId);
@@ -123,12 +138,71 @@ namespace CashierSystem
                 {
                     MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+                GetDgv(SelectIndex);//刷新
             }
             else
             {
-                ;  
+                ;
             }
         }
+        /// <summary>
+        /// 单位表刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspReLoadUnitInfo_Click(object sender, EventArgs e)
+        {
+            GetDgv(SelectIndex);
+        }
+
+
+        #endregion
+        #region 商品类别表
+
+        private void tspAddSortinfo_Click(object sender, EventArgs e)
+        {
+            List<string> tags = new List<string>();
+            Frm_SortInfo frm_Samll = Frm_SortInfo.Create(tags);
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+        }
+
+        private void tspEidtSortInfo_Click(object sender, EventArgs e)
+        {
+            var dataRow = this.dgvSortInfo.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            SortInfo sortInfo = DataManager.SortInfoBLL.GetEntityById(dataId);
+            List<string> tags = new List<string>() { sortInfo.Id.ToString(), sortInfo.SortName, sortInfo.Remark };
+            Frm_SortInfo frm_Samll = Frm_SortInfo.Create(tags);
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+        }
+
+        private void tspDeleteSortInfo_Click(object sender, EventArgs e)
+        {
+            var dataRow = this.dgvUnitInfo.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+
+                var isDelete = DataManager.SortInfoBLL.Delete(dataId);
+                if (!isDelete)
+                {
+                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                GetDgv(SelectIndex);//刷新
+            }
+            else
+            {
+                ;
+            }
+        }
+
+        private void tspReLoadSortInfo_Click(object sender, EventArgs e)
+        {
+            GetDgv(SelectIndex);//刷新
+        } 
+        #endregion
     }
 }

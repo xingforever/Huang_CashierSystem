@@ -60,7 +60,7 @@ namespace Model
 
         public override string GetSql()
         {
-            return "([SupName],[AddressInfo],[Management],[TelePhone],[Remark],[DelFlag]) ";
+            return "([SupName],[Management],[TelePhone],[AddressInfo],[Remark],[DelFlag]) ";
         }
         public override string GetAddSql()
         {
@@ -75,10 +75,10 @@ namespace Model
         }
         public override string GetEditSql()
         {
-            string sql = " Set[SupName]='" + this.SupName +
-                 "', [AddressInfo]='" + this.AddressInfo +
+            string sql = " Set[SupName]='" + this.SupName +                
                  "', [Management]='" + this.Management +
                  "', [TelePhone]='" + this.TelePhone +
+                  "', [AddressInfo]='" + this.AddressInfo +
                  "', [Remark]='" + this.Remark +
                  "'  Where [ID]=" + this.Id;
 
