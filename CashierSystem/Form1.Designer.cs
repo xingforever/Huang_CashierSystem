@@ -57,6 +57,7 @@
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripTextBox();
             this.tspReLoadUnitInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGoodSort = new System.Windows.Forms.TabPage();
+            this.dgvSortInfo = new System.Windows.Forms.DataGridView();
             this.statusStrip3 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -71,37 +72,36 @@
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.tspReLoadSortInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tabWholeSalerInfo = new System.Windows.Forms.TabPage();
-            this.tabUserInfoManager = new System.Windows.Forms.TabPage();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.dgvSortInfo = new System.Windows.Forms.DataGridView();
-            this.menuStrip3 = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dgvWholeSalerInfo = new System.Windows.Forms.DataGridView();
             this.statusStrip4 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel7 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel9 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tspWholeSalerInfoCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel10 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.dgvWholeSalerInfo = new System.Windows.Forms.DataGridView();
-            this.menuStrip4 = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem14 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem16 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripTextBox3 = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripMenuItem17 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip3 = new System.Windows.Forms.MenuStrip();
+            this.tspAddWholeSalerInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspEditWholeSalerInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspDeleteWholeSalerInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
+            this.txtReLoadWholeSalerInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabUserInfoManager = new System.Windows.Forms.TabPage();
+            this.dgvUserInfo = new System.Windows.Forms.DataGridView();
             this.statusStrip5 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel11 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel12 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel13 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tspUserCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel14 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.dgvUserInfo = new System.Windows.Forms.DataGridView();
+            this.menuStrip4 = new System.Windows.Forms.MenuStrip();
+            this.tspAddUserInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspEditUserInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspDeleteUserInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem16 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox3 = new System.Windows.Forms.ToolStripTextBox();
+            this.tspReLoadUserInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tabMain.SuspendLayout();
             this.tabGoodsInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvGoodsInfo)).BeginInit();
@@ -112,17 +112,17 @@
             this.panel2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tabGoodSort.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
             this.statusStrip3.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             this.tabWholeSalerInfo.SuspendLayout();
-            this.tabUserInfoManager.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).BeginInit();
-            this.menuStrip3.SuspendLayout();
-            this.statusStrip4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvWholeSalerInfo)).BeginInit();
-            this.menuStrip4.SuspendLayout();
-            this.statusStrip5.SuspendLayout();
+            this.statusStrip4.SuspendLayout();
+            this.menuStrip3.SuspendLayout();
+            this.tabUserInfoManager.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUserInfo)).BeginInit();
+            this.statusStrip5.SuspendLayout();
+            this.menuStrip4.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -392,6 +392,16 @@
             this.tabGoodSort.Text = "商品类别";
             this.tabGoodSort.UseVisualStyleBackColor = true;
             // 
+            // dgvSortInfo
+            // 
+            this.dgvSortInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSortInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvSortInfo.Location = new System.Drawing.Point(3, 30);
+            this.dgvSortInfo.Name = "dgvSortInfo";
+            this.dgvSortInfo.RowTemplate.Height = 23;
+            this.dgvSortInfo.Size = new System.Drawing.Size(836, 261);
+            this.dgvSortInfo.TabIndex = 6;
+            // 
             // statusStrip3
             // 
             this.statusStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -512,66 +522,93 @@
             this.tabWholeSalerInfo.Text = "供货商信息";
             this.tabWholeSalerInfo.UseVisualStyleBackColor = true;
             // 
-            // tabUserInfoManager
+            // dgvWholeSalerInfo
             // 
-            this.tabUserInfoManager.Controls.Add(this.dgvUserInfo);
-            this.tabUserInfoManager.Controls.Add(this.statusStrip5);
-            this.tabUserInfoManager.Controls.Add(this.menuStrip4);
-            this.tabUserInfoManager.Location = new System.Drawing.Point(4, 22);
-            this.tabUserInfoManager.Name = "tabUserInfoManager";
-            this.tabUserInfoManager.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUserInfoManager.Size = new System.Drawing.Size(842, 316);
-            this.tabUserInfoManager.TabIndex = 7;
-            this.tabUserInfoManager.Text = "账号管理";
-            this.tabUserInfoManager.UseVisualStyleBackColor = true;
+            this.dgvWholeSalerInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvWholeSalerInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvWholeSalerInfo.Location = new System.Drawing.Point(3, 30);
+            this.dgvWholeSalerInfo.Name = "dgvWholeSalerInfo";
+            this.dgvWholeSalerInfo.RowTemplate.Height = 23;
+            this.dgvWholeSalerInfo.Size = new System.Drawing.Size(836, 261);
+            this.dgvWholeSalerInfo.TabIndex = 7;
             // 
-            // dgvSortInfo
+            // statusStrip4
             // 
-            this.dgvSortInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvSortInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvSortInfo.Location = new System.Drawing.Point(3, 30);
-            this.dgvSortInfo.Name = "dgvSortInfo";
-            this.dgvSortInfo.RowTemplate.Height = 23;
-            this.dgvSortInfo.Size = new System.Drawing.Size(836, 261);
-            this.dgvSortInfo.TabIndex = 6;
+            this.statusStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel3,
+            this.toolStripStatusLabel7,
+            this.tspWholeSalerInfoCount,
+            this.toolStripStatusLabel10});
+            this.statusStrip4.Location = new System.Drawing.Point(3, 291);
+            this.statusStrip4.Name = "statusStrip4";
+            this.statusStrip4.Size = new System.Drawing.Size(836, 22);
+            this.statusStrip4.TabIndex = 6;
+            this.statusStrip4.Text = "statusStrip4";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(16, 17);
+            this.toolStripStatusLabel3.Text = "  ";
+            // 
+            // toolStripStatusLabel7
+            // 
+            this.toolStripStatusLabel7.Name = "toolStripStatusLabel7";
+            this.toolStripStatusLabel7.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel7.Text = "共";
+            // 
+            // tspWholeSalerInfoCount
+            // 
+            this.tspWholeSalerInfoCount.Name = "tspWholeSalerInfoCount";
+            this.tspWholeSalerInfoCount.Size = new System.Drawing.Size(22, 17);
+            this.tspWholeSalerInfoCount.Text = "50";
+            // 
+            // toolStripStatusLabel10
+            // 
+            this.toolStripStatusLabel10.Name = "toolStripStatusLabel10";
+            this.toolStripStatusLabel10.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel10.Text = "行";
             // 
             // menuStrip3
             // 
             this.menuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3,
+            this.tspAddWholeSalerInfo,
+            this.tspEditWholeSalerInfo,
+            this.tspDeleteWholeSalerInfo,
             this.toolStripMenuItem7,
             this.toolStripMenuItem10,
             this.toolStripTextBox2,
-            this.toolStripMenuItem11});
+            this.txtReLoadWholeSalerInfo});
             this.menuStrip3.Location = new System.Drawing.Point(3, 3);
             this.menuStrip3.Name = "menuStrip3";
             this.menuStrip3.Size = new System.Drawing.Size(836, 27);
             this.menuStrip3.TabIndex = 4;
             this.menuStrip3.Text = "menuStrip3";
             // 
-            // toolStripMenuItem1
+            // tspAddWholeSalerInfo
             // 
-            this.toolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(60, 23);
-            this.toolStripMenuItem1.Tag = "添加";
-            this.toolStripMenuItem1.Text = "添加";
+            this.tspAddWholeSalerInfo.Image = ((System.Drawing.Image)(resources.GetObject("tspAddWholeSalerInfo.Image")));
+            this.tspAddWholeSalerInfo.Name = "tspAddWholeSalerInfo";
+            this.tspAddWholeSalerInfo.Size = new System.Drawing.Size(60, 23);
+            this.tspAddWholeSalerInfo.Tag = "添加";
+            this.tspAddWholeSalerInfo.Text = "添加";
+            this.tspAddWholeSalerInfo.Click += new System.EventHandler(this.tspAddWholeSalerInfo_Click);
             // 
-            // toolStripMenuItem2
+            // tspEditWholeSalerInfo
             // 
-            this.toolStripMenuItem2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem2.Image")));
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(60, 23);
-            this.toolStripMenuItem2.Text = "编辑";
+            this.tspEditWholeSalerInfo.Image = ((System.Drawing.Image)(resources.GetObject("tspEditWholeSalerInfo.Image")));
+            this.tspEditWholeSalerInfo.Name = "tspEditWholeSalerInfo";
+            this.tspEditWholeSalerInfo.Size = new System.Drawing.Size(60, 23);
+            this.tspEditWholeSalerInfo.Text = "编辑";
+            this.tspEditWholeSalerInfo.Click += new System.EventHandler(this.tspEditWholeSalerInfo_Click);
             // 
-            // toolStripMenuItem3
+            // tspDeleteWholeSalerInfo
             // 
-            this.toolStripMenuItem3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem3.Image")));
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(60, 23);
-            this.toolStripMenuItem3.Text = "删除";
+            this.tspDeleteWholeSalerInfo.Image = ((System.Drawing.Image)(resources.GetObject("tspDeleteWholeSalerInfo.Image")));
+            this.tspDeleteWholeSalerInfo.Name = "tspDeleteWholeSalerInfo";
+            this.tspDeleteWholeSalerInfo.Size = new System.Drawing.Size(60, 23);
+            this.tspDeleteWholeSalerInfo.Text = "删除";
+            this.tspDeleteWholeSalerInfo.Click += new System.EventHandler(this.tspDeleteWholeSalerInfo_Click);
             // 
             // toolStripMenuItem7
             // 
@@ -594,97 +631,114 @@
             this.toolStripTextBox2.Size = new System.Drawing.Size(136, 23);
             this.toolStripTextBox2.ToolTipText = "输入名称";
             // 
-            // toolStripMenuItem11
+            // txtReLoadWholeSalerInfo
             // 
-            this.toolStripMenuItem11.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem11.Image")));
-            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(60, 23);
-            this.toolStripMenuItem11.Text = "刷新";
+            this.txtReLoadWholeSalerInfo.Image = ((System.Drawing.Image)(resources.GetObject("txtReLoadWholeSalerInfo.Image")));
+            this.txtReLoadWholeSalerInfo.Name = "txtReLoadWholeSalerInfo";
+            this.txtReLoadWholeSalerInfo.Size = new System.Drawing.Size(60, 23);
+            this.txtReLoadWholeSalerInfo.Text = "刷新";
+            this.txtReLoadWholeSalerInfo.Click += new System.EventHandler(this.txtReLoadWholeSalerInfo_Click);
             // 
-            // statusStrip4
+            // tabUserInfoManager
             // 
-            this.statusStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel3,
-            this.toolStripStatusLabel7,
-            this.toolStripStatusLabel9,
-            this.toolStripStatusLabel10});
-            this.statusStrip4.Location = new System.Drawing.Point(3, 291);
-            this.statusStrip4.Name = "statusStrip4";
-            this.statusStrip4.Size = new System.Drawing.Size(836, 22);
-            this.statusStrip4.TabIndex = 6;
-            this.statusStrip4.Text = "statusStrip4";
+            this.tabUserInfoManager.Controls.Add(this.dgvUserInfo);
+            this.tabUserInfoManager.Controls.Add(this.statusStrip5);
+            this.tabUserInfoManager.Controls.Add(this.menuStrip4);
+            this.tabUserInfoManager.Location = new System.Drawing.Point(4, 22);
+            this.tabUserInfoManager.Name = "tabUserInfoManager";
+            this.tabUserInfoManager.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUserInfoManager.Size = new System.Drawing.Size(842, 316);
+            this.tabUserInfoManager.TabIndex = 7;
+            this.tabUserInfoManager.Text = "账号管理";
+            this.tabUserInfoManager.UseVisualStyleBackColor = true;
             // 
-            // toolStripStatusLabel3
+            // dgvUserInfo
             // 
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(16, 17);
-            this.toolStripStatusLabel3.Text = "  ";
+            this.dgvUserInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUserInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvUserInfo.Location = new System.Drawing.Point(3, 30);
+            this.dgvUserInfo.Name = "dgvUserInfo";
+            this.dgvUserInfo.RowTemplate.Height = 23;
+            this.dgvUserInfo.Size = new System.Drawing.Size(836, 261);
+            this.dgvUserInfo.TabIndex = 8;
             // 
-            // toolStripStatusLabel7
+            // statusStrip5
             // 
-            this.toolStripStatusLabel7.Name = "toolStripStatusLabel7";
-            this.toolStripStatusLabel7.Size = new System.Drawing.Size(20, 17);
-            this.toolStripStatusLabel7.Text = "共";
+            this.statusStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel11,
+            this.toolStripStatusLabel12,
+            this.tspUserCount,
+            this.toolStripStatusLabel14});
+            this.statusStrip5.Location = new System.Drawing.Point(3, 291);
+            this.statusStrip5.Name = "statusStrip5";
+            this.statusStrip5.Size = new System.Drawing.Size(836, 22);
+            this.statusStrip5.TabIndex = 7;
+            this.statusStrip5.Text = "statusStrip5";
             // 
-            // toolStripStatusLabel9
+            // toolStripStatusLabel11
             // 
-            this.toolStripStatusLabel9.Name = "toolStripStatusLabel9";
-            this.toolStripStatusLabel9.Size = new System.Drawing.Size(22, 17);
-            this.toolStripStatusLabel9.Text = "50";
+            this.toolStripStatusLabel11.Name = "toolStripStatusLabel11";
+            this.toolStripStatusLabel11.Size = new System.Drawing.Size(16, 17);
+            this.toolStripStatusLabel11.Text = "  ";
             // 
-            // toolStripStatusLabel10
+            // toolStripStatusLabel12
             // 
-            this.toolStripStatusLabel10.Name = "toolStripStatusLabel10";
-            this.toolStripStatusLabel10.Size = new System.Drawing.Size(20, 17);
-            this.toolStripStatusLabel10.Text = "行";
+            this.toolStripStatusLabel12.Name = "toolStripStatusLabel12";
+            this.toolStripStatusLabel12.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel12.Text = "共";
             // 
-            // dgvWholeSalerInfo
+            // tspUserCount
             // 
-            this.dgvWholeSalerInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvWholeSalerInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvWholeSalerInfo.Location = new System.Drawing.Point(3, 30);
-            this.dgvWholeSalerInfo.Name = "dgvWholeSalerInfo";
-            this.dgvWholeSalerInfo.RowTemplate.Height = 23;
-            this.dgvWholeSalerInfo.Size = new System.Drawing.Size(836, 261);
-            this.dgvWholeSalerInfo.TabIndex = 7;
+            this.tspUserCount.Name = "tspUserCount";
+            this.tspUserCount.Size = new System.Drawing.Size(22, 17);
+            this.tspUserCount.Text = "50";
+            // 
+            // toolStripStatusLabel14
+            // 
+            this.toolStripStatusLabel14.Name = "toolStripStatusLabel14";
+            this.toolStripStatusLabel14.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel14.Text = "行";
             // 
             // menuStrip4
             // 
             this.menuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem12,
-            this.toolStripMenuItem13,
-            this.toolStripMenuItem14,
+            this.tspAddUserInfo,
+            this.tspEditUserInfo,
+            this.tspDeleteUserInfo,
             this.toolStripMenuItem15,
             this.toolStripMenuItem16,
             this.toolStripTextBox3,
-            this.toolStripMenuItem17});
+            this.tspReLoadUserInfo});
             this.menuStrip4.Location = new System.Drawing.Point(3, 3);
             this.menuStrip4.Name = "menuStrip4";
             this.menuStrip4.Size = new System.Drawing.Size(836, 27);
             this.menuStrip4.TabIndex = 5;
             this.menuStrip4.Text = "menuStrip4";
             // 
-            // toolStripMenuItem12
+            // tspAddUserInfo
             // 
-            this.toolStripMenuItem12.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem12.Image")));
-            this.toolStripMenuItem12.Name = "toolStripMenuItem12";
-            this.toolStripMenuItem12.Size = new System.Drawing.Size(60, 23);
-            this.toolStripMenuItem12.Tag = "添加";
-            this.toolStripMenuItem12.Text = "添加";
+            this.tspAddUserInfo.Image = ((System.Drawing.Image)(resources.GetObject("tspAddUserInfo.Image")));
+            this.tspAddUserInfo.Name = "tspAddUserInfo";
+            this.tspAddUserInfo.Size = new System.Drawing.Size(60, 23);
+            this.tspAddUserInfo.Tag = "添加";
+            this.tspAddUserInfo.Text = "添加";
+            this.tspAddUserInfo.Click += new System.EventHandler(this.tspAddUserInfo_Click);
             // 
-            // toolStripMenuItem13
+            // tspEditUserInfo
             // 
-            this.toolStripMenuItem13.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem13.Image")));
-            this.toolStripMenuItem13.Name = "toolStripMenuItem13";
-            this.toolStripMenuItem13.Size = new System.Drawing.Size(60, 23);
-            this.toolStripMenuItem13.Text = "编辑";
+            this.tspEditUserInfo.Image = ((System.Drawing.Image)(resources.GetObject("tspEditUserInfo.Image")));
+            this.tspEditUserInfo.Name = "tspEditUserInfo";
+            this.tspEditUserInfo.Size = new System.Drawing.Size(60, 23);
+            this.tspEditUserInfo.Text = "编辑";
+            this.tspEditUserInfo.Click += new System.EventHandler(this.tspEditUserInfo_Click);
             // 
-            // toolStripMenuItem14
+            // tspDeleteUserInfo
             // 
-            this.toolStripMenuItem14.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem14.Image")));
-            this.toolStripMenuItem14.Name = "toolStripMenuItem14";
-            this.toolStripMenuItem14.Size = new System.Drawing.Size(60, 23);
-            this.toolStripMenuItem14.Text = "删除";
+            this.tspDeleteUserInfo.Image = ((System.Drawing.Image)(resources.GetObject("tspDeleteUserInfo.Image")));
+            this.tspDeleteUserInfo.Name = "tspDeleteUserInfo";
+            this.tspDeleteUserInfo.Size = new System.Drawing.Size(60, 23);
+            this.tspDeleteUserInfo.Text = "删除";
+            this.tspDeleteUserInfo.Click += new System.EventHandler(this.tspDeleteUserInfo_Click);
             // 
             // toolStripMenuItem15
             // 
@@ -707,59 +761,13 @@
             this.toolStripTextBox3.Size = new System.Drawing.Size(136, 23);
             this.toolStripTextBox3.ToolTipText = "输入名称";
             // 
-            // toolStripMenuItem17
+            // tspReLoadUserInfo
             // 
-            this.toolStripMenuItem17.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem17.Image")));
-            this.toolStripMenuItem17.Name = "toolStripMenuItem17";
-            this.toolStripMenuItem17.Size = new System.Drawing.Size(60, 23);
-            this.toolStripMenuItem17.Text = "刷新";
-            // 
-            // statusStrip5
-            // 
-            this.statusStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel11,
-            this.toolStripStatusLabel12,
-            this.toolStripStatusLabel13,
-            this.toolStripStatusLabel14});
-            this.statusStrip5.Location = new System.Drawing.Point(3, 291);
-            this.statusStrip5.Name = "statusStrip5";
-            this.statusStrip5.Size = new System.Drawing.Size(836, 22);
-            this.statusStrip5.TabIndex = 7;
-            this.statusStrip5.Text = "statusStrip5";
-            // 
-            // toolStripStatusLabel11
-            // 
-            this.toolStripStatusLabel11.Name = "toolStripStatusLabel11";
-            this.toolStripStatusLabel11.Size = new System.Drawing.Size(16, 17);
-            this.toolStripStatusLabel11.Text = "  ";
-            // 
-            // toolStripStatusLabel12
-            // 
-            this.toolStripStatusLabel12.Name = "toolStripStatusLabel12";
-            this.toolStripStatusLabel12.Size = new System.Drawing.Size(20, 17);
-            this.toolStripStatusLabel12.Text = "共";
-            // 
-            // toolStripStatusLabel13
-            // 
-            this.toolStripStatusLabel13.Name = "toolStripStatusLabel13";
-            this.toolStripStatusLabel13.Size = new System.Drawing.Size(22, 17);
-            this.toolStripStatusLabel13.Text = "50";
-            // 
-            // toolStripStatusLabel14
-            // 
-            this.toolStripStatusLabel14.Name = "toolStripStatusLabel14";
-            this.toolStripStatusLabel14.Size = new System.Drawing.Size(20, 17);
-            this.toolStripStatusLabel14.Text = "行";
-            // 
-            // dgvUserInfo
-            // 
-            this.dgvUserInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvUserInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvUserInfo.Location = new System.Drawing.Point(3, 30);
-            this.dgvUserInfo.Name = "dgvUserInfo";
-            this.dgvUserInfo.RowTemplate.Height = 23;
-            this.dgvUserInfo.Size = new System.Drawing.Size(836, 261);
-            this.dgvUserInfo.TabIndex = 8;
+            this.tspReLoadUserInfo.Image = ((System.Drawing.Image)(resources.GetObject("tspReLoadUserInfo.Image")));
+            this.tspReLoadUserInfo.Name = "tspReLoadUserInfo";
+            this.tspReLoadUserInfo.Size = new System.Drawing.Size(60, 23);
+            this.tspReLoadUserInfo.Text = "刷新";
+            this.tspReLoadUserInfo.Click += new System.EventHandler(this.tspReLoadUserInfo_Click);
             // 
             // Huang_System
             // 
@@ -789,25 +797,25 @@
             this.menuStrip1.PerformLayout();
             this.tabGoodSort.ResumeLayout(false);
             this.tabGoodSort.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).EndInit();
             this.statusStrip3.ResumeLayout(false);
             this.statusStrip3.PerformLayout();
             this.menuStrip2.ResumeLayout(false);
             this.menuStrip2.PerformLayout();
             this.tabWholeSalerInfo.ResumeLayout(false);
             this.tabWholeSalerInfo.PerformLayout();
-            this.tabUserInfoManager.ResumeLayout(false);
-            this.tabUserInfoManager.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSortInfo)).EndInit();
-            this.menuStrip3.ResumeLayout(false);
-            this.menuStrip3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvWholeSalerInfo)).EndInit();
             this.statusStrip4.ResumeLayout(false);
             this.statusStrip4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWholeSalerInfo)).EndInit();
-            this.menuStrip4.ResumeLayout(false);
-            this.menuStrip4.PerformLayout();
+            this.menuStrip3.ResumeLayout(false);
+            this.menuStrip3.PerformLayout();
+            this.tabUserInfoManager.ResumeLayout(false);
+            this.tabUserInfoManager.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUserInfo)).EndInit();
             this.statusStrip5.ResumeLayout(false);
             this.statusStrip5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvUserInfo)).EndInit();
+            this.menuStrip4.ResumeLayout(false);
+            this.menuStrip4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -864,30 +872,30 @@
         private System.Windows.Forms.StatusStrip statusStrip4;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel7;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel9;
+        private System.Windows.Forms.ToolStripStatusLabel tspWholeSalerInfoCount;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel10;
         private System.Windows.Forms.MenuStrip menuStrip3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem tspAddWholeSalerInfo;
+        private System.Windows.Forms.ToolStripMenuItem tspEditWholeSalerInfo;
+        private System.Windows.Forms.ToolStripMenuItem tspDeleteWholeSalerInfo;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem11;
+        private System.Windows.Forms.ToolStripMenuItem txtReLoadWholeSalerInfo;
         private System.Windows.Forms.DataGridView dgvUserInfo;
         private System.Windows.Forms.StatusStrip statusStrip5;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel11;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel12;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel13;
+        private System.Windows.Forms.ToolStripStatusLabel tspUserCount;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel14;
         private System.Windows.Forms.MenuStrip menuStrip4;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem14;
+        private System.Windows.Forms.ToolStripMenuItem tspAddUserInfo;
+        private System.Windows.Forms.ToolStripMenuItem tspEditUserInfo;
+        private System.Windows.Forms.ToolStripMenuItem tspDeleteUserInfo;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem15;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem16;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem17;
+        private System.Windows.Forms.ToolStripMenuItem tspReLoadUserInfo;
     }
 }
 

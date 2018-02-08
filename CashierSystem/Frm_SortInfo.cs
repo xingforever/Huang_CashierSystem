@@ -118,5 +118,10 @@ namespace CashierSystem
             //属性界面
             f1.GetDgv(f1.SelectIndex);
         }
+
+        private void btnEsc_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

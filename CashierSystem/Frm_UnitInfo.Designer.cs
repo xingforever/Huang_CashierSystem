@@ -92,6 +92,7 @@
             this.btnEsc.TabIndex = 3;
             this.btnEsc.Text = "取消";
             this.btnEsc.UseVisualStyleBackColor = true;
+            this.btnEsc.Click += new System.EventHandler(this.btnEsc_Click);
             // 
             // lbltips
             // 

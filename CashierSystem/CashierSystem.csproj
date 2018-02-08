@@ -62,6 +62,12 @@
     <Compile Include="Frm_UnitInfo.Designer.cs">
       <DependentUpon>Frm_UnitInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_UserInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_UserInfo.Designer.cs">
+      <DependentUpon>Frm_UserInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_WholeSalerInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +84,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_UnitInfo.resx">
       <DependentUpon>Frm_UnitInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_UserInfo.resx">
+      <DependentUpon>Frm_UserInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_WholeSalerInfo.resx">
       <DependentUpon>Frm_WholeSalerInfo.cs</DependentUpon>
@@ -105,6 +114,10 @@
     <ProjectReference Include="..\Bll\Bll.csproj">
       <Project>{b94443df-cba5-4e66-9b62-9089bbafe7e0}</Project>
       <Name>Bll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{089CBDBE-EF09-46E3-9507-0DC012175EDD}</Project>
+      <Name>Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common_Winform\Common_Winform.csproj">
       <Project>{cbc06bbe-0af3-4957-bda9-1a2165a2eca3}</Project>

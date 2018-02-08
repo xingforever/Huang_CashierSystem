@@ -34,7 +34,7 @@ namespace Model
         /// <returns></returns>
         public override List<string> GetHanderTxt()
         {
-            return new List<string> { "ID编号", "姓名", "密码", "备注", "是否删除" };
+            return new List<string> { "ID编号", "用户名", "密码", "备注", "是否删除" };
         }
         /// <summary>
         /// 获取隐藏数据位置
