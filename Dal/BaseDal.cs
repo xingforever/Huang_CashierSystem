@@ -135,7 +135,7 @@ namespace Dal
             }
         }
 
-        public bool Delete(int id)
+        public virtual bool Delete(int id)
         {
             T entity = new T();
             try

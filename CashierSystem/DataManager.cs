@@ -94,39 +94,47 @@ namespace CashierSystem
             return null;
         }
 
-        public static void GetHandTxtAndHideIndex(int id, ref List<string> handText,  ref List<int> hideIndex)
+        public static void GetHandTxtAndHideIndex(int id, ref List<string> name,ref List<string> handText,  ref List<int> hideIndex)
         {
             switch (id)
             {
                 case 0:
+                    name = new GoodsInfo().GetTableName();
                     handText = new GoodsInfo().GetHanderTxt();
                     hideIndex= new GoodsInfo().GetHideIndex();
                     break;
                 case 1:
+                    name = new SalesInfo().GetTableName();
                     handText = new SalesInfo().GetHanderTxt();
                     hideIndex = new SalesInfo().GetHideIndex();
                     break;
                 case 2:
+                    name = new GoodsInfo().GetTableName();
                     handText = new GoodsInfo().GetHanderTxt();
                     hideIndex = new GoodsInfo().GetHideIndex();
                     break;
                 case 3:
+                    name = new SalesInfo().GetTableName();
                     handText = new SalesInfo().GetHanderTxt();
                     hideIndex = new SalesInfo().GetHideIndex();
                     break;
                 case 4:
+                    name = new UnitInfo().GetTableName();
                     handText = new UnitInfo().GetHanderTxt();
                     hideIndex = new UnitInfo().GetHideIndex();
                     break;
                 case 5:
+                    name = new SortInfo().GetTableName();
                     handText = new SortInfo().GetHanderTxt();
                     hideIndex = new SortInfo().GetHideIndex();
                     break;
                 case 6:
+                    name = new WholeSalerInfo().GetTableName();
                     handText = new WholeSalerInfo().GetHanderTxt();
                     hideIndex = new WholeSalerInfo().GetHideIndex();
                     break;
                 case 7:
+                    name = new UserInfo().GetTableName();
                     handText = new UserInfo().GetHanderTxt();
                     hideIndex = new UserInfo().GetHideIndex();
                     break;

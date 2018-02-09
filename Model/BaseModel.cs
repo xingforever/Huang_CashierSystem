@@ -39,6 +39,12 @@ namespace Model
 
             return null;
         }
+
+        public virtual List<string> GetTableName()
+        {
+            return new List<string>();
+        }
+
         /// <summary>
         /// 获取标题名称
         /// </summary>

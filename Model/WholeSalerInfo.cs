@@ -39,25 +39,7 @@ namespace Model
         {
             return "WholeSalerInfo";
         }
-
-        /// <summary>
-        /// 获取标题名称
-        /// </summary>
-        /// <returns></returns>
-        public override List<string> GetHanderTxt()
-        {
-            return new List<string> { "ID编号", "供货商店名", "供货商地址", "负责人", "联系电话", "备注", "是否删除" };
-        }
-        /// <summary>
-        /// 获取隐藏数据位置
-        /// </summary>
-        /// <returns></returns>
-        public override List<int> GetHideIndex()
-        {
-            return new List<int>() { 0, 6 };
-        }
-
-
+        
         public override string GetSql()
         {
             return "([SupName],[Management],[TelePhone],[AddressInfo],[Remark],[DelFlag]) ";
@@ -88,11 +70,11 @@ namespace Model
         public override List<BaseModel> GetList(DataTable dataTable)
         {
 
-            DataRow dr = null;
-            WholeSalerInfo wholeSalerInfo = new WholeSalerInfo();
+            DataRow dr = null;            
             List<BaseModel> Entitys = new List<BaseModel>();
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
+                WholeSalerInfo wholeSalerInfo = new WholeSalerInfo();
                 dr = dataTable.Rows[i];
                 wholeSalerInfo.Id = Convert.ToInt32(dr["ID"]);
                 wholeSalerInfo.SupName = Convert.ToString(dr["SupName"]);
@@ -105,6 +87,32 @@ namespace Model
             }
 
             return Entitys;
+        }
+
+        /// <summary>
+        /// 获取表格值名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetTableName()
+        {
+            //DgvName
+            return new List<string> { "ID", "SupName", "Management",  "TelePhone", "AddressInfo", "Remark", "DelFlag" }; ;
+        }
+        /// <summary>
+        /// 获取标题名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetHanderTxt()
+        {
+            return new List<string> { "ID编号", "供货商店名", "负责人", "联系电话", "供货商地址", "备注", "是否删除" };
+        }
+        /// <summary>
+        /// 获取隐藏数据位置
+        /// </summary>
+        /// <returns></returns>
+        public override List<int> GetHideIndex()
+        {
+            return new List<int>() { 0, 6 };
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -8,5 +9,101 @@ namespace Dal
 {
     public  class GoodsInfoDal:BaseDal<GoodsInfo>
     {
+
+
+        //string sql = @"select di.*,dti.dtitle as dTypeTitle 
+        //        from dishinfo as di
+        //        inner join dishtypeinfo as dti
+        //        on di.dtypeid=dti.did
+        //        where di.dIsDelete=0 and dti.dIsDelete=0";
+        /// <summary>
+        /// 获取条件查询后的商品信息
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public DataTable GetDataTablebyPammer(int startIndex, int count,Dictionary<string, string> dic=null )
+        {
+            //查询goodsinfo ,并查询出商品类型和单位
+            //标准可执行
+            //select  top 10
+            //goods.*,sort.SortName as SortName ,unit.UnitName as unitName,wsoles.SupName
+            //   from((GoodsInfo as goods
+            //    inner join SortInfo as sort
+            //    on goods.SortId = sort.Id)
+            //    inner join UnitInfo as unit
+            //    on goods.UnitId = unit.Id)
+            //    inner join WholeSalerInfo as wsoles
+            //    on goods.WholeSalerId = wsoles.Id
+            //    where goods.DelFlag = false and goods.id > 2
+            //   order by goods.id desc
+
+            
+            string sql1 = "select top " + count.ToString();//筛选一定量数据
+            string sql2 = @"  goods.*,sort.SortName as SortName ,unit.UnitName as UnitName,wsoles.SupName as SupName
+               from ((GoodsInfo as goods
+                inner join SortInfo as sort
+                on goods.SortId=sort.Id)
+                inner join UnitInfo as unit
+                on goods.UnitId=unit.Id)
+                inner join WholeSalerInfo as wsoles
+                on goods.WholeSalerId=wsoles.Id
+                where goods.DelFlag= false and goods.id >"+ startIndex.ToString();
+            string sql3 = " order by goods.id ";
+            string sql = sql1 + sql2;//排序
+            //限制条件
+            if (dic!=null)
+            {
+                foreach (var pair in dic)
+                {
+                    sql += " and goods." + pair.Key + " like " + pair.Key;
+                   
+                }
+            }
+            sql += sql3;
+            
+            var dataTable = SqlHelper.GetDataTable(sql);
+            //数据替换 
+
+            return dataTable;
+          
+
+
+        }
+
+
+        public List<GoodsInfo> GetGoodsInfoList(DataTable dataTable)
+        {
+            DataRow dr = null;
+            List<GoodsInfo> Entitys = new List<GoodsInfo>();
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                GoodsInfo goodsInfo = new GoodsInfo();
+                dr = dataTable.Rows[i];
+                goodsInfo.Id = Convert.ToInt32(dr["ID"]);
+                goodsInfo.UnitId = Convert.ToInt32(dr["UnitId"]);
+                goodsInfo.SortId = Convert.ToInt32(dr["SortId"]);
+                goodsInfo.WholeSalerId = Convert.ToInt32(dr["WholeSalerId"]);
+                goodsInfo.GoodsType = Convert.ToString(dr["GoodsType"]);
+                goodsInfo.PurPrice = Convert.ToDecimal(dr["PurPrice"]);
+                goodsInfo.PayPrice = Convert.ToDecimal(dr["PayPrice"]);
+                goodsInfo.Total = Convert.ToDouble(dr["Total"]);
+                goodsInfo.SalesCount = Convert.ToDouble(dr["SalesCount"]);
+                goodsInfo.SurplusCount = Convert.ToDouble(dr["SurplusCount"]);
+                goodsInfo.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
+                goodsInfo.LastTime = Convert.ToDateTime(dr["LastTime"]);
+                goodsInfo.Remark = Convert.ToString(dr["Remark"]);
+                UnitInfo unitInfo = new UnitInfoDal().GetEntityById(goodsInfo.UnitId);
+                SortInfo sortInfo = new SortInfoDal().GetEntityById(goodsInfo.SortId);
+                WholeSalerInfo wholeSalerInfo = new WholeSalerInfoDal().GetEntityById(goodsInfo.WholeSalerId);
+                goodsInfo.UnitInfo = unitInfo;
+                goodsInfo.SortInfo = sortInfo;
+                goodsInfo.WholeSalerInfo = wholeSalerInfo;
+                Entitys.Add(goodsInfo);
+            }
+            return Entitys;
+
+        }
+       
+
     }
 }

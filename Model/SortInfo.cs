@@ -20,23 +20,8 @@ namespace Model
         {
             return "SortInfo";
         }
-        /// <summary>
-        /// 获取标题名称
-        /// </summary>
-        /// <returns></returns>
-        public override List<string> GetHanderTxt()
-        {
-            return  new List<string> { "ID编号", "类别", "备注", "是否删除" };
-        }
-        /// <summary>
-        /// 获取隐藏数据位置
-        /// </summary>
-        /// <returns></returns>
-        public override List<int> GetHideIndex()
-        {
 
-            return new List<int>() { 0, 3 };
-        }
+       
 
         public override string GetSql()
         {
@@ -59,11 +44,11 @@ namespace Model
         public override List<BaseModel> GetList(DataTable dataTable)
         {
 
-            DataRow dr = null;
-            SortInfo sortInfo = new SortInfo();
+            DataRow dr = null;           
             List<BaseModel> Entitys = new List<BaseModel>();
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
+                SortInfo sortInfo = new SortInfo();
                 dr = dataTable.Rows[i];
                 sortInfo.Id = Convert.ToInt32(dr["ID"]);
                 sortInfo.SortName = Convert.ToString(dr["SortName"]);
@@ -73,6 +58,33 @@ namespace Model
             }
 
             return Entitys;
+        }
+
+        /// <summary>
+        /// 获取表格值名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetTableName()
+        {
+            //DgvName
+            return new List<string> { "ID", "SortName",  "Remark", "DelFlag" }; ;
+        }
+        /// <summary>
+        /// 获取标题名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetHanderTxt()
+        {
+            return new List<string> { "ID编号", "类别", "备注", "是否删除" };
+        }
+        /// <summary>
+        /// 获取隐藏数据位置
+        /// </summary>
+        /// <returns></returns>
+        public override List<int> GetHideIndex()
+        {
+
+            return new List<int>() { 0, 3 };
         }
 
     }

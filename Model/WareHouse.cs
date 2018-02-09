@@ -75,10 +75,11 @@ namespace Model
         {
 
             DataRow dr = null;
-            WareHouse wareHouse = new WareHouse();
+          
             List<BaseModel> Entitys = new List<BaseModel>();
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
+                WareHouse wareHouse = new WareHouse();
                 dr = dataTable.Rows[i];
                 wareHouse.Id = Convert.ToInt32(dr["ID"]);
                 wareHouse.GoodsId = Convert.ToInt32(dr["GoodsId"]);

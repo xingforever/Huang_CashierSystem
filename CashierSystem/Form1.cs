@@ -52,34 +52,43 @@ namespace CashierSystem
         /// 获取数据并展示在响应的标签页
         /// </summary>
         /// <param name="id"></param>
-        public void GetDgv(int id)
+        public void GetDgv(int id,SearchModel searchModel=null)
         {
             DataTable dataTable = DataManager.LoadBySelectId(id);
+            if (searchModel == null)
+            {
+                //搜索条件有默认条件
+                searchModel = new SearchModel();
+            }
+           
+            List<string> nameList = new List<string>();
             List<string> handerTxt = new List<string>();
             List<int> hideIndex = new List<int>();
-            DataManager.GetHandTxtAndHideIndex(id, ref handerTxt, ref hideIndex);
+            
+            DataManager.GetHandTxtAndHideIndex(id,ref nameList, ref handerTxt, ref hideIndex);
             switch (id)
             {
                 case 0:
-                    this.dgvGoodsInfo = dataGridViewHelper.Init(this.dgvGoodsInfo, handerTxt, dataTable, hideIndex);
-
+                    LoadGoodsInfo();
+                    dataTable = DataManager.GoodsInfoBLL.GetDataTablebyPammer(searchModel);
+                    this.dgvGoodsInfo = dataGridViewHelper.Init(this.dgvGoodsInfo, nameList, handerTxt, dataTable, hideIndex);
                     break;
                 case 1:
                     break;
                 case 4:
-                    this.dgvUnitInfo = dataGridViewHelper.Init(this.dgvUnitInfo, handerTxt, dataTable, hideIndex);
+                    this.dgvUnitInfo = dataGridViewHelper.Init(this.dgvUnitInfo, nameList, handerTxt, dataTable, hideIndex);
                     this.tspUnitInfoCount.Text = dataTable.Rows.Count.ToString();
                     break;
                 case 5:
-                    this.dgvSortInfo = dataGridViewHelper.Init(this.dgvSortInfo, handerTxt, dataTable, hideIndex);
+                    this.dgvSortInfo = dataGridViewHelper.Init(this.dgvSortInfo, nameList, handerTxt, dataTable, hideIndex);
                     this.tspSortInfoCount.Text = dataTable.Rows.Count.ToString();
                     break;
                 case 6:
-                    this.dgvWholeSalerInfo = dataGridViewHelper.Init(this.dgvWholeSalerInfo, handerTxt, dataTable, hideIndex);
+                    this.dgvWholeSalerInfo = dataGridViewHelper.Init(this.dgvWholeSalerInfo, nameList, handerTxt, dataTable, hideIndex);
                     this.tspWholeSalerInfoCount.Text = dataTable.Rows.Count.ToString();
                     break;
                 case 7:
-                    this.dgvUserInfo = dataGridViewHelper.Init(this.dgvUserInfo, handerTxt, dataTable, hideIndex);
+                    this.dgvUserInfo = dataGridViewHelper.Init(this.dgvUserInfo, handerTxt, nameList, dataTable, hideIndex);
                     this.tspUserCount.Text = dataTable.Rows.Count.ToString();
                     break;
             }
@@ -117,7 +126,7 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspEditUnitInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvUserInfo.SelectedRows.Count < 0)
+            if (this.dgvUnitInfo.SelectedRows.Count < 0)
             {
                 UnSelectedTips();
                 return;
@@ -137,7 +146,7 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspDeleteUnitInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvUserInfo.SelectedRows.Count < 0)
+            if (this.dgvUnitInfo.SelectedRows.Count < 0)
             {
                 UnSelectedTips();
                 return;
@@ -184,7 +193,7 @@ namespace CashierSystem
 
         private void tspEidtSortInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvUserInfo.SelectedRows.Count < 0)
+            if (this.dgvSortInfo.SelectedRows.Count < 0)
             {
                 UnSelectedTips();
                 return;
@@ -200,12 +209,12 @@ namespace CashierSystem
 
         private void tspDeleteSortInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvUserInfo.SelectedRows.Count < 0)
+            if (this.dgvSortInfo.SelectedRows.Count < 0)
             {
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvUnitInfo.SelectedRows[0];
+            var dataRow = this.dgvSortInfo.SelectedRows[0];
            
             var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
             var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -241,7 +250,7 @@ namespace CashierSystem
 
         private void tspEditWholeSalerInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvUserInfo.SelectedRows.Count < 0)
+            if (this.dgvWholeSalerInfo.SelectedRows.Count < 0)
             {
                 UnSelectedTips();
                 return;
@@ -257,7 +266,7 @@ namespace CashierSystem
 
         private void tspDeleteWholeSalerInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvUserInfo.SelectedRows.Count < 0)
+            if (this.dgvWholeSalerInfo.SelectedRows.Count < 0)
             {
                 UnSelectedTips();
                 return;
@@ -286,7 +295,7 @@ namespace CashierSystem
             GetDgv(SelectIndex);
         }
         #endregion
-
+        #region 管理员信息表
         private void tspAddUserInfo_Click(object sender, EventArgs e)
         {
             Frm_UserInfo frm_Samll = Frm_UserInfo.Create();
@@ -296,13 +305,13 @@ namespace CashierSystem
 
         private void tspEditUserInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvUserInfo.SelectedRows.Count<0)
+            if (this.dgvUserInfo.SelectedRows.Count < 0)
             {
                 UnSelectedTips();
                 return;
             }
             var dataRow = this.dgvUserInfo.SelectedRows[0];
-           
+
             var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
             UserInfo userInfo = DataManager.UserInfoBLL.GetEntityById(dataId);
             List<string> tags = new List<string>() { userInfo.Id.ToString(), userInfo.UserName, userInfo.Remark };
@@ -321,21 +330,69 @@ namespace CashierSystem
         {
             GetDgv(SelectIndex);
         }
+        #endregion
 
 
+        private void LoadGoodsInfo()
+        {
+
+            cbxSortsInfo. ValueMember = "Id";
+            cbxSortsInfo.DisplayMember = "SortName";
+            cbxSortsInfo.DataSource = GetSortInfoList();
+
+            cbxUnitInfo.ValueMember = "Id";
+            cbxUnitInfo.DisplayMember = "UnitName";
+            cbxUnitInfo.DataSource = GetUnitInfoList();
+            
+        }
+
+
+
+
+        /// <summary>
+        /// 获取单位表
+        /// </summary>
+        /// <returns></returns>
+        private List<UnitInfo> GetUnitInfoList()
+        {
+         var list= DataManager.UnitInfoBLL.GetList();
+            list.Insert(0, new UnitInfo()
+            {
+                Id = 0,
+                UnitName = "全部"
+
+            });
+            return list;
+
+        }
+
+        /// <summary>
+        /// 获取
+        /// </summary>
+        /// <returns></returns>
+        public List<SortInfo> GetSortInfoList()
+        {
+
+          var list=  DataManager.SortInfoBLL.GetList();
+            list.Insert(0, new SortInfo()
+            {
+                Id=0,
+                SortName="全部"
+
+            });
+            return list;
+
+        }
+
+        /// <summary>
+        /// 未选中行操作提示
+        /// </summary>
         public void UnSelectedTips()
         {
             MessageBox.Show("未选中行,请单击表格某行 ", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        private void Huang_System_SizeChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label17_Click(object sender, EventArgs e)
-        {
-
-        }
+      
+        
     }
 }

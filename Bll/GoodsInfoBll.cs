@@ -2,6 +2,7 @@
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -9,9 +10,15 @@ namespace Bll
 {
    public  class GoodsInfoBll:BaseBll<GoodsInfo>
     {
-       public  GoodsInfoBll()
+        GoodsInfoDal dal = new GoodsInfoDal();
+        public  GoodsInfoBll()
         {
             this.CurrentDal = new GoodsInfoDal();
+        }
+        public DataTable GetDataTablebyPammer( SearchModel searchModel )
+        {
+           
+            return dal.GetDataTablebyPammer(searchModel.startIndex, searchModel.count, searchModel.dic);
         }
 
     }

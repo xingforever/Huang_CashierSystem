@@ -126,11 +126,11 @@ namespace Model
         public override List<BaseModel> GetList(DataTable dataTable)
         {
 
-            DataRow dr = null;
-            GoodsInfo goodsInfo = new GoodsInfo();
+            DataRow dr = null;           
             List<BaseModel> Entitys = new List<BaseModel>();
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
+                GoodsInfo goodsInfo = new GoodsInfo();
                 dr = dataTable.Rows[i];
                 goodsInfo.Id = Convert.ToInt32(dr["ID"]);
                 goodsInfo.UnitId = Convert.ToInt32(dr["UnitId"]);
@@ -144,22 +144,28 @@ namespace Model
                 goodsInfo.SurplusCount = Convert.ToDouble(dr["SurplusCount"]);
                 goodsInfo.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
                 goodsInfo.LastTime = Convert.ToDateTime(dr["LastTime"]);              
-                goodsInfo.Remark = Convert.ToString(dr["Remark"]);          
+                goodsInfo.Remark = Convert.ToString(dr["Remark"]);              
+
                 Entitys.Add(goodsInfo);
             }
 
             return Entitys;
         }
 
+        public override List<string> GetTableName()
+        {
+            //DgvName
+            return new List<string> { "ID","GoodsName", "SortName", "UnitName", "GoodsType", "PurPrice", "PayPrice", "Total", "SalesCount", "SurplusCount", "WholeSalerName", "CreateTime", "LastTime", "Remark", "DelFlag" }; ;
+        }
 
         /// <summary>
-        /// 获取标题名称
+        /// 获取标题显示名称
         /// </summary>
         /// <returns></returns>
         public override List<string> GetHanderTxt()
         {
            
-           
+           //DgvDisPlayName
             return new List<string> { "ID编号", "商品名", "类别", "单位", "规格", "进货价", "售价", "总数量", "已售出", "库存", "供货商", "进货时间", "保质时间", "备注", "是否删除" }; ;
         }
         /// <summary>
@@ -168,8 +174,8 @@ namespace Model
         /// <returns></returns>
         public override List<int> GetHideIndex()
         {
-
-            return  new List<int>() { 0, 5, 7, 8, 11, 12, 14 }; ;
+            //默认 隐藏的数据
+            return  new List<int>() { 0,1,2,3,4 ,5,6, 7, 8,9,10, 11, 12, 13,14 }; ;
         }
 
 

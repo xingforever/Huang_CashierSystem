@@ -49,6 +49,16 @@ namespace Model
         {
             return "SalesInfo";
         }
+        /// <summary>
+        /// 获取表格值名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetTableName()
+        {
+            //DgvName
+            return new List<string> { "ID", "GoodsId", "CustomerName", "Count", "Discount", "Prices", "CreateTime",
+             "IsPay",  "Remark", "DelFlag" }; ;
+        }
 
         /// <summary>
         /// 获取标题名称
@@ -98,10 +108,11 @@ namespace Model
         {
 
             DataRow dr = null;
-            SalesInfo salesInfo = new SalesInfo();
+           
             List<BaseModel> Entitys = new List<BaseModel>();
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
+                SalesInfo salesInfo = new SalesInfo();
                 dr = dataTable.Rows[i];
                 salesInfo.Id = Convert.ToInt32(dr["ID"]);
                 salesInfo.GoodsId = Convert.ToInt32(dr["GoodsId"]);

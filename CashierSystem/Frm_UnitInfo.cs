@@ -91,8 +91,9 @@ namespace CashierSystem
                 //添加
                
                     UnitInfo unitInfo = new UnitInfo();
-                    unitInfo.UnitName = txtFirst.Text;
-                    unitInfo.Remark = txtRmark.Text;
+                    unitInfo.UnitName = txtFirst.Text.Trim();
+                    unitInfo.Remark = txtRmark.Text.Trim().Replace(';','.');//替换';'
+                //后期 英文";"有作用
                   var isSuccess=  DataManager.UnitInfoBLL.Add(unitInfo);
                     if (!isSuccess)
                     {
@@ -106,8 +107,8 @@ namespace CashierSystem
             {
                
                     UnitInfo unitInfo = new UnitInfo();
-                    unitInfo.UnitName = txtFirst.Text;
-                    unitInfo.Remark = txtRmark.Text;
+                    unitInfo.UnitName = txtFirst.Text.Trim();
+                    unitInfo.Remark = txtRmark.Text.Trim();
                     unitInfo.Id = entityId;
                     var isSuccess = DataManager.UnitInfoBLL.Edit(unitInfo);
                     if (!isSuccess)

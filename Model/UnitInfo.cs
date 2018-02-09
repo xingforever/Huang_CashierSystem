@@ -26,6 +26,15 @@ namespace Model
         }
 
         /// <summary>
+        /// 获取表格值名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<string> GetTableName()
+        {
+            //DgvName
+            return new List<string> { "ID", "UnitName",  "Remark", "DelFlag" }; ;
+        }
+        /// <summary>
         /// 获取标题名称
         /// </summary>
         /// <returns></returns>
@@ -62,11 +71,11 @@ namespace Model
         public override List<BaseModel> GetList(DataTable dataTable)
         {
 
-            DataRow dr = null;
-            UnitInfo unitInfo = new UnitInfo();
+            DataRow dr = null;            
             List<BaseModel> Entitys = new List<BaseModel>();
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
+                UnitInfo unitInfo = new UnitInfo();
                 dr = dataTable.Rows[i];
                 unitInfo.Id = Convert.ToInt32(dr["ID"]);
                 unitInfo.UnitName = Convert.ToString(dr["UnitName"]);
