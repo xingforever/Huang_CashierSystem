@@ -42,6 +42,7 @@
     <Compile Include="BaseModel.cs" />
     <Compile Include="GoodsInfo.cs" />
     <Compile Include="NoReceiveMoney.cs" />
+    <Compile Include="OrderInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SalesInfo.cs" />
     <Compile Include="SearchModels\SearchModel.cs" />

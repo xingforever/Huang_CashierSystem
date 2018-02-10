@@ -12,13 +12,20 @@ namespace Common_Winform
     {
 
         DataGridView MyDataGridView = new DataGridView();
+        /// <summary>
+        /// 用于辅助
+        /// </summary>
+        public int HelperValue = int.MaxValue;
 
        public  DataGridViewHelper()
         {
 
         }
+        public DataGridViewHelper(DataGridView dataGridView )
+        {
+            MyDataGridView = dataGridView;
+        }
 
-      
         public DataGridView Init(DataGridView pDataGridView, DataTable dataTable)
         {
             MyDataGridView = null;
@@ -100,39 +107,49 @@ namespace Common_Winform
             return MyDataGridView;
         }
 
-
-        public DataGridView Init(DataGridView pDataGridView, DataTable dataTable, List<int> hideColumn = null, bool usingNo = true, bool usingChk = false)
+        /// <summary>
+        /// 初始化DataGridView
+        /// </summary>
+        /// <param name="pDataGridView">DataGridView</param>
+        /// <param name="nameList">名字列表</param>
+        /// <param name="handerNames">标题列表</param>
+        /// <param name="hideColumn">隐藏列</param>
+        /// <param name="usingNo">使用标题行</param>    
+        /// <returns></returns>
+        public DataGridView Init(DataGridView pDataGridView, List<string> nameList, List<string> handerNames, List<int> hideColumn = null, bool usingNo = true)
         {
             MyDataGridView = null;
             MyDataGridView = pDataGridView;
-            BindingSource bs = new BindingSource();
-            bs.DataSource = dataTable;
-            MyDataGridView.DataSource = bs;//填充数据
-            //MyDataGridView.BackgroundColor = Color.WhiteSmoke;//DataGridView 背景色白色
-            //MyDataGridView.AllowUserToOrderColumns = false;//关闭列间排序
-            //MyDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;//填充表格
-            //MyDataGridView.ColumnHeadersVisible = true;//列标题可见
-            //MyDataGridView.RowHeadersVisible = true;//行标题可见
-            //MyDataGridView.EnableHeadersVisualStyles = false;//禁用默认标题样式
-            //MyDataGridView.ColumnHeadersDefaultCellStyle.Font = new Font("宋体", 15, FontStyle.Bold);//自定义标题样式
-            //MyDataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;//标题居中
-            //MyDataGridView.MultiSelect = false;//仅单选
-            //MyDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;//整行被选中
-            //MyDataGridView.ReadOnly = true;
+            MyDataGridView.BackgroundColor = Color.WhiteSmoke;//DataGridView 背景色白色
+            MyDataGridView.AllowUserToOrderColumns = false;//关闭列间排序
+            MyDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;//填充表格
+            MyDataGridView.ColumnHeadersVisible = true;//列标题可见
+            MyDataGridView.RowHeadersVisible = true;//行标题可见
+            MyDataGridView.EnableHeadersVisualStyles = false;//禁用默认标题样式
+            MyDataGridView.ColumnHeadersDefaultCellStyle.Font = new Font("宋体", 15, FontStyle.Bold);//自定义标题样式
+            MyDataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;//标题居中
+            MyDataGridView.MultiSelect = false;//仅单选
+            MyDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;//整行被选中
+            MyDataGridView.ReadOnly = true;
             if (usingNo)
             {
                 MyDataGridView.RowPostPaint += DataGridView_RowPostPaint;//行标题
             }
-            if (usingChk)
+            if (nameList.Count==handerNames.Count&&nameList.Count>0)
             {
-                DataGridViewCheckBoxColumn col = new DataGridViewCheckBoxColumn();
-                col.SortMode = DataGridViewColumnSortMode.NotSortable;
-                MyDataGridView.Columns.Add(col);
-                MyDataGridView.MultiSelect = false;//仅单选
-                MyDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;//整行被选中
-                                                                                       //加载 单击选中事件 
-                MyDataGridView.Click += DataGridView_Click;
+                for (int i = 0; i < nameList.Count; i++)
+                {
+                    DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn();
+                    col.SortMode = DataGridViewColumnSortMode.NotSortable;//关闭列内排序
+                    col.DataPropertyName =nameList[i];
+                    col.Name = nameList[i];
+                    col.HeaderText = handerNames[i];
+                    col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    MyDataGridView.Columns.Add(col);
+                }
+               
             }
+            
             if (hideColumn != null)
             {
                 for (int i = 0; i < hideColumn.Count; i++)
@@ -142,13 +159,29 @@ namespace Common_Winform
             }
            
             
-
-            //奇偶行不同颜色
-            ChangeColor();
-
-
             return MyDataGridView;
         }
+
+        /// <summary>
+        /// 填充数据
+        /// </summary>
+        /// <param name="pDataGridView"></param>
+        /// <param name="dataTable"></param>
+        /// <returns></returns>
+        public DataGridView FillData(DataGridView pDataGridView,DataTable dataTable)
+        {
+            MyDataGridView = null;
+            MyDataGridView = pDataGridView;
+            BindingSource bs = new BindingSource();
+            bs.DataSource = dataTable;
+            MyDataGridView.DataSource = bs;//填充数据
+            ChangeColor();
+            return MyDataGridView;
+        }
+
+
+
+
 
 
 
@@ -222,6 +255,7 @@ namespace Common_Winform
             }
         }
 
+       
 
         private void ChangeColor()
         {
@@ -238,5 +272,8 @@ namespace Common_Winform
                 }
             }
         }
+
+
+
     }
 }

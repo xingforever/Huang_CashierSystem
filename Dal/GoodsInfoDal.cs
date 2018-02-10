@@ -39,7 +39,7 @@ namespace Dal
 
             
             string sql1 = "select top " + count.ToString();//筛选一定量数据
-            string sql2 = @"  goods.*,sort.SortName as SortName ,unit.UnitName as UnitName,wsoles.SupName as SupName
+            string sql2 = @"  goods.Id,goods.GoodsName,sort.SortName as SortName ,unit.UnitName as UnitName,goods.GoodsType,goods.PayPrice ,goods.SurplusCount, wsoles.SupName as WholeSalerName,goods.Remark
                from ((GoodsInfo as goods
                 inner join SortInfo as sort
                 on goods.SortId=sort.Id)
@@ -47,23 +47,28 @@ namespace Dal
                 on goods.UnitId=unit.Id)
                 inner join WholeSalerInfo as wsoles
                 on goods.WholeSalerId=wsoles.Id
-                where goods.DelFlag= false and goods.id >"+ startIndex.ToString();
+                where goods.DelFlag= false and goods.id >" + startIndex.ToString();
             string sql3 = " order by goods.id ";
             string sql = sql1 + sql2;//排序
             //限制条件
             if (dic!=null)
             {
+                
                 foreach (var pair in dic)
                 {
-                    sql += " and goods." + pair.Key + " like " + pair.Key;
+                    string goodsName = "";
+                    if (dic.TryGetValue("GoodsName", out goodsName))
+                    {
+                        sql += @" and goods." + pair.Key + " like '%" + pair.Value+"%'";
+                        continue;
+                    }
+                    sql += " and goods." + pair.Key + " like " + pair.Value;
                    
                 }
             }
             sql += sql3;
             
             var dataTable = SqlHelper.GetDataTable(sql);
-            //数据替换 
-
             return dataTable;
           
 

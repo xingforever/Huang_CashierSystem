@@ -16,7 +16,7 @@ namespace CashierSystem
         public string _ModelName = "SortInfo";
         public int entityId = int.MaxValue;
         public static List<string> _Tags;
-        public Frm_SortInfo()
+         Frm_SortInfo()
         {
             InitializeComponent();
         }

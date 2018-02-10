@@ -21,7 +21,7 @@ namespace Model
             ModelName = "";
             startIndex = 0;
             count = 10;
-            dic = null;
+            dic = new Dictionary<string, string>();
         }
     }
 }

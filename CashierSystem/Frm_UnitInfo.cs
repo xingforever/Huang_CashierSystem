@@ -12,7 +12,7 @@ namespace CashierSystem
 {
     public partial class Frm_UnitInfo : Form
     {
-        public Frm_UnitInfo()
+         Frm_UnitInfo()
         {
             InitializeComponent();
         }

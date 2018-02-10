@@ -133,6 +133,7 @@ namespace Model
                 GoodsInfo goodsInfo = new GoodsInfo();
                 dr = dataTable.Rows[i];
                 goodsInfo.Id = Convert.ToInt32(dr["ID"]);
+                goodsInfo.GoodsName = Convert.ToString(dr["GoodsName"]);
                 goodsInfo.UnitId = Convert.ToInt32(dr["UnitId"]);
                 goodsInfo.SortId = Convert.ToInt32(dr["SortId"]);
                 goodsInfo.WholeSalerId = Convert.ToInt32(dr["WholeSalerId"]);
@@ -155,7 +156,8 @@ namespace Model
         public override List<string> GetTableName()
         {
             //DgvName
-            return new List<string> { "ID","GoodsName", "SortName", "UnitName", "GoodsType", "PurPrice", "PayPrice", "Total", "SalesCount", "SurplusCount", "WholeSalerName", "CreateTime", "LastTime", "Remark", "DelFlag" }; ;
+            // return new List<string> { "ID","GoodsName", "SortName", "UnitName", "GoodsType", "PurPrice", "PayPrice", "Total", "SalesCount", "SurplusCount", "WholeSalerName", "CreateTime", "LastTime", "Remark", "DelFlag" }; 
+            return new List<string> { "ID","GoodsName", "SortName", "UnitName", "GoodsType",  "PayPrice",  "SurplusCount", "WholeSalerName", "Remark" }; ;
         }
 
         /// <summary>
@@ -166,7 +168,7 @@ namespace Model
         {
            
            //DgvDisPlayName
-            return new List<string> { "ID编号", "商品名", "类别", "单位", "规格", "进货价", "售价", "总数量", "已售出", "库存", "供货商", "进货时间", "保质时间", "备注", "是否删除" }; ;
+            return new List<string> { "ID编号", "商品名", "类别", "单位", "规格",  "售价", "库存", "供货商", "备注" }; ;
         }
         /// <summary>
         /// 获取隐藏数据位置
@@ -175,7 +177,7 @@ namespace Model
         public override List<int> GetHideIndex()
         {
             //默认 隐藏的数据
-            return  new List<int>() { 0,1,2,3,4 ,5,6, 7, 8,9,10, 11, 12, 13,14 }; ;
+            return  new List<int>() { 0}; 
         }
 
 
