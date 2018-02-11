@@ -12,21 +12,14 @@ namespace Model
    public  class SalesInfo:BaseModel
     { 
         /// <summary>
-        /// 商品信息
+        /// 订单信息
         /// </summary>
-        public int GoodsId { get; set; }
+        public int OrderId { get; set; }
+      
         /// <summary>
-        /// 个数(数量)
+        /// 总利润
         /// </summary>
-        public  double  Count { get; set; }
-        /// <summary>
-        /// 折扣(钱)
-        /// </summary>
-        public decimal DisCount { get; set; }
-        /// <summary>
-        /// 总价钱
-        /// </summary>
-        public  decimal Prices { get; set; }
+        public  decimal Profit{ get; set; }
         /// <summary>
         /// 是否支付完成
         /// </summary>
@@ -37,12 +30,12 @@ namespace Model
         public  DateTime CreateTime { get; set; }           
       
 
-        public GoodsInfo GoodsInfo { get; set; }
+        public OrderInfo OrderInfo { get; set; }
 
        public  SalesInfo()
         {
          
-            GoodsInfo = null;
+            OrderInfo = null;
           
         }
         public override string GetModelName()
@@ -56,7 +49,7 @@ namespace Model
         public override List<string> GetTableName()
         {
             //DgvName
-            return new List<string> { "ID", "GoodsId", "CustomerName", "Count", "Discount", "Prices", "CreateTime",
+            return new List<string> { "ID", "OrderId",  "Prifot", "CreateTime",
              "IsPay",  "Remark", "DelFlag" }; ;
         }
 
@@ -66,7 +59,7 @@ namespace Model
         /// <returns></returns>
         public override List<string> GetHanderTxt()
         { 
-            return new List<string> { "ID编号", "商品编号", "数量", "折扣", "价格", "售货时间", "是否支付", "备注", "是否删除" };
+            return new List<string> { "ID编号", "订单编号",  "利润", "订单时间", "是否支付", "备注", "是否删除" };
         }
         /// <summary>
         /// 获取隐藏数据位置
@@ -75,19 +68,18 @@ namespace Model
         public override List<int> GetHideIndex()
         {
 
-            return new List<int>() { 0, 8 };
+            return new List<int>() { 0, 6};
         }
 
         public override string GetSql()
         {
-            return "([GoodsId],[Count],[DisCount],[Prices],[CreateTime],[IsPay],[Remark],[DelFlag]) ";
+            return "([OrderId],[Profit],[CriteTime],[IsPay],[Remark],[DelFlag]) ";
         }
 
         public override string GetAddSql()
         {
-            string sql = " Values ('" + this.GoodsId + "','"
-                + this.Count + "','" + this.DisCount + "','"
-                  + this.Prices + "'," + this.CreateTime + "','"
+            string sql = " Values ('" + this.OrderId + "','"              
+                  + this.Profit + "'," + this.CreateTime + "','"
                   + this.IsPay + ",'"  + this.Remark + "',"
                   +  this.DelFlag + ")";
 
@@ -107,18 +99,15 @@ namespace Model
         public override List<BaseModel> GetList(DataTable dataTable)
         {
 
-            DataRow dr = null;
-           
+            DataRow dr = null;           
             List<BaseModel> Entitys = new List<BaseModel>();
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
                 SalesInfo salesInfo = new SalesInfo();
                 dr = dataTable.Rows[i];
                 salesInfo.Id = Convert.ToInt32(dr["ID"]);
-                salesInfo.GoodsId = Convert.ToInt32(dr["GoodsId"]);
-                salesInfo.Count = Convert.ToDouble(dr["Count"]);
-                salesInfo.DisCount = Convert.ToDecimal(dr["DisCount"]);
-                salesInfo.Prices = Convert.ToDecimal(dr["Prices"]);
+                salesInfo.OrderId = Convert.ToInt32(dr["GoodsId"]);             
+                salesInfo.Profit = Convert.ToDecimal(dr["Profit"]);
                 salesInfo.IsPay = Convert.ToBoolean(dr["IsPay"]);
                 salesInfo.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
                 salesInfo.Remark = Convert.ToString(dr["Remark"]);                

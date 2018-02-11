@@ -47,15 +47,15 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panel1 = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -191,12 +191,23 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pnlGoodsBalance = new System.Windows.Forms.Panel();
             this.dgvOrdersInfo = new System.Windows.Forms.DataGridView();
+            this.SaleTable_GoodsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SaleTable_GoodsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SaleTable_Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SaleTable_Money = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sales_DisCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sales_Remak = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btnOrderEdit = new System.Windows.Forms.Button();
+            this.btnOrder = new System.Windows.Forms.Button();
+            this.lblTotalMoney = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabTodaySales = new System.Windows.Forms.TabPage();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dgvOrderInfo = new System.Windows.Forms.DataGridView();
             this.statusStrip7 = new System.Windows.Forms.StatusStrip();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
@@ -212,17 +223,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.SaleTable_GoodsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SaleTable_GoodsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SaleTable_Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SaleTable_Money = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sales_DisCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sales_Remak = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.lblTotalMoney = new System.Windows.Forms.Label();
-            this.btnOrder = new System.Windows.Forms.Button();
-            this.btnOrderEdit = new System.Windows.Forms.Button();
             this.tabUserInfoManager.SuspendLayout();
             this.statusStrip5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUserInfo)).BeginInit();
@@ -259,7 +259,7 @@
             this.panel3.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabTodaySales.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrderInfo)).BeginInit();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.SuspendLayout();
@@ -1683,6 +1683,66 @@
             this.dgvOrdersInfo.TabIndex = 2;
             this.dgvOrdersInfo.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvOrdersInfo_RowPostPaint);
             // 
+            // SaleTable_GoodsId
+            // 
+            this.SaleTable_GoodsId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.SaleTable_GoodsId.DefaultCellStyle = dataGridViewCellStyle19;
+            this.SaleTable_GoodsId.HeaderText = "编号";
+            this.SaleTable_GoodsId.Name = "SaleTable_GoodsId";
+            this.SaleTable_GoodsId.ReadOnly = true;
+            this.SaleTable_GoodsId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SaleTable_GoodsId.Visible = false;
+            // 
+            // SaleTable_GoodsName
+            // 
+            this.SaleTable_GoodsName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.SaleTable_GoodsName.DefaultCellStyle = dataGridViewCellStyle20;
+            this.SaleTable_GoodsName.HeaderText = "商品名称";
+            this.SaleTable_GoodsName.Name = "SaleTable_GoodsName";
+            this.SaleTable_GoodsName.ReadOnly = true;
+            this.SaleTable_GoodsName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // SaleTable_Count
+            // 
+            this.SaleTable_Count.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.SaleTable_Count.DefaultCellStyle = dataGridViewCellStyle21;
+            this.SaleTable_Count.HeaderText = "数量";
+            this.SaleTable_Count.Name = "SaleTable_Count";
+            this.SaleTable_Count.ReadOnly = true;
+            // 
+            // SaleTable_Money
+            // 
+            this.SaleTable_Money.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.SaleTable_Money.DefaultCellStyle = dataGridViewCellStyle22;
+            this.SaleTable_Money.HeaderText = "价钱";
+            this.SaleTable_Money.Name = "SaleTable_Money";
+            this.SaleTable_Money.ReadOnly = true;
+            this.SaleTable_Money.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Sales_DisCount
+            // 
+            this.Sales_DisCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Sales_DisCount.DefaultCellStyle = dataGridViewCellStyle23;
+            this.Sales_DisCount.HeaderText = "折扣";
+            this.Sales_DisCount.Name = "Sales_DisCount";
+            this.Sales_DisCount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Sales_DisCount.Visible = false;
+            // 
+            // Sales_Remak
+            // 
+            this.Sales_Remak.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.Sales_Remak.DefaultCellStyle = dataGridViewCellStyle24;
+            this.Sales_Remak.HeaderText = "备注";
+            this.Sales_Remak.Name = "Sales_Remak";
+            this.Sales_Remak.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Sales_Remak.Visible = false;
+            // 
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -1696,6 +1756,56 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(354, 105);
             this.panel4.TabIndex = 1;
+            // 
+            // btnOrderEdit
+            // 
+            this.btnOrderEdit.Location = new System.Drawing.Point(213, 59);
+            this.btnOrderEdit.Name = "btnOrderEdit";
+            this.btnOrderEdit.Size = new System.Drawing.Size(75, 32);
+            this.btnOrderEdit.TabIndex = 3;
+            this.btnOrderEdit.Text = "修改";
+            this.btnOrderEdit.UseVisualStyleBackColor = true;
+            // 
+            // btnOrder
+            // 
+            this.btnOrder.Location = new System.Drawing.Point(69, 59);
+            this.btnOrder.Name = "btnOrder";
+            this.btnOrder.Size = new System.Drawing.Size(75, 32);
+            this.btnOrder.TabIndex = 3;
+            this.btnOrder.Text = "下单";
+            this.btnOrder.UseVisualStyleBackColor = true;
+            this.btnOrder.Click += new System.EventHandler(this.btnOrder_Click);
+            // 
+            // lblTotalMoney
+            // 
+            this.lblTotalMoney.AutoSize = true;
+            this.lblTotalMoney.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblTotalMoney.ForeColor = System.Drawing.Color.Red;
+            this.lblTotalMoney.Location = new System.Drawing.Point(195, 6);
+            this.lblTotalMoney.Name = "lblTotalMoney";
+            this.lblTotalMoney.Size = new System.Drawing.Size(69, 35);
+            this.lblTotalMoney.TabIndex = 2;
+            this.lblTotalMoney.Text = "***";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label24.Location = new System.Drawing.Point(134, 18);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(19, 20);
+            this.label24.TabIndex = 1;
+            this.label24.Text = "¥";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label23.Location = new System.Drawing.Point(65, 18);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(63, 21);
+            this.label23.TabIndex = 0;
+            this.label23.Text = "共计:";
             // 
             // panel3
             // 
@@ -1742,7 +1852,7 @@
             // 
             // tabTodaySales
             // 
-            this.tabTodaySales.Controls.Add(this.dataGridView2);
+            this.tabTodaySales.Controls.Add(this.dgvOrderInfo);
             this.tabTodaySales.Controls.Add(this.statusStrip7);
             this.tabTodaySales.Controls.Add(this.panel6);
             this.tabTodaySales.Controls.Add(this.panel5);
@@ -1755,9 +1865,9 @@
             this.tabTodaySales.Text = "今日销售记录";
             this.tabTodaySales.UseVisualStyleBackColor = true;
             // 
-            // dataGridView2
+            // dgvOrderInfo
             // 
-            this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dgvOrderInfo.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle25.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1765,8 +1875,8 @@
             dataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle25;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOrderInfo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle25;
+            this.dgvOrderInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle26.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1774,10 +1884,10 @@
             dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle26;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(3, 70);
-            this.dataGridView2.Name = "dataGridView2";
+            this.dgvOrderInfo.DefaultCellStyle = dataGridViewCellStyle26;
+            this.dgvOrderInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvOrderInfo.Location = new System.Drawing.Point(3, 70);
+            this.dgvOrderInfo.Name = "dgvOrderInfo";
             dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle27.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1785,10 +1895,10 @@
             dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle27;
-            this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(868, 272);
-            this.dataGridView2.TabIndex = 5;
+            this.dgvOrderInfo.RowHeadersDefaultCellStyle = dataGridViewCellStyle27;
+            this.dgvOrderInfo.RowTemplate.Height = 23;
+            this.dgvOrderInfo.Size = new System.Drawing.Size(868, 272);
+            this.dgvOrderInfo.TabIndex = 5;
             // 
             // statusStrip7
             // 
@@ -1951,116 +2061,6 @@
             this.label7.TabIndex = 7;
             this.label7.Text = "商品类别";
             // 
-            // SaleTable_GoodsId
-            // 
-            this.SaleTable_GoodsId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.SaleTable_GoodsId.DefaultCellStyle = dataGridViewCellStyle19;
-            this.SaleTable_GoodsId.HeaderText = "编号";
-            this.SaleTable_GoodsId.Name = "SaleTable_GoodsId";
-            this.SaleTable_GoodsId.ReadOnly = true;
-            this.SaleTable_GoodsId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SaleTable_GoodsId.Visible = false;
-            // 
-            // SaleTable_GoodsName
-            // 
-            this.SaleTable_GoodsName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.SaleTable_GoodsName.DefaultCellStyle = dataGridViewCellStyle20;
-            this.SaleTable_GoodsName.HeaderText = "商品名称";
-            this.SaleTable_GoodsName.Name = "SaleTable_GoodsName";
-            this.SaleTable_GoodsName.ReadOnly = true;
-            this.SaleTable_GoodsName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // SaleTable_Count
-            // 
-            this.SaleTable_Count.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.SaleTable_Count.DefaultCellStyle = dataGridViewCellStyle21;
-            this.SaleTable_Count.HeaderText = "数量";
-            this.SaleTable_Count.Name = "SaleTable_Count";
-            this.SaleTable_Count.ReadOnly = true;
-            // 
-            // SaleTable_Money
-            // 
-            this.SaleTable_Money.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.SaleTable_Money.DefaultCellStyle = dataGridViewCellStyle22;
-            this.SaleTable_Money.HeaderText = "价钱";
-            this.SaleTable_Money.Name = "SaleTable_Money";
-            this.SaleTable_Money.ReadOnly = true;
-            this.SaleTable_Money.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Sales_DisCount
-            // 
-            this.Sales_DisCount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Sales_DisCount.DefaultCellStyle = dataGridViewCellStyle23;
-            this.Sales_DisCount.HeaderText = "折扣";
-            this.Sales_DisCount.Name = "Sales_DisCount";
-            this.Sales_DisCount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Sales_DisCount.Visible = false;
-            // 
-            // Sales_Remak
-            // 
-            this.Sales_Remak.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.Sales_Remak.DefaultCellStyle = dataGridViewCellStyle24;
-            this.Sales_Remak.HeaderText = "备注";
-            this.Sales_Remak.Name = "Sales_Remak";
-            this.Sales_Remak.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Sales_Remak.Visible = false;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label23.Location = new System.Drawing.Point(65, 18);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(63, 21);
-            this.label23.TabIndex = 0;
-            this.label23.Text = "共计:";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label24.Location = new System.Drawing.Point(134, 18);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(19, 20);
-            this.label24.TabIndex = 1;
-            this.label24.Text = "¥";
-            // 
-            // lblTotalMoney
-            // 
-            this.lblTotalMoney.AutoSize = true;
-            this.lblTotalMoney.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblTotalMoney.ForeColor = System.Drawing.Color.Red;
-            this.lblTotalMoney.Location = new System.Drawing.Point(195, 6);
-            this.lblTotalMoney.Name = "lblTotalMoney";
-            this.lblTotalMoney.Size = new System.Drawing.Size(69, 35);
-            this.lblTotalMoney.TabIndex = 2;
-            this.lblTotalMoney.Text = "***";
-            // 
-            // btnOrder
-            // 
-            this.btnOrder.Location = new System.Drawing.Point(69, 59);
-            this.btnOrder.Name = "btnOrder";
-            this.btnOrder.Size = new System.Drawing.Size(75, 32);
-            this.btnOrder.TabIndex = 3;
-            this.btnOrder.Text = "下单";
-            this.btnOrder.UseVisualStyleBackColor = true;
-            this.btnOrder.Click += new System.EventHandler(this.btnOrder_Click);
-            // 
-            // btnOrderEdit
-            // 
-            this.btnOrderEdit.Location = new System.Drawing.Point(213, 59);
-            this.btnOrderEdit.Name = "btnOrderEdit";
-            this.btnOrderEdit.Size = new System.Drawing.Size(75, 32);
-            this.btnOrderEdit.TabIndex = 3;
-            this.btnOrderEdit.Text = "修改";
-            this.btnOrderEdit.UseVisualStyleBackColor = true;
-            // 
             // Huang_System
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -2135,7 +2135,7 @@
             this.tabMain.ResumeLayout(false);
             this.tabTodaySales.ResumeLayout(false);
             this.tabTodaySales.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrderInfo)).EndInit();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel5.ResumeLayout(false);
@@ -2287,7 +2287,7 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
         private System.Windows.Forms.StatusStrip statusStrip8;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dgvOrderInfo;
         private System.Windows.Forms.StatusStrip statusStrip7;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel9;
         private System.Windows.Forms.ToolStripStatusLabel tspGoodsLastPage;

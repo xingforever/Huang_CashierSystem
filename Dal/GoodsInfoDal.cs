@@ -71,8 +71,6 @@ namespace Dal
             var dataTable = SqlHelper.GetDataTable(sql);
             return dataTable;
           
-
-
         }
 
 

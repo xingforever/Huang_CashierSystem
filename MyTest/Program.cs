@@ -440,13 +440,13 @@ namespace MyTest
 
             GoodsInfoDal GoodsInfoDal = new GoodsInfoDal();
             SalesInfo salesInfo = new SalesInfo();
-            salesInfo.GoodsId = 2;
-            salesInfo.Count = 3;
-            salesInfo.DisCount = 50;
-            salesInfo.GoodsInfo = GoodsInfoDal.GetEntityById(salesInfo.GoodsId);
-            salesInfo.Prices = salesInfo.GoodsInfo.PayPrice * (decimal)salesInfo.Count - salesInfo.DisCount;
-            salesInfo.CreateTime = DateTime.Now;
-            salesInfo.IsPay = true;
+            //salesInfo.GoodsId = 2;
+            //salesInfo.Count = 3;
+            //salesInfo.DisCount = 50;
+            //salesInfo.GoodsInfo = GoodsInfoDal.GetEntityById(salesInfo.GoodsId);
+            //salesInfo.Prices = salesInfo.GoodsInfo.PayPrice * (decimal)salesInfo.Count - salesInfo.DisCount;
+            //salesInfo.CreateTime = DateTime.Now;
+            //salesInfo.IsPay = true;
 
 
             SalesInfoDal salesInfoDal = new SalesInfoDal();

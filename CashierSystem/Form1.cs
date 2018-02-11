@@ -70,6 +70,12 @@ namespace CashierSystem
                     this.dgvGoodsInfo = dataGridViewHelper.Init(this.dgvGoodsInfo, nameList, handerTxt, hideIndex);
                     GetDgv(0);
                 }
+               else if (i == 1)
+                {
+                    this.dgvOrderInfo.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
+                    this.dgvOrderInfo = dataGridViewHelper.Init(this.dgvOrderInfo, nameList, handerTxt, hideIndex);
+                    GetDgv(1);
+                }
                 else  if (i == 4)
                 {
                     this.dgvUnitInfo.Tag = false;
@@ -98,7 +104,7 @@ namespace CashierSystem
         /// <param name="id"></param>
         public void GetDgv(int id,SearchModel searchModel=null)
         {
-            DataTable dataTable = DataManager.LoadBySelectId(id);
+            DataTable dataTable=new DataTable () ;
             if (searchModel == null)
             {
                 //搜索条件有默认条件
@@ -118,20 +124,29 @@ namespace CashierSystem
                     
                     break;
                 case 1:
+                    if (!(bool)this.dgvOrderInfo.Tag)
+                    {
+                        dataTable = DataManager.OrderInfoBLL.GetDataTablebyPammer(searchModel);
+                        this.dgvOrderInfo = dataGridViewHelper.FillData(this.dgvOrderInfo, dataTable); this.dgvOrderInfo.Tag = true;
+                    }
                     break;
                 case 4:
+                    dataTable = DataManager.UnitInfoBLL.GetDataTable();
                     this.dgvUnitInfo = dataGridViewHelper.FillData(this.dgvUnitInfo, dataTable);
                     this.tspUnitInfoCount.Text = dataTable.Rows.Count.ToString();
                     break;
                 case 5:
+                    dataTable = DataManager.SortInfoBLL.GetDataTable();
                     this.dgvSortInfo = dataGridViewHelper.FillData(this.dgvSortInfo, dataTable);
                     this.tspSortInfoCount.Text = dataTable.Rows.Count.ToString();
                     break;
                 case 6:
+                    dataTable = DataManager.WholeSalerInfoBLL.GetDataTable();
                     this.dgvWholeSalerInfo = dataGridViewHelper.FillData(this.dgvWholeSalerInfo, dataTable);
                     this.tspWholeSalerInfoCount.Text = dataTable.Rows.Count.ToString();
                     break;
                 case 7:
+                    dataTable = DataManager.UserInfoBLL.GetDataTable();
                     this.dgvUserInfo = dataGridViewHelper.FillData(this.dgvUserInfo, dataTable);
                     this.tspUserCount.Text = dataTable.Rows.Count.ToString();
                     break;
@@ -520,7 +535,7 @@ namespace CashierSystem
                 dataGridViewRow.Cells[0].Value = order.GoodsId;
                 dataGridViewRow.Cells[1].Value = order.GoodsName;
                 dataGridViewRow.Cells[2].Value = order.Count;
-                dataGridViewRow.Cells[3].Value = order.PayPice;
+                dataGridViewRow.Cells[3].Value = order.PayPrice;
                 dataGridViewRow.Cells[4].Value = order.DisCount;
                 dataGridViewRow.Cells[5].Value = order.Remark;
                 this.dgvOrdersInfo.Rows.Add(dataGridViewRow);
@@ -545,7 +560,7 @@ namespace CashierSystem
                     if ((item.Count + count) <= maxCount)
                     {
                         item.Count += count;//
-                        item.PayPice = goodsInfo.PayPrice * item.Count;
+                        item.PayPrice = goodsInfo.PayPrice * item.Count;
                         isHaveSame = true;
                     }
                     else
@@ -561,7 +576,7 @@ namespace CashierSystem
                 orderInfo.GoodsId = goodsId;
                 orderInfo.Count = count;
                 orderInfo.GoodsName = goodsInfo.GoodsName;
-                orderInfo.PayPice = goodsInfo.PayPrice * orderInfo.Count;
+                orderInfo.PayPrice = goodsInfo.PayPrice * orderInfo.Count;
                 if (count>maxCount)
                 {
                     return false;

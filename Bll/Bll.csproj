@@ -41,6 +41,7 @@
     <Compile Include="BaseBll.cs" />
     <Compile Include="GoodsInfoBll.cs" />
     <Compile Include="NoReceiveMoneyBll.cs" />
+    <Compile Include="OrderInfoBll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SalesInfoBll.cs" />
     <Compile Include="SortInfoBll.cs" />

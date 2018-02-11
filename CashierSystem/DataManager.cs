@@ -18,6 +18,8 @@ namespace CashierSystem
         /// 未收账信息表
         /// </summary>
         public static NoReceiveMoneyBll NoReceiveMoneyBLL { get; set; }
+
+        public  static OrderInfoBll OrderInfoBLL { get; set; }
         /// <summary>
         /// 售货单表
         /// </summary>
@@ -52,6 +54,7 @@ namespace CashierSystem
             UserInfoBLL = new UserInfoBll();
             WholeSalerInfoBLL = new WholeSalerInfoBll();
             UnitInfoBLL = new UnitInfoBll();
+            OrderInfoBLL = new OrderInfoBll();
         }
         /// <summary>
         /// 数据表刷新
@@ -75,7 +78,7 @@ namespace CashierSystem
                 case 0:
                   return   GoodsInfoBLL.GetDataTable();                    
                 case 1:
-                    return SalesInfoBLL.GetTodayDataTable();
+                    return OrderInfoBLL.GetDataTable();
                 case 2:
                    return GoodsInfoBLL.GetDataTable();
                 case 3:
@@ -104,9 +107,9 @@ namespace CashierSystem
                     hideIndex= new GoodsInfo().GetHideIndex();
                     break;
                 case 1:
-                    name = new SalesInfo().GetTableName();
-                    handText = new SalesInfo().GetHanderTxt();
-                    hideIndex = new SalesInfo().GetHideIndex();
+                    name = new OrderInfo().GetTableName();
+                    handText = new OrderInfo().GetHanderTxt();
+                    hideIndex = new OrderInfo().GetHideIndex();
                     break;
                 case 2:
                     name = new GoodsInfo().GetTableName();

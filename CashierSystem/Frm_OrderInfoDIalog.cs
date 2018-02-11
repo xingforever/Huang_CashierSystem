@@ -38,11 +38,7 @@ namespace CashierSystem
             {
                 var order = OrdersInfo[i];
                 SalesInfo salesInfo = new SalesInfo();
-                salesInfo.GoodsId = order.GoodsId;
-                salesInfo.Count = order.Count;
-                salesInfo.Prices = order.PayPice;
-                salesInfo.DisCount = order.DisCount;
-                salesInfo.Remark = order.Remark;
+               
 
 
 
