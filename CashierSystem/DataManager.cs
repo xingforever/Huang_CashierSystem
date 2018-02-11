@@ -24,7 +24,7 @@ namespace CashierSystem
         /// 售货单表
         /// </summary>
 
-        public static SalesInfoBll SalesInfoBLL { get; set;  }
+        public static ProfitsInfoBll SalesInfoBLL { get; set;  }
         /// <summary>
         /// 商品类型表
         /// </summary>
@@ -49,7 +49,7 @@ namespace CashierSystem
         {
             GoodsInfoBLL = new GoodsInfoBll();
             NoReceiveMoneyBLL = new NoReceiveMoneyBll();
-            SalesInfoBLL = new SalesInfoBll();
+            SalesInfoBLL = new ProfitsInfoBll();
             SortInfoBLL = new SortInfoBll();
             UserInfoBLL = new UserInfoBll();
             WholeSalerInfoBLL = new WholeSalerInfoBll();
@@ -117,9 +117,9 @@ namespace CashierSystem
                     hideIndex = new GoodsInfo().GetHideIndex();
                     break;
                 case 3:
-                    name = new SalesInfo().GetTableName();
-                    handText = new SalesInfo().GetHanderTxt();
-                    hideIndex = new SalesInfo().GetHideIndex();
+                    name = new ProfitsInfo().GetTableName();
+                    handText = new ProfitsInfo().GetHanderTxt();
+                    hideIndex = new ProfitsInfo().GetHideIndex();
                     break;
                 case 4:
                     name = new UnitInfo().GetTableName();

@@ -439,7 +439,7 @@ namespace MyTest
         {
 
             GoodsInfoDal GoodsInfoDal = new GoodsInfoDal();
-            SalesInfo salesInfo = new SalesInfo();
+            ProfitsInfo salesInfo = new ProfitsInfo();
             //salesInfo.GoodsId = 2;
             //salesInfo.Count = 3;
             //salesInfo.DisCount = 50;
@@ -449,7 +449,7 @@ namespace MyTest
             //salesInfo.IsPay = true;
 
 
-            SalesInfoDal salesInfoDal = new SalesInfoDal();
+            ProfitsInfoDal salesInfoDal = new ProfitsInfoDal();
 
             bool d = salesInfoDal.Add(salesInfo);
             if (d)
@@ -467,8 +467,8 @@ namespace MyTest
             GoodsInfoDal GoodsInfoDal = new GoodsInfoDal();
 
 
-            SalesInfoDal salesInfoDal = new SalesInfoDal();
-            SalesInfo salesInfo = salesInfoDal.GetEntityById(2);
+            ProfitsInfoDal salesInfoDal = new ProfitsInfoDal();
+            ProfitsInfo salesInfo = salesInfoDal.GetEntityById(2);
             salesInfo.Remark = "测试修改";
             salesInfo.IsPay = false;
 
@@ -489,7 +489,7 @@ namespace MyTest
             int id = 2;
 
 
-            SalesInfoDal salesInfoDal = new SalesInfoDal();
+            ProfitsInfoDal salesInfoDal = new ProfitsInfoDal();
             var d = salesInfoDal.GetEntityById(id);
             if (d != null)
             {
@@ -504,7 +504,7 @@ namespace MyTest
         static void DeleteSalesInfo()
         {
             int id = 2;
-            SalesInfoDal salesInfoDal = new SalesInfoDal();
+            ProfitsInfoDal salesInfoDal = new ProfitsInfoDal();
             var d = salesInfoDal.Delete(id);
             if (d)
             {
@@ -522,7 +522,7 @@ namespace MyTest
         static void AddNoReceiveMoney()
         {
             NoReceiveMoneyDal noReceiveMoneyDal = new NoReceiveMoneyDal();
-            SalesInfoDal salesInfoDal = new SalesInfoDal();
+            ProfitsInfoDal salesInfoDal = new ProfitsInfoDal();
             NoReceiveMoney noReceiveMoney = new NoReceiveMoney();
             noReceiveMoney.SalesInfoId = 2;
             noReceiveMoney.SalesInfo = salesInfoDal.GetEntityById(2);

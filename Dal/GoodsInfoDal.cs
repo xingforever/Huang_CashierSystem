@@ -73,7 +73,21 @@ namespace Dal
           
         }
 
+       /// <summary>
+       /// 修改商品数量
+       /// </summary>
+       /// <param name="id">商品ID</param>
+       /// <param name="Salescount">售卖量</param>
+       /// <param name="SurplusCount">库存</param>
+       /// <returns></returns>
+        public bool EditGoodsInfoCount(int id,double  salescount, double surplusCount)
+        {
+            string sql = "Update [GoodsInfo] Set [SalesCount]='" + salescount + "',[SurplusCount]='" + surplusCount
+                 + "' Where [ID]= " + id + " and DelFlag=False ";
+            var affect= SqlHelper.ExecuteNonQuery(sql);
 
+            return affect > 0 ;
+        }
         public List<GoodsInfo> GetGoodsInfoList(DataTable dataTable)
         {
             DataRow dr = null;

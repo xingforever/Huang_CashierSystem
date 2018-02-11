@@ -19,6 +19,10 @@ namespace CashierSystem
             InitializeComponent();
         }
         /// <summary>
+        /// 登录操作员ID
+        /// </summary>
+        public int LoginId = int.MaxValue;
+        /// <summary>
         /// 管理类
         /// </summary>
         DataManager dataManager = new DataManager();
@@ -30,7 +34,19 @@ namespace CashierSystem
         /// 被选择表Index
         /// </summary>
         public int SelectIndex = 0;
-        public List<OrderInfo> OrdersInfo = new List<OrderInfo>();//下单表 无数据库支持
+        /// <summary>
+        /// 临时下单号
+        /// </summary>
+        public string OrderId = "";
+        /// <summary>
+        /// 临时下单表
+        /// </summary>
+        public List<OrderInfo> OrdersInfo = new List<OrderInfo>();
+        /// <summary>
+        /// 操作员修改应收款数造成的折扣
+        /// 并未对某项商品进行折扣
+        /// </summary>
+        public decimal OrderDisCount = (decimal) 0.0;
 
 
         /// <summary>
@@ -72,8 +88,8 @@ namespace CashierSystem
                 }
                else if (i == 1)
                 {
-                    this.dgvOrderInfo.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
-                    this.dgvOrderInfo = dataGridViewHelper.Init(this.dgvOrderInfo, nameList, handerTxt, hideIndex);
+                    this.dataGridView2.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
+                    this.dataGridView2 = dataGridViewHelper.Init(this.dataGridView2, nameList, handerTxt, hideIndex);
                     GetDgv(1);
                 }
                 else  if (i == 4)
@@ -124,10 +140,10 @@ namespace CashierSystem
                     
                     break;
                 case 1:
-                    if (!(bool)this.dgvOrderInfo.Tag)
+                    if (!(bool)this.dataGridView2.Tag)
                     {
                         dataTable = DataManager.OrderInfoBLL.GetDataTablebyPammer(searchModel);
-                        this.dgvOrderInfo = dataGridViewHelper.FillData(this.dgvOrderInfo, dataTable); this.dgvOrderInfo.Tag = true;
+                        this.dataGridView2 = dataGridViewHelper.FillData(this.dataGridView2, dataTable); this.dataGridView2.Tag = true;
                     }
                     break;
                 case 4:
@@ -480,7 +496,7 @@ namespace CashierSystem
         }
 
         /// <summary>
-        /// 获取
+        /// 获取类别
         /// </summary>
         /// <returns></returns>
         public List<SortInfo> GetSortInfoList()
@@ -515,18 +531,31 @@ namespace CashierSystem
         private void dgvGoodsInfo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
           
-            var dataRow = this.dgvGoodsInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            //将数据添加到下单表            
-            AddGoodsToOrder(dataId);
-            LoadOrdersInfo();
+           
+            try
+            {
+                var dataRow = this.dgvGoodsInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                 //将数据添加到下单表            
+                var isAddSucess= AddGoodsToOrder(dataId);
+                LoadOrdersInfo();
+            }
+            catch (Exception)
+            {
+
+                return;
+            }
+         
         }
+        /// <summary>
+        /// 小订单表加载
+        /// </summary>
         public void LoadOrdersInfo()
         {
             var count = this.dgvOrdersInfo.Rows.Count;
             var ddd = this.dgvOrdersInfo.ColumnCount;
             this.dgvOrdersInfo.Rows.Clear();//清除数据
-
+            decimal AllMoney = (decimal)0.0;
             foreach (OrderInfo order in OrdersInfo)
             {
                 DataGridViewRow dataGridViewRow = new DataGridViewRow();
@@ -538,8 +567,11 @@ namespace CashierSystem
                 dataGridViewRow.Cells[3].Value = order.PayPrice;
                 dataGridViewRow.Cells[4].Value = order.DisCount;
                 dataGridViewRow.Cells[5].Value = order.Remark;
+                AllMoney += order.PayPrice;
                 this.dgvOrdersInfo.Rows.Add(dataGridViewRow);
             }
+            
+            this.lblOrderMoney.Text = AllMoney.ToString();
         }
         /// <summary>
         /// 下单
@@ -552,6 +584,13 @@ namespace CashierSystem
             var goodsInfo = DataManager.GoodsInfoBLL.GetEntityById(goodsId);
             var maxCount = goodsInfo.SurplusCount;//库存量
             bool isHaveSame = false;//下单表中有相同商品
+               //20180211154701
+            if (OrdersInfo.Count==0)
+            {
+                OrderId = DateTime.Now.ToString("yyyyMMddHHmmss");
+            }
+            //创建一个订单号  一个列表仅有一个
+
             //将数据添加到下单表            
             foreach (OrderInfo item in OrdersInfo)
             {
@@ -560,7 +599,9 @@ namespace CashierSystem
                     if ((item.Count + count) <= maxCount)
                     {
                         item.Count += count;//
-                        item.PayPrice = goodsInfo.PayPrice * item.Count;
+                        item.PayPrice = (goodsInfo.PayPrice * (decimal)item.Count) - item.DisCount;
+                        //利润
+                        item.Profit = item.PayPrice - ((goodsInfo.PurPrice) * (decimal )item.Count) ;
                         isHaveSame = true;
                     }
                     else
@@ -573,10 +614,14 @@ namespace CashierSystem
             if (!isHaveSame)
             {
                 OrderInfo orderInfo = new OrderInfo();
+                orderInfo.GoodsInfo = goodsInfo;
                 orderInfo.GoodsId = goodsId;
+                orderInfo.OrderId = OrderId;
+                orderInfo.CreateTime = DateTime.Now;
                 orderInfo.Count = count;
                 orderInfo.GoodsName = goodsInfo.GoodsName;
-                orderInfo.PayPrice = goodsInfo.PayPrice * orderInfo.Count;
+                orderInfo.PayPrice = (goodsInfo.PayPrice * (decimal)orderInfo.Count )- orderInfo.DisCount;//收款
+                orderInfo.Profit = orderInfo.PayPrice - ((goodsInfo.PurPrice) * (decimal)orderInfo.Count);//利润
                 if (count>maxCount)
                 {
                     return false;
@@ -620,8 +665,106 @@ namespace CashierSystem
             Frm_OrderInfoDIalog frm_Samll = Frm_OrderInfoDIalog.Create();
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
-
+            //下单成功
+            if (OrdersInfo.Count==0)
+            {
+                this.dgvOrdersInfo.Rows.Clear();//清除数据
+                this.lblOrderMoney.Text = "0.000";//待收款清0
+                OrderDisCount = (decimal)0.0;//折扣 
+                SearchLoadGoodsInfo();//商品信息页重新加载(保留操作员上次操作)
+            }
            
+        }
+        /// <summary>
+        /// 订单表数量修改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvOrdersInfo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                var dataRow = this.dgvOrdersInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取商品Id
+                OrderInfo orderInfo = null;
+                for (int i = 0; i < OrdersInfo.Count; i++)
+                {
+                    var orderinfo = OrdersInfo[i];
+                    if (orderinfo.GoodsId==dataId)
+                    {
+                        orderInfo = orderinfo;
+                        break;
+                    }
+                }
+                if (orderInfo==null)
+                {
+                    MessageBox.Show("发生错误,联系开发人员");
+                    return;
+                }
+                Frm_OrderInfo frm_Samll = Frm_OrderInfo.Create( orderInfo);
+                frm_Samll.ShowDialog(this);
+                frm_Samll.Focus();
+                LoadOrdersInfo();
+
+            }
+            catch (Exception)
+            {
+
+                ;
+            }
+           
+        }
+        /// <summary>
+        /// 订单应收款修改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOrderEdit_Click(object sender, EventArgs e)
+        {
+            if (this.txtOrderMoney.Visible)
+            {
+                EditOrderMonry();
+            }
+            else
+            {
+                this.lblOrderMoney.Visible = false;
+                this.txtOrderMoney.Visible = true;
+                this.txtOrderMoney.Text = this.lblOrderMoney.Text;
+                this.txtOrderMoney.Focus();
+            }
+           
+        }
+       
+        /// <summary>
+        /// 订单修改完毕
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtOrderMoney_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                EditOrderMonry();
+            }
+        }
+
+        public  void EditOrderMonry()
+        {
+            this.txtOrderMoney.Visible = false;
+            var OldMoney = Convert.ToDecimal(this.lblOrderMoney.Text);
+            try
+            {
+                var newMoney = Convert.ToDecimal(this.txtOrderMoney.Text);
+                this.lblOrderMoney.Visible = true;
+                OrderDisCount = newMoney - OldMoney;//操作用修改应收款的折扣
+                this.lblOrderMoney.Text = this.txtOrderMoney.Text;
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("操作失误,总价格为数字", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
         }
     }
 }

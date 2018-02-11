@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Dal
 {
-   public  class SalesInfoDal:BaseDal<SalesInfo>
+   public  class ProfitsInfoDal:BaseDal<ProfitsInfo>
     {
 
         public  DataTable GetTodayDataTable()
@@ -17,7 +17,7 @@ namespace Dal
             DateTime dateTime2 = DateTime + new TimeSpan(24, 0, 0,0);
             try
             {
-                string sql = "Select * from [SalesInfo] Where [DelFlag]=False And [CreateTime]>='"+DateTime+ "' And [CreateTime] <='"+ dateTime2+"'";
+                string sql = "Select * from [ProfitsInfo] Where [DelFlag]=False And [CreateTime]>='" + DateTime+ "' And [CreateTime] <='"+ dateTime2+"'";
                 var dataTable = SqlHelper.GetDataTable(sql);
                 return dataTable;
             }

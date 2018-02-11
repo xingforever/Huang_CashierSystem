@@ -9,12 +9,13 @@ namespace Model
     /// <summary>
     /// 销售表
     /// </summary>
-   public  class SalesInfo:BaseModel
+   public  class ProfitsInfo:BaseModel
     { 
+
         /// <summary>
         /// 订单信息
         /// </summary>
-        public int OrderId { get; set; }
+        public string  OrderId { get; set; }
       
         /// <summary>
         /// 总利润
@@ -32,7 +33,7 @@ namespace Model
 
         public OrderInfo OrderInfo { get; set; }
 
-       public  SalesInfo()
+       public  ProfitsInfo()
         {
          
             OrderInfo = null;
@@ -40,7 +41,7 @@ namespace Model
         }
         public override string GetModelName()
         {
-            return "SalesInfo";
+            return "ProfitsInfo";
         }
         /// <summary>
         /// 获取表格值名称
@@ -49,7 +50,7 @@ namespace Model
         public override List<string> GetTableName()
         {
             //DgvName
-            return new List<string> { "ID", "OrderId",  "Prifot", "CreateTime",
+            return new List<string> { "ID", "OrderId",  "Profit", "CreateTime",
              "IsPay",  "Remark", "DelFlag" }; ;
         }
 
@@ -73,13 +74,13 @@ namespace Model
 
         public override string GetSql()
         {
-            return "([OrderId],[Profit],[CriteTime],[IsPay],[Remark],[DelFlag]) ";
+            return "([OrderId],[Profit],[CreateTime],[IsPay],[Remark],[DelFlag]) ";
         }
 
         public override string GetAddSql()
         {
             string sql = " Values ('" + this.OrderId + "','"              
-                  + this.Profit + "'," + this.CreateTime + "','"
+                  + this.Profit + "','" + this.CreateTime + "',"
                   + this.IsPay + ",'"  + this.Remark + "',"
                   +  this.DelFlag + ")";
 
@@ -103,15 +104,15 @@ namespace Model
             List<BaseModel> Entitys = new List<BaseModel>();
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
-                SalesInfo salesInfo = new SalesInfo();
+                ProfitsInfo profitsInfo = new ProfitsInfo();
                 dr = dataTable.Rows[i];
-                salesInfo.Id = Convert.ToInt32(dr["ID"]);
-                salesInfo.OrderId = Convert.ToInt32(dr["GoodsId"]);             
-                salesInfo.Profit = Convert.ToDecimal(dr["Profit"]);
-                salesInfo.IsPay = Convert.ToBoolean(dr["IsPay"]);
-                salesInfo.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
-                salesInfo.Remark = Convert.ToString(dr["Remark"]);                
-                Entitys.Add(salesInfo);
+                profitsInfo.Id = Convert.ToInt32(dr["ID"]);
+                profitsInfo.OrderId = Convert.ToString(dr["OrderId"]);             
+                profitsInfo.Profit = Convert.ToDecimal(dr["Profit"]);
+                profitsInfo.IsPay = Convert.ToBoolean(dr["IsPay"]);
+                profitsInfo.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
+                profitsInfo.Remark = Convert.ToString(dr["Remark"]);                
+                Entitys.Add(profitsInfo);
             }
 
             return Entitys;

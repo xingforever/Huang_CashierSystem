@@ -12,18 +12,21 @@ namespace Model
     /// </summary>
    public class OrderInfo:BaseModel
     {
+       
         /// <summary>
         /// 订单号--下单的年月日小时分钟秒
         /// </summary>
-        public  string OrderId;
+        public  string OrderId { get; set; }
         public int GoodsId { get; set;  }
         public  string GoodsName { get; set; }
-        public int Count { get; set; }
+        public double Count { get; set; }
 
         public decimal PayPrice { get; set; }
         public  decimal DisCount { get; set; }
 
        public  DateTime CreateTime { get; set; }
+
+        public  decimal Profit { get; set; }
 
         public GoodsInfo GoodsInfo { get; set; }
 
@@ -34,13 +37,14 @@ namespace Model
             Count = 0;
             PayPrice = (decimal)0.0;
             DisCount = (decimal)0.0;
+            Profit = (decimal)0.0;
             GoodsInfo = null;
         }
-
+       
 
         public override string GetSql()
         {
-            return "([OrderId],[GoodsId],[Count],[DisCount],[PayPice],[CreateTime],[Remark],[DelFlag])";
+            return "([OrderId],[GoodsId],[Count],[DisCount],[PayPrice],[CreateTime],[Remark],[DelFlag])";
         }
 
         public override string GetAddSql()
@@ -82,7 +86,7 @@ namespace Model
                 orderInfo.GoodsName = Convert.ToString(dr["GoodsId"]);
                 orderInfo.Count = Convert.ToInt32(dr["Count"]);
                 orderInfo.DisCount = Convert.ToInt32(dr["DisCount"]);
-                orderInfo.PayPrice = Convert.ToInt32(dr["PayPice"]);
+                orderInfo.PayPrice = Convert.ToInt32(dr["PayPrice"]);
                 orderInfo.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
                 orderInfo.Remark = Convert.ToString(dr["Remark"]);
                 orderInfo.DelFlag = Convert.ToBoolean(dr["DelFlag"]);
@@ -94,7 +98,7 @@ namespace Model
 
         public override List<string> GetTableName()
         {
-            return new List<string>() { "ID", "OrderId", "GoodsName", "Count", "DisCount", "Prices", "CreateTime","Remark", "DelFlag" };
+            return new List<string>() { "ID", "OrderId", "GoodsName", "Count", "DisCount", "PayPrice", "CreateTime","Remark", "DelFlag" };
         }
 
         /// <summary>

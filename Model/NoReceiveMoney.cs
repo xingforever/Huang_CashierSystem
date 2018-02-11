@@ -31,7 +31,7 @@ namespace Model
         /// <summary>
         /// 销售单信息
         /// </summary>
-        public SalesInfo SalesInfo { get; set; }
+        public ProfitsInfo SalesInfo { get; set; }
 
         public   NoReceiveMoney()
         {

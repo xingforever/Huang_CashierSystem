@@ -8,12 +8,12 @@ using System.Text;
 
 namespace Bll
 {
-   public  class SalesInfoBll:BaseBll<SalesInfo>
+   public  class ProfitsInfoBll:BaseBll<ProfitsInfo>
     {
 
-       public   SalesInfoBll()
+       public   ProfitsInfoBll()
         {
-            this.CurrentDal = new  SalesInfoDal();
+            this.CurrentDal = new  ProfitsInfoDal();
         }
         /// <summary>
         /// 返回当天的销售
@@ -22,13 +22,13 @@ namespace Bll
         public DataTable GetTodayDataTable()
         {
             //
-            return new SalesInfoDal().GetTodayDataTable();
+            return new ProfitsInfoDal().GetTodayDataTable();
         }
 
         public DataTable GetDataTables( SearchModel searchModel)
         {
-            searchModel.ModelName = "SalesInfo";
-            return new SalesInfoDal().GetDataTable(searchModel);
+            searchModel.ModelName = "ProfitsInfo";
+            return new ProfitsInfoDal().GetDataTable(searchModel);
         }
 
     }

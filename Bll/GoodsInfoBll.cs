@@ -20,6 +20,10 @@ namespace Bll
            
             return dal.GetDataTablebyPammer(searchModel.startIndex, searchModel.count, searchModel.dic);
         }
+        public bool EditGoodsInfoCount(int  id, double  salescount, double  surplusCount)
+        {
+            return dal.EditGoodsInfoCount(id, salescount, surplusCount);
+        }
 
     }
 }

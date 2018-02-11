@@ -28,7 +28,7 @@ namespace Dal
 
             string sql1 = "select top " + count.ToString();//筛选一定量数据
             string sql2 = @" OrderInfo.Id,OrderInfo.OrderId,goods.GoodsName as GoodsName,OrderInfo.Count,OrderInfo.DisCount,
-                     OrderInfo.Prices,OrderInfo.CreateTime,OrderInfo.Remark
+                     OrderInfo.PayPrice,OrderInfo.CreateTime,OrderInfo.Remark
                      from OrderInfo 
                      inner join GoodsInfo as goods
                     on OrderInfo.GoodsId=goods.Id

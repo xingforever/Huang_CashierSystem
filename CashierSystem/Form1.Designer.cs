@@ -122,7 +122,6 @@
             this.tspReLoadUnitInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSales = new System.Windows.Forms.TabPage();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.statusStrip9 = new System.Windows.Forms.StatusStrip();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label20 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
@@ -148,7 +147,6 @@
             this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripTextBox4 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip8 = new System.Windows.Forms.StatusStrip();
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
@@ -200,15 +198,14 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnOrderEdit = new System.Windows.Forms.Button();
             this.btnOrder = new System.Windows.Forms.Button();
-            this.lblTotalMoney = new System.Windows.Forms.Label();
+            this.lblOrderMoney = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabTodaySales = new System.Windows.Forms.TabPage();
-            this.dgvOrderInfo = new System.Windows.Forms.DataGridView();
-            this.statusStrip7 = new System.Windows.Forms.StatusStrip();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -223,6 +220,49 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.statusStrip6 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel15 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel18 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel22 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel24 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel25 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel27 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel28 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel29 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel30 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel31 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel32 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel33 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel34 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip7 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel35 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel36 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel37 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel38 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel39 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel40 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel41 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel42 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel43 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel44 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel45 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel46 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel47 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip8 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel48 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel49 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel50 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel51 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel52 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel53 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel54 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel55 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel56 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel57 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel58 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel59 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel60 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.txtOrderMoney = new System.Windows.Forms.TextBox();
             this.tabUserInfoManager.SuspendLayout();
             this.statusStrip5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUserInfo)).BeginInit();
@@ -259,9 +299,12 @@
             this.panel3.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tabTodaySales.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvOrderInfo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.statusStrip6.SuspendLayout();
+            this.statusStrip7.SuspendLayout();
+            this.statusStrip8.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -269,14 +312,14 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1082, 78);
+            this.panel1.Size = new System.Drawing.Size(1076, 78);
             this.panel1.TabIndex = 0;
             // 
             // statusStrip1
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 475);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1082, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1076, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -757,7 +800,7 @@
             this.tabGoodsUnit.Location = new System.Drawing.Point(4, 26);
             this.tabGoodsUnit.Name = "tabGoodsUnit";
             this.tabGoodsUnit.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGoodsUnit.Size = new System.Drawing.Size(1074, 367);
+            this.tabGoodsUnit.Size = new System.Drawing.Size(1068, 367);
             this.tabGoodsUnit.TabIndex = 2;
             this.tabGoodsUnit.Text = "商品单位";
             this.tabGoodsUnit.UseVisualStyleBackColor = true;
@@ -794,7 +837,7 @@
             dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvUnitInfo.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dgvUnitInfo.RowTemplate.Height = 23;
-            this.dgvUnitInfo.Size = new System.Drawing.Size(1068, 308);
+            this.dgvUnitInfo.Size = new System.Drawing.Size(1062, 308);
             this.dgvUnitInfo.TabIndex = 2;
             // 
             // statusStrip2
@@ -806,7 +849,7 @@
             this.toolStripStatusLabel4});
             this.statusStrip2.Location = new System.Drawing.Point(3, 342);
             this.statusStrip2.Name = "statusStrip2";
-            this.statusStrip2.Size = new System.Drawing.Size(1068, 22);
+            this.statusStrip2.Size = new System.Drawing.Size(1062, 22);
             this.statusStrip2.TabIndex = 1;
             this.statusStrip2.Text = "statusStrip2";
             // 
@@ -841,7 +884,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1068, 31);
+            this.panel2.Size = new System.Drawing.Size(1062, 31);
             this.panel2.TabIndex = 0;
             // 
             // menuStrip1
@@ -856,7 +899,7 @@
             this.tspReLoadUnitInfo});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1066, 27);
+            this.menuStrip1.Size = new System.Drawing.Size(1060, 27);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -916,15 +959,15 @@
             // 
             // tabSales
             // 
+            this.tabSales.Controls.Add(this.statusStrip8);
             this.tabSales.Controls.Add(this.dataGridView4);
-            this.tabSales.Controls.Add(this.statusStrip9);
             this.tabSales.Controls.Add(this.panel10);
             this.tabSales.Controls.Add(this.panel8);
             this.tabSales.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabSales.Location = new System.Drawing.Point(4, 26);
             this.tabSales.Name = "tabSales";
             this.tabSales.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSales.Size = new System.Drawing.Size(1074, 367);
+            this.tabSales.Size = new System.Drawing.Size(1068, 367);
             this.tabSales.TabIndex = 6;
             this.tabSales.Text = "销售记录";
             this.tabSales.UseVisualStyleBackColor = true;
@@ -961,23 +1004,15 @@
             dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView4.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.dataGridView4.RowTemplate.Height = 23;
-            this.dataGridView4.Size = new System.Drawing.Size(868, 284);
+            this.dataGridView4.Size = new System.Drawing.Size(862, 306);
             this.dataGridView4.TabIndex = 4;
-            // 
-            // statusStrip9
-            // 
-            this.statusStrip9.Location = new System.Drawing.Point(3, 342);
-            this.statusStrip9.Name = "statusStrip9";
-            this.statusStrip9.Size = new System.Drawing.Size(868, 22);
-            this.statusStrip9.TabIndex = 3;
-            this.statusStrip9.Text = "statusStrip9";
             // 
             // panel10
             // 
             this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel10.Controls.Add(this.label20);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel10.Location = new System.Drawing.Point(871, 58);
+            this.panel10.Location = new System.Drawing.Point(865, 58);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(200, 306);
             this.panel10.TabIndex = 2;
@@ -999,7 +1034,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.Location = new System.Drawing.Point(3, 3);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(1068, 55);
+            this.panel8.Size = new System.Drawing.Size(1062, 55);
             this.panel8.TabIndex = 0;
             // 
             // panel11
@@ -1019,7 +1054,7 @@
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(0, 0);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(1066, 43);
+            this.panel11.Size = new System.Drawing.Size(1060, 43);
             this.panel11.TabIndex = 1;
             // 
             // dateTimePicker3
@@ -1135,9 +1170,9 @@
             // 
             // tabGoodsManager
             // 
+            this.tabGoodsManager.Controls.Add(this.statusStrip7);
             this.tabGoodsManager.Controls.Add(this.dataGridView3);
             this.tabGoodsManager.Controls.Add(this.menuStrip5);
-            this.tabGoodsManager.Controls.Add(this.statusStrip8);
             this.tabGoodsManager.Controls.Add(this.panel9);
             this.tabGoodsManager.Controls.Add(this.panel7);
             this.tabGoodsManager.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1181,7 +1216,7 @@
             dataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView3.RowHeadersDefaultCellStyle = dataGridViewCellStyle18;
             this.dataGridView3.RowTemplate.Height = 23;
-            this.dataGridView3.Size = new System.Drawing.Size(868, 269);
+            this.dataGridView3.Size = new System.Drawing.Size(868, 291);
             this.dataGridView3.TabIndex = 13;
             // 
             // menuStrip5
@@ -1249,14 +1284,6 @@
             this.toolStripMenuItem13.Name = "toolStripMenuItem13";
             this.toolStripMenuItem13.Size = new System.Drawing.Size(60, 23);
             this.toolStripMenuItem13.Text = "刷新";
-            // 
-            // statusStrip8
-            // 
-            this.statusStrip8.Location = new System.Drawing.Point(3, 342);
-            this.statusStrip8.Name = "statusStrip8";
-            this.statusStrip8.Size = new System.Drawing.Size(868, 22);
-            this.statusStrip8.TabIndex = 3;
-            this.statusStrip8.Text = "statusStrip8";
             // 
             // panel9
             // 
@@ -1430,7 +1457,7 @@
             this.tabGoodsInfo.Location = new System.Drawing.Point(4, 26);
             this.tabGoodsInfo.Name = "tabGoodsInfo";
             this.tabGoodsInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGoodsInfo.Size = new System.Drawing.Size(1074, 367);
+            this.tabGoodsInfo.Size = new System.Drawing.Size(1068, 367);
             this.tabGoodsInfo.TabIndex = 0;
             this.tabGoodsInfo.Text = "商品信息";
             this.tabGoodsInfo.UseVisualStyleBackColor = true;
@@ -1444,7 +1471,7 @@
             this.dgvGoodsInfo.Name = "dgvGoodsInfo";
             this.dgvGoodsInfo.ReadOnly = true;
             this.dgvGoodsInfo.RowTemplate.Height = 23;
-            this.dgvGoodsInfo.Size = new System.Drawing.Size(714, 279);
+            this.dgvGoodsInfo.Size = new System.Drawing.Size(708, 279);
             this.dgvGoodsInfo.TabIndex = 4;
             this.dgvGoodsInfo.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvGoodsInfo_CellDoubleClick);
             // 
@@ -1466,7 +1493,7 @@
             this.toolStripStatusLabel23});
             this.statusStripgoodsInfo.Location = new System.Drawing.Point(3, 342);
             this.statusStripgoodsInfo.Name = "statusStripgoodsInfo";
-            this.statusStripgoodsInfo.Size = new System.Drawing.Size(714, 22);
+            this.statusStripgoodsInfo.Size = new System.Drawing.Size(708, 22);
             this.statusStripgoodsInfo.TabIndex = 3;
             this.statusStripgoodsInfo.Text = "goosInfoStatus";
             // 
@@ -1474,7 +1501,7 @@
             // 
             this.toolStripStatusLabel9.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.toolStripStatusLabel9.Name = "toolStripStatusLabel9";
-            this.toolStripStatusLabel9.Size = new System.Drawing.Size(229, 17);
+            this.toolStripStatusLabel9.Size = new System.Drawing.Size(226, 17);
             this.toolStripStatusLabel9.Spring = true;
             // 
             // tspGoodsLastPage
@@ -1546,7 +1573,7 @@
             // toolStripStatusLabel23
             // 
             this.toolStripStatusLabel23.Name = "toolStripStatusLabel23";
-            this.toolStripStatusLabel23.Size = new System.Drawing.Size(229, 17);
+            this.toolStripStatusLabel23.Size = new System.Drawing.Size(226, 17);
             this.toolStripStatusLabel23.Spring = true;
             // 
             // pnlGoodsInfoSearch
@@ -1563,7 +1590,7 @@
             this.pnlGoodsInfoSearch.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlGoodsInfoSearch.Location = new System.Drawing.Point(3, 3);
             this.pnlGoodsInfoSearch.Name = "pnlGoodsInfoSearch";
-            this.pnlGoodsInfoSearch.Size = new System.Drawing.Size(714, 60);
+            this.pnlGoodsInfoSearch.Size = new System.Drawing.Size(708, 60);
             this.pnlGoodsInfoSearch.TabIndex = 2;
             // 
             // txtGoodsNameSearch
@@ -1657,7 +1684,7 @@
             this.pnlGoodsBalance.Controls.Add(this.panel4);
             this.pnlGoodsBalance.Controls.Add(this.panel3);
             this.pnlGoodsBalance.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pnlGoodsBalance.Location = new System.Drawing.Point(717, 3);
+            this.pnlGoodsBalance.Location = new System.Drawing.Point(711, 3);
             this.pnlGoodsBalance.Name = "pnlGoodsBalance";
             this.pnlGoodsBalance.Size = new System.Drawing.Size(354, 361);
             this.pnlGoodsBalance.TabIndex = 1;
@@ -1679,8 +1706,10 @@
             this.dgvOrdersInfo.Name = "dgvOrdersInfo";
             this.dgvOrdersInfo.RowTemplate.Height = 23;
             this.dgvOrdersInfo.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.dgvOrdersInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvOrdersInfo.Size = new System.Drawing.Size(354, 211);
             this.dgvOrdersInfo.TabIndex = 2;
+            this.dgvOrdersInfo.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrdersInfo_CellDoubleClick);
             this.dgvOrdersInfo.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvOrdersInfo_RowPostPaint);
             // 
             // SaleTable_GoodsId
@@ -1746,9 +1775,10 @@
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.txtOrderMoney);
             this.panel4.Controls.Add(this.btnOrderEdit);
             this.panel4.Controls.Add(this.btnOrder);
-            this.panel4.Controls.Add(this.lblTotalMoney);
+            this.panel4.Controls.Add(this.lblOrderMoney);
             this.panel4.Controls.Add(this.label24);
             this.panel4.Controls.Add(this.label23);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -1765,6 +1795,7 @@
             this.btnOrderEdit.TabIndex = 3;
             this.btnOrderEdit.Text = "修改";
             this.btnOrderEdit.UseVisualStyleBackColor = true;
+            this.btnOrderEdit.Click += new System.EventHandler(this.btnOrderEdit_Click);
             // 
             // btnOrder
             // 
@@ -1776,24 +1807,24 @@
             this.btnOrder.UseVisualStyleBackColor = true;
             this.btnOrder.Click += new System.EventHandler(this.btnOrder_Click);
             // 
-            // lblTotalMoney
+            // lblOrderMoney
             // 
-            this.lblTotalMoney.AutoSize = true;
-            this.lblTotalMoney.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblTotalMoney.ForeColor = System.Drawing.Color.Red;
-            this.lblTotalMoney.Location = new System.Drawing.Point(195, 6);
-            this.lblTotalMoney.Name = "lblTotalMoney";
-            this.lblTotalMoney.Size = new System.Drawing.Size(69, 35);
-            this.lblTotalMoney.TabIndex = 2;
-            this.lblTotalMoney.Text = "***";
+            this.lblOrderMoney.AutoSize = true;
+            this.lblOrderMoney.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblOrderMoney.ForeColor = System.Drawing.Color.Red;
+            this.lblOrderMoney.Location = new System.Drawing.Point(161, 6);
+            this.lblOrderMoney.Name = "lblOrderMoney";
+            this.lblOrderMoney.Size = new System.Drawing.Size(87, 35);
+            this.lblOrderMoney.TabIndex = 2;
+            this.lblOrderMoney.Text = "0.00";
             // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label24.Location = new System.Drawing.Point(134, 18);
+            this.label24.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label24.Location = new System.Drawing.Point(131, 15);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(19, 20);
+            this.label24.Size = new System.Drawing.Size(22, 24);
             this.label24.TabIndex = 1;
             this.label24.Text = "¥";
             // 
@@ -1845,15 +1876,15 @@
             this.tabMain.Location = new System.Drawing.Point(0, 78);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(1082, 397);
+            this.tabMain.Size = new System.Drawing.Size(1076, 397);
             this.tabMain.TabIndex = 2;
             this.tabMain.SelectedIndexChanged += new System.EventHandler(this.tabMain_SelectedIndexChanged);
             this.tabMain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabMain_Selected);
             // 
             // tabTodaySales
             // 
-            this.tabTodaySales.Controls.Add(this.dgvOrderInfo);
-            this.tabTodaySales.Controls.Add(this.statusStrip7);
+            this.tabTodaySales.Controls.Add(this.statusStrip6);
+            this.tabTodaySales.Controls.Add(this.dataGridView2);
             this.tabTodaySales.Controls.Add(this.panel6);
             this.tabTodaySales.Controls.Add(this.panel5);
             this.tabTodaySales.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1865,9 +1896,9 @@
             this.tabTodaySales.Text = "今日销售记录";
             this.tabTodaySales.UseVisualStyleBackColor = true;
             // 
-            // dgvOrderInfo
+            // dataGridView2
             // 
-            this.dgvOrderInfo.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle25.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1875,8 +1906,8 @@
             dataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvOrderInfo.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle25;
-            this.dgvOrderInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle25;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle26.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1884,10 +1915,10 @@
             dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvOrderInfo.DefaultCellStyle = dataGridViewCellStyle26;
-            this.dgvOrderInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvOrderInfo.Location = new System.Drawing.Point(3, 70);
-            this.dgvOrderInfo.Name = "dgvOrderInfo";
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle26;
+            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView2.Location = new System.Drawing.Point(3, 70);
+            this.dataGridView2.Name = "dataGridView2";
             dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle27.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1895,18 +1926,10 @@
             dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvOrderInfo.RowHeadersDefaultCellStyle = dataGridViewCellStyle27;
-            this.dgvOrderInfo.RowTemplate.Height = 23;
-            this.dgvOrderInfo.Size = new System.Drawing.Size(868, 272);
-            this.dgvOrderInfo.TabIndex = 5;
-            // 
-            // statusStrip7
-            // 
-            this.statusStrip7.Location = new System.Drawing.Point(3, 342);
-            this.statusStrip7.Name = "statusStrip7";
-            this.statusStrip7.Size = new System.Drawing.Size(868, 22);
-            this.statusStrip7.TabIndex = 4;
-            this.statusStrip7.Text = "statusStrip7";
+            this.dataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle27;
+            this.dataGridView2.RowTemplate.Height = 23;
+            this.dataGridView2.Size = new System.Drawing.Size(868, 294);
+            this.dataGridView2.TabIndex = 5;
             // 
             // panel6
             // 
@@ -2061,11 +2084,324 @@
             this.label7.TabIndex = 7;
             this.label7.Text = "商品类别";
             // 
+            // statusStrip6
+            // 
+            this.statusStrip6.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel15,
+            this.toolStripStatusLabel18,
+            this.toolStripStatusLabel22,
+            this.toolStripStatusLabel24,
+            this.toolStripStatusLabel25,
+            this.toolStripStatusLabel27,
+            this.toolStripStatusLabel28,
+            this.toolStripStatusLabel29,
+            this.toolStripStatusLabel30,
+            this.toolStripStatusLabel31,
+            this.toolStripStatusLabel32,
+            this.toolStripStatusLabel33,
+            this.toolStripStatusLabel34});
+            this.statusStrip6.Location = new System.Drawing.Point(3, 342);
+            this.statusStrip6.Name = "statusStrip6";
+            this.statusStrip6.Size = new System.Drawing.Size(868, 22);
+            this.statusStrip6.TabIndex = 6;
+            this.statusStrip6.Text = "goosInfoStatus";
+            // 
+            // toolStripStatusLabel15
+            // 
+            this.toolStripStatusLabel15.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel15.Name = "toolStripStatusLabel15";
+            this.toolStripStatusLabel15.Size = new System.Drawing.Size(306, 17);
+            this.toolStripStatusLabel15.Spring = true;
+            // 
+            // toolStripStatusLabel18
+            // 
+            this.toolStripStatusLabel18.Name = "toolStripStatusLabel18";
+            this.toolStripStatusLabel18.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel18.Text = "上一页";
+            // 
+            // toolStripStatusLabel22
+            // 
+            this.toolStripStatusLabel22.Name = "toolStripStatusLabel22";
+            this.toolStripStatusLabel22.Size = new System.Drawing.Size(11, 17);
+            this.toolStripStatusLabel22.Text = "|";
+            // 
+            // toolStripStatusLabel24
+            // 
+            this.toolStripStatusLabel24.Name = "toolStripStatusLabel24";
+            this.toolStripStatusLabel24.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel24.Text = "第";
+            // 
+            // toolStripStatusLabel25
+            // 
+            this.toolStripStatusLabel25.Name = "toolStripStatusLabel25";
+            this.toolStripStatusLabel25.Size = new System.Drawing.Size(15, 17);
+            this.toolStripStatusLabel25.Text = "1";
+            // 
+            // toolStripStatusLabel27
+            // 
+            this.toolStripStatusLabel27.Name = "toolStripStatusLabel27";
+            this.toolStripStatusLabel27.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel27.Text = "页";
+            // 
+            // toolStripStatusLabel28
+            // 
+            this.toolStripStatusLabel28.Name = "toolStripStatusLabel28";
+            this.toolStripStatusLabel28.Size = new System.Drawing.Size(13, 17);
+            this.toolStripStatusLabel28.Text = "/";
+            // 
+            // toolStripStatusLabel29
+            // 
+            this.toolStripStatusLabel29.Name = "toolStripStatusLabel29";
+            this.toolStripStatusLabel29.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel29.Text = "共";
+            // 
+            // toolStripStatusLabel30
+            // 
+            this.toolStripStatusLabel30.Name = "toolStripStatusLabel30";
+            this.toolStripStatusLabel30.Size = new System.Drawing.Size(22, 17);
+            this.toolStripStatusLabel30.Text = "50";
+            // 
+            // toolStripStatusLabel31
+            // 
+            this.toolStripStatusLabel31.Name = "toolStripStatusLabel31";
+            this.toolStripStatusLabel31.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel31.Text = "页";
+            // 
+            // toolStripStatusLabel32
+            // 
+            this.toolStripStatusLabel32.Name = "toolStripStatusLabel32";
+            this.toolStripStatusLabel32.Size = new System.Drawing.Size(11, 17);
+            this.toolStripStatusLabel32.Text = "|";
+            // 
+            // toolStripStatusLabel33
+            // 
+            this.toolStripStatusLabel33.Name = "toolStripStatusLabel33";
+            this.toolStripStatusLabel33.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel33.Text = "下一页";
+            // 
+            // toolStripStatusLabel34
+            // 
+            this.toolStripStatusLabel34.Name = "toolStripStatusLabel34";
+            this.toolStripStatusLabel34.Size = new System.Drawing.Size(306, 17);
+            this.toolStripStatusLabel34.Spring = true;
+            // 
+            // statusStrip7
+            // 
+            this.statusStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel35,
+            this.toolStripStatusLabel36,
+            this.toolStripStatusLabel37,
+            this.toolStripStatusLabel38,
+            this.toolStripStatusLabel39,
+            this.toolStripStatusLabel40,
+            this.toolStripStatusLabel41,
+            this.toolStripStatusLabel42,
+            this.toolStripStatusLabel43,
+            this.toolStripStatusLabel44,
+            this.toolStripStatusLabel45,
+            this.toolStripStatusLabel46,
+            this.toolStripStatusLabel47});
+            this.statusStrip7.Location = new System.Drawing.Point(3, 342);
+            this.statusStrip7.Name = "statusStrip7";
+            this.statusStrip7.Size = new System.Drawing.Size(868, 22);
+            this.statusStrip7.TabIndex = 14;
+            this.statusStrip7.Text = "goosInfoStatus";
+            // 
+            // toolStripStatusLabel35
+            // 
+            this.toolStripStatusLabel35.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel35.Name = "toolStripStatusLabel35";
+            this.toolStripStatusLabel35.Size = new System.Drawing.Size(306, 17);
+            this.toolStripStatusLabel35.Spring = true;
+            // 
+            // toolStripStatusLabel36
+            // 
+            this.toolStripStatusLabel36.Name = "toolStripStatusLabel36";
+            this.toolStripStatusLabel36.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel36.Text = "上一页";
+            // 
+            // toolStripStatusLabel37
+            // 
+            this.toolStripStatusLabel37.Name = "toolStripStatusLabel37";
+            this.toolStripStatusLabel37.Size = new System.Drawing.Size(11, 17);
+            this.toolStripStatusLabel37.Text = "|";
+            // 
+            // toolStripStatusLabel38
+            // 
+            this.toolStripStatusLabel38.Name = "toolStripStatusLabel38";
+            this.toolStripStatusLabel38.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel38.Text = "第";
+            // 
+            // toolStripStatusLabel39
+            // 
+            this.toolStripStatusLabel39.Name = "toolStripStatusLabel39";
+            this.toolStripStatusLabel39.Size = new System.Drawing.Size(15, 17);
+            this.toolStripStatusLabel39.Text = "1";
+            // 
+            // toolStripStatusLabel40
+            // 
+            this.toolStripStatusLabel40.Name = "toolStripStatusLabel40";
+            this.toolStripStatusLabel40.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel40.Text = "页";
+            // 
+            // toolStripStatusLabel41
+            // 
+            this.toolStripStatusLabel41.Name = "toolStripStatusLabel41";
+            this.toolStripStatusLabel41.Size = new System.Drawing.Size(13, 17);
+            this.toolStripStatusLabel41.Text = "/";
+            // 
+            // toolStripStatusLabel42
+            // 
+            this.toolStripStatusLabel42.Name = "toolStripStatusLabel42";
+            this.toolStripStatusLabel42.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel42.Text = "共";
+            // 
+            // toolStripStatusLabel43
+            // 
+            this.toolStripStatusLabel43.Name = "toolStripStatusLabel43";
+            this.toolStripStatusLabel43.Size = new System.Drawing.Size(22, 17);
+            this.toolStripStatusLabel43.Text = "50";
+            // 
+            // toolStripStatusLabel44
+            // 
+            this.toolStripStatusLabel44.Name = "toolStripStatusLabel44";
+            this.toolStripStatusLabel44.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel44.Text = "页";
+            // 
+            // toolStripStatusLabel45
+            // 
+            this.toolStripStatusLabel45.Name = "toolStripStatusLabel45";
+            this.toolStripStatusLabel45.Size = new System.Drawing.Size(11, 17);
+            this.toolStripStatusLabel45.Text = "|";
+            // 
+            // toolStripStatusLabel46
+            // 
+            this.toolStripStatusLabel46.Name = "toolStripStatusLabel46";
+            this.toolStripStatusLabel46.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel46.Text = "下一页";
+            // 
+            // toolStripStatusLabel47
+            // 
+            this.toolStripStatusLabel47.Name = "toolStripStatusLabel47";
+            this.toolStripStatusLabel47.Size = new System.Drawing.Size(306, 17);
+            this.toolStripStatusLabel47.Spring = true;
+            // 
+            // statusStrip8
+            // 
+            this.statusStrip8.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel48,
+            this.toolStripStatusLabel49,
+            this.toolStripStatusLabel50,
+            this.toolStripStatusLabel51,
+            this.toolStripStatusLabel52,
+            this.toolStripStatusLabel53,
+            this.toolStripStatusLabel54,
+            this.toolStripStatusLabel55,
+            this.toolStripStatusLabel56,
+            this.toolStripStatusLabel57,
+            this.toolStripStatusLabel58,
+            this.toolStripStatusLabel59,
+            this.toolStripStatusLabel60});
+            this.statusStrip8.Location = new System.Drawing.Point(3, 342);
+            this.statusStrip8.Name = "statusStrip8";
+            this.statusStrip8.Size = new System.Drawing.Size(862, 22);
+            this.statusStrip8.TabIndex = 5;
+            this.statusStrip8.Text = "goosInfoStatus";
+            // 
+            // toolStripStatusLabel48
+            // 
+            this.toolStripStatusLabel48.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel48.Name = "toolStripStatusLabel48";
+            this.toolStripStatusLabel48.Size = new System.Drawing.Size(303, 17);
+            this.toolStripStatusLabel48.Spring = true;
+            // 
+            // toolStripStatusLabel49
+            // 
+            this.toolStripStatusLabel49.Name = "toolStripStatusLabel49";
+            this.toolStripStatusLabel49.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel49.Text = "上一页";
+            // 
+            // toolStripStatusLabel50
+            // 
+            this.toolStripStatusLabel50.Name = "toolStripStatusLabel50";
+            this.toolStripStatusLabel50.Size = new System.Drawing.Size(11, 17);
+            this.toolStripStatusLabel50.Text = "|";
+            // 
+            // toolStripStatusLabel51
+            // 
+            this.toolStripStatusLabel51.Name = "toolStripStatusLabel51";
+            this.toolStripStatusLabel51.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel51.Text = "第";
+            // 
+            // toolStripStatusLabel52
+            // 
+            this.toolStripStatusLabel52.Name = "toolStripStatusLabel52";
+            this.toolStripStatusLabel52.Size = new System.Drawing.Size(15, 17);
+            this.toolStripStatusLabel52.Text = "1";
+            // 
+            // toolStripStatusLabel53
+            // 
+            this.toolStripStatusLabel53.Name = "toolStripStatusLabel53";
+            this.toolStripStatusLabel53.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel53.Text = "页";
+            // 
+            // toolStripStatusLabel54
+            // 
+            this.toolStripStatusLabel54.Name = "toolStripStatusLabel54";
+            this.toolStripStatusLabel54.Size = new System.Drawing.Size(13, 17);
+            this.toolStripStatusLabel54.Text = "/";
+            // 
+            // toolStripStatusLabel55
+            // 
+            this.toolStripStatusLabel55.Name = "toolStripStatusLabel55";
+            this.toolStripStatusLabel55.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel55.Text = "共";
+            // 
+            // toolStripStatusLabel56
+            // 
+            this.toolStripStatusLabel56.Name = "toolStripStatusLabel56";
+            this.toolStripStatusLabel56.Size = new System.Drawing.Size(22, 17);
+            this.toolStripStatusLabel56.Text = "50";
+            // 
+            // toolStripStatusLabel57
+            // 
+            this.toolStripStatusLabel57.Name = "toolStripStatusLabel57";
+            this.toolStripStatusLabel57.Size = new System.Drawing.Size(20, 17);
+            this.toolStripStatusLabel57.Text = "页";
+            // 
+            // toolStripStatusLabel58
+            // 
+            this.toolStripStatusLabel58.Name = "toolStripStatusLabel58";
+            this.toolStripStatusLabel58.Size = new System.Drawing.Size(11, 17);
+            this.toolStripStatusLabel58.Text = "|";
+            // 
+            // toolStripStatusLabel59
+            // 
+            this.toolStripStatusLabel59.Name = "toolStripStatusLabel59";
+            this.toolStripStatusLabel59.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel59.Text = "下一页";
+            // 
+            // toolStripStatusLabel60
+            // 
+            this.toolStripStatusLabel60.Name = "toolStripStatusLabel60";
+            this.toolStripStatusLabel60.Size = new System.Drawing.Size(303, 17);
+            this.toolStripStatusLabel60.Spring = true;
+            // 
+            // txtOrderMoney
+            // 
+            this.txtOrderMoney.Font = new System.Drawing.Font("宋体", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtOrderMoney.Location = new System.Drawing.Point(159, 6);
+            this.txtOrderMoney.Name = "txtOrderMoney";
+            this.txtOrderMoney.Size = new System.Drawing.Size(159, 47);
+            this.txtOrderMoney.TabIndex = 4;
+            this.txtOrderMoney.Visible = false;
+            this.txtOrderMoney.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtOrderMoney_KeyDown);
+            // 
             // Huang_System
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1082, 497);
+            this.ClientSize = new System.Drawing.Size(1076, 497);
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel1);
@@ -2135,11 +2471,17 @@
             this.tabMain.ResumeLayout(false);
             this.tabTodaySales.ResumeLayout(false);
             this.tabTodaySales.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvOrderInfo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            this.statusStrip6.ResumeLayout(false);
+            this.statusStrip6.PerformLayout();
+            this.statusStrip7.ResumeLayout(false);
+            this.statusStrip7.PerformLayout();
+            this.statusStrip8.ResumeLayout(false);
+            this.statusStrip8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2275,7 +2617,6 @@
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DataGridView dataGridView4;
-        private System.Windows.Forms.StatusStrip statusStrip9;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.MenuStrip menuStrip5;
@@ -2286,9 +2627,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem13;
-        private System.Windows.Forms.StatusStrip statusStrip8;
-        private System.Windows.Forms.DataGridView dgvOrderInfo;
-        private System.Windows.Forms.StatusStrip statusStrip7;
+        private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel9;
         private System.Windows.Forms.ToolStripStatusLabel tspGoodsLastPage;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel20;
@@ -2310,9 +2649,52 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Sales_Remak;
         private System.Windows.Forms.Button btnOrderEdit;
         private System.Windows.Forms.Button btnOrder;
-        private System.Windows.Forms.Label lblTotalMoney;
+        private System.Windows.Forms.Label lblOrderMoney;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.StatusStrip statusStrip8;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel48;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel49;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel50;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel51;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel52;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel53;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel54;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel55;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel56;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel57;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel58;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel59;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel60;
+        private System.Windows.Forms.StatusStrip statusStrip7;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel35;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel36;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel37;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel38;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel39;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel40;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel41;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel42;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel43;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel44;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel45;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel46;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel47;
+        private System.Windows.Forms.StatusStrip statusStrip6;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel15;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel18;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel22;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel24;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel25;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel27;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel28;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel29;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel30;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel31;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel32;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel33;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel34;
+        private System.Windows.Forms.TextBox txtOrderMoney;
     }
 }
 
