@@ -88,8 +88,14 @@ namespace CashierSystem
                 }
                else if (i == 1)
                 {
-                    this.dataGridView2.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
-                    this.dataGridView2 = dataGridViewHelper.Init(this.dataGridView2, nameList, handerTxt, hideIndex);
+                    this.dgvTodayOrder.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
+                    this.dgvTodayOrder = dataGridViewHelper.Init(this.dgvTodayOrder, nameList, handerTxt, hideIndex);
+                    GetDgv(1);
+                }
+                else if (i == 3)
+                {
+                    this.dgvAllOrder.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
+                    this.dgvAllOrder = dataGridViewHelper.Init(this.dgvAllOrder, nameList, handerTxt, hideIndex);
                     GetDgv(1);
                 }
                 else  if (i == 4)
@@ -140,10 +146,18 @@ namespace CashierSystem
                     
                     break;
                 case 1:
-                    if (!(bool)this.dataGridView2.Tag)
+                    if (!(bool)this.dgvTodayOrder.Tag)
+                    {
+                        dataTable = DataManager.OrderInfoBLL.GetTodayDataTable();
+                        this.dgvTodayOrder = dataGridViewHelper.FillData(this.dgvTodayOrder, dataTable); this.dgvTodayOrder.Tag = true;
+                    }
+                    break;
+                case 3:
+                    if (!(bool)this.dgvAllOrder.Tag)
                     {
                         dataTable = DataManager.OrderInfoBLL.GetDataTablebyPammer(searchModel);
-                        this.dataGridView2 = dataGridViewHelper.FillData(this.dataGridView2, dataTable); this.dataGridView2.Tag = true;
+                        this.dgvAllOrder = dataGridViewHelper.FillData(this.dgvAllOrder, dataTable);
+                        this.dgvAllOrder.Tag = true;
                     }
                     break;
                 case 4:
@@ -410,8 +424,7 @@ namespace CashierSystem
             GetDgv(SelectIndex);
         }
         #endregion
-
-
+        #region 商品展示信息
 
         /// <summary>
         /// 初始化GoodInfos
@@ -422,24 +435,26 @@ namespace CashierSystem
 
             cbxSortsInfo.ValueMember = "Id";
             cbxSortsInfo.DisplayMember = "SortName";
-            cbxSortsInfo.DataSource = GetSortInfoList();           
+            cbxSortsInfo.DataSource = GetSortInfoList();
             cbxUnitInfo.ValueMember = "Id";
             cbxUnitInfo.DisplayMember = "UnitName";
-            cbxUnitInfo.DataSource = GetUnitInfoList();            
+            cbxUnitInfo.DataSource = GetUnitInfoList();
             string goodsName = "";
-            string  sortId = "0";
-             string  unitId = "0";
-            txtGoodsNameSearch.Text = goodsSearch.dic.TryGetValue("GoodsName", out goodsName)? goodsName:"";
+            string sortId = "0";
+            string unitId = "0";
+            txtGoodsNameSearch.Text = goodsSearch.dic.TryGetValue("GoodsName", out goodsName) ? goodsName : "";
             unitId = goodsSearch.dic.TryGetValue("UnitId", out unitId) ? unitId : "0";
             sortId = goodsSearch.dic.TryGetValue("SortId", out sortId) ? sortId : "0";
             cbxUnitInfo.SelectedValue = Convert.ToInt32(unitId);
             cbxSortsInfo.SelectedValue = Convert.ToInt32(sortId);
-         
-           
 
-
+            
 
         }
+        /// <summary>
+        /// 搜索商品信息
+        /// </summary>
+        /// <param name="startIndex"></param>
 
         private void SearchLoadGoodsInfo(int startIndex = 0)
         {
@@ -462,7 +477,7 @@ namespace CashierSystem
                 {
                     searchModel.dic.Add("UnitId", unitId);
                 }
-                if (goodsName!="")
+                if (goodsName != "")
                 {
                     searchModel.dic.Add("GoodsName", goodsName);
                 }
@@ -474,6 +489,296 @@ namespace CashierSystem
             this.dgvGoodsInfo.Tag = false;//false 表示需要更新
             GetDgv(0, searchModel);
         }
+        /// <summary>
+        /// 搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnGoodsSearch_Click(object sender, EventArgs e)
+        {
+            SearchLoadGoodsInfo();
+        }
+        /// <summary>
+        /// 双击
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvGoodsInfo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+
+            try
+            {
+                var dataRow = this.dgvGoodsInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                                                                     //将数据添加到下单表            
+                var isAddSucess = AddGoodsToOrder(dataId);
+                LoadOrdersInfo();
+            }
+            catch (Exception)
+            {
+
+                return;
+            }
+
+        }
+        #endregion
+        #region 小订单表操作
+
+        /// <summary>
+        /// 小订单表加载
+        /// </summary>
+        public void LoadOrdersInfo()
+        {
+            var count = this.dgvOrdersInfo.Rows.Count;
+            var ddd = this.dgvOrdersInfo.ColumnCount;
+            this.dgvOrdersInfo.Rows.Clear();//清除数据
+            decimal AllMoney = (decimal)0.0;
+            foreach (OrderInfo order in OrdersInfo)
+            {
+                DataGridViewRow dataGridViewRow = new DataGridViewRow();
+                dataGridViewRow.CreateCells(dgvOrdersInfo);
+                dataGridViewRow.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dataGridViewRow.Cells[0].Value = order.GoodsId;
+                dataGridViewRow.Cells[1].Value = order.GoodsName;
+                dataGridViewRow.Cells[2].Value = order.Count;
+                dataGridViewRow.Cells[3].Value = order.PayPrice;
+                dataGridViewRow.Cells[4].Value = order.DisCount;
+                dataGridViewRow.Cells[5].Value = order.Remark;
+                AllMoney += order.PayPrice;
+                this.dgvOrdersInfo.Rows.Add(dataGridViewRow);
+            }
+
+            this.lblOrderMoney.Text = AllMoney.ToString();
+        }
+        /// <summary>
+        /// 下单
+        /// </summary>
+        /// <param name="goodsId">商品ID</param>
+        /// <param name="count">数量</param>
+        /// <returns></returns>
+        public bool AddGoodsToOrder(int goodsId, int count = 1)
+        {
+            var goodsInfo = DataManager.GoodsInfoBLL.GetEntityById(goodsId);
+            var maxCount = goodsInfo.SurplusCount;//库存量
+            bool isHaveSame = false;//下单表中有相同商品
+                                    //20180211154701
+            if (OrdersInfo.Count == 0)
+            {
+                OrderId = DateTime.Now.ToString("yyyyMMddHHmmss");
+            }
+            //创建一个订单号  一个列表仅有一个
+
+            //将数据添加到下单表            
+            foreach (OrderInfo item in OrdersInfo)
+            {
+                if (item.GoodsId == goodsId)
+                {
+                    if ((item.Count + count) <= maxCount)
+                    {
+                        item.Count += count;//
+                        item.PayPrice = (goodsInfo.PayPrice * (decimal)item.Count) - item.DisCount;
+                        //利润
+                        item.Profit = item.PayPrice - ((goodsInfo.PurPrice) * (decimal)item.Count);
+                        isHaveSame = true;
+                    }
+                    else
+                    {
+                        return false;//库存不够
+                    }
+                }
+            }
+            //订单表中 无此商品 ,
+            if (!isHaveSame)
+            {
+                OrderInfo orderInfo = new OrderInfo();
+                orderInfo.GoodsInfo = goodsInfo;
+                orderInfo.GoodsId = goodsId;
+                orderInfo.OrderId = OrderId;
+                orderInfo.CreateTime = DateTime.Now;
+                orderInfo.Count = count;
+                orderInfo.GoodsName = goodsInfo.GoodsName;
+                orderInfo.PayPrice = (goodsInfo.PayPrice * (decimal)orderInfo.Count) - orderInfo.DisCount;//收款
+                orderInfo.Profit = orderInfo.PayPrice - ((goodsInfo.PurPrice) * (decimal)orderInfo.Count);//利润
+                if (count > maxCount)
+                {
+                    return false;
+                }
+                OrdersInfo.Add(orderInfo);
+            }
+            return true;
+
+        }
+
+        /// <summary>
+        /// 订单表行标题
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvOrdersInfo_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            //自动编号，与数据无关
+            Rectangle rectangle = new Rectangle(e.RowBounds.Location.X,
+               e.RowBounds.Location.Y,
+               this.dgvOrdersInfo.RowHeadersWidth - 4,
+               e.RowBounds.Height);
+            TextRenderer.DrawText(e.Graphics,
+                  (e.RowIndex + 1).ToString(),
+                  this.dgvOrdersInfo.RowHeadersDefaultCellStyle.Font,
+                   rectangle,
+                  this.dgvOrdersInfo.RowHeadersDefaultCellStyle.ForeColor,
+                   TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
+        }
+        /// <summary>
+        /// 下单操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOrder_Click(object sender, EventArgs e)
+        {
+            if (OrdersInfo.Count < 1)
+            {
+                MessageBox.Show("订单表中无商品,请双击商品信息表中信息添加商品", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            Frm_OrderInfoDIalog frm_Samll = Frm_OrderInfoDIalog.Create();
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+            //下单成功
+            if (OrdersInfo.Count == 0)
+            {
+                this.dgvOrdersInfo.Rows.Clear();//清除数据
+                this.lblOrderMoney.Text = "0.000";//待收款清0
+                OrderDisCount = (decimal)0.0;//折扣 
+                SearchLoadGoodsInfo();//商品信息页重新加载(保留操作员上次操作)
+                this.dgvTodayOrder.Tag = false;//信息需要重新加载
+            }
+
+        }
+        /// <summary>
+        /// 双击 订单表数量修改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvOrdersInfo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                var dataRow = this.dgvOrdersInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取商品Id
+                OrderInfo orderInfo = null;
+                for (int i = 0; i < OrdersInfo.Count; i++)
+                {
+                    var orderinfo = OrdersInfo[i];
+                    if (orderinfo.GoodsId == dataId)
+                    {
+                        orderInfo = orderinfo;
+                        break;
+                    }
+                }
+                if (orderInfo == null)
+                {
+                    MessageBox.Show("发生错误,联系开发人员");
+                    return;
+                }
+                Frm_OrderInfo frm_Samll = Frm_OrderInfo.Create(orderInfo);
+                frm_Samll.ShowDialog(this);
+                frm_Samll.Focus();
+                LoadOrdersInfo();
+
+            }
+            catch (Exception)
+            {
+
+                ;
+            }
+
+        }
+        /// <summary>
+        /// 订单应收款修改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOrderEdit_Click(object sender, EventArgs e)
+        {
+            if (this.txtOrderMoney.Visible)
+            {
+                EditOrderMonry();
+            }
+            else
+            {
+                this.lblOrderMoney.Visible = false;
+                this.txtOrderMoney.Visible = true;
+                this.txtOrderMoney.Text = this.lblOrderMoney.Text;
+                this.txtOrderMoney.Focus();
+            }
+
+        }
+
+        /// <summary>
+        /// 订单修改完毕事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtOrderMoney_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                EditOrderMonry();
+            }
+        }
+        /// <summary>
+        /// 订单修改完毕
+        /// </summary>
+        public void EditOrderMonry()
+        {
+            this.txtOrderMoney.Visible = false;
+            var OldMoney = Convert.ToDecimal(this.lblOrderMoney.Text);
+            try
+            {
+                var newMoney = Convert.ToDecimal(this.txtOrderMoney.Text);
+                this.lblOrderMoney.Visible = true;
+                OrderDisCount = OldMoney - newMoney;//操作用修改应收款的折扣
+                this.lblOrderMoney.Text = this.txtOrderMoney.Text;
+                //
+                for (int i = 0; i < OrdersInfo.Count; i++)
+                {
+                    OrdersInfo[i].DisCount = Math.Round((OrderDisCount / OrdersInfo.Count));
+                    OrdersInfo[i].Remark = "该订单共已折扣" + Math.Round((OrderDisCount / OrdersInfo.Count), 4) + "元";
+                    OrdersInfo[i].PayPrice = OrdersInfo[i].PayPrice - Math.Round((OrderDisCount / OrdersInfo.Count), 4);
+                }
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("操作失误,总价格为数字", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        } 
+        #endregion
+
+
+
+        /// <summary>
+        /// 初始化今日订单表
+        /// </summary>
+        /// <param name="todayOrderSearch"></param>
+        public void LoadTodayOrderInfo(SearchModel todayOrderSearch)
+        {
+            DateTime today = DateTime.Today;
+            //如果搜索添加中含有 时间 则设置,否则 设置为今天0.00
+            TodayOrderStartTime.Value = todayOrderSearch.StartTime.Equals(new DateTime())? today:todayOrderSearch.StartTime;
+            DateTime now = DateTime.Now;
+            TodayOrderEndTime.Value= todayOrderSearch.EndTime.Equals(new DateTime()) ? now : todayOrderSearch.EndTime;
+            string todaySearchMixMoney = "";
+            string todaySearchMaxMoney = "";
+            string todaySearchGoodsName = "";
+            txtTodaySearchMixMoney.Text = todayOrderSearch.dic.TryGetValue("TodaySearchMixMoney", out todaySearchMixMoney) ? todaySearchMixMoney : "";
+            txtTodaySearchMaxMoney.Text = todayOrderSearch.dic.TryGetValue("TodaySearchMaxMoney", out todaySearchMaxMoney) ? todaySearchMaxMoney : "";
+            txtTodayOrder_SearchName.Text= todayOrderSearch.dic.TryGetValue("TodaySearchGoodsName", out todaySearchGoodsName) ? todaySearchGoodsName : "";
+
+        }
+
+
 
 
 
@@ -523,248 +828,9 @@ namespace CashierSystem
 
        
 
-        private void btnGoodsSearch_Click(object sender, EventArgs e)
-        {
-            SearchLoadGoodsInfo();
-        }
-
-        private void dgvGoodsInfo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-          
-           
-            try
-            {
-                var dataRow = this.dgvGoodsInfo.SelectedRows[0];
-                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-                 //将数据添加到下单表            
-                var isAddSucess= AddGoodsToOrder(dataId);
-                LoadOrdersInfo();
-            }
-            catch (Exception)
-            {
-
-                return;
-            }
-         
-        }
-        /// <summary>
-        /// 小订单表加载
-        /// </summary>
-        public void LoadOrdersInfo()
-        {
-            var count = this.dgvOrdersInfo.Rows.Count;
-            var ddd = this.dgvOrdersInfo.ColumnCount;
-            this.dgvOrdersInfo.Rows.Clear();//清除数据
-            decimal AllMoney = (decimal)0.0;
-            foreach (OrderInfo order in OrdersInfo)
-            {
-                DataGridViewRow dataGridViewRow = new DataGridViewRow();
-                dataGridViewRow.CreateCells(dgvOrdersInfo);
-                dataGridViewRow.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dataGridViewRow.Cells[0].Value = order.GoodsId;
-                dataGridViewRow.Cells[1].Value = order.GoodsName;
-                dataGridViewRow.Cells[2].Value = order.Count;
-                dataGridViewRow.Cells[3].Value = order.PayPrice;
-                dataGridViewRow.Cells[4].Value = order.DisCount;
-                dataGridViewRow.Cells[5].Value = order.Remark;
-                AllMoney += order.PayPrice;
-                this.dgvOrdersInfo.Rows.Add(dataGridViewRow);
-            }
-            
-            this.lblOrderMoney.Text = AllMoney.ToString();
-        }
-        /// <summary>
-        /// 下单
-        /// </summary>
-        /// <param name="goodsId">商品ID</param>
-        /// <param name="count">数量</param>
-        /// <returns></returns>
-        public  bool  AddGoodsToOrder(int goodsId,int count=1)
-        {
-            var goodsInfo = DataManager.GoodsInfoBLL.GetEntityById(goodsId);
-            var maxCount = goodsInfo.SurplusCount;//库存量
-            bool isHaveSame = false;//下单表中有相同商品
-               //20180211154701
-            if (OrdersInfo.Count==0)
-            {
-                OrderId = DateTime.Now.ToString("yyyyMMddHHmmss");
-            }
-            //创建一个订单号  一个列表仅有一个
-
-            //将数据添加到下单表            
-            foreach (OrderInfo item in OrdersInfo)
-            {
-                if (item.GoodsId == goodsId)
-                {
-                    if ((item.Count + count) <= maxCount)
-                    {
-                        item.Count += count;//
-                        item.PayPrice = (goodsInfo.PayPrice * (decimal)item.Count) - item.DisCount;
-                        //利润
-                        item.Profit = item.PayPrice - ((goodsInfo.PurPrice) * (decimal )item.Count) ;
-                        isHaveSame = true;
-                    }
-                    else
-                    {
-                        return false;//库存不够
-                    }
-                }
-            }
-            //订单表中 无此商品 ,
-            if (!isHaveSame)
-            {
-                OrderInfo orderInfo = new OrderInfo();
-                orderInfo.GoodsInfo = goodsInfo;
-                orderInfo.GoodsId = goodsId;
-                orderInfo.OrderId = OrderId;
-                orderInfo.CreateTime = DateTime.Now;
-                orderInfo.Count = count;
-                orderInfo.GoodsName = goodsInfo.GoodsName;
-                orderInfo.PayPrice = (goodsInfo.PayPrice * (decimal)orderInfo.Count )- orderInfo.DisCount;//收款
-                orderInfo.Profit = orderInfo.PayPrice - ((goodsInfo.PurPrice) * (decimal)orderInfo.Count);//利润
-                if (count>maxCount)
-                {
-                    return false;
-                }
-                OrdersInfo.Add(orderInfo);
-            }
-            return true;
-
-        }
-
-        /// <summary>
-        /// 订单表行标题
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgvOrdersInfo_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
-        {
-            //自动编号，与数据无关
-            Rectangle rectangle = new Rectangle(e.RowBounds.Location.X,
-               e.RowBounds.Location.Y,
-               this.dgvOrdersInfo.RowHeadersWidth - 4,
-               e.RowBounds.Height);
-            TextRenderer.DrawText(e.Graphics,
-                  (e.RowIndex + 1).ToString(),
-                  this.dgvOrdersInfo.RowHeadersDefaultCellStyle.Font,
-                   rectangle,
-                  this.dgvOrdersInfo.RowHeadersDefaultCellStyle.ForeColor,
-                   TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
-        }
-        /// <summary>
-        /// 下单操作
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnOrder_Click(object sender, EventArgs e)
-        {
-            if (OrdersInfo.Count<1)
-            {
-                MessageBox.Show("订单表中无商品,请双击商品信息表中信息添加商品","提示",MessageBoxButtons.OK,MessageBoxIcon.Information);
-            }
-            Frm_OrderInfoDIalog frm_Samll = Frm_OrderInfoDIalog.Create();
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
-            //下单成功
-            if (OrdersInfo.Count==0)
-            {
-                this.dgvOrdersInfo.Rows.Clear();//清除数据
-                this.lblOrderMoney.Text = "0.000";//待收款清0
-                OrderDisCount = (decimal)0.0;//折扣 
-                SearchLoadGoodsInfo();//商品信息页重新加载(保留操作员上次操作)
-            }
-           
-        }
-        /// <summary>
-        /// 订单表数量修改
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgvOrdersInfo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                var dataRow = this.dgvOrdersInfo.SelectedRows[0];
-                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取商品Id
-                OrderInfo orderInfo = null;
-                for (int i = 0; i < OrdersInfo.Count; i++)
-                {
-                    var orderinfo = OrdersInfo[i];
-                    if (orderinfo.GoodsId==dataId)
-                    {
-                        orderInfo = orderinfo;
-                        break;
-                    }
-                }
-                if (orderInfo==null)
-                {
-                    MessageBox.Show("发生错误,联系开发人员");
-                    return;
-                }
-                Frm_OrderInfo frm_Samll = Frm_OrderInfo.Create( orderInfo);
-                frm_Samll.ShowDialog(this);
-                frm_Samll.Focus();
-                LoadOrdersInfo();
-
-            }
-            catch (Exception)
-            {
-
-                ;
-            }
-           
-        }
-        /// <summary>
-        /// 订单应收款修改
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnOrderEdit_Click(object sender, EventArgs e)
-        {
-            if (this.txtOrderMoney.Visible)
-            {
-                EditOrderMonry();
-            }
-            else
-            {
-                this.lblOrderMoney.Visible = false;
-                this.txtOrderMoney.Visible = true;
-                this.txtOrderMoney.Text = this.lblOrderMoney.Text;
-                this.txtOrderMoney.Focus();
-            }
-           
-        }
        
-        /// <summary>
-        /// 订单修改完毕
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void txtOrderMoney_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                EditOrderMonry();
-            }
-        }
+      
 
-        public  void EditOrderMonry()
-        {
-            this.txtOrderMoney.Visible = false;
-            var OldMoney = Convert.ToDecimal(this.lblOrderMoney.Text);
-            try
-            {
-                var newMoney = Convert.ToDecimal(this.txtOrderMoney.Text);
-                this.lblOrderMoney.Visible = true;
-                OrderDisCount = newMoney - OldMoney;//操作用修改应收款的折扣
-                this.lblOrderMoney.Text = this.txtOrderMoney.Text;
-            }
-            catch (Exception)
-            {
-
-                MessageBox.Show("操作失误,总价格为数字", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            }
-        }
+        
     }
 }

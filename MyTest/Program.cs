@@ -1,4 +1,5 @@
-﻿using Dal;
+﻿using Common_API;
+using Dal;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -14,12 +15,29 @@ namespace MyTest
         static void Main(string[] args)
         {
 
-            DeleteNoReceiveMoney();
+            GetHuangLi();
             Console.WriteLine();
             Console.ReadKey();
 
 
         }
+
+        public static  void GetHuangLi()
+        {
+            if (AlmanacApiHelper.GetData())
+            {
+                Console.WriteLine(AlmanacApiHelper.gongli);
+                Console.WriteLine(AlmanacApiHelper.nongli);
+                Console.WriteLine(AlmanacApiHelper.yi);
+                Console.WriteLine(AlmanacApiHelper.ji);
+            }
+            else
+            {
+                Console.WriteLine(AlmanacApiHelper.errMessage);
+            }
+            
+        }
+
 
         #region UserInfo Test
         static void AddUser()

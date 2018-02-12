@@ -8,8 +8,9 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>MyTest</RootNamespace>
     <AssemblyName>MyTest</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,6 +51,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common_Api\Common_API.csproj">
+      <Project>{9CD9ACDB-1339-462B-A736-95A7E92F6799}</Project>
+      <Name>Common_API</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dal\Dal.csproj">
       <Project>{21a5ad8f-0ed9-4076-8d02-da2676f1069d}</Project>
       <Name>Dal</Name>

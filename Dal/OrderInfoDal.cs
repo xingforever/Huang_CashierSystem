@@ -57,5 +57,50 @@ namespace Dal
             return dataTable;
 
         }
+
+        /// <summary>
+        /// 获取今日销售单
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetTodayDataTable(string goodsName="",double mixMoney=0.0,double maxMoney=double.MaxValue)
+        {
+
+            //时间>='2011-8-1 00:00:00' and 时间<='2011-8-10 23:59:59'
+            DateTime DateTime = DateTime.Now.Date;
+            string  TodayTime=    DateTime.ToString("yyyy-MM-dd 00:00:00");
+            DateTime dateTime2 = DateTime + new TimeSpan(1, 0, 0, 0);
+            string TorrowTime= dateTime2.ToString("yyyy-MM-dd 00:00:00");
+            try
+                {
+                    string sql = @"select top 30
+                    OrderInfo.Id,OrderInfo.OrderId,goods.GoodsName as GoodsName,OrderInfo.Count,OrderInfo.DisCount,
+                     OrderInfo.PayPrice,OrderInfo.CreateTime,OrderInfo.Remark
+                     from OrderInfo
+                     inner join GoodsInfo as goods
+                    on OrderInfo.GoodsId = goods.Id Where OrderInfo.DelFlag=False And goods.DelFlag=False   And OrderInfo.CreateTime>=#" + TodayTime + "# And  OrderInfo.CreateTime <=#" + TorrowTime + "#" ;
+                if (goodsName!="")
+                {
+                    sql += "  and goods.GoodsName like '%" + goodsName + "%'";
+                }
+                if (mixMoney>0)
+                {
+                    sql += "  OrderInfo.PayPrice  >" + mixMoney ;
+                }
+                if (maxMoney!=double.MaxValue)
+                {
+                    sql += "  OrderInfo.PayPrice  <" + maxMoney;
+                }
+
+               
+                var dataTable = SqlHelper.GetDataTable(sql);
+                    return dataTable;
+                }
+                catch (Exception ex)
+                {
+                    var e = ex.Message; ;
+                    return null;
+                }
+            
+        }
     }
 }

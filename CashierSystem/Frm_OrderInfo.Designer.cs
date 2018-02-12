@@ -180,6 +180,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Frm_OrderInfo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "订单修改";
             this.Load += new System.EventHandler(this.Frm_OrderInfo_Load);
             this.ResumeLayout(false);

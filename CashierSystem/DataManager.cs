@@ -117,9 +117,9 @@ namespace CashierSystem
                     hideIndex = new GoodsInfo().GetHideIndex();
                     break;
                 case 3:
-                    name = new ProfitsInfo().GetTableName();
-                    handText = new ProfitsInfo().GetHanderTxt();
-                    hideIndex = new ProfitsInfo().GetHideIndex();
+                    name = new OrderInfo().GetTableName();
+                    handText = new OrderInfo().GetHanderTxt();
+                    hideIndex = new OrderInfo().GetHideIndex();
                     break;
                 case 4:
                     name = new UnitInfo().GetTableName();

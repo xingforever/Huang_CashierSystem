@@ -13,6 +13,10 @@ namespace Model
         public  int startIndex { get; set; }
         //个数
         public   int count { get; set; }
+
+        public  DateTime StartTime { get; set;  }
+
+        public  DateTime EndTime { get; set;  }
         //条件列表
         public Dictionary<string, string> dic { get; set; }
 
@@ -21,6 +25,8 @@ namespace Model
             ModelName = "";
             startIndex = 0;
             count = 10;
+            StartTime =new DateTime ();//0001/1/1 0:00:00
+            EndTime = new DateTime();
             dic = new Dictionary<string, string>();
         }
     }

@@ -91,10 +91,13 @@ namespace CashierSystem
                 MessageBox.Show("利润表数据添加失败,如多次失败请联系管理员");
                 return;
             }
-
-
-
+            
             f1.OrdersInfo = new List<OrderInfo>();//清空订单表
+            this.Close();
+        }
+
+        private void btnOrderCancel_Click(object sender, EventArgs e)
+        {
             this.Close();
         }
     }

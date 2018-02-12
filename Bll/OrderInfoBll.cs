@@ -20,5 +20,11 @@ namespace Bll
 
             return dal.GetDataTablebyPammer(searchModel.startIndex, searchModel.count, searchModel.dic);
         }
+
+        public DataTable GetTodayDataTable()
+        {
+            
+            return dal.GetTodayDataTable();
+        }
     }
 }

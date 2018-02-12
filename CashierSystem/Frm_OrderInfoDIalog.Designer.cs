@@ -74,6 +74,7 @@
             this.btnOrderCancel.TabIndex = 1;
             this.btnOrderCancel.Text = "取消";
             this.btnOrderCancel.UseVisualStyleBackColor = true;
+            this.btnOrderCancel.Click += new System.EventHandler(this.btnOrderCancel_Click);
             // 
             // Frm_OrderInfoDIalog
             // 
