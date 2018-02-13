@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonHelper.cs" />
     <Compile Include="ConvertJson.cs" />
+    <Compile Include="IsConnectionNET.cs" />
     <Compile Include="Md5Helper.cs" />
     <Compile Include="PinyinHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

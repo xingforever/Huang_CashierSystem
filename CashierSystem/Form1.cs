@@ -1,4 +1,6 @@
-﻿using Common_Winform;
+﻿using Common;
+using Common_API;
+using Common_Winform;
 using Model;
 using System;
 using System.Collections.Generic;
@@ -21,7 +23,11 @@ namespace CashierSystem
         /// <summary>
         /// 登录操作员ID
         /// </summary>
-        public int LoginId = int.MaxValue;
+        public int loginId = int.MaxValue;
+        /// <summary>
+        /// 是否联网
+        /// </summary>
+        public bool isPingSuccess = false;
         /// <summary>
         /// 管理类
         /// </summary>
@@ -62,7 +68,9 @@ namespace CashierSystem
 
         private void Huang_System_Load(object sender, EventArgs e)
         {
+            isPingSuccess = IsConnectionNET.IsConnect();
             LoadAllDgv();
+            LoadWeatherAndAlmanac();
             tabMain.SelectedIndex = 0;
             SelectIndex = 0;
 
@@ -120,6 +128,41 @@ namespace CashierSystem
           
         }
 
+        public  void LoadWeatherAndAlmanac()
+        {
+            //如果联网成功
+            if (isPingSuccess)
+            {
+                #region 黄历显示
+                var myAlmanac = AlmanacApiHelper.GetAlmanac();
+                if (myAlmanac.IsGetSuccess)
+                {
+                    lblAlmamcDate.Text = myAlmanac.date;
+                    lblAlmamcNongli.Text = myAlmanac.nongli;
+                    lblAlmamcJi.Text = myAlmanac.ji;
+                    lblAlmamcYi.Text = myAlmanac.yi;
+                    lblAlmamcNongli = LabelHelper.GetAutoSizeLabel(lblAlmamcNongli, myAlmanac.nongli);
+                    lblAlmamcDate = LabelHelper.GetAutoSizeLabel(lblAlmamcDate, myAlmanac.date);
+                    lblAlmamcJi = LabelHelper.GetAutoSizeLabel(lblAlmamcJi, myAlmanac.ji);
+                    lblAlmamcYi = LabelHelper.GetAutoSizeLabel(lblAlmamcYi, myAlmanac.yi);
+
+                }
+                else
+                {
+                    lblAlmamcDate.Text = "网络连接失败,黄历无法正常显示";
+                    lblAlmamcNongli.Text = "";
+                    lblAlmamcJi.Text = "";
+                    lblAlmamcYi.Text = "";
+                }
+                #endregion
+
+                var weather = WeatherHelper.GetSupportProvince();
+
+
+
+            }
+        }
+
         /// <summary>
         /// 获取数据并展示在响应的标签页
         /// </summary>
@@ -148,8 +191,10 @@ namespace CashierSystem
                 case 1:
                     if (!(bool)this.dgvTodayOrder.Tag)
                     {
-                        dataTable = DataManager.OrderInfoBLL.GetTodayDataTable();
-                        this.dgvTodayOrder = dataGridViewHelper.FillData(this.dgvTodayOrder, dataTable); this.dgvTodayOrder.Tag = true;
+                        dataTable = DataManager.OrderInfoBLL.GetTodayDataTable(searchModel);
+                        this.dgvTodayOrder = dataGridViewHelper.FillData(this.dgvTodayOrder, dataTable);
+                        LoadTodayOrderInfo(searchModel);
+                            this.dgvTodayOrder.Tag = true;
                     }
                     break;
                 case 3:
@@ -639,6 +684,7 @@ namespace CashierSystem
             if (OrdersInfo.Count < 1)
             {
                 MessageBox.Show("订单表中无商品,请双击商品信息表中信息添加商品", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
             Frm_OrderInfoDIalog frm_Samll = Frm_OrderInfoDIalog.Create();
             frm_Samll.ShowDialog(this);
@@ -764,19 +810,105 @@ namespace CashierSystem
         /// <param name="todayOrderSearch"></param>
         public void LoadTodayOrderInfo(SearchModel todayOrderSearch)
         {
+            string format = "HH:mm:ss";
+            dateTodayOrderStartTime.Format = DateTimePickerFormat.Custom;
+            dateTodayOrderEndTime.Format = DateTimePickerFormat.Custom;
+            dateTodayOrderStartTime.CustomFormat = format;
+            dateTodayOrderEndTime.CustomFormat = format;
             DateTime today = DateTime.Today;
-            //如果搜索添加中含有 时间 则设置,否则 设置为今天0.00
-            TodayOrderStartTime.Value = todayOrderSearch.StartTime.Equals(new DateTime())? today:todayOrderSearch.StartTime;
-            DateTime now = DateTime.Now;
-            TodayOrderEndTime.Value= todayOrderSearch.EndTime.Equals(new DateTime()) ? now : todayOrderSearch.EndTime;
+            //如果搜索添加中含有 时间 则设置,否则 设置开始时间为今天0.00,终止数据为24.00 
+            dateTodayOrderStartTime.Value = todayOrderSearch.StartTime.Equals(new DateTime())? today:todayOrderSearch.StartTime;
+            DateTime todayEnd = DateTime.Today + new TimeSpan(23, 59, 59);           
+            dateTodayOrderEndTime.Value= todayOrderSearch.EndTime.Equals(new DateTime()) ? todayEnd : todayOrderSearch.EndTime;
             string todaySearchMixMoney = "";
             string todaySearchMaxMoney = "";
             string todaySearchGoodsName = "";
             txtTodaySearchMixMoney.Text = todayOrderSearch.dic.TryGetValue("TodaySearchMixMoney", out todaySearchMixMoney) ? todaySearchMixMoney : "";
             txtTodaySearchMaxMoney.Text = todayOrderSearch.dic.TryGetValue("TodaySearchMaxMoney", out todaySearchMaxMoney) ? todaySearchMaxMoney : "";
+            if (todaySearchMixMoney=="0")
+            {
+                txtTodaySearchMixMoney.Text = "";
+            }
+            if (todaySearchMaxMoney==decimal.MaxValue.ToString())
+            {
+                txtTodaySearchMaxMoney.Text = "";
+            }
+            
             txtTodayOrder_SearchName.Text= todayOrderSearch.dic.TryGetValue("TodaySearchGoodsName", out todaySearchGoodsName) ? todaySearchGoodsName : "";
 
+
+
         }
+        /// <summary>
+        /// 今日订单搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnTodayOrder_Click(object sender, EventArgs e)
+        {
+            SearchTodayOrderInfo();
+        }
+        /// <summary>
+        /// 订单搜索
+        /// </summary>
+        /// <param name="startIndex"></param>
+        public  void SearchTodayOrderInfo(int startIndex = 0)
+        {
+            SearchModel searchModel = new SearchModel();
+            searchModel.ModelName = "OrderInfo";
+            searchModel.count = 30;
+            searchModel.startIndex = startIndex;//开始行
+            searchModel.dic = new Dictionary<string, string>();
+            
+            //搜索
+            if (startIndex == 0)
+            {
+                var StartTime = dateTodayOrderStartTime.Value;
+                var EndTime = dateTodayOrderEndTime.Value;
+                decimal  mixMoney = 0;
+                decimal maxMoney = decimal.MaxValue;
+                var mixMoneyString =txtTodaySearchMixMoney.Text.Trim();
+                var maxMoneyString = txtTodaySearchMaxMoney.Text.Trim();
+               var isTrue=  Common.CommonHelper.GetTrueSearchMoney(mixMoneyString, maxMoneyString, out mixMoney, out maxMoney);//用户输入价钱是区间是否合格               
+                if (!isTrue)
+                {
+                    InputWarngs("输入价格区间有误!!");
+                    return;
+                } 
+                if (StartTime>EndTime)
+                {
+                    InputWarngs("输入时间有误!!!");
+                    return;
+                }
+                var goodsName = txtGoodsNameSearch.Text.Trim();               
+                if (goodsName != "")
+                {
+                    searchModel.dic.Add("TodaySearchGoodsName", goodsName);
+                }
+                searchModel.StartTime = StartTime;
+                searchModel.EndTime = EndTime;
+                searchModel.dic.Add("TodaySearchMaxMoney", maxMoney.ToString());
+                searchModel.dic.Add("TodaySearchMixMoney", mixMoney.ToString());
+                
+            }
+            //下一页或者上一页
+            //利用Tag属性 ,标记是否需要再次更新数据
+            this.dgvTodayOrder.Tag = false;//false 表示需要更新
+            GetDgv(1, searchModel);
+        }
+
+        public MyAlmanac GetmyAlmanac()
+        {
+            MyAlmanac myAlmanac = new MyAlmanac();
+            if (isPingSuccess)
+            {
+                myAlmanac = AlmanacApiHelper.GetAlmanac();
+                return myAlmanac;
+            }
+            return null;
+        }
+
+       
 
 
 
@@ -825,12 +957,15 @@ namespace CashierSystem
         {
             MessageBox.Show("未选中行,请单击表格某行 ", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
+        /// <summary>
+        /// 输入信息不符合要求警告
+        /// </summary>
+        /// <param name="messAge"></param>
+        public  void InputWarngs(string messAge="输入有误!")
+        {
+            MessageBox.Show(messAge, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
 
        
-
-       
-      
-
-        
     }
 }

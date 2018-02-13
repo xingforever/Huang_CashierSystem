@@ -62,14 +62,23 @@ namespace Dal
         /// 获取今日销售单
         /// </summary>
         /// <returns></returns>
-        public DataTable GetTodayDataTable(string goodsName="",double mixMoney=0.0,double maxMoney=double.MaxValue)
+        public DataTable GetTodayDataTable(DateTime startTime=new DateTime(),DateTime endTime = new DateTime(), Dictionary<string, string> dic = null)
         {
 
             //时间>='2011-8-1 00:00:00' and 时间<='2011-8-10 23:59:59'
             DateTime DateTime = DateTime.Now.Date;
-            string  TodayTime=    DateTime.ToString("yyyy-MM-dd 00:00:00");
+            string  TodayTimeStart=    DateTime.ToString("yyyy-MM-dd 00:00:00");
             DateTime dateTime2 = DateTime + new TimeSpan(1, 0, 0, 0);
-            string TorrowTime= dateTime2.ToString("yyyy-MM-dd 00:00:00");
+            string TodayTimeEnd= dateTime2.ToString("yyyy-MM-dd 00:00:00");
+            //操作员选择时间端
+            if (!startTime.Equals(new DateTime()))
+            {
+                TodayTimeStart = startTime.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+            if (!endTime.Equals(new DateTime()))
+            {
+                TodayTimeEnd = endTime.ToString("yyyy-MM-dd HH:mm:ss");
+            }
             try
                 {
                     string sql = @"select top 30
@@ -77,20 +86,33 @@ namespace Dal
                      OrderInfo.PayPrice,OrderInfo.CreateTime,OrderInfo.Remark
                      from OrderInfo
                      inner join GoodsInfo as goods
-                    on OrderInfo.GoodsId = goods.Id Where OrderInfo.DelFlag=False And goods.DelFlag=False   And OrderInfo.CreateTime>=#" + TodayTime + "# And  OrderInfo.CreateTime <=#" + TorrowTime + "#" ;
-                if (goodsName!="")
+                    on OrderInfo.GoodsId = goods.Id Where OrderInfo.DelFlag=False And goods.DelFlag=False   And OrderInfo.CreateTime>=#" + TodayTimeStart + "# And  OrderInfo.CreateTime <=#" + TodayTimeEnd + "#" ;
+                ///商品名删选 
+                if (dic !=null)
                 {
-                    sql += "  and goods.GoodsName like '%" + goodsName + "%'";
-                }
-                if (mixMoney>0)
-                {
-                    sql += "  OrderInfo.PayPrice  >" + mixMoney ;
-                }
-                if (maxMoney!=double.MaxValue)
-                {
-                    sql += "  OrderInfo.PayPrice  <" + maxMoney;
-                }
+                    string goodsName = "";
+                    if (dic.TryGetValue("TodaySearchGoodsName", out goodsName))
+                    {
+                        sql += @" and goods." + "GoodsName" + " like '%" + goodsName + "%'";
 
+                    }
+                    //价格筛选
+                    decimal mixMoney = 0;
+                    decimal maxMoney = decimal.MaxValue;
+                    string mixMoneyString = mixMoney.ToString();
+                    string maxMoneyString = maxMoney.ToString();
+                    if (dic.TryGetValue("TodaySearchMixMoney", out mixMoneyString))
+                    {
+                        mixMoney = Convert.ToDecimal(mixMoneyString);
+                        sql += " and  OrderInfo.PayPrice  >" + mixMoney;
+                    }
+                    if (dic.TryGetValue("TodaySearchMaxMoney", out maxMoneyString))
+                    {
+                        maxMoney = Convert.ToDecimal(maxMoneyString);
+                        sql += " and  OrderInfo.PayPrice  <" + maxMoney;
+
+                    }
+                }
                
                 var dataTable = SqlHelper.GetDataTable(sql);
                     return dataTable;

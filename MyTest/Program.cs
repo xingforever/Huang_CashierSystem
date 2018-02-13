@@ -15,10 +15,17 @@ namespace MyTest
         static void Main(string[] args)
         {
 
-            GetHuangLi();
+            GetWeather();
             Console.WriteLine();
             Console.ReadKey();
 
+
+        }
+
+        public static void GetWeather()
+        {
+            var data = WeatherHelper.GetWeather();
+           
 
         }
 

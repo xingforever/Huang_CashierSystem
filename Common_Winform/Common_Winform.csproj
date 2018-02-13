@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="LabelHelper.cs" />
     <Compile Include="DataGridViewHelper.cs" />
     <Compile Include="DoubleClick_DataGridViewCellEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

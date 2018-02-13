@@ -8,8 +8,9 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>CashierSystem</RootNamespace>
     <AssemblyName>CashierSystem</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -126,7 +127,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -145,6 +148,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{089CBDBE-EF09-46E3-9507-0DC012175EDD}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common_Api\Common_API.csproj">
+      <Project>{9CD9ACDB-1339-462B-A736-95A7E92F6799}</Project>
+      <Name>Common_API</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common_Winform\Common_Winform.csproj">
       <Project>{cbc06bbe-0af3-4957-bda9-1a2165a2eca3}</Project>

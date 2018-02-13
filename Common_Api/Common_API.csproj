@@ -39,6 +39,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -46,10 +50,189 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlmanacApiHelper.cs" />
+    <Compile Include="Connected Services\ServiceReference1\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="MyAlmanac.cs" />
+    <Compile Include="MyWeather.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="WeatherHelper.cs" />
+    <Compile Include="Web References\WeatherWeb\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Connected Services\ServiceReference1\WeatherWebService.wsdl" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\WeatherWeb\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\WeatherWeb\WeatherWebService.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://www.webxml.com.cn/WebServices/WeatherWebService.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\WeatherWeb\</RelPath>
+      <UpdateFromURL>http://www.webxml.com.cn/WebServices/WeatherWebService.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Common_API_WeatherWeb_WeatherWebService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Web References\WeatherWeb\WeatherWebService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServiceReference1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceReference1\WeatherWebService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceReference1\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceReference1\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServiceReference1\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="weatherIcon\0.gif" />
+    <Content Include="weatherIcon\1.gif" />
+    <Content Include="weatherIcon\10.gif" />
+    <Content Include="weatherIcon\11.gif" />
+    <Content Include="weatherIcon\12.gif" />
+    <Content Include="weatherIcon\13.gif" />
+    <Content Include="weatherIcon\14.gif" />
+    <Content Include="weatherIcon\15.gif" />
+    <Content Include="weatherIcon\16.gif" />
+    <Content Include="weatherIcon\17.gif" />
+    <Content Include="weatherIcon\18.gif" />
+    <Content Include="weatherIcon\19.gif" />
+    <Content Include="weatherIcon\2.gif" />
+    <Content Include="weatherIcon\20.gif" />
+    <Content Include="weatherIcon\21.gif" />
+    <Content Include="weatherIcon\22.gif" />
+    <Content Include="weatherIcon\23.gif" />
+    <Content Include="weatherIcon\24.gif" />
+    <Content Include="weatherIcon\25.gif" />
+    <Content Include="weatherIcon\26.gif" />
+    <Content Include="weatherIcon\27.gif" />
+    <Content Include="weatherIcon\28.gif" />
+    <Content Include="weatherIcon\29.gif" />
+    <Content Include="weatherIcon\3.gif" />
+    <Content Include="weatherIcon\30.gif" />
+    <Content Include="weatherIcon\31.gif" />
+    <Content Include="weatherIcon\4.gif" />
+    <Content Include="weatherIcon\5.gif" />
+    <Content Include="weatherIcon\6.gif" />
+    <Content Include="weatherIcon\7.gif" />
+    <Content Include="weatherIcon\8.gif" />
+    <Content Include="weatherIcon\9.gif" />
+    <Content Include="weatherIcon\a_0.gif" />
+    <Content Include="weatherIcon\a_1.gif" />
+    <Content Include="weatherIcon\a_10.gif" />
+    <Content Include="weatherIcon\a_11.gif" />
+    <Content Include="weatherIcon\a_12.gif" />
+    <Content Include="weatherIcon\a_13.gif" />
+    <Content Include="weatherIcon\a_14.gif" />
+    <Content Include="weatherIcon\a_15.gif" />
+    <Content Include="weatherIcon\a_16.gif" />
+    <Content Include="weatherIcon\a_17.gif" />
+    <Content Include="weatherIcon\a_18.gif" />
+    <Content Include="weatherIcon\a_19.gif" />
+    <Content Include="weatherIcon\a_2.gif" />
+    <Content Include="weatherIcon\a_20.gif" />
+    <Content Include="weatherIcon\a_21.gif" />
+    <Content Include="weatherIcon\a_22.gif" />
+    <Content Include="weatherIcon\a_23.gif" />
+    <Content Include="weatherIcon\a_24.gif" />
+    <Content Include="weatherIcon\a_25.gif" />
+    <Content Include="weatherIcon\a_26.gif" />
+    <Content Include="weatherIcon\a_27.gif" />
+    <Content Include="weatherIcon\a_28.gif" />
+    <Content Include="weatherIcon\a_29.gif" />
+    <Content Include="weatherIcon\a_3.gif" />
+    <Content Include="weatherIcon\a_30.gif" />
+    <Content Include="weatherIcon\a_31.gif" />
+    <Content Include="weatherIcon\a_4.gif" />
+    <Content Include="weatherIcon\a_5.gif" />
+    <Content Include="weatherIcon\a_6.gif" />
+    <Content Include="weatherIcon\a_7.gif" />
+    <Content Include="weatherIcon\a_8.gif" />
+    <Content Include="weatherIcon\a_9.gif" />
+    <Content Include="weatherIcon\a_nothing.gif" />
+    <Content Include="weatherIcon\b_0.gif" />
+    <Content Include="weatherIcon\b_1.gif" />
+    <Content Include="weatherIcon\b_10.gif" />
+    <Content Include="weatherIcon\b_11.gif" />
+    <Content Include="weatherIcon\b_12.gif" />
+    <Content Include="weatherIcon\b_13.gif" />
+    <Content Include="weatherIcon\b_14.gif" />
+    <Content Include="weatherIcon\b_15.gif" />
+    <Content Include="weatherIcon\b_16.gif" />
+    <Content Include="weatherIcon\b_17.gif" />
+    <Content Include="weatherIcon\b_18.gif" />
+    <Content Include="weatherIcon\b_19.gif" />
+    <Content Include="weatherIcon\b_2.gif" />
+    <Content Include="weatherIcon\b_20.gif" />
+    <Content Include="weatherIcon\b_21.gif" />
+    <Content Include="weatherIcon\b_22.gif" />
+    <Content Include="weatherIcon\b_23.gif" />
+    <Content Include="weatherIcon\b_24.gif" />
+    <Content Include="weatherIcon\b_25.gif" />
+    <Content Include="weatherIcon\b_26.gif" />
+    <Content Include="weatherIcon\b_27.gif" />
+    <Content Include="weatherIcon\b_28.gif" />
+    <Content Include="weatherIcon\b_29.gif" />
+    <Content Include="weatherIcon\b_3.gif" />
+    <Content Include="weatherIcon\b_30.gif" />
+    <Content Include="weatherIcon\b_31.gif" />
+    <Content Include="weatherIcon\b_4.gif" />
+    <Content Include="weatherIcon\b_5.gif" />
+    <Content Include="weatherIcon\b_6.gif" />
+    <Content Include="weatherIcon\b_7.gif" />
+    <Content Include="weatherIcon\b_8.gif" />
+    <Content Include="weatherIcon\b_9.gif" />
+    <Content Include="weatherIcon\b_nothing.gif" />
+    <Content Include="weatherIcon\nothing.gif" />
+    <Content Include="weatherIcon\Read me.txt" />
+    <Content Include="weatherIcon\r_b.gif" />
+    <Content Include="weatherIcon\r_t1.gif" />
+    <Content Include="weatherIcon\tem1.gif" />
+    <Content Include="weatherIcon\tem2.gif" />
+    <Content Include="weatherIcon\tem3.gif" />
+    <Content Include="weatherIcon\tem4.gif" />
+    <Content Include="weatherIcon\tem5.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

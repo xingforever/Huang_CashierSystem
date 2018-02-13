@@ -144,15 +144,10 @@
             this.panel11 = new System.Windows.Forms.Panel();
             this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.label19 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.button5 = new System.Windows.Forms.Button();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
             this.tabGoodsManager = new System.Windows.Forms.TabPage();
             this.statusStrip7 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel35 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -252,30 +247,52 @@
             this.toolStripStatusLabel34 = new System.Windows.Forms.ToolStripStatusLabel();
             this.dgvTodayOrder = new System.Windows.Forms.DataGridView();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.label26 = new System.Windows.Forms.Label();
+            this.panel13 = new System.Windows.Forms.Panel();
             this.label27 = new System.Windows.Forms.Label();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.TodayOrderStartTime = new System.Windows.Forms.DateTimePicker();
+            this.dateTodayOrderEndTime = new System.Windows.Forms.DateTimePicker();
+            this.dateTodayOrderStartTime = new System.Windows.Forms.DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.txtTodaySearchMaxMoney = new System.Windows.Forms.TextBox();
             this.txtTodaySearchMixMoney = new System.Windows.Forms.TextBox();
             this.txtTodayOrder_SearchName = new System.Windows.Forms.TextBox();
             this.btnTodayOrder = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.TodayOrderEndTime = new System.Windows.Forms.DateTimePicker();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
+            this.lblAlmamcDate = new System.Windows.Forms.Label();
+            this.lblAlmamcNongli = new System.Windows.Forms.Label();
+            this.lblAlmamcJi = new System.Windows.Forms.Label();
+            this.lblAlmamcYi = new System.Windows.Forms.Label();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.label42 = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
+            this.lblChangeWeather = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.lblWeatherTime = new System.Windows.Forms.Label();
+            this.lblWeatherTemperature = new System.Windows.Forms.Label();
+            this.lblWaterSummary = new System.Windows.Forms.Label();
+            this.lblWeatherWind = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tabUserInfoManager.SuspendLayout();
             this.statusStrip5.SuspendLayout();
@@ -318,13 +335,16 @@
             this.statusStrip6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTodayOrder)).BeginInit();
             this.panel6.SuspendLayout();
+            this.panel13.SuspendLayout();
+            this.panel12.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panel14.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.panel14);
             this.panel1.Controls.Add(this.label29);
-            this.panel1.Controls.Add(this.label28);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -335,7 +355,7 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label29.Location = new System.Drawing.Point(829, 59);
+            this.label29.Location = new System.Drawing.Point(630, 61);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(56, 16);
             this.label29.TabIndex = 0;
@@ -345,7 +365,7 @@
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label28.Location = new System.Drawing.Point(829, 9);
+            this.label28.Location = new System.Drawing.Point(105, 0);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(40, 16);
             this.label28.TabIndex = 0;
@@ -1177,17 +1197,13 @@
             // panel11
             // 
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel11.Controls.Add(this.label19);
             this.panel11.Controls.Add(this.dateTimePicker3);
             this.panel11.Controls.Add(this.dateTimePicker2);
-            this.panel11.Controls.Add(this.label19);
             this.panel11.Controls.Add(this.label17);
             this.panel11.Controls.Add(this.textBox10);
             this.panel11.Controls.Add(this.button5);
-            this.panel11.Controls.Add(this.comboBox7);
-            this.panel11.Controls.Add(this.comboBox8);
             this.panel11.Controls.Add(this.label18);
-            this.panel11.Controls.Add(this.label21);
-            this.panel11.Controls.Add(this.label22);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(0, 0);
             this.panel11.Name = "panel11";
@@ -1197,7 +1213,7 @@
             // dateTimePicker3
             // 
             this.dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker3.Location = new System.Drawing.Point(602, 15);
+            this.dateTimePicker3.Location = new System.Drawing.Point(265, 13);
             this.dateTimePicker3.Name = "dateTimePicker3";
             this.dateTimePicker3.Size = new System.Drawing.Size(85, 21);
             this.dateTimePicker3.TabIndex = 28;
@@ -1205,35 +1221,25 @@
             // dateTimePicker2
             // 
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(429, 11);
+            this.dateTimePicker2.Location = new System.Drawing.Point(118, 11);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(85, 21);
             this.dateTimePicker2.TabIndex = 28;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label19.Location = new System.Drawing.Point(520, 18);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(72, 16);
-            this.label19.TabIndex = 27;
-            this.label19.Text = "进货日期";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(349, 14);
+            this.label17.Location = new System.Drawing.Point(24, 14);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(72, 16);
             this.label17.TabIndex = 27;
-            this.label17.Text = "进货日期";
+            this.label17.Text = "销售日期";
             // 
             // textBox10
             // 
             this.textBox10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox10.Location = new System.Drawing.Point(775, 10);
+            this.textBox10.Location = new System.Drawing.Point(507, 9);
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(134, 26);
             this.textBox10.TabIndex = 23;
@@ -1241,30 +1247,12 @@
             // button5
             // 
             this.button5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button5.Location = new System.Drawing.Point(917, 10);
+            this.button5.Location = new System.Drawing.Point(672, 10);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(88, 25);
             this.button5.TabIndex = 22;
             this.button5.Text = "搜索";
             this.button5.UseVisualStyleBackColor = true;
-            // 
-            // comboBox7
-            // 
-            this.comboBox7.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(263, 11);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(78, 24);
-            this.comboBox7.TabIndex = 20;
-            // 
-            // comboBox8
-            // 
-            this.comboBox8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Location = new System.Drawing.Point(79, 10);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(96, 24);
-            this.comboBox8.TabIndex = 21;
             // 
             // label18
             // 
@@ -1273,37 +1261,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(695, 14);
+            this.label18.Location = new System.Drawing.Point(427, 13);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(72, 16);
             this.label18.TabIndex = 16;
             this.label18.Text = "商品名称";
-            // 
-            // label21
-            // 
-            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label21.Location = new System.Drawing.Point(181, 17);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(72, 16);
-            this.label21.TabIndex = 18;
-            this.label21.Text = "商品单位";
-            // 
-            // label22
-            // 
-            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label22.Location = new System.Drawing.Point(-1, 13);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(72, 16);
-            this.label22.TabIndex = 19;
-            this.label22.Text = "商品类别";
             // 
             // tabGoodsManager
             // 
@@ -2283,69 +2245,180 @@
             // panel6
             // 
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel6.Controls.Add(this.label36);
-            this.panel6.Controls.Add(this.label37);
-            this.panel6.Controls.Add(this.label35);
-            this.panel6.Controls.Add(this.label34);
-            this.panel6.Controls.Add(this.label32);
-            this.panel6.Controls.Add(this.label31);
-            this.panel6.Controls.Add(this.label30);
-            this.panel6.Controls.Add(this.label26);
-            this.panel6.Controls.Add(this.label27);
-            this.panel6.Controls.Add(this.label25);
-            this.panel6.Controls.Add(this.label33);
-            this.panel6.Controls.Add(this.label10);
+            this.panel6.Controls.Add(this.panel13);
+            this.panel6.Controls.Add(this.panel12);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel6.Location = new System.Drawing.Point(865, 70);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(200, 294);
             this.panel6.TabIndex = 3;
             // 
-            // label26
+            // panel13
             // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label26.Location = new System.Drawing.Point(14, 257);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(64, 16);
-            this.label26.TabIndex = 0;
-            this.label26.Text = "净利润:";
+            this.panel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel13.Controls.Add(this.lblAlmamcYi);
+            this.panel13.Controls.Add(this.lblAlmamcJi);
+            this.panel13.Controls.Add(this.lblAlmamcNongli);
+            this.panel13.Controls.Add(this.lblAlmamcDate);
+            this.panel13.Controls.Add(this.label41);
+            this.panel13.Controls.Add(this.label40);
+            this.panel13.Controls.Add(this.label39);
+            this.panel13.Controls.Add(this.label38);
+            this.panel13.Controls.Add(this.label27);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel13.Location = new System.Drawing.Point(0, 0);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(198, 126);
+            this.panel13.TabIndex = 2;
             // 
             // label27
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label27.Location = new System.Drawing.Point(5, 2);
+            this.label27.Location = new System.Drawing.Point(78, 1);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(40, 16);
-            this.label27.TabIndex = 0;
+            this.label27.TabIndex = 1;
             this.label27.Text = "黄历";
+            // 
+            // panel12
+            // 
+            this.panel12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel12.Controls.Add(this.label36);
+            this.panel12.Controls.Add(this.label37);
+            this.panel12.Controls.Add(this.label35);
+            this.panel12.Controls.Add(this.label34);
+            this.panel12.Controls.Add(this.label32);
+            this.panel12.Controls.Add(this.label31);
+            this.panel12.Controls.Add(this.label30);
+            this.panel12.Controls.Add(this.label26);
+            this.panel12.Controls.Add(this.label25);
+            this.panel12.Controls.Add(this.label33);
+            this.panel12.Controls.Add(this.label10);
+            this.panel12.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel12.Location = new System.Drawing.Point(0, 126);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(198, 166);
+            this.panel12.TabIndex = 1;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label36.Location = new System.Drawing.Point(77, 126);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(19, 20);
+            this.label36.TabIndex = 13;
+            this.label36.Text = "¥";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label37.Location = new System.Drawing.Point(90, 87);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(19, 20);
+            this.label37.TabIndex = 14;
+            this.label37.Text = "¥";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label35.Location = new System.Drawing.Point(88, 48);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(19, 20);
+            this.label35.TabIndex = 15;
+            this.label35.Text = "¥";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label34.ForeColor = System.Drawing.Color.Black;
+            this.label34.Location = new System.Drawing.Point(119, 87);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(58, 24);
+            this.label34.TabIndex = 10;
+            this.label34.Text = "0.00";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label32.ForeColor = System.Drawing.Color.Black;
+            this.label32.Location = new System.Drawing.Point(117, 48);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(58, 24);
+            this.label32.TabIndex = 11;
+            this.label32.Text = "0.00";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label31.ForeColor = System.Drawing.Color.Red;
+            this.label31.Location = new System.Drawing.Point(102, 126);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(73, 29);
+            this.label31.TabIndex = 12;
+            this.label31.Text = "0.00";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label30.Location = new System.Drawing.Point(153, 15);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(24, 16);
+            this.label30.TabIndex = 9;
+            this.label30.Text = "次";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label26.Location = new System.Drawing.Point(20, 129);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(64, 16);
+            this.label26.TabIndex = 5;
+            this.label26.Text = "净利润:";
             // 
             // label25
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label25.Location = new System.Drawing.Point(14, 148);
+            this.label25.Location = new System.Drawing.Point(20, 15);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(64, 16);
-            this.label25.TabIndex = 0;
-            this.label25.Text = "共交易:";
+            this.label25.Size = new System.Drawing.Size(96, 16);
+            this.label25.TabIndex = 6;
+            this.label25.Text = "今日共交易:";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label33.Location = new System.Drawing.Point(20, 87);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(64, 16);
+            this.label33.TabIndex = 7;
+            this.label33.Text = "待收款:";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(14, 181);
+            this.label10.Location = new System.Drawing.Point(18, 48);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(64, 16);
-            this.label10.TabIndex = 0;
+            this.label10.TabIndex = 8;
             this.label10.Text = "共收款:";
             // 
             // panel5
             // 
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.TodayOrderEndTime);
-            this.panel5.Controls.Add(this.TodayOrderStartTime);
+            this.panel5.Controls.Add(this.dateTodayOrderEndTime);
+            this.panel5.Controls.Add(this.dateTodayOrderStartTime);
             this.panel5.Controls.Add(this.label7);
             this.panel5.Controls.Add(this.label8);
             this.panel5.Controls.Add(this.txtTodaySearchMaxMoney);
@@ -2361,20 +2434,41 @@
             this.panel5.Size = new System.Drawing.Size(1062, 67);
             this.panel5.TabIndex = 0;
             // 
-            // TodayOrderStartTime
+            // dateTodayOrderEndTime
             // 
-            this.TodayOrderStartTime.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TodayOrderStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.TodayOrderStartTime.Location = new System.Drawing.Point(82, 23);
-            this.TodayOrderStartTime.Name = "TodayOrderStartTime";
-            this.TodayOrderStartTime.Size = new System.Drawing.Size(91, 26);
-            this.TodayOrderStartTime.TabIndex = 16;
+            this.dateTodayOrderEndTime.CustomFormat = "HH:mm:ss";
+            this.dateTodayOrderEndTime.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dateTodayOrderEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dateTodayOrderEndTime.Location = new System.Drawing.Point(217, 23);
+            this.dateTodayOrderEndTime.Name = "dateTodayOrderEndTime";
+            this.dateTodayOrderEndTime.Size = new System.Drawing.Size(84, 26);
+            this.dateTodayOrderEndTime.TabIndex = 16;
+            // 
+            // dateTodayOrderStartTime
+            // 
+            this.dateTodayOrderStartTime.CustomFormat = "HH:mm:ss";
+            this.dateTodayOrderStartTime.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dateTodayOrderStartTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTodayOrderStartTime.Location = new System.Drawing.Point(82, 23);
+            this.dateTodayOrderStartTime.Name = "dateTodayOrderStartTime";
+            this.dateTodayOrderStartTime.Size = new System.Drawing.Size(91, 26);
+            this.dateTodayOrderStartTime.TabIndex = 16;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(189, 30);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(22, 24);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "~";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(461, 28);
+            this.label8.Location = new System.Drawing.Point(448, 30);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(22, 24);
             this.label8.TabIndex = 15;
@@ -2383,9 +2477,9 @@
             // txtTodaySearchMaxMoney
             // 
             this.txtTodaySearchMaxMoney.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtTodaySearchMaxMoney.Location = new System.Drawing.Point(489, 23);
+            this.txtTodaySearchMaxMoney.Location = new System.Drawing.Point(476, 23);
             this.txtTodaySearchMaxMoney.Name = "txtTodaySearchMaxMoney";
-            this.txtTodaySearchMaxMoney.Size = new System.Drawing.Size(73, 26);
+            this.txtTodaySearchMaxMoney.Size = new System.Drawing.Size(104, 26);
             this.txtTodaySearchMaxMoney.TabIndex = 13;
             // 
             // txtTodaySearchMixMoney
@@ -2395,6 +2489,7 @@
             this.txtTodaySearchMixMoney.Name = "txtTodaySearchMixMoney";
             this.txtTodaySearchMixMoney.Size = new System.Drawing.Size(79, 26);
             this.txtTodaySearchMixMoney.TabIndex = 14;
+            this.txtTodaySearchMixMoney.Text = "0.00";
             // 
             // txtTodayOrder_SearchName
             // 
@@ -2413,6 +2508,7 @@
             this.btnTodayOrder.TabIndex = 11;
             this.btnTodayOrder.Text = "搜索";
             this.btnTodayOrder.UseVisualStyleBackColor = true;
+            this.btnTodayOrder.Click += new System.EventHandler(this.btnTodayOrder_Click);
             // 
             // label5
             // 
@@ -2427,19 +2523,6 @@
             this.label5.TabIndex = 5;
             this.label5.Text = "商品名称";
             // 
-            // label9
-            // 
-            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(317, 26);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(40, 16);
-            this.label9.TabIndex = 6;
-            this.label9.Text = "价格";
-            // 
             // label6
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -2453,107 +2536,210 @@
             this.label6.TabIndex = 6;
             this.label6.Text = "售货时间";
             // 
-            // label7
+            // label9
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(189, 30);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(22, 24);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "~";
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label9.Location = new System.Drawing.Point(317, 26);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(40, 16);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "价格";
             // 
-            // TodayOrderEndTime
+            // label38
             // 
-            this.TodayOrderEndTime.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TodayOrderEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.TodayOrderEndTime.Location = new System.Drawing.Point(217, 23);
-            this.TodayOrderEndTime.Name = "TodayOrderEndTime";
-            this.TodayOrderEndTime.Size = new System.Drawing.Size(84, 26);
-            this.TodayOrderEndTime.TabIndex = 16;
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(5, 31);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(35, 12);
+            this.label38.TabIndex = 2;
+            this.label38.Text = "日期:";
             // 
-            // label30
+            // label39
             // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label30.Location = new System.Drawing.Point(147, 148);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(24, 16);
-            this.label30.TabIndex = 1;
-            this.label30.Text = "次";
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(5, 57);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(35, 12);
+            this.label39.TabIndex = 2;
+            this.label39.Text = "农历:";
             // 
-            // label31
+            // label40
             // 
-            this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label31.ForeColor = System.Drawing.Color.Red;
-            this.label31.Location = new System.Drawing.Point(96, 254);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(73, 29);
-            this.label31.TabIndex = 3;
-            this.label31.Text = "0.00";
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(5, 83);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(23, 12);
+            this.label40.TabIndex = 3;
+            this.label40.Text = "忌:";
             // 
-            // label32
+            // label41
             // 
-            this.label32.AutoSize = true;
-            this.label32.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label32.ForeColor = System.Drawing.Color.Black;
-            this.label32.Location = new System.Drawing.Point(113, 181);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(58, 24);
-            this.label32.TabIndex = 3;
-            this.label32.Text = "0.00";
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(3, 110);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(23, 12);
+            this.label41.TabIndex = 3;
+            this.label41.Text = "宜:";
             // 
-            // label33
+            // lblAlmamcDate
             // 
-            this.label33.AutoSize = true;
-            this.label33.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label33.Location = new System.Drawing.Point(14, 213);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(64, 16);
-            this.label33.TabIndex = 0;
-            this.label33.Text = "待收款:";
+            this.lblAlmamcDate.AutoSize = true;
+            this.lblAlmamcDate.Location = new System.Drawing.Point(47, 31);
+            this.lblAlmamcDate.Name = "lblAlmamcDate";
+            this.lblAlmamcDate.Size = new System.Drawing.Size(47, 12);
+            this.lblAlmamcDate.TabIndex = 4;
+            this.lblAlmamcDate.Text = "label42";
             // 
-            // label34
+            // lblAlmamcNongli
             // 
-            this.label34.AutoSize = true;
-            this.label34.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label34.ForeColor = System.Drawing.Color.Black;
-            this.label34.Location = new System.Drawing.Point(113, 213);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(58, 24);
-            this.label34.TabIndex = 3;
-            this.label34.Text = "0.00";
+            this.lblAlmamcNongli.AutoSize = true;
+            this.lblAlmamcNongli.Location = new System.Drawing.Point(46, 57);
+            this.lblAlmamcNongli.Name = "lblAlmamcNongli";
+            this.lblAlmamcNongli.Size = new System.Drawing.Size(47, 12);
+            this.lblAlmamcNongli.TabIndex = 4;
+            this.lblAlmamcNongli.Text = "label42";
             // 
-            // label35
+            // lblAlmamcJi
             // 
-            this.label35.AutoSize = true;
-            this.label35.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label35.Location = new System.Drawing.Point(84, 181);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(19, 20);
-            this.label35.TabIndex = 4;
-            this.label35.Text = "¥";
+            this.lblAlmamcJi.AutoSize = true;
+            this.lblAlmamcJi.Location = new System.Drawing.Point(46, 83);
+            this.lblAlmamcJi.Name = "lblAlmamcJi";
+            this.lblAlmamcJi.Size = new System.Drawing.Size(47, 12);
+            this.lblAlmamcJi.TabIndex = 4;
+            this.lblAlmamcJi.Text = "label42";
             // 
-            // label36
+            // lblAlmamcYi
             // 
-            this.label36.AutoSize = true;
-            this.label36.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label36.Location = new System.Drawing.Point(71, 254);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(19, 20);
-            this.label36.TabIndex = 4;
-            this.label36.Text = "¥";
+            this.lblAlmamcYi.AutoSize = true;
+            this.lblAlmamcYi.Location = new System.Drawing.Point(47, 110);
+            this.lblAlmamcYi.Name = "lblAlmamcYi";
+            this.lblAlmamcYi.Size = new System.Drawing.Size(47, 12);
+            this.lblAlmamcYi.TabIndex = 4;
+            this.lblAlmamcYi.Text = "label42";
             // 
-            // label37
+            // panel14
             // 
-            this.label37.AutoSize = true;
-            this.label37.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label37.Location = new System.Drawing.Point(84, 213);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(19, 20);
-            this.label37.TabIndex = 4;
-            this.label37.Text = "¥";
+            this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel14.Controls.Add(this.lblWaterSummary);
+            this.panel14.Controls.Add(this.lblWeatherTemperature);
+            this.panel14.Controls.Add(this.lblWeatherWind);
+            this.panel14.Controls.Add(this.lblWeatherTime);
+            this.panel14.Controls.Add(this.label47);
+            this.panel14.Controls.Add(this.lblChangeWeather);
+            this.panel14.Controls.Add(this.label45);
+            this.panel14.Controls.Add(this.label44);
+            this.panel14.Controls.Add(this.label43);
+            this.panel14.Controls.Add(this.label42);
+            this.panel14.Controls.Add(this.label28);
+            this.panel14.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel14.Location = new System.Drawing.Point(791, 0);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(285, 78);
+            this.panel14.TabIndex = 1;
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(3, 23);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(35, 12);
+            this.label42.TabIndex = 1;
+            this.label42.Text = "时间:";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(-3, 64);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(59, 12);
+            this.label43.TabIndex = 2;
+            this.label43.Text = "天气情况:";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(3, 44);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(29, 12);
+            this.label44.TabIndex = 3;
+            this.label44.Text = "温度";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(157, 23);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(29, 12);
+            this.label45.TabIndex = 4;
+            this.label45.Text = "风力";
+            // 
+            // lblChangeWeather
+            // 
+            this.lblChangeWeather.AutoSize = true;
+            this.lblChangeWeather.Location = new System.Drawing.Point(169, 57);
+            this.lblChangeWeather.Name = "lblChangeWeather";
+            this.lblChangeWeather.Size = new System.Drawing.Size(17, 12);
+            this.lblChangeWeather.TabIndex = 5;
+            this.lblChangeWeather.Text = ">>";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(212, 57);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(29, 12);
+            this.label47.TabIndex = 6;
+            this.label47.Text = "设置";
+            // 
+            // lblWeatherTime
+            // 
+            this.lblWeatherTime.AutoSize = true;
+            this.lblWeatherTime.Location = new System.Drawing.Point(45, 23);
+            this.lblWeatherTime.Name = "lblWeatherTime";
+            this.lblWeatherTime.Size = new System.Drawing.Size(53, 12);
+            this.lblWeatherTime.TabIndex = 7;
+            this.lblWeatherTime.Text = "dateTime";
+            // 
+            // lblWeatherTemperature
+            // 
+            this.lblWeatherTemperature.AutoSize = true;
+            this.lblWeatherTemperature.Location = new System.Drawing.Point(45, 44);
+            this.lblWeatherTemperature.Name = "lblWeatherTemperature";
+            this.lblWeatherTemperature.Size = new System.Drawing.Size(113, 12);
+            this.lblWeatherTemperature.TabIndex = 7;
+            this.lblWeatherTemperature.Text = "WeatherTemperature";
+            // 
+            // lblWaterSummary
+            // 
+            this.lblWaterSummary.AutoSize = true;
+            this.lblWaterSummary.Location = new System.Drawing.Point(54, 62);
+            this.lblWaterSummary.Name = "lblWaterSummary";
+            this.lblWaterSummary.Size = new System.Drawing.Size(77, 12);
+            this.lblWaterSummary.TabIndex = 7;
+            this.lblWaterSummary.Text = "WaterSummary";
+            // 
+            // lblWeatherWind
+            // 
+            this.lblWeatherWind.AutoSize = true;
+            this.lblWeatherWind.Location = new System.Drawing.Point(192, 23);
+            this.lblWeatherWind.Name = "lblWeatherWind";
+            this.lblWeatherWind.Size = new System.Drawing.Size(71, 12);
+            this.lblWeatherWind.TabIndex = 7;
+            this.lblWeatherWind.Text = "WeatherWind";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label19.Location = new System.Drawing.Point(225, 17);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(22, 24);
+            this.label19.TabIndex = 29;
+            this.label19.Text = "~";
             // 
             // Huang_System
             // 
@@ -2639,9 +2825,14 @@
             this.statusStrip6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTodayOrder)).EndInit();
             this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
+            this.panel12.ResumeLayout(false);
+            this.panel12.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            this.panel14.ResumeLayout(false);
+            this.panel14.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2745,15 +2936,10 @@
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.DateTimePicker dateTimePicker3;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.ComboBox comboBox7;
-        private System.Windows.Forms.ComboBox comboBox8;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label11;
@@ -2767,7 +2953,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtTodaySearchMaxMoney;
         private System.Windows.Forms.TextBox txtTodaySearchMixMoney;
@@ -2853,13 +3038,13 @@
         private System.Windows.Forms.TextBox txtOrderMoney;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.DateTimePicker TodayOrderStartTime;
-        private System.Windows.Forms.DateTimePicker TodayOrderEndTime;
+        private System.Windows.Forms.DateTimePicker dateTodayOrderStartTime;
+        private System.Windows.Forms.DateTimePicker dateTodayOrderEndTime;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label35;
@@ -2867,7 +3052,30 @@
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lblAlmamcYi;
+        private System.Windows.Forms.Label lblAlmamcJi;
+        private System.Windows.Forms.Label lblAlmamcNongli;
+        private System.Windows.Forms.Label lblAlmamcDate;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.Label lblWeatherTemperature;
+        private System.Windows.Forms.Label lblWeatherTime;
+        private System.Windows.Forms.Label label47;
+        private System.Windows.Forms.Label lblChangeWeather;
+        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.Label lblWaterSummary;
+        private System.Windows.Forms.Label lblWeatherWind;
+        private System.Windows.Forms.Label label19;
     }
 }
 

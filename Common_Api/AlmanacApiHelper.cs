@@ -19,24 +19,23 @@ namespace Common_API
 
         public static  string my_appSecret = "0c16da7aff6840e7ad5e52da243ff699";//密匙
 
-        public static string nongli;//农历
-        public static string errMessage;
-
-        public static string gongli;//公历
-        public static string yi;//宜
-        public static string ji;//忌
-
-        public static string  date;
+     
         AlmanacApiHelper()
         {
          
 
         }
+     
 
-        public  static bool GetData()
+        public  static MyAlmanac GetAlmanac(DateTime dateTime =new DateTime())
         {
-            DateTime dateTime = DateTime.Today;
-            date = dateTime.ToString("yyyyMMdd");
+            MyAlmanac myAlmanac = new MyAlmanac();
+            if (dateTime.Equals(new DateTime()))
+            {
+                dateTime = DateTime.Today;
+            }
+           
+           var  date = dateTime.ToString("yyyyMMdd");
             String jsonStr = new ShowApiRequest("http://route.showapi.com/856-1", my_appId, my_appSecret)
             .addTextPara("date", date)
             .post();
@@ -47,17 +46,20 @@ namespace Common_API
             if (isSuccess)
             {
                 JObject jrobj = (JObject)JsonConvert.DeserializeObject((obj["showapi_res_body"].ToString()));//黄历结构体的主要数据
-                nongli = jrobj["nongli"].ToString();
-                gongli= jrobj["gongli"].ToString();
-                ji= jrobj["ji"].ToString();
-                yi= jrobj["yi"].ToString();
+                myAlmanac.date = date;
+                myAlmanac.nongli = jrobj["nongli"].ToString();
+                myAlmanac.gongli = jrobj["gongli"].ToString();
+                myAlmanac. ji = jrobj["ji"].ToString();
+                myAlmanac.yi = jrobj["yi"].ToString();
+                myAlmanac.IsGetSuccess = true;
             }
             else
             {
-                errMessage = obj["showapi_res_error"].ToString();
+                myAlmanac.IsGetSuccess = false;
+                myAlmanac. errMessage = obj["showapi_res_error"].ToString();
             }
 
-            return isSuccess;
+            return myAlmanac;
 
         }
       
