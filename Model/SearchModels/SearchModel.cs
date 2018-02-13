@@ -24,7 +24,7 @@ namespace Model
         {
             ModelName = "";
             startIndex = 0;
-            count = 10;
+            count = 30;
             StartTime =new DateTime ();//0001/1/1 0:00:00
             EndTime = new DateTime();
             dic = new Dictionary<string, string>();

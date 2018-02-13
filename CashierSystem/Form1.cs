@@ -104,22 +104,23 @@ namespace CashierSystem
                 {
                     this.dgvAllOrder.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
                     this.dgvAllOrder = dataGridViewHelper.Init(this.dgvAllOrder, nameList, handerTxt, hideIndex);
-                    GetDgv(1);
+                    GetDgv(3);
                 }
-                else  if (i == 4)
+                
+                else  if (i == 6)
                 {
                     this.dgvUnitInfo.Tag = false;
                     this.dgvUnitInfo = dataGridViewHelper.Init(this.dgvUnitInfo, nameList, handerTxt,  hideIndex);
-                }else if (i == 5)
+                }else if (i == 7)
                 {
                     this.dgvSortInfo.Tag = false;
                     this.dgvSortInfo = dataGridViewHelper.Init(this.dgvSortInfo, nameList, handerTxt,  hideIndex);
                 }
-               else if (i == 6)
+               else if (i == 8)
                 {
                     this.dgvWholeSalerInfo.Tag = false;
                     this.dgvWholeSalerInfo = dataGridViewHelper.Init(this.dgvWholeSalerInfo, nameList, handerTxt,  hideIndex);
-                }else if (i == 7)
+                }else if (i == 9)
                 {
                     this.dgvUnitInfo.Tag = false;
                     this.dgvUserInfo = dataGridViewHelper.Init(this.dgvUserInfo, handerTxt, nameList,  hideIndex);
@@ -127,7 +128,9 @@ namespace CashierSystem
             }
           
         }
-
+        /// <summary>
+        /// 初始化,加载黄历与天气
+        /// </summary>
         public  void LoadWeatherAndAlmanac()
         {
             //如果联网成功
@@ -202,25 +205,26 @@ namespace CashierSystem
                     {
                         dataTable = DataManager.OrderInfoBLL.GetDataTablebyPammer(searchModel);
                         this.dgvAllOrder = dataGridViewHelper.FillData(this.dgvAllOrder, dataTable);
+                        LoadAllOrderInfo(searchModel);
                         this.dgvAllOrder.Tag = true;
                     }
                     break;
-                case 4:
+                case 6:
                     dataTable = DataManager.UnitInfoBLL.GetDataTable();
                     this.dgvUnitInfo = dataGridViewHelper.FillData(this.dgvUnitInfo, dataTable);
                     this.tspUnitInfoCount.Text = dataTable.Rows.Count.ToString();
                     break;
-                case 5:
+                case 7:
                     dataTable = DataManager.SortInfoBLL.GetDataTable();
                     this.dgvSortInfo = dataGridViewHelper.FillData(this.dgvSortInfo, dataTable);
                     this.tspSortInfoCount.Text = dataTable.Rows.Count.ToString();
                     break;
-                case 6:
+                case 8:
                     dataTable = DataManager.WholeSalerInfoBLL.GetDataTable();
                     this.dgvWholeSalerInfo = dataGridViewHelper.FillData(this.dgvWholeSalerInfo, dataTable);
                     this.tspWholeSalerInfoCount.Text = dataTable.Rows.Count.ToString();
                     break;
-                case 7:
+                case 9:
                     dataTable = DataManager.UserInfoBLL.GetDataTable();
                     this.dgvUserInfo = dataGridViewHelper.FillData(this.dgvUserInfo, dataTable);
                     this.tspUserCount.Text = dataTable.Rows.Count.ToString();
@@ -492,9 +496,7 @@ namespace CashierSystem
             sortId = goodsSearch.dic.TryGetValue("SortId", out sortId) ? sortId : "0";
             cbxUnitInfo.SelectedValue = Convert.ToInt32(unitId);
             cbxSortsInfo.SelectedValue = Convert.ToInt32(sortId);
-
             
-
         }
         /// <summary>
         /// 搜索商品信息
@@ -799,10 +801,9 @@ namespace CashierSystem
                 MessageBox.Show("操作失误,总价格为数字", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
             }
-        } 
+        }
         #endregion
-
-
+        #region 今日订单展示
 
         /// <summary>
         /// 初始化今日订单表
@@ -817,24 +818,24 @@ namespace CashierSystem
             dateTodayOrderEndTime.CustomFormat = format;
             DateTime today = DateTime.Today;
             //如果搜索添加中含有 时间 则设置,否则 设置开始时间为今天0.00,终止数据为24.00 
-            dateTodayOrderStartTime.Value = todayOrderSearch.StartTime.Equals(new DateTime())? today:todayOrderSearch.StartTime;
-            DateTime todayEnd = DateTime.Today + new TimeSpan(23, 59, 59);           
-            dateTodayOrderEndTime.Value= todayOrderSearch.EndTime.Equals(new DateTime()) ? todayEnd : todayOrderSearch.EndTime;
+            dateTodayOrderStartTime.Value = todayOrderSearch.StartTime.Equals(new DateTime()) ? today : todayOrderSearch.StartTime;
+            DateTime todayEnd = DateTime.Today + new TimeSpan(23, 59, 59);
+            dateTodayOrderEndTime.Value = todayOrderSearch.EndTime.Equals(new DateTime()) ? todayEnd : todayOrderSearch.EndTime;
             string todaySearchMixMoney = "";
             string todaySearchMaxMoney = "";
             string todaySearchGoodsName = "";
             txtTodaySearchMixMoney.Text = todayOrderSearch.dic.TryGetValue("TodaySearchMixMoney", out todaySearchMixMoney) ? todaySearchMixMoney : "";
             txtTodaySearchMaxMoney.Text = todayOrderSearch.dic.TryGetValue("TodaySearchMaxMoney", out todaySearchMaxMoney) ? todaySearchMaxMoney : "";
-            if (todaySearchMixMoney=="0")
+            if (todaySearchMixMoney == "0")
             {
                 txtTodaySearchMixMoney.Text = "";
             }
-            if (todaySearchMaxMoney==decimal.MaxValue.ToString())
+            if (todaySearchMaxMoney == decimal.MaxValue.ToString())
             {
                 txtTodaySearchMaxMoney.Text = "";
             }
-            
-            txtTodayOrder_SearchName.Text= todayOrderSearch.dic.TryGetValue("TodaySearchGoodsName", out todaySearchGoodsName) ? todaySearchGoodsName : "";
+
+            txtTodayOrder_SearchName.Text = todayOrderSearch.dic.TryGetValue("TodaySearchGoodsName", out todaySearchGoodsName) ? todaySearchGoodsName : "";
 
 
 
@@ -852,35 +853,35 @@ namespace CashierSystem
         /// 订单搜索
         /// </summary>
         /// <param name="startIndex"></param>
-        public  void SearchTodayOrderInfo(int startIndex = 0)
+        public void SearchTodayOrderInfo(int startIndex = 0)
         {
             SearchModel searchModel = new SearchModel();
             searchModel.ModelName = "OrderInfo";
             searchModel.count = 30;
             searchModel.startIndex = startIndex;//开始行
             searchModel.dic = new Dictionary<string, string>();
-            
+
             //搜索
             if (startIndex == 0)
             {
                 var StartTime = dateTodayOrderStartTime.Value;
                 var EndTime = dateTodayOrderEndTime.Value;
-                decimal  mixMoney = 0;
+                decimal mixMoney = 0;
                 decimal maxMoney = decimal.MaxValue;
-                var mixMoneyString =txtTodaySearchMixMoney.Text.Trim();
+                var mixMoneyString = txtTodaySearchMixMoney.Text.Trim();
                 var maxMoneyString = txtTodaySearchMaxMoney.Text.Trim();
-               var isTrue=  Common.CommonHelper.GetTrueSearchMoney(mixMoneyString, maxMoneyString, out mixMoney, out maxMoney);//用户输入价钱是区间是否合格               
+                var isTrue = Common.CommonHelper.GetTrueSearchMoney(mixMoneyString, maxMoneyString, out mixMoney, out maxMoney);//用户输入价钱是区间是否合格               
                 if (!isTrue)
                 {
                     InputWarngs("输入价格区间有误!!");
                     return;
-                } 
-                if (StartTime>EndTime)
+                }
+                if (StartTime > EndTime)
                 {
                     InputWarngs("输入时间有误!!!");
                     return;
                 }
-                var goodsName = txtGoodsNameSearch.Text.Trim();               
+                var goodsName = txtGoodsNameSearch.Text.Trim();
                 if (goodsName != "")
                 {
                     searchModel.dic.Add("TodaySearchGoodsName", goodsName);
@@ -889,27 +890,73 @@ namespace CashierSystem
                 searchModel.EndTime = EndTime;
                 searchModel.dic.Add("TodaySearchMaxMoney", maxMoney.ToString());
                 searchModel.dic.Add("TodaySearchMixMoney", mixMoney.ToString());
-                
+
             }
             //下一页或者上一页
             //利用Tag属性 ,标记是否需要再次更新数据
             this.dgvTodayOrder.Tag = false;//false 表示需要更新
             GetDgv(1, searchModel);
         }
+        #endregion
 
-        public MyAlmanac GetmyAlmanac()
+        /// <summary>
+        /// 加载所有订单表
+        /// </summary>
+        public void LoadAllOrderInfo(SearchModel allOrderSearch)
         {
-            MyAlmanac myAlmanac = new MyAlmanac();
-            if (isPingSuccess)
+            DateTime today = DateTime.Today;
+            DateTime weekAgo = today - new TimeSpan(7, 0, 0, 0);
+            today = DateTime.Now;//从一周前0.00 开始到现在的时间
+            dateAllOrderStartTime.Value = allOrderSearch.StartTime.Equals(new DateTime()) ? weekAgo : allOrderSearch.StartTime;
+            dateAllOrderEndTime.Value = allOrderSearch.EndTime.Equals(new DateTime()) ? today : allOrderSearch.EndTime;
+            string allOrderSearchGoodsName = "";
+            txtAllOrder_SearchName.Text = allOrderSearch.dic.TryGetValue("AllOrderSearchGoodsName", out allOrderSearchGoodsName) ? allOrderSearchGoodsName : "";
+
+        }
+        private void btnAllOrderInfo_Click(object sender, EventArgs e)
+        {
+            SearchAllOrderInfo();
+        }
+        /// <summary>
+        /// 所有订单搜索
+        /// </summary>
+        /// <param name="startIndex"></param>
+        public void SearchAllOrderInfo(int startIndex=0)
+        {
+            SearchModel searchModel = new SearchModel();
+            searchModel.ModelName = "OrderInfo";
+            searchModel.count = 30;
+            searchModel.startIndex = startIndex;//开始行
+            searchModel.dic = new Dictionary<string, string>();
+
+            //搜索
+            if (startIndex == 0)
             {
-                myAlmanac = AlmanacApiHelper.GetAlmanac();
-                return myAlmanac;
+                var StartTime = dateAllOrderStartTime.Value;
+                var EndTime = dateAllOrderEndTime.Value;
+               
+                if (StartTime > EndTime)
+                {
+                    InputWarngs("输入时间有误!!!");
+                    return;
+                }
+                var goodsName = txtAllOrder_SearchName.Text.Trim();
+                if (goodsName != "")
+                {
+                    searchModel.dic.Add("AllOrderSearchGoodsName", goodsName);
+                }
+                searchModel.StartTime = StartTime;
+                searchModel.EndTime = EndTime;
+               
             }
-            return null;
+            //下一页或者上一页
+            //利用Tag属性 ,标记是否需要再次更新数据
+            this.dgvAllOrder.Tag = false;//false 表示需要更新
+            GetDgv(3, searchModel);
         }
 
-       
 
+        
 
 
 
@@ -967,5 +1014,7 @@ namespace CashierSystem
         }
 
        
+
+        
     }
 }

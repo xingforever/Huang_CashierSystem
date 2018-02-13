@@ -9,7 +9,7 @@ namespace Dal
 {
     public  class OrderInfoDal:BaseDal<OrderInfo>
     {
-        public DataTable GetDataTablebyPammer(int startIndex, int count, Dictionary<string, string> dic = null)
+        public DataTable GetDataTablebyPammer(int startIndex=0, int count=30, DateTime startTime = new DateTime(), DateTime endTime = new DateTime(), Dictionary<string, string> dic = null)
         {
             //查询goodsinfo ,并查询出商品类型和单位
             //标准可执行
@@ -24,7 +24,17 @@ namespace Dal
             //    on goods.WholeSalerId = wsoles.Id
             //    where goods.DelFlag = false and goods.id > 2
             //   order by goods.id desc
-
+            DateTime dateTime = DateTime.Today;
+            string TimeStart = (dateTime-new TimeSpan(7,0,0,0,0)).ToString("yyyy-MM-dd 00:00:00");            
+            string TimeEnd = dateTime.ToString("yyyy-MM-dd 00:00:00");
+            //操作员选择时间端
+            if (!startTime.Equals(new DateTime()))
+            {
+                TimeStart = startTime.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+            if (!endTime.Equals(new DateTime()))
+            {
+                TimeEnd = endTime.ToString("yyyy-MM-dd HH:mm:ss");            }
 
             string sql1 = "select top " + count.ToString();//筛选一定量数据
             string sql2 = @" OrderInfo.Id,OrderInfo.OrderId,goods.GoodsName as GoodsName,OrderInfo.Count,OrderInfo.DisCount,
@@ -32,24 +42,17 @@ namespace Dal
                      from OrderInfo 
                      inner join GoodsInfo as goods
                     on OrderInfo.GoodsId=goods.Id
-                    where OrderInfo.DelFlag= false and OrderInfo.id >" + startIndex.ToString();
-            string sql3 = " order by OrderInfo.id ";
+                    where OrderInfo.DelFlag= false and goods.DelFlag= false  and  OrderInfo.id >" + startIndex.ToString()+ "  and OrderInfo.CreateTime >=#" + TimeStart + "# And  OrderInfo.CreateTime <=#" + TimeEnd + "#" ;
+            string sql3 = " order by OrderInfo.id  desc";
             string sql = sql1 + sql2;//排序
             //限制条件
             if (dic != null)
-            {
-
-                foreach (var pair in dic)
-                {
-                    string goodsName = "";
-                    if (dic.TryGetValue("GoodsName", out goodsName))
+            {  string goodsName = "";
+                    if (dic.TryGetValue("AllOrderSearchGoodsName", out goodsName))
                     {
-                        sql += @" and goods." + pair.Key + " like '%" + pair.Value + "%'";
-                        continue;
+                        sql += @" and goods." + "GoodsName" + " like '%" + goodsName + "%'";                      
                     }
-                    sql += " and OrderInfo." + pair.Key + " like " + pair.Value;
-
-                }
+                  
             }
             sql += sql3;
 
@@ -81,7 +84,7 @@ namespace Dal
             }
             try
                 {
-                    string sql = @"select top 30
+                    string sql = @"select 
                     OrderInfo.Id,OrderInfo.OrderId,goods.GoodsName as GoodsName,OrderInfo.Count,OrderInfo.DisCount,
                      OrderInfo.PayPrice,OrderInfo.CreateTime,OrderInfo.Remark
                      from OrderInfo

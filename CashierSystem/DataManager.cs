@@ -121,22 +121,22 @@ namespace CashierSystem
                     handText = new OrderInfo().GetHanderTxt();
                     hideIndex = new OrderInfo().GetHideIndex();
                     break;
-                case 4:
+                case 6:
                     name = new UnitInfo().GetTableName();
                     handText = new UnitInfo().GetHanderTxt();
                     hideIndex = new UnitInfo().GetHideIndex();
                     break;
-                case 5:
+                case 7:
                     name = new SortInfo().GetTableName();
                     handText = new SortInfo().GetHanderTxt();
                     hideIndex = new SortInfo().GetHideIndex();
                     break;
-                case 6:
+                case 8:
                     name = new WholeSalerInfo().GetTableName();
                     handText = new WholeSalerInfo().GetHanderTxt();
                     hideIndex = new WholeSalerInfo().GetHideIndex();
                     break;
-                case 7:
+                case 9:
                     name = new UserInfo().GetTableName();
                     handText = new UserInfo().GetHanderTxt();
                     hideIndex = new UserInfo().GetHideIndex();

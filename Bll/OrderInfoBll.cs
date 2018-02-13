@@ -18,7 +18,7 @@ namespace Bll
         public DataTable GetDataTablebyPammer(SearchModel searchModel)
         {
 
-            return dal.GetDataTablebyPammer(searchModel.startIndex, searchModel.count, searchModel.dic);
+            return dal.GetDataTablebyPammer(searchModel.startIndex, searchModel.count, searchModel.StartTime,searchModel.EndTime, searchModel.dic);
         }
 
         public DataTable GetTodayDataTable(SearchModel searchModel)
