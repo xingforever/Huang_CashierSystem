@@ -85,7 +85,7 @@ namespace CashierSystem
                 //弹出窗口 ,进行未付账人信息登记
             }
           
-            var isSuccess = DataManager.SalesInfoBLL.Add(salesInfo);
+            var isSuccess = DataManager.ProfitsInfoBLL.Add(salesInfo);
             if (!isSuccess)
             {
                 MessageBox.Show("利润表数据添加失败,如多次失败请联系管理员");

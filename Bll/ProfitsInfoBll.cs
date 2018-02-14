@@ -15,20 +15,12 @@ namespace Bll
         {
             this.CurrentDal = new  ProfitsInfoDal();
         }
-        /// <summary>
-        /// 返回当天的销售
-        /// </summary>
-        /// <returns></returns>
-        public DataTable GetTodayDataTable()
-        {
-            //
-            return new ProfitsInfoDal().GetTodayDataTable();
-        }
+       
 
-        public DataTable GetDataTables( SearchModel searchModel)
+        public DataTable GetDataTablebyPammer( SearchModel searchModel)
         {
             searchModel.ModelName = "ProfitsInfo";
-            return new ProfitsInfoDal().GetDataTable(searchModel);
+            return new ProfitsInfoDal().GetDataTablebyPammer(searchModel.startIndex,searchModel.count,searchModel.IsAsc,searchModel.StartTime,searchModel.EndTime,searchModel.dic);
         }
 
     }

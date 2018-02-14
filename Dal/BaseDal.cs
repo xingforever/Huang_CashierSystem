@@ -109,6 +109,7 @@ namespace Dal
         public DataTable GetDataTable()
         {
             T entity = new T();
+           
             try
             {
                 string sql = "Select * from [" + entity.GetModelName() + "] Where [DelFlag]=False";
@@ -123,9 +124,11 @@ namespace Dal
         }
         public DataTable GetDataTable(SearchModel searchModel)
         {
+            T entity = new T();
+            string sqls = entity.GetSql();
             try
             {
-                string sql = "Select * from [" + searchModel.ModelName + "] Where [DelFlag]=False";
+                string sql = @"Select * from [" + searchModel.ModelName + "] Where [DelFlag]=False";
                 var dataTable = SqlHelper.GetDataTable(sql);
                 return dataTable;
             }
@@ -133,6 +136,12 @@ namespace Dal
             {
                 return null;
             }
+        }
+
+        public int GetCount()
+        {
+           
+            return GetList().Count;
         }
 
         public virtual bool Delete(int id)

@@ -22,6 +22,10 @@ namespace Model
         /// </summary>
         public  decimal Profit{ get; set; }
         /// <summary>
+        /// 总折扣
+        /// </summary>
+        public  decimal DisCount { get; set; }
+        /// <summary>
         /// 是否支付完成
         /// </summary>
         public  bool IsPay { get; set; }
@@ -50,7 +54,7 @@ namespace Model
         public override List<string> GetTableName()
         {
             //DgvName
-            return new List<string> { "ID", "OrderId",  "Profit", "CreateTime",
+            return new List<string> { "ID", "OrderId",  "Profit","DisCount", "CreateTime",
              "IsPay",  "Remark", "DelFlag" }; ;
         }
 
@@ -60,7 +64,7 @@ namespace Model
         /// <returns></returns>
         public override List<string> GetHanderTxt()
         { 
-            return new List<string> { "ID编号", "订单编号",  "利润", "订单时间", "是否支付", "备注", "是否删除" };
+            return new List<string> { "ID编号", "订单编号",  "利润", "折扣", "订单时间", "是否支付", "备注", "是否删除" };
         }
         /// <summary>
         /// 获取隐藏数据位置
@@ -69,18 +73,19 @@ namespace Model
         public override List<int> GetHideIndex()
         {
 
-            return new List<int>() { 0, 6};
+            return new List<int>() { 0, 7};
         }
 
         public override string GetSql()
         {
-            return "([OrderId],[Profit],[CreateTime],[IsPay],[Remark],[DelFlag]) ";
+            return "([OrderId],[Profit],[DisCount],[CreateTime],[IsPay],[Remark],[DelFlag]) ";
         }
 
         public override string GetAddSql()
         {
             string sql = " Values ('" + this.OrderId + "','"              
-                  + this.Profit + "','" + this.CreateTime + "',"
+                  + this.Profit + "','" + this.CreateTime + "','"
+                  +this.DisCount+"',"
                   + this.IsPay + ",'"  + this.Remark + "',"
                   +  this.DelFlag + ")";
 

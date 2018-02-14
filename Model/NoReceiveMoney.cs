@@ -14,7 +14,7 @@ namespace Model
         /// <summary>
         /// 销售单
         /// </summary>
-        public  int SalesInfoId { get; set; }
+        public  int OrderId { get; set; }
         /// <summary>
         /// 客户
         /// </summary>
@@ -42,12 +42,12 @@ namespace Model
 
         public override string GetSql()
         {
-            return "([SalesInfoId],[CustomerName],[Phone],[CreateTime],[Remark],[DelFlag]) ";
+            return "([OrderId],[CustomerName],[Phone],[CreateTime],[Remark],[DelFlag]) ";
         }
 
         public override string GetAddSql()
         {
-            string sql = " Values ('" + this.SalesInfoId + "','"
+            string sql = " Values ('" + this.OrderId + "','"
                 + this.CustomerName + "','" 
                 + this.Phone + "','"
                 + this.CreateTime + "','" 
@@ -76,7 +76,7 @@ namespace Model
                 NoReceiveMoney noReceiveMoney = new NoReceiveMoney();
                 dr = dataTable.Rows[i];
                 noReceiveMoney.Id = Convert.ToInt32(dr["ID"]);
-                noReceiveMoney.SalesInfoId = Convert.ToInt32(dr["SalesInfoId"]);
+                noReceiveMoney.OrderId = Convert.ToInt32(dr["OrderId"]);
                 noReceiveMoney.CustomerName = Convert.ToString(dr["CustomerName"]);
                 noReceiveMoney.Phone = Convert.ToString(dr["Phone"]);
                 noReceiveMoney.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
@@ -93,7 +93,7 @@ namespace Model
         public override List<string> GetTableName()
         {
             //DgvName
-            return new List<string> { "ID", "SalesInfoId", "CustomerName", "Phone", "CreateTime", "Remark", "DelFlag" }; ;
+            return new List<string> { "ID", "OrderId", "CustomerName", "Phone", "CreateTime", "Remark", "DelFlag" }; ;
         }
         /// <summary>
         /// 获取标题名称
@@ -101,7 +101,7 @@ namespace Model
         /// <returns></returns>
         public override List<string> GetHanderTxt()
         {
-            return new List<string> { "ID编号", "售货单Id编号", "客户姓名", "联系电话", "创建时间", "备注", "是否删除" };
+            return new List<string> { "ID编号", "定单编号", "客户姓名", "联系电话", "创建时间", "备注", "是否删除" };
         }
         /// <summary>
         /// 获取隐藏数据位置

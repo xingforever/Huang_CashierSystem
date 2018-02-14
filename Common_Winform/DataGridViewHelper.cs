@@ -101,7 +101,7 @@ namespace Common_Winform
 
 
             //奇偶行不同颜色
-            ChangeColor();
+            ChangeColor(MyDataGridView);
 
             
             return MyDataGridView;
@@ -175,7 +175,7 @@ namespace Common_Winform
             BindingSource bs = new BindingSource();
             bs.DataSource = dataTable;
             MyDataGridView.DataSource = bs;//填充数据
-            ChangeColor();
+            ChangeColor(MyDataGridView);
             return MyDataGridView;
         }
 
@@ -257,18 +257,18 @@ namespace Common_Winform
 
        
 
-        private void ChangeColor()
+        private static void ChangeColor(DataGridView dataGridView)
         {
-            for (int i = 0; i < MyDataGridView.RowCount; i++)
+            for (int i = 0; i < dataGridView.RowCount; i++)
             {
                 //偶数行
                 if (i%2==0)
                 {
-                    MyDataGridView.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                    dataGridView.Rows[i].DefaultCellStyle.BackColor = Color.White;
                 }
                 else
                 {
-                    MyDataGridView.Rows[i].DefaultCellStyle.BackColor = Color.LightSkyBlue;
+                    dataGridView.Rows[i].DefaultCellStyle.BackColor = Color.LightSkyBlue;
                 }
             }
         }

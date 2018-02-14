@@ -52,7 +52,7 @@ namespace CashierSystem
         /// 操作员修改应收款数造成的折扣
         /// 并未对某项商品进行折扣
         /// </summary>
-        public decimal OrderDisCount = (decimal) 0.0;
+        public decimal OrderDisCount = (decimal)0.0;
 
 
         /// <summary>
@@ -78,23 +78,23 @@ namespace CashierSystem
         /// <summary>
         /// 初始化所有DataGridView样式
         /// </summary>
-        public  void LoadAllDgv()
+        public void LoadAllDgv()
         {
-            
-            for (int i = 0; i < 7; i++)
+
+            for (int i = 0; i <=9; i++)
             {
                 SearchModel searchModel = new SearchModel();
                 List<string> nameList = new List<string>();
                 List<string> handerTxt = new List<string>();
                 List<int> hideIndex = new List<int>();
-                DataManager.GetHandTxtAndHideIndex(i, ref nameList, ref handerTxt, ref hideIndex);               
-                if (i==0)
+                DataManager.GetHandTxtAndHideIndex(i, ref nameList, ref handerTxt, ref hideIndex);
+                if (i == 0)
                 {
                     this.dgvGoodsInfo.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
                     this.dgvGoodsInfo = dataGridViewHelper.Init(this.dgvGoodsInfo, nameList, handerTxt, hideIndex);
                     GetDgv(0);
                 }
-               else if (i == 1)
+                else if (i == 1)
                 {
                     this.dgvTodayOrder.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
                     this.dgvTodayOrder = dataGridViewHelper.Init(this.dgvTodayOrder, nameList, handerTxt, hideIndex);
@@ -106,32 +106,44 @@ namespace CashierSystem
                     this.dgvAllOrder = dataGridViewHelper.Init(this.dgvAllOrder, nameList, handerTxt, hideIndex);
                     GetDgv(3);
                 }
-                
-                else  if (i == 6)
+                else if (i == 4)
+                {
+                    this.dgvProfitsInfo.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
+                    this.dgvProfitsInfo = dataGridViewHelper.Init(this.dgvProfitsInfo, nameList, handerTxt, hideIndex);
+                    GetDgv(4);
+                }
+                else if (i == 5)
+                {
+                    this.dgvNoReceiveMoney.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
+                    this.dgvNoReceiveMoney = dataGridViewHelper.Init(this.dgvNoReceiveMoney, nameList, handerTxt, hideIndex);
+                    GetDgv(4);
+                }
+
+                else if (i == 6)
                 {
                     this.dgvUnitInfo.Tag = false;
-                    this.dgvUnitInfo = dataGridViewHelper.Init(this.dgvUnitInfo, nameList, handerTxt,  hideIndex);
-                }else if (i == 7)
+                    this.dgvUnitInfo = dataGridViewHelper.Init(this.dgvUnitInfo, nameList, handerTxt, hideIndex);
+                } else if (i == 7)
                 {
                     this.dgvSortInfo.Tag = false;
-                    this.dgvSortInfo = dataGridViewHelper.Init(this.dgvSortInfo, nameList, handerTxt,  hideIndex);
+                    this.dgvSortInfo = dataGridViewHelper.Init(this.dgvSortInfo, nameList, handerTxt, hideIndex);
                 }
-               else if (i == 8)
+                else if (i == 8)
                 {
                     this.dgvWholeSalerInfo.Tag = false;
-                    this.dgvWholeSalerInfo = dataGridViewHelper.Init(this.dgvWholeSalerInfo, nameList, handerTxt,  hideIndex);
-                }else if (i == 9)
+                    this.dgvWholeSalerInfo = dataGridViewHelper.Init(this.dgvWholeSalerInfo, nameList, handerTxt, hideIndex);
+                } else if (i == 9)
                 {
                     this.dgvUnitInfo.Tag = false;
-                    this.dgvUserInfo = dataGridViewHelper.Init(this.dgvUserInfo, handerTxt, nameList,  hideIndex);
+                    this.dgvUserInfo = dataGridViewHelper.Init(this.dgvUserInfo, handerTxt, nameList, hideIndex);
                 }
             }
-          
+
         }
         /// <summary>
         /// 初始化,加载黄历与天气
         /// </summary>
-        public  void LoadWeatherAndAlmanac()
+        public void LoadWeatherAndAlmanac()
         {
             //如果联网成功
             if (isPingSuccess)
@@ -170,15 +182,15 @@ namespace CashierSystem
         /// 获取数据并展示在响应的标签页
         /// </summary>
         /// <param name="id"></param>
-        public void GetDgv(int id,SearchModel searchModel=null)
+        public void GetDgv(int id, SearchModel searchModel = null)
         {
-            DataTable dataTable=new DataTable () ;
+            DataTable dataTable = new DataTable();
             if (searchModel == null)
             {
                 //搜索条件有默认条件
                 searchModel = new SearchModel();
             }
-           
+
             switch (id)
             {
                 case 0:
@@ -189,15 +201,15 @@ namespace CashierSystem
                         LoadGoodsInfo(searchModel);
                         this.dgvGoodsInfo.Tag = true;
                     }
-                    
+
                     break;
                 case 1:
                     if (!(bool)this.dgvTodayOrder.Tag)
                     {
-                        dataTable = DataManager.OrderInfoBLL.GetTodayDataTable(searchModel);
-                        this.dgvTodayOrder = dataGridViewHelper.FillData(this.dgvTodayOrder, dataTable);
                         LoadTodayOrderInfo(searchModel);
-                            this.dgvTodayOrder.Tag = true;
+                        dataTable = DataManager.OrderInfoBLL.GetTodayDataTable(searchModel);
+                        this.dgvTodayOrder = dataGridViewHelper.FillData(this.dgvTodayOrder, dataTable);                       
+                        this.dgvTodayOrder.Tag = true;
                     }
                     break;
                 case 3:
@@ -207,6 +219,24 @@ namespace CashierSystem
                         this.dgvAllOrder = dataGridViewHelper.FillData(this.dgvAllOrder, dataTable);
                         LoadAllOrderInfo(searchModel);
                         this.dgvAllOrder.Tag = true;
+                    }
+                    break;
+                case 4:
+                    if (!(bool)this.dgvProfitsInfo.Tag)
+                    {
+                        dataTable = DataManager.ProfitsInfoBLL.GetDataTablebyPammer(searchModel);
+                        this.dgvProfitsInfo = dataGridViewHelper.FillData(this.dgvProfitsInfo, dataTable);
+                        LoadProfitsInfo(searchModel);
+                        this.dgvProfitsInfo.Tag = true;
+                    }
+                    break;
+                case 5:
+                    if (!(bool)this.dgvNoReceiveMoney.Tag)
+                    {
+                        dataTable = DataManager.NoReceiveMoneyBLL.GetDataTablebyPammer(searchModel);
+                        this.dgvNoReceiveMoney  = dataGridViewHelper.FillData(this.dgvNoReceiveMoney, dataTable);
+                        LoadNoReceiveMoneyInfo(searchModel);
+                        this.dgvNoReceiveMoney.Tag = true;
                     }
                     break;
                 case 6:
@@ -245,6 +275,8 @@ namespace CashierSystem
             GetDgv(SelectIndex);
         }
 
+
+
         #region 商品单位表
         /// <summary>
         /// 单位表添加
@@ -273,7 +305,7 @@ namespace CashierSystem
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvUnitInfo.SelectedRows[0];           
+            var dataRow = this.dgvUnitInfo.SelectedRows[0];
             var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
             UnitInfo unitInfo = DataManager.UnitInfoBLL.GetEntityById(dataId);
             List<string> tags = new List<string>() { unitInfo.Id.ToString(), unitInfo.UnitName, unitInfo.Remark };
@@ -340,7 +372,7 @@ namespace CashierSystem
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvSortInfo.SelectedRows[0];           
+            var dataRow = this.dgvSortInfo.SelectedRows[0];
             var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
             SortInfo sortInfo = DataManager.SortInfoBLL.GetEntityById(dataId);
             List<string> tags = new List<string>() { sortInfo.Id.ToString(), sortInfo.SortName, sortInfo.Remark };
@@ -357,7 +389,7 @@ namespace CashierSystem
                 return;
             }
             var dataRow = this.dgvSortInfo.SelectedRows[0];
-           
+
             var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
             var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
@@ -398,7 +430,7 @@ namespace CashierSystem
                 return;
             }
             var dataRow = this.dgvWholeSalerInfo.SelectedRows[0];
-             var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
             WholeSalerInfo wholeSalerInfo = DataManager.WholeSalerInfoBLL.GetEntityById(dataId);
             List<string> tags = new List<string>() { wholeSalerInfo.Id.ToString(), wholeSalerInfo.SupName, wholeSalerInfo.Management, wholeSalerInfo.TelePhone, wholeSalerInfo.AddressInfo, wholeSalerInfo.Remark };
             Frm_WholeSalerInfo frm_Samll = Frm_WholeSalerInfo.Create(tags);
@@ -413,7 +445,7 @@ namespace CashierSystem
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvUnitInfo.SelectedRows[0];           
+            var dataRow = this.dgvUnitInfo.SelectedRows[0];
             var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
             var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
@@ -496,7 +528,7 @@ namespace CashierSystem
             sortId = goodsSearch.dic.TryGetValue("SortId", out sortId) ? sortId : "0";
             cbxUnitInfo.SelectedValue = Convert.ToInt32(unitId);
             cbxSortsInfo.SelectedValue = Convert.ToInt32(sortId);
-            
+
         }
         /// <summary>
         /// 搜索商品信息
@@ -898,6 +930,7 @@ namespace CashierSystem
             GetDgv(1, searchModel);
         }
         #endregion
+        #region 所有订单展示
 
         /// <summary>
         /// 加载所有订单表
@@ -921,7 +954,7 @@ namespace CashierSystem
         /// 所有订单搜索
         /// </summary>
         /// <param name="startIndex"></param>
-        public void SearchAllOrderInfo(int startIndex=0)
+        public void SearchAllOrderInfo(int startIndex = 0)
         {
             SearchModel searchModel = new SearchModel();
             searchModel.ModelName = "OrderInfo";
@@ -934,7 +967,7 @@ namespace CashierSystem
             {
                 var StartTime = dateAllOrderStartTime.Value;
                 var EndTime = dateAllOrderEndTime.Value;
-               
+
                 if (StartTime > EndTime)
                 {
                     InputWarngs("输入时间有误!!!");
@@ -947,18 +980,130 @@ namespace CashierSystem
                 }
                 searchModel.StartTime = StartTime;
                 searchModel.EndTime = EndTime;
-               
+
             }
             //下一页或者上一页
             //利用Tag属性 ,标记是否需要再次更新数据
             this.dgvAllOrder.Tag = false;//false 表示需要更新
             GetDgv(3, searchModel);
         }
+        #endregion
+        #region 利润表展示
+        /// <summary>
+        /// 利润信息表
+        /// </summary>
+        /// <param name="profitsInfoSearch"></param>
+        public void LoadProfitsInfo(SearchModel profitsInfoSearch)
+        {
+            DateTime today = DateTime.Today;
+            DateTime weekAgo = today - new TimeSpan(7, 0, 0, 0);
+            today = DateTime.Now;//从一周前0.00 开始到现在的时间
+            dateProfitStartTime.Value = profitsInfoSearch.StartTime.Equals(new DateTime()) ? weekAgo : profitsInfoSearch.StartTime;
+            dateProfitEndTime.Value = profitsInfoSearch.EndTime.Equals(new DateTime()) ? today : profitsInfoSearch.EndTime;
+            string profitsOrderId = "";
+            txtProfits_SearchOrderId.Text = profitsInfoSearch.dic.TryGetValue("Profits_OrderId", out profitsOrderId) ? profitsOrderId : "";
 
+        }
+        private void btnProfitSearch_Click(object sender, EventArgs e)
+        {
+            SearchProfitsInfo();
+        }
+        /// <summary>
+        /// 利润信息表搜索
+        /// </summary>
+        /// <param name="startIndex"></param>
+        public void SearchProfitsInfo(int startIndex = 0)
+        {
+            SearchModel searchModel = new SearchModel();
+            searchModel.ModelName = "ProfitsInfo";
+            searchModel.count = 30;
+            searchModel.startIndex = startIndex;//开始行
+            searchModel.dic = new Dictionary<string, string>();
 
-        
+            //搜索
+            if (startIndex == 0)
+            {
+                var startTime = dateProfitStartTime.Value;
+                var endTime = dateProfitEndTime.Value;
 
+                if (startTime > endTime)
+                {
+                    InputWarngs("输入时间有误!!!");
+                    return;
+                }
+                var orderId = txtProfits_SearchOrderId.Text.Trim();
+                if (orderId != "")
+                {
+                    searchModel.dic.Add("Profits_OrderId", orderId);
+                }
+                searchModel.StartTime = startTime;
+                searchModel.EndTime = endTime;
 
+            }
+            //下一页或者上一页
+            //利用Tag属性 ,标记是否需要再次更新数据
+            this.dgvProfitsInfo.Tag = false;//false 表示需要更新
+            GetDgv(4, searchModel);
+
+        }
+        #endregion
+        /// <summary>
+        /// 待收账加载
+        /// </summary>
+        /// <param name="profitsInfoSearch"></param>
+        public void LoadNoReceiveMoneyInfo(SearchModel profitsInfoSearch)
+        {
+            DateTime today = DateTime.Today;
+            DateTime weekAgo = today - new TimeSpan(7, 0, 0, 0);
+            today = DateTime.Now;//从一周前0.00 开始到现在的时间
+            dateNoReceiveStartTime.Value = profitsInfoSearch.StartTime.Equals(new DateTime()) ? weekAgo : profitsInfoSearch.StartTime;
+            dateProfitEndTime.Value = profitsInfoSearch.EndTime.Equals(new DateTime()) ? today : profitsInfoSearch.EndTime;
+            string profitsOrderId = "";
+            txtProfits_SearchOrderId.Text = profitsInfoSearch.dic.TryGetValue("NoReceiveMoney_Name", out profitsOrderId) ? profitsOrderId : "";
+
+        }
+        private void btnNoReceiveMoneySearch_Click(object sender, EventArgs e)
+        {
+            SearchNoReceiveMoneyInfo();
+        }
+        /// <summary>
+        /// 待收账表搜索
+        /// </summary>
+        /// <param name="startIndex"></param>
+        public void SearchNoReceiveMoneyInfo(int startIndex = 0)
+        {
+            SearchModel searchModel = new SearchModel();
+            searchModel.ModelName = "NoReceiveMoney";
+            searchModel.count = 30;
+            searchModel.startIndex = startIndex;//开始行
+            searchModel.dic = new Dictionary<string, string>();
+
+            //搜索
+            if (startIndex == 0)
+            {
+                var startTime = dateNoReceiveStartTime.Value;
+                var endTime = dateNoReceiveEndTime.Value;
+
+                if (startTime > endTime)
+                {
+                    InputWarngs("输入时间有误!!!");
+                    return;
+                }
+                var customerName = txtNoReceiveMoney_SearchName.Text.Trim();
+                if (customerName != "")
+                {
+                    searchModel.dic.Add("NoReceiveMoney_Name", customerName);
+                }
+                searchModel.StartTime = startTime;
+                searchModel.EndTime = endTime;
+
+            }
+            //下一页或者上一页
+            //利用Tag属性 ,标记是否需要再次更新数据
+            this.dgvNoReceiveMoney.Tag = false;//false 表示需要更新
+            GetDgv(5, searchModel);
+
+        }
 
 
 
@@ -968,7 +1113,7 @@ namespace CashierSystem
         /// <returns></returns>
         private List<UnitInfo> GetUnitInfoList()
         {
-         var list= DataManager.UnitInfoBLL.GetList();
+            var list = DataManager.UnitInfoBLL.GetList();
             list.Insert(0, new UnitInfo()
             {
                 Id = 0,
@@ -986,11 +1131,11 @@ namespace CashierSystem
         public List<SortInfo> GetSortInfoList()
         {
 
-          var list=  DataManager.SortInfoBLL.GetList();
+            var list = DataManager.SortInfoBLL.GetList();
             list.Insert(0, new SortInfo()
             {
-                Id=0,
-                SortName="全部"
+                Id = 0,
+                SortName = "全部"
 
             });
             return list;
@@ -1008,13 +1153,11 @@ namespace CashierSystem
         /// 输入信息不符合要求警告
         /// </summary>
         /// <param name="messAge"></param>
-        public  void InputWarngs(string messAge="输入有误!")
+        public void InputWarngs(string messAge = "输入有误!")
         {
             MessageBox.Show(messAge, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
        
-
-        
     }
 }

@@ -25,16 +25,16 @@ namespace Dal
             //    where goods.DelFlag = false and goods.id > 2
             //   order by goods.id desc
             DateTime dateTime = DateTime.Today;
-            string TimeStart = (dateTime-new TimeSpan(7,0,0,0,0)).ToString("yyyy-MM-dd 00:00:00");            
-            string TimeEnd = dateTime.ToString("yyyy-MM-dd 00:00:00");
+            string timeStart = (dateTime-new TimeSpan(7,0,0,0,0)).ToString("yyyy-MM-dd 00:00:00");            
+            string timeEnd = dateTime.ToString("yyyy-MM-dd 00:00:00");
             //操作员选择时间端
             if (!startTime.Equals(new DateTime()))
             {
-                TimeStart = startTime.ToString("yyyy-MM-dd HH:mm:ss");
+                timeStart = startTime.ToString("yyyy-MM-dd HH:mm:ss");
             }
             if (!endTime.Equals(new DateTime()))
             {
-                TimeEnd = endTime.ToString("yyyy-MM-dd HH:mm:ss");            }
+                timeEnd = endTime.ToString("yyyy-MM-dd HH:mm:ss");            }
 
             string sql1 = "select top " + count.ToString();//筛选一定量数据
             string sql2 = @" OrderInfo.Id,OrderInfo.OrderId,goods.GoodsName as GoodsName,OrderInfo.Count,OrderInfo.DisCount,
@@ -42,7 +42,7 @@ namespace Dal
                      from OrderInfo 
                      inner join GoodsInfo as goods
                     on OrderInfo.GoodsId=goods.Id
-                    where OrderInfo.DelFlag= false and goods.DelFlag= false  and  OrderInfo.id >" + startIndex.ToString()+ "  and OrderInfo.CreateTime >=#" + TimeStart + "# And  OrderInfo.CreateTime <=#" + TimeEnd + "#" ;
+                    where OrderInfo.DelFlag= false and goods.DelFlag= false  and  OrderInfo.id >" + startIndex.ToString()+ "  and OrderInfo.CreateTime >=#" + timeStart + "# And  OrderInfo.CreateTime <=#" + timeEnd + "#" ;
             string sql3 = " order by OrderInfo.id  desc";
             string sql = sql1 + sql2;//排序
             //限制条件

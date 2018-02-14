@@ -43,7 +43,7 @@
     <Compile Include="NoReceiveMoneyBll.cs" />
     <Compile Include="OrderInfoBll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SalesInfoBll.cs" />
+    <Compile Include="ProfitsInfoBll.cs" />
     <Compile Include="SortInfoBll.cs" />
     <Compile Include="UnitInfoBll.cs" />
     <Compile Include="UserInfoBll.cs" />

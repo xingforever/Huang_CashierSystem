@@ -18,13 +18,15 @@ namespace CashierSystem
         /// 未收账信息表
         /// </summary>
         public static NoReceiveMoneyBll NoReceiveMoneyBLL { get; set; }
-
+        /// <summary>
+        /// 订单表
+        /// </summary>
         public  static OrderInfoBll OrderInfoBLL { get; set; }
         /// <summary>
-        /// 售货单表
+        /// 利润单表
         /// </summary>
 
-        public static ProfitsInfoBll SalesInfoBLL { get; set;  }
+        public static ProfitsInfoBll ProfitsInfoBLL { get; set;  }
         /// <summary>
         /// 商品类型表
         /// </summary>
@@ -49,7 +51,7 @@ namespace CashierSystem
         {
             GoodsInfoBLL = new GoodsInfoBll();
             NoReceiveMoneyBLL = new NoReceiveMoneyBll();
-            SalesInfoBLL = new ProfitsInfoBll();
+            ProfitsInfoBLL = new ProfitsInfoBll();
             SortInfoBLL = new SortInfoBll();
             UserInfoBLL = new UserInfoBll();
             WholeSalerInfoBLL = new WholeSalerInfoBll();
@@ -82,7 +84,7 @@ namespace CashierSystem
                 case 2:
                    return GoodsInfoBLL.GetDataTable();
                 case 3:
-                    return SalesInfoBLL.GetDataTable();
+                    return ProfitsInfoBLL.GetDataTable();
                 case 4:
                     return UnitInfoBLL.GetDataTable();
                 case 5:
@@ -120,6 +122,16 @@ namespace CashierSystem
                     name = new OrderInfo().GetTableName();
                     handText = new OrderInfo().GetHanderTxt();
                     hideIndex = new OrderInfo().GetHideIndex();
+                    break;
+                case 4:
+                    name = new ProfitsInfo().GetTableName();
+                    handText = new ProfitsInfo().GetHanderTxt();
+                    hideIndex = new ProfitsInfo().GetHideIndex();
+                    break;
+                case 5:
+                    name = new NoReceiveMoney().GetTableName();
+                    handText = new NoReceiveMoney().GetHanderTxt();
+                    hideIndex = new NoReceiveMoney().GetHideIndex();
                     break;
                 case 6:
                     name = new UnitInfo().GetTableName();
