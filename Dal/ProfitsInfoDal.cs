@@ -63,5 +63,23 @@ namespace Dal
                 return null;
             }
         }
+
+
+        public ProfitsInfo GetProfitsInfoByOrderId(int orderId)
+        {
+            ProfitsInfo entity = new ProfitsInfo();
+            string sql = "Select * ProfitsInfo from   where [OrderId]=" + orderId;
+            var dataTable = SqlHelper.GetDataTable(sql);
+            var listEntity = entity.GetList(dataTable);
+            if (listEntity.Count == 1)
+            {
+                return (ProfitsInfo)listEntity[0];
+            }
+            else
+            {
+                return null;
+            }
+
+        }
     }
 }

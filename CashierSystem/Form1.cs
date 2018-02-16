@@ -1047,19 +1047,28 @@ namespace CashierSystem
 
         }
         #endregion
+
+
+
         /// <summary>
         /// 待收账加载
         /// </summary>
-        /// <param name="profitsInfoSearch"></param>
-        public void LoadNoReceiveMoneyInfo(SearchModel profitsInfoSearch)
+        /// <param name="noReceiveMoneySearch"></param>
+        public void LoadNoReceiveMoneyInfo(SearchModel noReceiveMoneySearch)
         {
+            string selectVlaue = "0";
+            cbxIsReceiveMoney.ValueMember = "Value";
+            cbxIsReceiveMoney.DisplayMember = "Name";
+            cbxIsReceiveMoney.DataSource = NoReceiveMoney.GetCBXNoRecevicePart();
+            cbxIsReceiveMoney.SelectedValue = noReceiveMoneySearch.dic.TryGetValue("NoReceiveMoney_SelectValue", out selectVlaue) ? selectVlaue : "0";
             DateTime today = DateTime.Today;
-            DateTime weekAgo = today - new TimeSpan(7, 0, 0, 0);
+            DateTime weekAgo = today - new TimeSpan(7, 0, 0, 0);     
+
             today = DateTime.Now;//从一周前0.00 开始到现在的时间
-            dateNoReceiveStartTime.Value = profitsInfoSearch.StartTime.Equals(new DateTime()) ? weekAgo : profitsInfoSearch.StartTime;
-            dateProfitEndTime.Value = profitsInfoSearch.EndTime.Equals(new DateTime()) ? today : profitsInfoSearch.EndTime;
+            dateNoReceiveStartTime.Value = noReceiveMoneySearch.StartTime.Equals(new DateTime()) ? weekAgo : noReceiveMoneySearch.StartTime;
+            dateProfitEndTime.Value = noReceiveMoneySearch.EndTime.Equals(new DateTime()) ? today : noReceiveMoneySearch.EndTime;
             string profitsOrderId = "";
-            txtProfits_SearchOrderId.Text = profitsInfoSearch.dic.TryGetValue("NoReceiveMoney_Name", out profitsOrderId) ? profitsOrderId : "";
+            txtProfits_SearchOrderId.Text = noReceiveMoneySearch.dic.TryGetValue("NoReceiveMoney_Name", out profitsOrderId) ? profitsOrderId : "";
 
         }
         private void btnNoReceiveMoneySearch_Click(object sender, EventArgs e)
@@ -1083,7 +1092,6 @@ namespace CashierSystem
             {
                 var startTime = dateNoReceiveStartTime.Value;
                 var endTime = dateNoReceiveEndTime.Value;
-
                 if (startTime > endTime)
                 {
                     InputWarngs("输入时间有误!!!");
@@ -1094,8 +1102,12 @@ namespace CashierSystem
                 {
                     searchModel.dic.Add("NoReceiveMoney_Name", customerName);
                 }
+
                 searchModel.StartTime = startTime;
                 searchModel.EndTime = endTime;
+
+                var selectValue = cbxIsReceiveMoney.SelectedValue.ToString();
+                searchModel.dic.Add("NoReceiveMoney_SelectValue", selectValue);
 
             }
             //下一页或者上一页
@@ -1103,6 +1115,18 @@ namespace CashierSystem
             this.dgvNoReceiveMoney.Tag = false;//false 表示需要更新
             GetDgv(5, searchModel);
 
+        }
+        private void tspNoReceiveMoneyInfoEdit_Click(object sender, EventArgs e)
+        {
+            if (this.dgvNoReceiveMoney.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvNoReceiveMoney.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(dataId);
+           
         }
 
 
@@ -1158,6 +1182,6 @@ namespace CashierSystem
             MessageBox.Show(messAge, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-       
+   
     }
 }

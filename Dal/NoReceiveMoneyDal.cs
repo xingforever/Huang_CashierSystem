@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Dal
 {
-  public   class NoReceiveMoneyDal:BaseDal<NoReceiveMoney>
+    public class NoReceiveMoneyDal : BaseDal<NoReceiveMoney>
     {
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Dal
                     flagString = "<=";
                     paiXu = "desc";
                 }
-                string sql = @"Select *" +
+                string sql = @"Select *," +
                    "from [NoReceiveMoney] Where [DelFlag]=False And [CreateTime]>=#" + timeStart + "# And [CreateTime] <=#" + timeEnd + "#"
                      + " And  [ID]" + flagString + startIndex;
 
@@ -63,5 +63,11 @@ namespace Dal
                 return null;
             }
         }
+
+
+      
+
     }
+
+    
 }

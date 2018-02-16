@@ -31,12 +31,12 @@ namespace Model
         /// <summary>
         /// 销售单信息
         /// </summary>
-        public ProfitsInfo SalesInfo { get; set; }
+        public ProfitsInfo ProfitsInfo { get; set; }
 
         public   NoReceiveMoney()
         {
            
-            SalesInfo = null;
+            ProfitsInfo = null;
            
         }
 
@@ -118,36 +118,35 @@ namespace Model
         }
 
 
+        public static List<NoReceiveMoneyInfoPart> GetCBXNoRecevicePart()
+        {
+            List<NoReceiveMoneyInfoPart> list = new List<NoReceiveMoneyInfoPart>();
+            NoReceiveMoneyInfoPart noReceiveMoney = new NoReceiveMoneyInfoPart(0, "未待账");
+            list.Add(noReceiveMoney);
+            NoReceiveMoneyInfoPart receiveMoneyInfoPart = new NoReceiveMoneyInfoPart(1, "已过账");
+            list.Add(receiveMoneyInfoPart);
+            return list;
 
 
 
+        }
+
+
+        
+
+    }
 
 
 
+    public class NoReceiveMoneyInfoPart
+    {
+        public int Value { get; set; }
+        public string Name { get; set; }
 
+        public NoReceiveMoneyInfoPart(int value, string name)
+        {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
 
     }
 }
