@@ -54,7 +54,7 @@ namespace CashierSystem
                 double dfd = (double)orderInfo.PayPrice;
                 txtOrder_Price.Text = orderInfo.PayPrice.ToString();
                 txtOrder_Remark.Text = orderInfo.Remark;
-            
+                this.lblTips.Visible = false;
             }
             catch
             {
@@ -65,48 +65,6 @@ namespace CashierSystem
         }
         private void btnOrderEnter_Click(object sender, EventArgs e)
         {
-            this.Close();
-        }
-
-       
-        private void Frm_OrderInfo_Load(object sender, EventArgs e)
-        {
-            InIt();
-        }
-
-        private void txtOrder_Count_MouseUp(object sender, MouseEventArgs e)
-        {
-            double count;
-            var isTrue = double.TryParse(this.txtOrder_Count.Text.Trim(), out count);
-            if (isTrue)
-            {
-                ChangeData();
-            }
-            else
-            {
-                lblTips.Text = "商品数量请填写数字!!!";
-                this.txtOrder_Count.Focus();
-            }
-        }
-        private void txtOrder_DisCount_MouseUp(object sender, MouseEventArgs e)
-        {
-            double disCount;
-            var isTrue = double.TryParse(this.txtOrder_DisCount.Text.Trim(), out disCount);
-            if (isTrue)
-            {
-                ChangeData();
-            }
-            else
-            {
-                lblTips.Text = "折扣请填写数字!!!";
-                this.txtOrder_DisCount.Focus();
-            }
-        }
-
-
-
-        private void btnOrderCancel_Click(object sender, EventArgs e)
-        {
             Huang_System f1 = (Huang_System)this.Owner;//将本窗体的拥有者强制设为Form1类的实例f
             try
             {
@@ -115,15 +73,13 @@ namespace CashierSystem
                 double count, disCount;
                 count = double.Parse(txtOrder_Count.Text.Trim());
                 disCount = double.Parse(txtOrder_DisCount.Text.Trim());
-
-
-
-                txtOrder_Count.Text = orderInfo.Count.ToString();
-                txtOrder_DisCount.Text = orderInfo.DisCount.ToString();
-                double dfd = (double)orderInfo.PayPrice;
-                txtOrder_Price.Text = orderInfo.PayPrice.ToString();
-                txtOrder_Remark.Text = orderInfo.Remark;
-
+                orderInfo.Count = count;
+                orderInfo.DisCount = (decimal)disCount;
+                orderInfo.PayPrice = theGoodInfo.PayPrice * (decimal)count - (decimal)disCount;
+                orderInfo.Profit = (orderInfo.PayPrice) - (theGoodInfo.PurPrice * (decimal)count);//利润;
+                orderInfo.Remark = this.txtOrder_Remark.Text.ToString();
+                f1.OrdersInfo[orderIndex] = orderInfo;
+                this.Close();
             }
             catch
             {
@@ -134,9 +90,56 @@ namespace CashierSystem
         }
 
        
+        private void Frm_OrderInfo_Load(object sender, EventArgs e)
+        {
+            InIt();
+        }
+
+        private void txtOrder_Count_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.lblTips.Visible = false;
+            double count;
+            var isTrue = double.TryParse(this.txtOrder_Count.Text.Trim(), out count);
+            if (isTrue)
+            {
+                ChangeData();
+            }
+            else
+            {
+                this.lblTips.Visible = true;
+                lblTips.Text = "商品数量请填写数字!!!";
+                this.txtOrder_Count.Focus();
+            }
+        }
+        private void txtOrder_DisCount_MouseUp(object sender, MouseEventArgs e)
+        {
+            this.lblTips.Visible = false;
+            double disCount;
+            var isTrue = double.TryParse(this.txtOrder_DisCount.Text.Trim(), out disCount);
+            if (isTrue)
+            {
+                ChangeData();
+            }
+            else
+            {
+                this.lblTips.Visible = true;
+                lblTips.Text = "折扣请填写数字!!!";
+                this.txtOrder_DisCount.Focus();
+            }
+        }
+
+
+
+        private void btnOrderCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+       
 
         private void lblReduceCount_Click(object sender, EventArgs e)
         {
+            this.lblTips.Visible = false;
             double count;
             var isTrue=  double.TryParse(this.txtOrder_Count.Text.Trim(), out count);
             if (isTrue)
@@ -149,6 +152,7 @@ namespace CashierSystem
             }
             else
             {
+                this.lblTips.Visible = true;
                 lblTips.Text = "商品数量请填写数字!!!";
                 this.txtOrder_Count.Focus();
             }
@@ -156,6 +160,7 @@ namespace CashierSystem
         }
         public void ChangeData()
         {
+            this.lblTips.Visible = false;
             //数量
             double count;
             double disCount;
@@ -169,12 +174,14 @@ namespace CashierSystem
             }
             else
             {
+                this.lblTips.Visible = true;
                 lblTips.Text = "商品数量和折扣请填写数字!!";
             }
         }
 
         private void lblAdd_Click(object sender, EventArgs e)
         {
+            this.lblTips.Visible = false;
             double count;
             var isTrue = double.TryParse(this.txtOrder_Count.Text.Trim(), out count);
             if (isTrue)
@@ -187,11 +194,24 @@ namespace CashierSystem
             }
             else
             {
+                this.lblTips.Visible = true;
                 lblTips.Text = "商品数量请填写数字,!!";
             }
            
         }
 
-       
+        private void btnRemoveOrder_Click(object sender, EventArgs e)
+        {
+            Huang_System f1 = (Huang_System)this.Owner;//将本窗体的拥有者强制设为Form1类的实例f
+            try
+            {
+                f1.OrdersInfo.RemoveAt(orderIndex);
+                this.Close();
+            }
+            catch
+            {
+                MessageBox.Show("出错了,请重试");
+            }
+          }
     }
 }

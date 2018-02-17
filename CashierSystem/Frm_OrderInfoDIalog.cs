@@ -12,19 +12,21 @@ namespace CashierSystem
 {
     public partial class Frm_OrderInfoDIalog : Form
     {
-        public bool IsPay = false;
+        public bool _isPay = false;
+        public  static string _payPrice = null;
          Frm_OrderInfoDIalog()
         {
             InitializeComponent();
         }
 
         private static Frm_OrderInfoDIalog _form;
-        public static Frm_OrderInfoDIalog Create(List<string> tags = null)
+        public static Frm_OrderInfoDIalog Create(string _tags = null)
         {
-            
+            _payPrice = _tags;
             if (_form == null)
             {
                 _form = new Frm_OrderInfoDIalog();
+               
             
             }
            
@@ -38,7 +40,7 @@ namespace CashierSystem
             ///4 商品库存管理
             ///关闭窗口.
 
-
+            var closeDialog = true;
 
 
             Huang_System f1 = (Huang_System)this.Owner;//将本窗体的拥有者强制设为Form1类的实例
@@ -46,6 +48,7 @@ namespace CashierSystem
             var OrdersInfo = f1.OrdersInfo;
            
             decimal allProfit = (decimal)0;
+            decimal allDisCount = (decimal)0;
             string orderId = OrdersInfo[0].OrderId;//个数保证大于0;
             for (int i = 0; i < OrdersInfo.Count; i++)
             {
@@ -68,10 +71,15 @@ namespace CashierSystem
                 }
 
                 allProfit += OrdersInfo[i].Profit;//利润
+                allDisCount += OrdersInfo[i].DisCount;//折扣
             }
+            //利润信息表
             ProfitsInfo salesInfo = new ProfitsInfo();
             salesInfo.OrderId = orderId;
             salesInfo.CreateTime = DateTime.Now;
+            salesInfo.Profit = allProfit;
+            salesInfo.DisCount = allDisCount;
+       
             var result=  MessageBox.Show("下单完成,是否已经收款?", "通知", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result==DialogResult.Yes)
             {
@@ -80,20 +88,34 @@ namespace CashierSystem
             }
             else
             {
+                //弹出窗口 ,进行未付账人信息登记
                 //未付款
                 salesInfo.IsPay = false;
-                //弹出窗口 ,进行未付账人信息登记
+                Frm_NoReceiveMoney frm_NoReceiveMoney = Frm_NoReceiveMoney.Create(orderId, _payPrice);
+                frm_NoReceiveMoney.ShowDialog(this);
+                frm_NoReceiveMoney.Focus();
+                //说明添加待收账人信息成功!!!
+                if (frm_NoReceiveMoney.Tag.ToString()!="true")
+                {
+                    closeDialog = false;
+                }
+                
+
             }
-          
-            var isSuccess = DataManager.ProfitsInfoBLL.Add(salesInfo);
-            if (!isSuccess)
+            //如果待收账人信息未完成 不能关闭窗口 ,不清空数据
+            if (closeDialog)
             {
-                MessageBox.Show("利润表数据添加失败,如多次失败请联系管理员");
-                return;
+                var isSuccess = DataManager.ProfitsInfoBLL.Add(salesInfo);
+                if (!isSuccess)
+                {
+                    MessageBox.Show("利润表数据添加失败,如多次失败请联系管理员");
+                    return;
+                }
+                f1.OrdersInfo = new List<OrderInfo>();//清空订单表
+                this.Close();
             }
+           
             
-            f1.OrdersInfo = new List<OrderInfo>();//清空订单表
-            this.Close();
         }
 
         private void btnOrderCancel_Click(object sender, EventArgs e)

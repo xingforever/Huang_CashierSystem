@@ -361,8 +361,9 @@
             this.label52 = new System.Windows.Forms.Label();
             this.txtNoReceiveMoney_SearchName = new System.Windows.Forms.TextBox();
             this.btnNoReceiveMoneySearch = new System.Windows.Forms.Button();
-            this.label53 = new System.Windows.Forms.Label();
             this.label61 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.tspNoM_Receive = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel14.SuspendLayout();
             this.tabUserInfoManager.SuspendLayout();
@@ -3329,6 +3330,7 @@
             this.menuStrip6.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tspNoReceiveMoneyInfoEdit,
             this.toolStripMenuItem19,
+            this.tspNoM_Receive,
             this.tspNoReceiveMoneyInfoReload});
             this.menuStrip6.Location = new System.Drawing.Point(0, 0);
             this.menuStrip6.Name = "menuStrip6";
@@ -3357,6 +3359,7 @@
             this.tspNoReceiveMoneyInfoReload.Name = "tspNoReceiveMoneyInfoReload";
             this.tspNoReceiveMoneyInfoReload.Size = new System.Drawing.Size(60, 21);
             this.tspNoReceiveMoneyInfoReload.Text = "刷新";
+            this.tspNoReceiveMoneyInfoReload.Click += new System.EventHandler(this.tspNoReceiveMoneyInfoReload_Click);
             // 
             // panel19
             // 
@@ -3452,6 +3455,19 @@
             this.btnNoReceiveMoneySearch.UseVisualStyleBackColor = true;
             this.btnNoReceiveMoneySearch.Click += new System.EventHandler(this.btnNoReceiveMoneySearch_Click);
             // 
+            // label61
+            // 
+            this.label61.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label61.AutoSize = true;
+            this.label61.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label61.Location = new System.Drawing.Point(19, 23);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(80, 16);
+            this.label61.TabIndex = 37;
+            this.label61.Text = "收账信息:";
+            // 
             // label53
             // 
             this.label53.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -3465,18 +3481,13 @@
             this.label53.TabIndex = 37;
             this.label53.Text = "客户姓名:";
             // 
-            // label61
+            // tspNoM_Receive
             // 
-            this.label61.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label61.AutoSize = true;
-            this.label61.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label61.Location = new System.Drawing.Point(19, 23);
-            this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(80, 16);
-            this.label61.TabIndex = 37;
-            this.label61.Text = "收账信息:";
+            this.tspNoM_Receive.Image = ((System.Drawing.Image)(resources.GetObject("tspNoM_Receive.Image")));
+            this.tspNoM_Receive.Name = "tspNoM_Receive";
+            this.tspNoM_Receive.Size = new System.Drawing.Size(72, 21);
+            this.tspNoM_Receive.Text = "已收账";
+            this.tspNoM_Receive.Click += new System.EventHandler(this.tspNoM_Receive_Click);
             // 
             // Huang_System
             // 
@@ -3902,6 +3913,7 @@
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.ComboBox cbxIsReceiveMoney;
         private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.ToolStripMenuItem tspNoM_Receive;
     }
 }
 

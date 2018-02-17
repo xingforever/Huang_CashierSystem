@@ -14,77 +14,150 @@ namespace CashierSystem
     {
 
         public string _ModelName = "SortInfo";
-        public int entityId = int.MaxValue;
-        public static List<string> _Tags;
+        public static int _entityId = int.MaxValue;
+        public static  string _orderId = null;
+        public static string _waitPayPrice = null;
         public Frm_NoReceiveMoney()
         {
             InitializeComponent();
         }
         private static Frm_NoReceiveMoney _form;
-        public static Frm_NoReceiveMoney Create(List<string> tags = null)
+        public static Frm_NoReceiveMoney Create(int entityId=int.MaxValue)
         {
-            _Tags = null;
+            //修改
+            if (entityId != int.MaxValue)
+            {
+                _entityId = entityId;
+                NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(entityId);
+                _orderId = noReceiveMoney.OrderId;
+            }
+           
             if (_form == null)
             {
                 _form = new Frm_NoReceiveMoney();
-                _Tags = tags;
+                
             }
-            else
-            {
-                Frm_NoReceiveMoney._Tags = tags;
-            }
+          
             return _form;
         }
+        public static Frm_NoReceiveMoney Create(string  orderId=null ,string payPrice=null )
+        {
+            _orderId = orderId;
+            _waitPayPrice = payPrice;               
+
+            if (_form == null)
+            {
+                _form = new Frm_NoReceiveMoney();
+
+            }
+            
+            return _form;
+        }
+
+
         private void btnNoMEnter_Click(object sender, EventArgs e)
         {
             if (!CheckData())
             {
                 return;
             }
-            Huang_System f1 = (Huang_System)this.Owner;
+           
             //修改数据
-            if (entityId != int.MaxValue)
+            if (_entityId != int.MaxValue)
             {
-                NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(entityId);
+                NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(_entityId);
                 if (noReceiveMoney!=null)
                 {
+                  
                     noReceiveMoney.CustomerName = this.txtNoM_CustomerName.Text;
                     noReceiveMoney.Phone = this.txtNoM_Phone.Text;
                     noReceiveMoney.Remark = this.txtNoM_Remark.Text;
-                    noReceiveMoney.ProfitsInfo = DataManager.ProfitsInfoBLL.GetProfitsInfoByOrderId(entityId);
+                    var isSuccess=  DataManager.NoReceiveMoneyBLL.Edit(noReceiveMoney);
+                    if (isSuccess)
+                    {
+                        ClearData();
+                        this.Tag = "true";//通知父窗口 ,可以关闭
+                        this.Close();
+                    }
+                   
 
                 }
-
+            }
+            //添加数据
+            else if (_orderId!=null)
+            {
+                NoReceiveMoney noReceiveMoney = new NoReceiveMoney();
+                noReceiveMoney.OrderId = _orderId;
+                noReceiveMoney.CustomerName = this.txtNoM_CustomerName.Text.Trim();
+                noReceiveMoney.Phone = this.txtNoM_Phone.Text.Trim();
+                noReceiveMoney.WaitPayPrice = Convert.ToDecimal(this.txtNoM_Money.Text.Trim());
+                noReceiveMoney.CreateTime = DateTime.Now;
+                noReceiveMoney.Remark = this.txtNoM_Remark.Text;
+                var isSuccess = DataManager.NoReceiveMoneyBLL.Add(noReceiveMoney);
+                if (isSuccess)
+                {
+                    ClearData();
+                    this.Tag = "true";//通知父窗口 ,可以关闭
+                    this.Close();
+                }
 
             }
-            
+            else
+            {
+                MessageBox.Show("操作失败");
+                this.Tag = "false";//通知父窗口 ,不可以关闭
+            }
+           
+
+
+
+
+
         }
 
         private void Frm_NoReceiveMoney_Load(object sender, EventArgs e)
         {
             Init();
+            this.Tag = "false";//通知父窗口 ,不可以关闭
         }
 
         public void Init()
         {
 
-            if (_Tags.Count==6)
+            if (_entityId!=int.MaxValue)
             {
-                entityId = Convert.ToInt32(_Tags[0]);
-                txtNoM_OrderId.Text = _Tags[1];
-                txtNoM_CustomerName.Text = _Tags[2];
-                txtNoM_Phone.Text = _Tags[3];
-                txtNoM_Money.Text = _Tags[4];
-                txtNoM_Remark.Text = _Tags[5];
+                NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(_entityId);
+                if (noReceiveMoney != null)
+                {
+                    this.txtNoM_OrderId.Text = noReceiveMoney.OrderId;
+                    this.txtNoM_CustomerName.Text = noReceiveMoney.CustomerName;
+                    this.txtNoM_Phone.Text = noReceiveMoney.Phone;
+                    this.txtNoM_Remark.Text = noReceiveMoney.Remark;
+                    this.txtNoM_Money.Text = noReceiveMoney.WaitPayPrice.ToString();
+
+                }
+            }
+            else if (_orderId!=null)
+            {
+                this.txtNoM_OrderId.Text = _orderId;
+                this.txtNoM_Money.Text = _waitPayPrice;
             }
             else
             {
                 MessageBox.Show("发生意外情况,请联系开发人员");
-
             }
+            
 
         }
 
+        public  void ClearData()
+        {
+            this.txtNoM_CustomerName.Text = "";
+            this.txtNoM_Money.Text = "";
+            this.txtNoM_OrderId.Text = "";
+            this.txtNoM_Phone.Text = "";
+            this.txtNoM_Remark.Text = "";
+        }
         public  bool CheckData()
         {
             this.lblNoM_Tips.Visible = false;
@@ -94,6 +167,7 @@ namespace CashierSystem
                 this.lblNoM_Tips.Visible = true;
                 return false;
             }
+           
             return true;
 
         }
@@ -109,6 +183,12 @@ namespace CashierSystem
                 this.lblNoM_Tips.Text = "请输入数字";
                 this.lblNoM_Tips.Visible = true;
             }
+        }
+
+        private void btnNoMCancel_Click(object sender, EventArgs e)
+        {
+            this.Tag = "false";//通知父窗口 ,不可以关闭
+            this.Close();
         }
     }
 }

@@ -84,8 +84,9 @@ namespace Model
         public override string GetAddSql()
         {
             string sql = " Values ('" + this.OrderId + "','"              
-                  + this.Profit + "','" + this.CreateTime + "','"
-                  +this.DisCount+"',"
+                  + this.Profit + "','"
+                    + this.DisCount + "','"
+                  + this.CreateTime + "',"                
                   + this.IsPay + ",'"  + this.Remark + "',"
                   +  this.DelFlag + ")";
 

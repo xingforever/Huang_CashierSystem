@@ -23,7 +23,7 @@ namespace Bll
             return new ProfitsInfoDal().GetDataTablebyPammer(searchModel.startIndex,searchModel.count,searchModel.IsAsc,searchModel.StartTime,searchModel.EndTime,searchModel.dic);
         }
 
-        public ProfitsInfo GetProfitsInfoByOrderId(int orderId)
+        public ProfitsInfo GetProfitsInfoByOrderId(string  orderId)
         {
             return new ProfitsInfoDal().GetProfitsInfoByOrderId(orderId);
         }

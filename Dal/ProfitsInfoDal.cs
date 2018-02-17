@@ -65,10 +65,10 @@ namespace Dal
         }
 
 
-        public ProfitsInfo GetProfitsInfoByOrderId(int orderId)
+        public ProfitsInfo GetProfitsInfoByOrderId(string  orderId)
         {
             ProfitsInfo entity = new ProfitsInfo();
-            string sql = "Select * ProfitsInfo from   where [OrderId]=" + orderId;
+            string sql = "Select *  from  ProfitsInfo  where [OrderId]='" + orderId + "'";
             var dataTable = SqlHelper.GetDataTable(sql);
             var listEntity = entity.GetList(dataTable);
             if (listEntity.Count == 1)

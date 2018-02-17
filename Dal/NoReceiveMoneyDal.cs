@@ -22,9 +22,9 @@ namespace Dal
         /// <returns></returns>
         public DataTable GetDataTablebyPammer(int startIndex = 0, int count = 30, bool idAsc = true, DateTime startTime = new DateTime(), DateTime endTime = new DateTime(), Dictionary<string, string> dic = null)
         {
-            DateTime dateTime = DateTime.Today;
+            DateTime dateTime = DateTime.Now;
             string timeStart = (dateTime - new TimeSpan(7, 0, 0, 0, 0)).ToString("yyyy-MM-dd 00:00:00");
-            string timeEnd = dateTime.ToString("yyyy-MM-dd 00:00:00");
+            string timeEnd = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
             //操作员选择时间端
             if (!startTime.Equals(new DateTime()))
             {
@@ -43,7 +43,7 @@ namespace Dal
                     flagString = "<=";
                     paiXu = "desc";
                 }
-                string sql = @"Select *," +
+                string sql = @"Select * " +
                    "from [NoReceiveMoney] Where [DelFlag]=False And [CreateTime]>=#" + timeStart + "# And [CreateTime] <=#" + timeEnd + "#"
                      + " And  [ID]" + flagString + startIndex;
 

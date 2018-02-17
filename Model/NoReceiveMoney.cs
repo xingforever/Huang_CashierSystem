@@ -14,11 +14,15 @@ namespace Model
         /// <summary>
         /// 销售单
         /// </summary>
-        public  int OrderId { get; set; }
+        public  string  OrderId { get; set; }
         /// <summary>
         /// 客户
         /// </summary>
         public string CustomerName { get; set; }
+        /// <summary>
+        /// 待收款钱
+        /// </summary>
+        public  decimal WaitPayPrice { get; set; }
         /// <summary>
         /// 电话
         /// </summary>
@@ -42,7 +46,7 @@ namespace Model
 
         public override string GetSql()
         {
-            return "([OrderId],[CustomerName],[Phone],[CreateTime],[Remark],[DelFlag]) ";
+            return "([OrderId],[CustomerName],[Phone],[WaitPayPrice],[CreateTime],[Remark],[DelFlag]) ";
         }
 
         public override string GetAddSql()
@@ -50,6 +54,7 @@ namespace Model
             string sql = " Values ('" + this.OrderId + "','"
                 + this.CustomerName + "','" 
                 + this.Phone + "','"
+                +this.WaitPayPrice+"','"
                 + this.CreateTime + "','" 
                 + this.Remark + "'," +
                 this.DelFlag + ")";
@@ -60,7 +65,9 @@ namespace Model
         {
             string sql = " Set [Remark]='" + this.Remark + "'," 
                 +" [CustomerName]='"+this.CustomerName+ "',"+
-                "[Phone]='" +this.Phone+"'  Where [ID]=" + this.Id;
+                "[Phone]='" +this.Phone+
+                  "[WaitPayPrice]='" + this.WaitPayPrice +
+                "'  Where [ID]=" + this.Id;
 
             return sql;
         }
@@ -76,8 +83,9 @@ namespace Model
                 NoReceiveMoney noReceiveMoney = new NoReceiveMoney();
                 dr = dataTable.Rows[i];
                 noReceiveMoney.Id = Convert.ToInt32(dr["ID"]);
-                noReceiveMoney.OrderId = Convert.ToInt32(dr["OrderId"]);
+                noReceiveMoney.OrderId = Convert.ToString(dr["OrderId"]);
                 noReceiveMoney.CustomerName = Convert.ToString(dr["CustomerName"]);
+                noReceiveMoney.WaitPayPrice = Convert.ToDecimal(dr["WaitPayPrice"]);
                 noReceiveMoney.Phone = Convert.ToString(dr["Phone"]);
                 noReceiveMoney.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
                 noReceiveMoney.Remark = Convert.ToString(dr["Remark"]);                
@@ -93,7 +101,7 @@ namespace Model
         public override List<string> GetTableName()
         {
             //DgvName
-            return new List<string> { "ID", "OrderId", "CustomerName", "Phone", "CreateTime", "Remark", "DelFlag" }; ;
+            return new List<string> { "ID", "OrderId", "CustomerName", "Phone", "WaitPayPrice", "CreateTime", "Remark", "DelFlag" }; ;
         }
         /// <summary>
         /// 获取标题名称
@@ -101,7 +109,7 @@ namespace Model
         /// <returns></returns>
         public override List<string> GetHanderTxt()
         {
-            return new List<string> { "ID编号", "定单编号", "客户姓名", "联系电话", "创建时间", "备注", "是否删除" };
+            return new List<string> { "ID编号", "定单编号", "客户姓名", "联系电话","待收账" ,"创建时间", "备注", "是否删除" };
         }
         /// <summary>
         /// 获取隐藏数据位置
@@ -109,7 +117,7 @@ namespace Model
         /// <returns></returns>
         public override List<int> GetHideIndex()
         {
-           return new List<int>() { 0, 6 };
+           return new List<int>() { 0, 7 };
         }
 
         public override string GetModelName()
@@ -121,7 +129,7 @@ namespace Model
         public static List<NoReceiveMoneyInfoPart> GetCBXNoRecevicePart()
         {
             List<NoReceiveMoneyInfoPart> list = new List<NoReceiveMoneyInfoPart>();
-            NoReceiveMoneyInfoPart noReceiveMoney = new NoReceiveMoneyInfoPart(0, "未待账");
+            NoReceiveMoneyInfoPart noReceiveMoney = new NoReceiveMoneyInfoPart(0, "待收账");
             list.Add(noReceiveMoney);
             NoReceiveMoneyInfoPart receiveMoneyInfoPart = new NoReceiveMoneyInfoPart(1, "已过账");
             list.Add(receiveMoneyInfoPart);
@@ -145,7 +153,8 @@ namespace Model
 
         public NoReceiveMoneyInfoPart(int value, string name)
         {
-
+            Value = value;
+            Name = name;
         }
 
     }

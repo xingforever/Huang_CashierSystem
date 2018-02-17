@@ -43,6 +43,7 @@
             this.lblReduceCount = new System.Windows.Forms.Label();
             this.lblAdd = new System.Windows.Forms.Label();
             this.lblTips = new System.Windows.Forms.Label();
+            this.btnRemoveOrder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -143,7 +144,7 @@
             // btnOrderEnter
             // 
             this.btnOrderEnter.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnOrderEnter.Location = new System.Drawing.Point(42, 293);
+            this.btnOrderEnter.Location = new System.Drawing.Point(23, 293);
             this.btnOrderEnter.Name = "btnOrderEnter";
             this.btnOrderEnter.Size = new System.Drawing.Size(69, 27);
             this.btnOrderEnter.TabIndex = 2;
@@ -154,7 +155,7 @@
             // btnOrderCancel
             // 
             this.btnOrderCancel.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnOrderCancel.Location = new System.Drawing.Point(193, 293);
+            this.btnOrderCancel.Location = new System.Drawing.Point(208, 293);
             this.btnOrderCancel.Name = "btnOrderCancel";
             this.btnOrderCancel.Size = new System.Drawing.Size(69, 27);
             this.btnOrderCancel.TabIndex = 2;
@@ -188,11 +189,22 @@
             // 
             this.lblTips.AutoSize = true;
             this.lblTips.ForeColor = System.Drawing.Color.Red;
-            this.lblTips.Location = new System.Drawing.Point(126, 275);
+            this.lblTips.Location = new System.Drawing.Point(85, 268);
             this.lblTips.Name = "lblTips";
             this.lblTips.Size = new System.Drawing.Size(35, 12);
             this.lblTips.TabIndex = 4;
             this.lblTips.Text = "提示:";
+            // 
+            // btnRemoveOrder
+            // 
+            this.btnRemoveOrder.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnRemoveOrder.Location = new System.Drawing.Point(117, 293);
+            this.btnRemoveOrder.Name = "btnRemoveOrder";
+            this.btnRemoveOrder.Size = new System.Drawing.Size(69, 27);
+            this.btnRemoveOrder.TabIndex = 2;
+            this.btnRemoveOrder.Text = "删除";
+            this.btnRemoveOrder.UseVisualStyleBackColor = true;
+            this.btnRemoveOrder.Click += new System.EventHandler(this.btnRemoveOrder_Click);
             // 
             // Frm_OrderInfo
             // 
@@ -202,6 +214,7 @@
             this.Controls.Add(this.lblTips);
             this.Controls.Add(this.lblAdd);
             this.Controls.Add(this.lblReduceCount);
+            this.Controls.Add(this.btnRemoveOrder);
             this.Controls.Add(this.btnOrderCancel);
             this.Controls.Add(this.btnOrderEnter);
             this.Controls.Add(this.txtOrder_Remark);
@@ -242,5 +255,6 @@
         private System.Windows.Forms.Label lblReduceCount;
         private System.Windows.Forms.Label lblAdd;
         private System.Windows.Forms.Label lblTips;
+        private System.Windows.Forms.Button btnRemoveOrder;
     }
 }

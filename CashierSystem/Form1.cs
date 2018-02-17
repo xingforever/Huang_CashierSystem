@@ -135,7 +135,7 @@ namespace CashierSystem
                 } else if (i == 9)
                 {
                     this.dgvUnitInfo.Tag = false;
-                    this.dgvUserInfo = dataGridViewHelper.Init(this.dgvUserInfo, handerTxt, nameList, hideIndex);
+                    this.dgvUserInfo = dataGridViewHelper.Init(this.dgvUserInfo, nameList, handerTxt, hideIndex);
                 }
             }
 
@@ -720,7 +720,7 @@ namespace CashierSystem
                 MessageBox.Show("订单表中无商品,请双击商品信息表中信息添加商品", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            Frm_OrderInfoDIalog frm_Samll = Frm_OrderInfoDIalog.Create();
+            Frm_OrderInfoDIalog frm_Samll = Frm_OrderInfoDIalog.Create(this.lblOrderMoney.Text);
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
             //下单成功
@@ -784,6 +784,7 @@ namespace CashierSystem
         {
             if (this.txtOrderMoney.Visible)
             {
+                this.txtOrderMoney.Focus();
                 EditOrderMonry();
             }
             else
@@ -795,7 +796,7 @@ namespace CashierSystem
             }
 
         }
-
+       
         /// <summary>
         /// 订单修改完毕事件
         /// </summary>
@@ -1049,8 +1050,7 @@ namespace CashierSystem
 
         }
         #endregion
-
-
+        #region 待收账表信息
 
         /// <summary>
         /// 待收账加载
@@ -1062,9 +1062,14 @@ namespace CashierSystem
             cbxIsReceiveMoney.ValueMember = "Value";
             cbxIsReceiveMoney.DisplayMember = "Name";
             cbxIsReceiveMoney.DataSource = NoReceiveMoney.GetCBXNoRecevicePart();
-            cbxIsReceiveMoney.SelectedValue = noReceiveMoneySearch.dic.TryGetValue("NoReceiveMoney_SelectValue", out selectVlaue) ? selectVlaue : "0";
-            DateTime today = DateTime.Today;
-            DateTime weekAgo = today - new TimeSpan(7, 0, 0, 0);     
+            noReceiveMoneySearch.dic.TryGetValue("NoReceiveMoney_SelectValue", out selectVlaue);
+            if (selectVlaue!="0")
+            {
+                cbxIsReceiveMoney.SelectedIndex = 1;
+            }
+            cbxIsReceiveMoney.SelectedIndex = 0;
+                DateTime today = DateTime.Today;
+            DateTime weekAgo = today - new TimeSpan(7, 0, 0, 0);
 
             today = DateTime.Now;//从一周前0.00 开始到现在的时间
             dateNoReceiveStartTime.Value = noReceiveMoneySearch.StartTime.Equals(new DateTime()) ? weekAgo : noReceiveMoneySearch.StartTime;
@@ -1128,9 +1133,45 @@ namespace CashierSystem
             var dataRow = this.dgvNoReceiveMoney.SelectedRows[0];
             var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
             NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(dataId);
-           
+            List<string> tags = new List<string>();
+            Frm_NoReceiveMoney frm_NoReceiveMoney = Frm_NoReceiveMoney.Create(dataId);
+            frm_NoReceiveMoney.ShowDialog(this);
+            frm_NoReceiveMoney.Focus();
+
+
+
         }
 
+        private void tspNoM_Receive_Click(object sender, EventArgs e)
+        {
+            if (this.dgvNoReceiveMoney.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvNoReceiveMoney.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            var result = MessageBox.Show("改账单已经结清?", "询问", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.OK)
+            {
+                NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(dataId);
+                var profists = DataManager.ProfitsInfoBLL.GetProfitsInfoByOrderId(noReceiveMoney.OrderId);
+                profists.IsPay = true;
+                var isFail = !(DataManager.ProfitsInfoBLL.Edit(profists));
+                var isFail2 = !(DataManager.NoReceiveMoneyBLL.Delete(dataId));
+                if (isFail || isFail2)
+                {
+                    MessageBox.Show("未知错误!!");
+                }
+            }
+
+        }
+        private void tspNoReceiveMoneyInfoReload_Click(object sender, EventArgs e)
+        {
+            this.dgvNoReceiveMoney.Tag = false;
+            GetDgv(5);
+        } 
+        #endregion
 
 
         /// <summary>
@@ -1184,6 +1225,6 @@ namespace CashierSystem
             MessageBox.Show(messAge, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-   
+       
     }
 }

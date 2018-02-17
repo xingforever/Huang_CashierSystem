@@ -52,6 +52,7 @@
             this.btnNoMCancel.TabIndex = 13;
             this.btnNoMCancel.Text = "取消";
             this.btnNoMCancel.UseVisualStyleBackColor = true;
+            this.btnNoMCancel.Click += new System.EventHandler(this.btnNoMCancel_Click);
             // 
             // btnNoMEnter
             // 
@@ -78,6 +79,7 @@
             this.txtNoM_Money.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtNoM_Money.Location = new System.Drawing.Point(110, 161);
             this.txtNoM_Money.Name = "txtNoM_Money";
+            this.txtNoM_Money.ReadOnly = true;
             this.txtNoM_Money.Size = new System.Drawing.Size(151, 26);
             this.txtNoM_Money.TabIndex = 9;
             this.txtNoM_Money.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtNoM_Money_MouseUp);
@@ -188,6 +190,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Frm_NoReceiveMoney";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "待收账信息";
             this.Load += new System.EventHandler(this.Frm_NoReceiveMoney_Load);
             this.ResumeLayout(false);
