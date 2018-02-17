@@ -17,52 +17,50 @@ namespace CashierSystem
             InitializeComponent();
         }
 
-        public int entityId = int.MaxValue;
-        public  static  OrderInfo  theOrderInfo;
-        public OrderInfo _orderInfo;
-        private double OldCount;
-        private decimal OldDisCount;
-        private decimal OldPrice;
-        private string OldRemark;
-        private decimal OldProfit;
-     
-
+        public static int orderIndex = int.MaxValue;
+        public GoodsInfo theGoodInfo = null;
+        public double  mixCount = 0;//最小值
+        public double maxCount = double.MaxValue / 1000000000.0;
+      
         private static Frm_OrderInfo _form;
-        public static Frm_OrderInfo Create(  OrderInfo orderInfo)
+        public static Frm_OrderInfo Create( int id )
         {
-            theOrderInfo = null;
+            orderIndex = int.MaxValue;
             if (_form == null)
             {
                 _form = new Frm_OrderInfo();
-                theOrderInfo = orderInfo;
-                
+
+                orderIndex = id;
             }
             else
             {
-                theOrderInfo = orderInfo;
-               
+                orderIndex = id;
+
             }
             return _form;
         }
         
          public void  InIt()
         {
-            _orderInfo = theOrderInfo;
+            Huang_System f1 = (Huang_System)this.Owner;//将本窗体的拥有者强制设为Form1类的实例f
             try
             {
-                txtOrder_GoodsName.Text = _orderInfo.GoodsName;
-                txtOrder_Count.Text = _orderInfo.Count.ToString();
-                txtOrder_DisCount.Text = _orderInfo.DisCount.ToString();
-
-                double  dfd = (double)_orderInfo.PayPrice;
-                txtOrder_Price.Text= _orderInfo.PayPrice.ToString();
-                txtOrder_Remark.Text = _orderInfo.Remark;
-                Copy();
+                var orderInfo = f1.OrdersInfo[orderIndex];
+                theGoodInfo = DataManager.GoodsInfoBLL.GetEntityById(orderInfo.GoodsId);
+                maxCount = theGoodInfo.SurplusCount;
+                txtOrder_GoodsName.Text = orderInfo.GoodsName;
+                txtOrder_Count.Text = orderInfo.Count.ToString();
+                txtOrder_DisCount.Text = orderInfo.DisCount.ToString();
+                double dfd = (double)orderInfo.PayPrice;
+                txtOrder_Price.Text = orderInfo.PayPrice.ToString();
+                txtOrder_Remark.Text = orderInfo.Remark;
+            
             }
-            catch 
+            catch
             {
 
-                ;
+                MessageBox.Show("发生未知错误!!!");
+                this.Close();
             }
         }
         private void btnOrderEnter_Click(object sender, EventArgs e)
@@ -70,15 +68,7 @@ namespace CashierSystem
             this.Close();
         }
 
-        public   void Copy()
-        {
-            OldCount = _orderInfo.Count;
-            OldDisCount = _orderInfo.DisCount;
-            OldPrice = _orderInfo.PayPrice;
-            OldProfit = _orderInfo.Profit;
-            OldRemark = _orderInfo.Remark;
-
-        }
+       
         private void Frm_OrderInfo_Load(object sender, EventArgs e)
         {
             InIt();
@@ -86,64 +76,122 @@ namespace CashierSystem
 
         private void txtOrder_Count_MouseUp(object sender, MouseEventArgs e)
         {
+            double count;
+            var isTrue = double.TryParse(this.txtOrder_Count.Text.Trim(), out count);
+            if (isTrue)
+            {
+                ChangeData();
+            }
+            else
+            {
+                lblTips.Text = "商品数量请填写数字!!!";
+                this.txtOrder_Count.Focus();
+            }
+        }
+        private void txtOrder_DisCount_MouseUp(object sender, MouseEventArgs e)
+        {
+            double disCount;
+            var isTrue = double.TryParse(this.txtOrder_DisCount.Text.Trim(), out disCount);
+            if (isTrue)
+            {
+                ChangeData();
+            }
+            else
+            {
+                lblTips.Text = "折扣请填写数字!!!";
+                this.txtOrder_DisCount.Focus();
+            }
+        }
+
+
+
+        private void btnOrderCancel_Click(object sender, EventArgs e)
+        {
+            Huang_System f1 = (Huang_System)this.Owner;//将本窗体的拥有者强制设为Form1类的实例f
             try
             {
-                var editCount = Convert.ToDouble(this.txtOrder_Count.Text);
-                var goodsInfo = DataManager.GoodsInfoBLL.GetEntityById(_orderInfo.GoodsId);
-                var surplusCount = goodsInfo.SurplusCount;
-                if (editCount>=surplusCount)
-                {
-                    MessageBox.Show("库存不够!!,剩余数量为"+surplusCount, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                var disCount = Convert.ToDecimal(this.txtOrder_DisCount.Text);
-                _orderInfo.Count = editCount;
-                _orderInfo.DisCount = disCount;                
-                _orderInfo.PayPrice = (goodsInfo.PurPrice * (decimal)editCount) - disCount;
-                _orderInfo.Profit = _orderInfo.PayPrice - (goodsInfo.PurPrice * (decimal)editCount);
-                this.txtOrder_Price.Text = _orderInfo.PayPrice.ToString();
+                var orderInfo = f1.OrdersInfo[orderIndex];
+                theGoodInfo = DataManager.GoodsInfoBLL.GetEntityById(orderInfo.GoodsId);
+                double count, disCount;
+                count = double.Parse(txtOrder_Count.Text.Trim());
+                disCount = double.Parse(txtOrder_DisCount.Text.Trim());
+
+
+
+                txtOrder_Count.Text = orderInfo.Count.ToString();
+                txtOrder_DisCount.Text = orderInfo.DisCount.ToString();
+                double dfd = (double)orderInfo.PayPrice;
+                txtOrder_Price.Text = orderInfo.PayPrice.ToString();
+                txtOrder_Remark.Text = orderInfo.Remark;
+
             }
-            catch 
+            catch
             {
-                MessageBox.Show("修改失败,请检查数据是否合格", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+
+                MessageBox.Show("发生未知错误!!!");
+                this.Close();
+            }
+        }
+
+       
+
+        private void lblReduceCount_Click(object sender, EventArgs e)
+        {
+            double count;
+            var isTrue=  double.TryParse(this.txtOrder_Count.Text.Trim(), out count);
+            if (isTrue)
+            {
+                if (count>(mixCount+1))
+                {
+                    this.txtOrder_Count.Text = (count - 1).ToString();
+                    ChangeData();
+                }
+            }
+            else
+            {
+                lblTips.Text = "商品数量请填写数字!!!";
+                this.txtOrder_Count.Focus();
+            }
+            
+        }
+        public void ChangeData()
+        {
+            //数量
+            double count;
+            double disCount;
+            var isCountTrue = double.TryParse(this.txtOrder_Count.Text.Trim(), out count);
+            var isDisCount = double.TryParse(this.txtOrder_DisCount.Text.Trim(), out disCount);
+            if (isCountTrue && isDisCount)
+            {
+                //售价
+                var parice = (theGoodInfo.PayPrice * (decimal)count) - (decimal)disCount;
+                this.txtOrder_Price.Text = parice.ToString();
+            }
+            else
+            {
+                lblTips.Text = "商品数量和折扣请填写数字!!";
+            }
+        }
+
+        private void lblAdd_Click(object sender, EventArgs e)
+        {
+            double count;
+            var isTrue = double.TryParse(this.txtOrder_Count.Text.Trim(), out count);
+            if (isTrue)
+            {
+                if ((count+1) <=maxCount)
+                {
+                    this.txtOrder_Count.Text = (count +1).ToString();
+                    ChangeData();
+                }
+            }
+            else
+            {
+                lblTips.Text = "商品数量请填写数字,!!";
             }
            
         }
 
-        private void txtOrder_DisCount_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-               
-                var goodsInfo = DataManager.GoodsInfoBLL.GetEntityById(_orderInfo.GoodsId);
-                var editCount = Convert.ToDouble(this.txtOrder_Count.Text);
-                var disCount = Convert.ToDecimal(this.txtOrder_DisCount.Text);              
-                _orderInfo.DisCount = disCount;
-                _orderInfo.PayPrice = (goodsInfo.PurPrice * (decimal)editCount) - disCount;
-                _orderInfo.Profit = _orderInfo.PayPrice - (goodsInfo.PurPrice * (decimal)editCount);
-                this.txtOrder_Price.Text = _orderInfo.PayPrice.ToString();
-            }
-            catch
-            {
-                MessageBox.Show("修改失败,请检查数据是否合格", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-        }
-
-        private void btnOrderCancel_Click(object sender, EventArgs e)
-        {
-            _orderInfo.Count = OldCount;
-            _orderInfo.DisCount = OldDisCount;
-            _orderInfo.PayPrice = OldPrice;
-            _orderInfo.Profit = OldProfit;
-            _orderInfo.Remark = OldRemark;
-            InIt();
-        }
-
-        private void txtOrder_Remark_TextChanged(object sender, EventArgs e)
-        {
-            _orderInfo.Remark = this.txtOrder_Remark.Text;
-        }
+       
     }
 }

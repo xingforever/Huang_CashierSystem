@@ -746,11 +746,13 @@ namespace CashierSystem
                 var dataRow = this.dgvOrdersInfo.SelectedRows[0];
                 var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取商品Id
                 OrderInfo orderInfo = null;
+                int index=int.MaxValue;
                 for (int i = 0; i < OrdersInfo.Count; i++)
                 {
                     var orderinfo = OrdersInfo[i];
                     if (orderinfo.GoodsId == dataId)
                     {
+                        index = i;//传值,用于确定 小定单的位置
                         orderInfo = orderinfo;
                         break;
                     }
@@ -760,7 +762,7 @@ namespace CashierSystem
                     MessageBox.Show("发生错误,联系开发人员");
                     return;
                 }
-                Frm_OrderInfo frm_Samll = Frm_OrderInfo.Create(orderInfo);
+                Frm_OrderInfo frm_Samll = Frm_OrderInfo.Create(index);
                 frm_Samll.ShowDialog(this);
                 frm_Samll.Focus();
                 LoadOrdersInfo();

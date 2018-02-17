@@ -40,6 +40,9 @@
             this.txtOrder_Remark = new System.Windows.Forms.TextBox();
             this.btnOrderEnter = new System.Windows.Forms.Button();
             this.btnOrderCancel = new System.Windows.Forms.Button();
+            this.lblReduceCount = new System.Windows.Forms.Label();
+            this.lblAdd = new System.Windows.Forms.Label();
+            this.lblTips = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -74,9 +77,9 @@
             // txtOrder_Count
             // 
             this.txtOrder_Count.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtOrder_Count.Location = new System.Drawing.Point(126, 63);
+            this.txtOrder_Count.Location = new System.Drawing.Point(173, 63);
             this.txtOrder_Count.Name = "txtOrder_Count";
-            this.txtOrder_Count.Size = new System.Drawing.Size(151, 26);
+            this.txtOrder_Count.Size = new System.Drawing.Size(54, 26);
             this.txtOrder_Count.TabIndex = 1;
             this.txtOrder_Count.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtOrder_Count_MouseUp);
             // 
@@ -117,7 +120,7 @@
             this.txtOrder_DisCount.Name = "txtOrder_DisCount";
             this.txtOrder_DisCount.Size = new System.Drawing.Size(151, 26);
             this.txtOrder_DisCount.TabIndex = 1;
-            this.txtOrder_DisCount.TextChanged += new System.EventHandler(this.txtOrder_DisCount_TextChanged);
+            this.txtOrder_DisCount.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtOrder_DisCount_MouseUp);
             // 
             // txtOrder_Price
             // 
@@ -136,12 +139,11 @@
             this.txtOrder_Remark.Name = "txtOrder_Remark";
             this.txtOrder_Remark.Size = new System.Drawing.Size(151, 64);
             this.txtOrder_Remark.TabIndex = 1;
-            this.txtOrder_Remark.TextChanged += new System.EventHandler(this.txtOrder_Remark_TextChanged);
             // 
             // btnOrderEnter
             // 
             this.btnOrderEnter.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnOrderEnter.Location = new System.Drawing.Point(42, 282);
+            this.btnOrderEnter.Location = new System.Drawing.Point(42, 293);
             this.btnOrderEnter.Name = "btnOrderEnter";
             this.btnOrderEnter.Size = new System.Drawing.Size(69, 27);
             this.btnOrderEnter.TabIndex = 2;
@@ -152,7 +154,7 @@
             // btnOrderCancel
             // 
             this.btnOrderCancel.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnOrderCancel.Location = new System.Drawing.Point(186, 282);
+            this.btnOrderCancel.Location = new System.Drawing.Point(193, 293);
             this.btnOrderCancel.Name = "btnOrderCancel";
             this.btnOrderCancel.Size = new System.Drawing.Size(69, 27);
             this.btnOrderCancel.TabIndex = 2;
@@ -160,11 +162,46 @@
             this.btnOrderCancel.UseVisualStyleBackColor = true;
             this.btnOrderCancel.Click += new System.EventHandler(this.btnOrderCancel_Click);
             // 
+            // lblReduceCount
+            // 
+            this.lblReduceCount.AutoSize = true;
+            this.lblReduceCount.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblReduceCount.Location = new System.Drawing.Point(126, 66);
+            this.lblReduceCount.Name = "lblReduceCount";
+            this.lblReduceCount.Size = new System.Drawing.Size(21, 21);
+            this.lblReduceCount.TabIndex = 3;
+            this.lblReduceCount.Text = "-";
+            this.lblReduceCount.Click += new System.EventHandler(this.lblReduceCount_Click);
+            // 
+            // lblAdd
+            // 
+            this.lblAdd.AutoSize = true;
+            this.lblAdd.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblAdd.Location = new System.Drawing.Point(256, 66);
+            this.lblAdd.Name = "lblAdd";
+            this.lblAdd.Size = new System.Drawing.Size(21, 21);
+            this.lblAdd.TabIndex = 3;
+            this.lblAdd.Text = "+";
+            this.lblAdd.Click += new System.EventHandler(this.lblAdd_Click);
+            // 
+            // lblTips
+            // 
+            this.lblTips.AutoSize = true;
+            this.lblTips.ForeColor = System.Drawing.Color.Red;
+            this.lblTips.Location = new System.Drawing.Point(126, 275);
+            this.lblTips.Name = "lblTips";
+            this.lblTips.Size = new System.Drawing.Size(35, 12);
+            this.lblTips.TabIndex = 4;
+            this.lblTips.Text = "提示:";
+            // 
             // Frm_OrderInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(305, 332);
+            this.Controls.Add(this.lblTips);
+            this.Controls.Add(this.lblAdd);
+            this.Controls.Add(this.lblReduceCount);
             this.Controls.Add(this.btnOrderCancel);
             this.Controls.Add(this.btnOrderEnter);
             this.Controls.Add(this.txtOrder_Remark);
@@ -202,5 +239,8 @@
         private System.Windows.Forms.TextBox txtOrder_Remark;
         private System.Windows.Forms.Button btnOrderEnter;
         private System.Windows.Forms.Button btnOrderCancel;
+        private System.Windows.Forms.Label lblReduceCount;
+        private System.Windows.Forms.Label lblAdd;
+        private System.Windows.Forms.Label lblTips;
     }
 }
