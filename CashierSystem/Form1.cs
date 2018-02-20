@@ -100,6 +100,12 @@ namespace CashierSystem
                     this.dgvTodayOrder = dataGridViewHelper.Init(this.dgvTodayOrder, nameList, handerTxt, hideIndex);
                     GetDgv(1);
                 }
+                else if (i == 2)
+                {
+                    this.dgvGoodSInfoManager.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
+                    this.dgvGoodSInfoManager = dataGridViewHelper.Init(this.dgvGoodSInfoManager, nameList, handerTxt, hideIndex);
+                    GetDgv(2);
+                }
                 else if (i == 3)
                 {
                     this.dgvAllOrder.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
@@ -210,6 +216,15 @@ namespace CashierSystem
                         dataTable = DataManager.OrderInfoBLL.GetTodayDataTable(searchModel);
                         this.dgvTodayOrder = dataGridViewHelper.FillData(this.dgvTodayOrder, dataTable);                       
                         this.dgvTodayOrder.Tag = true;
+                    }
+                    break;
+                case 2:
+                    if (!(bool)this.dgvGoodSInfoManager.Tag)
+                    {
+                        LoadGoodsInfoManager(searchModel);
+                        dataTable = DataManager.GoodsInfoBLL.GetDataTablebyPammer(searchModel);
+                        this.dgvGoodSInfoManager = dataGridViewHelper.FillData(this.dgvGoodSInfoManager, dataTable);
+                        this.dgvGoodSInfoManager.Tag = true;
                     }
                     break;
                 case 3:
@@ -543,8 +558,7 @@ namespace CashierSystem
             searchModel.startIndex = startIndex;//开始行
             searchModel.dic = new Dictionary<string, string>();
             //搜索
-            if (startIndex == 0)
-            {
+           
                 var sortId = (cbxSortsInfo.SelectedValue).ToString();//类型
                 var unitId = (cbxUnitInfo.SelectedValue).ToString();//单位
                 var goodsName = txtGoodsNameSearch.Text.Trim();
@@ -562,7 +576,7 @@ namespace CashierSystem
                 }
 
 
-            }
+            
             //下一页或者上一页
             //利用Tag属性 ,标记是否需要再次更新数据
             this.dgvGoodsInfo.Tag = false;//false 表示需要更新
@@ -1170,10 +1184,94 @@ namespace CashierSystem
         {
             this.dgvNoReceiveMoney.Tag = false;
             GetDgv(5);
-        } 
+        }
         #endregion
 
+        #region 商品管理表
 
+        public void LoadGoodsInfoManager(SearchModel goodsSearch)
+        {
+            cbxGIManager_Sort.ValueMember = "Id";
+            cbxGIManager_Sort.DisplayMember = "SortName";
+            cbxGIManager_Sort.DataSource = GetSortInfoList();
+            cbxGIManager_Unit.ValueMember = "Id";
+            cbxGIManager_Unit.DisplayMember = "UnitName";
+            cbxGIManager_Unit.DataSource = GetUnitInfoList();
+            cbxGIManager_WSaler.ValueMember = "Id";
+            cbxGIManager_WSaler.DisplayMember = "SupName";
+            cbxGIManager_WSaler.DataSource = GetWholeSalerList();
+            string goodsName = "";
+            string sortId = "0";
+            string unitId = "0";
+            string wholeSalerId = "0";
+            txtGIGoosName_Search.Text = goodsSearch.dic.TryGetValue("GoodsName", out goodsName) ? goodsName : "";
+            unitId = goodsSearch.dic.TryGetValue("UnitId", out unitId) ? unitId : "0";
+            sortId = goodsSearch.dic.TryGetValue("SortId", out sortId) ? sortId : "0";
+            wholeSalerId = goodsSearch.dic.TryGetValue("WholeSalerId", out wholeSalerId) ? wholeSalerId : "0";
+            cbxGIManager_Unit.SelectedValue = Convert.ToInt32(unitId);
+            cbxGIManager_Sort.SelectedValue = Convert.ToInt32(sortId);
+            cbxGIManager_WSaler.SelectedValue = Convert.ToInt32(wholeSalerId);
+        }
+
+        private void tspGoosInfo_Add_Click(object sender, EventArgs e)
+        {
+            Frm_GoodsInfo frm_GoodsInfo = Frm_GoodsInfo.Create();
+            frm_GoodsInfo.ShowDialog();
+            frm_GoodsInfo.Focus();
+            //刷新商品管理页信息
+            this.dgvGoodSInfoManager.Tag = false;
+            GetDgv(SelectIndex);//刷新
+        }
+
+        private void tspGoodsInfo_Edit_Click(object sender, EventArgs e)
+        {
+            if (this.dgvGoodSInfoManager.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvGoodSInfoManager.SelectedRows[0];
+
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                                                                 // GoodsInfo goodInfo = DataManager.GoodsInfoBLL.GetEntityById(dataId);         ;
+            Frm_GoodsInfo frm_GoodsInfo = Frm_GoodsInfo.Create(dataId);
+            frm_GoodsInfo.ShowDialog();
+            frm_GoodsInfo.Focus();
+            this.dgvGoodSInfoManager.Tag = false;
+            GetDgv(SelectIndex);//刷新
+        }
+
+        private void tspGoodsInfo_Remove_Click(object sender, EventArgs e)
+        {
+            if (this.dgvGoodSInfoManager.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvGoodSInfoManager.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            var isSuccess = DataManager.GoodsInfoBLL.Delete(dataId);
+            if (isSuccess)
+            {
+                MessageBox.Show("删除成功!", "删除", MessageBoxButtons.OK, MessageBoxIcon.None);
+                this.dgvGoodSInfoManager.Tag = false;
+                GetDgv(SelectIndex);//刷新
+            }
+            else
+            {
+                MessageBox.Show("删除不成功!", "删除", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void tspGoodsInfo_ReLoad_Click(object sender, EventArgs e)
+        {
+            this.dgvGoodSInfoManager.Tag = false;
+            GetDgv(SelectIndex);//刷新
+        }
+
+
+
+        #endregion
         /// <summary>
         /// 获取单位表
         /// </summary>
@@ -1209,6 +1307,18 @@ namespace CashierSystem
 
         }
 
+        public List<WholeSalerInfo> GetWholeSalerList()
+        {
+            var list = DataManager.WholeSalerInfoBLL.GetList();
+            list.Insert(0, new WholeSalerInfo()
+            {
+                Id = 0,
+                SupName = "全部"
+
+            });
+            return list;
+        }
+
         /// <summary>
         /// 未选中行操作提示
         /// </summary>
@@ -1225,6 +1335,61 @@ namespace CashierSystem
             MessageBox.Show(messAge, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-       
+        
+        public void SearchGoodsInfo(int startIndex=0)
+        {
+            SearchModel searchModel = new SearchModel();
+            searchModel.ModelName = "GoodsInfo";
+            searchModel.count = 30;
+            searchModel.startIndex = startIndex;//开始行
+            searchModel.dic = new Dictionary<string, string>();
+            //搜索
+
+            var sortId = (cbxGIManager_Sort.SelectedValue).ToString();//类型
+            var unitId = (cbxGIManager_Unit.SelectedValue).ToString();//单位
+            var wholeSalerId = (cbxGIManager_WSaler.SelectedValue).ToString();//供货商
+            var goodsName = txtGIGoosName_Search.Text.Trim();
+            if (sortId != "0")
+            {
+                searchModel.dic.Add("SortId", sortId);
+            }
+            if (unitId != "0")
+            {
+                searchModel.dic.Add("UnitId", unitId);
+            }
+            if (wholeSalerId != "0")
+            {
+                searchModel.dic.Add("WholeSalerId", wholeSalerId);
+            }
+            if (goodsName != "")
+            {
+                searchModel.dic.Add("GoodsName", goodsName);
+            }
+
+            decimal mixMoney = 0;
+            decimal maxMoney = decimal.MaxValue;
+            var mixMoneyString = txtGIManager_MinPrice.Text.Trim();
+            var maxMoneyString = txtGIManager_MaxPrice.Text.Trim();
+            var isTrue = Common.CommonHelper.GetTrueSearchMoney(mixMoneyString, maxMoneyString, out mixMoney, out maxMoney);//用户输入价钱是区间是否合格               
+            if (isTrue)
+            {
+                searchModel.dic.Add("GIM_MaxMoney", maxMoney.ToString());
+                searchModel.dic.Add("GIM_MixMoney", mixMoney.ToString());
+            }
+            else
+            {
+                InputWarngs("输入价格区间有误!!");
+                return;
+            }
+        
+            //下一页或者上一页
+            //利用Tag属性 ,标记是否需要再次更新数据
+            this.dgvGoodSInfoManager.Tag = false;//false 表示需要更新
+            GetDgv(2, searchModel);
+        }
+        private void btnGIManagerSearch_Click(object sender, EventArgs e)
+        {
+            SearchGoodsInfo();
+        }
     }
 }

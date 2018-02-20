@@ -100,19 +100,16 @@ namespace Dal
 
                     }
                     //价格筛选
-                    decimal mixMoney = 0;
-                    decimal maxMoney = decimal.MaxValue;
-                    string mixMoneyString = mixMoney.ToString();
-                    string maxMoneyString = maxMoney.ToString();
-                    if (dic.TryGetValue("TodaySearchMixMoney", out mixMoneyString))
+                   
+                    if (dic.TryGetValue("TodaySearchMixMoney", out string  mixMoneyString))
                     {
-                        mixMoney = Convert.ToDecimal(mixMoneyString);
-                        sql += " and  OrderInfo.PayPrice  >" + mixMoney;
+                       
+                        sql += " and  OrderInfo.PayPrice  >" + mixMoneyString;
                     }
-                    if (dic.TryGetValue("TodaySearchMaxMoney", out maxMoneyString))
+                    if (dic.TryGetValue("TodaySearchMaxMoney", out string maxMoneyString))
                     {
-                        maxMoney = Convert.ToDecimal(maxMoneyString);
-                        sql += " and  OrderInfo.PayPrice  <" + maxMoney;
+                        
+                        sql += " and  OrderInfo.PayPrice  <" + maxMoneyString;
 
                     }
                 }

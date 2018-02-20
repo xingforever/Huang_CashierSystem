@@ -97,8 +97,8 @@ namespace Model
                 this.PurPrice + "','"+ 
                 this.PayPrice + "','" +                
                 this.Total + "','" +
-                this.SalesCount + "','" +
-                this.SurplusCount + "','" +
+                0 + "','" +
+                this.Total + "','" +
                 this.WholeSalerId + "','" +
                 this.CreateTime + "','" +
                 this.LastTime + "','" +
@@ -109,8 +109,10 @@ namespace Model
         public override string GetEditSql()
         {
             string sql = " Set[UnitId]='" + this.UnitId +
+                 "', [SortId]='" + this.SortId +
                 "', [WholeSalerId]='" + this.WholeSalerId +
                 "', [GoodsName]='" + this.GoodsName +
+                "', [PurPrice]='" + this.PurPrice +
                 "', [PayPrice]='" + this.PayPrice +
                 "', [Total]='" + this.Total +
                 "', [SalesCount]='" + this.SalesCount +

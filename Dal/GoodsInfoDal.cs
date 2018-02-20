@@ -51,20 +51,37 @@ namespace Dal
             string sql3 = " order by goods.id ";
             string sql = sql1 + sql2;//排序
             //限制条件
-            if (dic!=null)
-            {
-                
-                foreach (var pair in dic)
+            if (dic != null)
+            {    //商品名称
+                string goodsName = "";
+                if (dic.TryGetValue("GoodsName", out goodsName))
                 {
-                    string goodsName = "";
-                    if (dic.TryGetValue("GoodsName", out goodsName))
-                    {
-                        sql += @" and goods." + pair.Key + " like '%" + pair.Value+"%'";
-                        continue;
-                    }
-                    sql += " and goods." + pair.Key + " like " + pair.Value;
-                   
+                    sql += @" and goods. GoodsName" + " like '%" + goodsName + "%'";
+
                 }
+                //价格
+                if (dic.TryGetValue("GIM_MixMoney", out string mixMoney))
+                {
+                    sql += @" and goods.PayPrice > " + mixMoney;
+
+                }
+                if (dic.TryGetValue("GIM_MaxMoney", out string maxMoney))
+                {
+                    sql += @" and goods.PayPrice < " + maxMoney;
+                }
+                if (dic.TryGetValue("SortId", out string SortId))
+                {
+                    sql += @" and goods.SortId = " + SortId;
+                }
+                if (dic.TryGetValue("UnitId", out string UnitId))
+                {
+                    sql += @" and goods.UnitId = " + UnitId;
+                }
+                if (dic.TryGetValue("WholeSalerId", out string WholeSalerId))
+                {
+                    sql += @" and goods.WholeSalerId = " + WholeSalerId;
+                }
+
             }
             sql += sql3;
             
