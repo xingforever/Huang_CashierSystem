@@ -21,7 +21,7 @@ namespace Dal
         /// </summary>
         /// <param name=""></param>
         /// <returns></returns>
-        public DataTable GetDataTablebyPammer(int startIndex, int count,Dictionary<string, string> dic=null )
+        public DataTable GetDataTablebyPammer(SearchModel searchModel)
         {
             //查询goodsinfo ,并查询出商品类型和单位
             //标准可执行
@@ -36,8 +36,11 @@ namespace Dal
             //    on goods.WholeSalerId = wsoles.Id
             //    where goods.DelFlag = false and goods.id > 2
             //   order by goods.id desc
+            int startIndex = searchModel.startIndex;
+            int count = searchModel.count;
+            Dictionary<string, string> dic = searchModel.dic;
 
-            
+
             string sql1 = "select top " + count.ToString();//筛选一定量数据
             string sql2 = @"  goods.Id,goods.GoodsName,sort.SortName as SortName ,unit.UnitName as UnitName,goods.GoodsType,goods.PayPrice ,goods.SurplusCount, wsoles.SupName as WholeSalerName,goods.Remark
                from ((GoodsInfo as goods
@@ -56,7 +59,7 @@ namespace Dal
                 string goodsName = "";
                 if (dic.TryGetValue("GoodsName", out goodsName))
                 {
-                    sql += @" and goods. GoodsName" + " like '%" + goodsName + "%'";
+                    sql += @" and goods.GoodsName" + " like '%" + goodsName + "%'";
 
                 }
                 //价格
@@ -86,6 +89,17 @@ namespace Dal
             sql += sql3;
             
             var dataTable = SqlHelper.GetDataTable(sql);
+            if (dataTable!=null)
+            {
+                DataRow dr_last = dataTable.AsEnumerable().Last<DataRow>();//获取最后一行
+                var id = Convert.ToInt32(dr_last[0].ToString());//最后一行 ID
+                searchModel.nextIndex = id;//下一页ID大于这个值
+            }
+            else
+            {
+                searchModel.nextIndex = -1; ;
+            }
+            
             return dataTable;
           
         }

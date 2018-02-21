@@ -11,6 +11,9 @@ namespace Model
         public string ModelName { get; set; }
         //起始id
         public  int startIndex { get; set; }
+
+        public int lastIndex { get; set; }
+        public int nextIndex { get; set; }
         //个数
         public   int count { get; set; }
         /// <summary>
@@ -28,7 +31,9 @@ namespace Model
         {
             ModelName = "";
             startIndex = 0;
-            count = 30;
+            lastIndex = startIndex;
+            nextIndex = 3;
+            count = 3;
             IsAsc = true;
             StartTime =new DateTime ();//0001/1/1 0:00:00
             EndTime = new DateTime();

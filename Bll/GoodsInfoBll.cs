@@ -18,8 +18,21 @@ namespace Bll
         public DataTable GetDataTablebyPammer( SearchModel searchModel )
         {
            
-            return dal.GetDataTablebyPammer(searchModel.startIndex, searchModel.count, searchModel.dic);
+            return dal.GetDataTablebyPammer(searchModel);
         }
+        /// <summary>
+        /// 获取符合条件的行数
+        /// </summary>
+        /// <param name="searchModel"></param>
+        /// <returns></returns>
+        public int  GetDataTableCountByPammer(SearchModel searchModel)
+        {
+            searchModel.startIndex = 0;
+            searchModel.count = int.MaxValue;
+            return dal.GetDataTablebyPammer(searchModel).Rows.Count;
+        }
+
+
         public bool EditGoodsInfoCount(int  id, double  salescount, double  surplusCount)
         {
             return dal.EditGoodsInfoCount(id, salescount, surplusCount);

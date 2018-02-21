@@ -45,5 +45,29 @@ namespace Common
 
         }
 
+
+        public static bool GetTruePage(int pageSum,int pageNow,int id,bool isNest)
+        {
+            if (isNest)
+            {
+                if ((pageNow + 1) > pageSum)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if ((pageNow -1) <=0)
+                {
+                    return false;
+                }
+            }
+           
+            if (id <0)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
