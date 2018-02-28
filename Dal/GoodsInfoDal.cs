@@ -36,11 +36,9 @@ namespace Dal
             //    on goods.WholeSalerId = wsoles.Id
             //    where goods.DelFlag = false and goods.id > 2
             //   order by goods.id desc
-            int startIndex = searchModel.startIndex;
-            int count = searchModel.count;
+            int startIndex = searchModel.StartIndex;
+            int count = searchModel.PageCount;
             Dictionary<string, string> dic = searchModel.dic;
-
-
             string sql1 = "select top " + count.ToString();//筛选一定量数据
             string sql2 = @"  goods.Id,goods.GoodsName,sort.SortName as SortName ,unit.UnitName as UnitName,goods.GoodsType,goods.PayPrice ,goods.SurplusCount, wsoles.SupName as WholeSalerName,goods.Remark
                from ((GoodsInfo as goods
@@ -50,7 +48,10 @@ namespace Dal
                 on goods.UnitId=unit.Id)
                 inner join WholeSalerInfo as wsoles
                 on goods.WholeSalerId=wsoles.Id
-                where goods.DelFlag= false and goods.id >" + startIndex.ToString();
+                where goods.DelFlag= false and goods.id  ";           
+            //顺序排序
+           sql2 += ">=" + startIndex.ToString();
+            
             string sql3 = " order by goods.id ";
             string sql = sql1 + sql2;//排序
             //限制条件
@@ -89,17 +90,21 @@ namespace Dal
             sql += sql3;
             
             var dataTable = SqlHelper.GetDataTable(sql);
-            if (dataTable!=null)
+            if (dataTable!=null&& dataTable.Rows.Count>0)
             {
+
+                DataRow dr_first = dataTable.AsEnumerable().First<DataRow>();//获取最后一行
+                var fitstid = Convert.ToInt32(dr_first[0].ToString());//最后一行 ID
                 DataRow dr_last = dataTable.AsEnumerable().Last<DataRow>();//获取最后一行
-                var id = Convert.ToInt32(dr_last[0].ToString());//最后一行 ID
-                searchModel.nextIndex = id;//下一页ID大于这个值
+                var lastid = Convert.ToInt32(dr_last[0].ToString());//最后一行 ID
+                //表示只有一个-1 ,即本次查询为第一页
+                if (searchModel.PageStartIndex.Count==1)
+                {
+                    searchModel.PageStartIndex.Add(fitstid);//
+                }
+                searchModel.PageStartIndex.Add(lastid+1);//下一页  
             }
-            else
-            {
-                searchModel.nextIndex = -1; ;
-            }
-            
+           
             return dataTable;
           
         }

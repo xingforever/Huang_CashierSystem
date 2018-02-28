@@ -27,8 +27,8 @@ namespace Bll
         /// <returns></returns>
         public int  GetDataTableCountByPammer(SearchModel searchModel)
         {
-            searchModel.startIndex = 0;
-            searchModel.count = int.MaxValue;
+            searchModel.StartIndex = 0;
+            searchModel.PageCount = int.MaxValue;
             return dal.GetDataTablebyPammer(searchModel).Rows.Count;
         }
 

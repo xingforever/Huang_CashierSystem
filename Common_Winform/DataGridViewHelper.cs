@@ -168,14 +168,18 @@ namespace Common_Winform
         /// <param name="pDataGridView"></param>
         /// <param name="dataTable"></param>
         /// <returns></returns>
-        public DataGridView FillData(DataGridView pDataGridView,DataTable dataTable)
+        public DataGridView FillData(DataGridView pDataGridView,DataTable dataTable,bool isChangeColor=true)
         {
             MyDataGridView = null;
             MyDataGridView = pDataGridView;
             BindingSource bs = new BindingSource();
             bs.DataSource = dataTable;
             MyDataGridView.DataSource = bs;//填充数据
-            ChangeColor(MyDataGridView);
+            if (isChangeColor)
+            {
+                ChangeColor(MyDataGridView);
+
+            }
             return MyDataGridView;
         }
 

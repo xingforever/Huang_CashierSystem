@@ -15,11 +15,18 @@ namespace Bll
         {
             this.CurrentDal = new OrderInfoDal();
         }
-        public DataTable GetDataTablebyPammer(SearchModel searchModel)
+        public DataTable GetDataTableByPammer(SearchModel searchModel)
         {
 
-            return dal.GetDataTablebyPammer(searchModel.startIndex, searchModel.count, searchModel.StartTime,searchModel.EndTime, searchModel.dic);
+            return dal.GetDataTablebyPammer(searchModel);
         }
+        public  int GetDataTableCountByPammer(SearchModel searchModel)
+        {
+            searchModel.PageCount = int.MaxValue;
+            return dal.GetDataTablebyPammer(searchModel).Rows.Count;
+                ;
+        }
+
 
         public DataTable GetTodayDataTable(SearchModel searchModel)
         {            

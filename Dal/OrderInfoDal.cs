@@ -9,8 +9,15 @@ namespace Dal
 {
     public  class OrderInfoDal:BaseDal<OrderInfo>
     {
-        public DataTable GetDataTablebyPammer(int startIndex=0, int count=30, DateTime startTime = new DateTime(), DateTime endTime = new DateTime(), Dictionary<string, string> dic = null)
+        /// <summary>
+        /// 销售记录 
+        /// </summary>
+        /// <param name="searchModel"></param>
+        /// <returns></returns>
+        public DataTable GetDataTablebyPammer(SearchModel searchModel)
         {
+
+
             //查询goodsinfo ,并查询出商品类型和单位
             //标准可执行
             //select  top 10
@@ -24,6 +31,11 @@ namespace Dal
             //    on goods.WholeSalerId = wsoles.Id
             //    where goods.DelFlag = false and goods.id > 2
             //   order by goods.id desc
+            int startIndex = searchModel.StartIndex;
+            int count = searchModel.PageCount;
+            Dictionary<string, string> dic = searchModel.dic;
+            var startTime = searchModel.StartTime;
+            var endTime = searchModel.EndTime;
             DateTime dateTime = DateTime.Today;
             string timeStart = (dateTime-new TimeSpan(7,0,0,0,0)).ToString("yyyy-MM-dd 00:00:00");            
             string timeEnd = dateTime.ToString("yyyy-MM-dd 00:00:00");
@@ -42,8 +54,11 @@ namespace Dal
                      from OrderInfo 
                      inner join GoodsInfo as goods
                     on OrderInfo.GoodsId=goods.Id
-                    where OrderInfo.DelFlag= false and goods.DelFlag= false  and  OrderInfo.id >" + startIndex.ToString()+ "  and OrderInfo.CreateTime >=#" + timeStart + "# And  OrderInfo.CreateTime <=#" + timeEnd + "#" ;
-            string sql3 = " order by OrderInfo.id  desc";
+                    where OrderInfo.DelFlag= false and goods.DelFlag= false "+ "  and OrderInfo.CreateTime >=#" + timeStart + "# And  OrderInfo.CreateTime <=#" + timeEnd + "#" ;
+           //顺序
+          sql2 += " and OrderInfo.id >= " + startIndex.ToString();           
+             
+            string sql3 = " order by OrderInfo.id  ";
             string sql = sql1 + sql2;//排序
             //限制条件
             if (dic != null)
@@ -57,6 +72,21 @@ namespace Dal
             sql += sql3;
 
             var dataTable = SqlHelper.GetDataTable(sql);
+            if (dataTable != null && dataTable.Rows.Count > 0)
+            {
+
+                DataRow dr_first = dataTable.AsEnumerable().First<DataRow>();//获取最后一行
+                var fitstid = Convert.ToInt32(dr_first[0].ToString());//最后一行 ID
+                DataRow dr_last = dataTable.AsEnumerable().Last<DataRow>();//获取最后一行
+                var lastid = Convert.ToInt32(dr_last[0].ToString());//最后一行 ID
+                //表示只有一个-1 ,即本次查询为第一页
+                if (searchModel.PageStartIndex.Count == 1)
+                {
+                    searchModel.PageStartIndex.Add(fitstid);//
+                }
+                searchModel.PageStartIndex.Add(lastid + 1);//下一页  
+            }
+            
             return dataTable;
 
         }

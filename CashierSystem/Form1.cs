@@ -111,12 +111,14 @@ namespace CashierSystem
                 }
                 else if (i == 3)
                 {
+                    LoadAllOrderInfo();
                     this.dgvAllOrder.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
                     this.dgvAllOrder = dataGridViewHelper.Init(this.dgvAllOrder, nameList, handerTxt, hideIndex);
                     GetDgv(3);
                 }
                 else if (i == 4)
                 {
+                    LoadProfitsInfo();
                     this.dgvProfitsInfo.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
                     this.dgvProfitsInfo = dataGridViewHelper.Init(this.dgvProfitsInfo, nameList, handerTxt, hideIndex);
                     GetDgv(4);
@@ -180,7 +182,7 @@ namespace CashierSystem
                 }
                 #endregion
 
-                var weather = WeatherHelper.GetSupportProvince();
+              //  var weather = WeatherHelper.GetSupportProvince();
 
 
 
@@ -197,6 +199,7 @@ namespace CashierSystem
             if (searchModel == null)
             {
                 //搜索条件有默认条件
+                //默认count  为3 各个表需要根据实际情况进行修改
                 searchModel = new SearchModel();
             }
 
@@ -205,6 +208,7 @@ namespace CashierSystem
                 case 0:
                     if (!(bool)this.dgvGoodsInfo.Tag)
                     {
+                        searchModel.PageCount = Seeting.GoodsInfoPageCount;
                         dataTable = DataManager.GoodsInfoBLL.GetDataTablebyPammer(searchModel);
                         this.dgvGoodsInfo = dataGridViewHelper.FillData(this.dgvGoodsInfo, dataTable);
                         LoadGoodsInfoStatus(searchModel);//加载状态栏
@@ -224,18 +228,20 @@ namespace CashierSystem
                 case 2:
                     if (!(bool)this.dgvGoodSInfoManager.Tag)
                     {
-                     
+                        searchModel.PageCount = Seeting.GoodsManagerPageCount;                       
                         dataTable = DataManager.GoodsInfoBLL.GetDataTablebyPammer(searchModel);
                         this.dgvGoodSInfoManager = dataGridViewHelper.FillData(this.dgvGoodSInfoManager, dataTable);
+                        LoadGoodsManagerStatus(searchModel);//加载状态栏
                         this.dgvGoodSInfoManager.Tag = true;
                     }
                     break;
                 case 3:
                     if (!(bool)this.dgvAllOrder.Tag)
                     {
-                        dataTable = DataManager.OrderInfoBLL.GetDataTablebyPammer(searchModel);
+                        searchModel.PageCount = Seeting.AllOrderPageCount;
+                        dataTable = DataManager.OrderInfoBLL.GetDataTableByPammer(searchModel);
                         this.dgvAllOrder = dataGridViewHelper.FillData(this.dgvAllOrder, dataTable);
-                        LoadAllOrderInfo(searchModel);
+                        LoadAllOrderStatus(searchModel);
                         this.dgvAllOrder.Tag = true;
                     }
                     break;
@@ -244,7 +250,9 @@ namespace CashierSystem
                     {
                         dataTable = DataManager.ProfitsInfoBLL.GetDataTablebyPammer(searchModel);
                         this.dgvProfitsInfo = dataGridViewHelper.FillData(this.dgvProfitsInfo, dataTable);
-                        LoadProfitsInfo(searchModel);
+                        //可以排序 (排序后不能改颜色)
+                        this.dgvProfitsInfo.Columns["IsPay"].SortMode = DataGridViewColumnSortMode.Automatic;
+                        LoadProfitStatus(searchModel);
                         this.dgvProfitsInfo.Tag = true;
                     }
                     break;
@@ -295,6 +303,7 @@ namespace CashierSystem
 
         #region 商品展示信息
 
+        private static SearchModel myGoodInfoSearchModel;
         /// <summary>
         /// 初始化GoodInfos
         /// </summary>
@@ -318,28 +327,38 @@ namespace CashierSystem
         /// <param name="searchModel">搜索条件</param>
         public void LoadGoodsInfoStatus(SearchModel searchModel)
         {
-            int lastIndex = searchModel.lastIndex;
-            int nextIndex = searchModel.nextIndex;
+            myGoodInfoSearchModel = searchModel;//赋值给静态变量
+            var pageStartIndex = searchModel.PageStartIndex;
             double pageSize = Seeting.GoodsInfoPageCount;
-
             if (tspGoodsPageCount.Tag.ToString() != "-1")
             {
                 //重新更换搜索条件后
                 // 采用获取top 所有数据
                 //此处破坏了每页数量和下一页起始页ID
-                int count = DataManager.GoodsInfoBLL.GetDataTableCountByPammer(searchModel);
+                SearchModel searchModel2 = new SearchModel(searchModel);               
+                int count = DataManager.GoodsInfoBLL.GetDataTableCountByPammer(searchModel2);
                 int pageSum = Convert.ToInt32(Math.Ceiling(count / pageSize));//总页数
                 tspGoodsPageCount.Text = pageSum.ToString();
-                lastIndex = -1;
+                tspGoodsLastPage.Tag = -1;
                 if (pageSum <= 1)
-                {
-                    nextIndex = -1;
+                {                    
+                    tspGoodsNextPage.Tag = -1;
                 }
+                else
+                {
+                    tspGoodsNextPage.Tag = pageStartIndex[2];//有第二页
+                }
+               
                 tspGoodsPageCount.Tag = "-1";
             }
-
-            tspGoodsLastPage.Tag = lastIndex;
-            tspGoodsNextPage.Tag = nextIndex;
+            else
+            {
+                int pageNow = Convert.ToInt32(tspGoodsPage.Text);//当前页码
+                tspGoodsLastPage.Tag = pageStartIndex[pageNow-1];
+                tspGoodsNextPage.Tag = pageStartIndex[pageNow+1];
+            }
+           
+            
         }
         /// <summary>
         /// 上一页
@@ -354,8 +373,10 @@ namespace CashierSystem
             bool isTrue = CommonHelper.GetTruePage(pageSum, pageNow, lastId, false);
             if (isTrue)
             {
-                SearchLoadGoodsInfo(lastId);
+                myGoodInfoSearchModel.StartIndex = lastId;
                 tspGoodsPage.Text = (pageNow - 1).ToString();
+                SearchLoadGoodsInfo(myGoodInfoSearchModel);
+              
             }
 
         }
@@ -368,12 +389,15 @@ namespace CashierSystem
         {
             int pageSum = Convert.ToInt32(tspGoodsPageCount.Text);
             int pageNow = Convert.ToInt32(tspGoodsPage.Text);
+            int lastId= Convert.ToInt32(tspGoodsLastPage.Tag);
             int nextId = Convert.ToInt32(tspGoodsNextPage.Tag);
             bool isTrue = CommonHelper.GetTruePage(pageSum, pageNow, nextId, true);
             if (isTrue)
             {
-                SearchLoadGoodsInfo(nextId);
+                myGoodInfoSearchModel.StartIndex = nextId;//一页开始
                 tspGoodsPage.Text = (pageNow + 1).ToString();
+                SearchLoadGoodsInfo(myGoodInfoSearchModel);
+                
             }
 
         }
@@ -381,30 +405,33 @@ namespace CashierSystem
         /// 搜索商品信息
         /// </summary>
         /// <param name="startIndex"></param>
-        private void SearchLoadGoodsInfo(int startIndex = 0)
+        private void SearchLoadGoodsInfo(SearchModel searchModel=null, int startIndex = 0)
         {
-            SearchModel searchModel = new SearchModel();
-            searchModel.ModelName = "GoodsInfo";
-            searchModel.count = Seeting.GoodsInfoPageCount;
-            searchModel.lastIndex = searchModel.startIndex;//上一页开始行
-            searchModel.startIndex = startIndex;//开始行
-            searchModel.dic = new Dictionary<string, string>();
-            //搜索           
-            var sortId = (cbxSortsInfo.SelectedValue).ToString();//类型
-            var unitId = (cbxUnitInfo.SelectedValue).ToString();//单位
-            var goodsName = txtGoodsNameSearch.Text.Trim();
-            if (sortId != "0")
+            if (searchModel==null)
             {
-                searchModel.dic.Add("SortId", sortId);
-            }
-            if (unitId != "0")
-            {
-                searchModel.dic.Add("UnitId", unitId);
-            }
-            if (goodsName != "")
-            {
-                searchModel.dic.Add("GoodsName", goodsName);
-            }
+                searchModel = new SearchModel();
+                searchModel.ModelName = "GoodsInfo";
+                searchModel.PageCount = Seeting.GoodsInfoPageCount;               
+                searchModel.dic = new Dictionary<string, string>();
+                searchModel.StartIndex = startIndex;
+                //搜索           
+                var sortId = (cbxSortsInfo.SelectedValue).ToString();//类型
+                var unitId = (cbxUnitInfo.SelectedValue).ToString();//单位
+                var goodsName = txtGoodsNameSearch.Text.Trim();
+                if (sortId != "0")
+                {
+                    searchModel.dic.Add("SortId", sortId);
+                }
+                if (unitId != "0")
+                {
+                    searchModel.dic.Add("UnitId", unitId);
+                }
+                if (goodsName != "")
+                {
+                    searchModel.dic.Add("GoodsName", goodsName);
+                }
+            }          
+            
             this.dgvGoodsInfo.Tag = false;//false 表示需要更新
             GetDgv(0, searchModel);//获取数据同时将下一页开始行设置
         }
@@ -482,8 +509,8 @@ namespace CashierSystem
         {
             SearchModel searchModel = new SearchModel();
             searchModel.ModelName = "OrderInfo";
-            searchModel.count = Seeting.ToadyOrderPageCount;
-            searchModel.startIndex = startIndex;//开始行
+            searchModel.PageCount = Seeting.ToadyOrderPageCount;
+            searchModel.StartIndex = startIndex;//开始行
             searchModel.dic = new Dictionary<string, string>();
             var StartTime = dateTodayOrderStartTime.Value;
             var EndTime = dateTodayOrderEndTime.Value;
@@ -518,6 +545,258 @@ namespace CashierSystem
             GetDgv(1, searchModel);
         }
         #endregion
+        #region 商品管理表
+
+        private static SearchModel GIMSearchModel;
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public void LoadGoodsInfoManager()
+        {
+            cbxGIManager_Sort.ValueMember = "Id";
+            cbxGIManager_Sort.DisplayMember = "SortName";
+            cbxGIManager_Sort.DataSource = GetSortInfoList();
+            lblGoodsSorts.Text = (GetSortInfoList().Count-1).ToString();
+            cbxGIManager_Unit.ValueMember = "Id";
+            cbxGIManager_Unit.DisplayMember = "UnitName";
+            cbxGIManager_Unit.DataSource = GetUnitInfoList();
+            lblGoodsUnits.Text = (GetUnitInfoList().Count - 1).ToString();
+            cbxGIManager_WSaler.ValueMember = "Id";
+            cbxGIManager_WSaler.DisplayMember = "SupName";
+            cbxGIManager_WSaler.DataSource = GetWholeSalerList();
+            lblGoodsWSalers.Text = (GetWholeSalerList().Count - 1).ToString();
+            cbxGIManager_Unit.SelectedValue = 0;
+            cbxGIManager_Sort.SelectedValue = 0;
+            cbxGIManager_WSaler.SelectedValue = 0;
+            int count = DataManager.GoodsInfoBLL.GetDataTableCountByPammer(new SearchModel());
+            lblGoodsCount.Text = count.ToString();
+                
+        }
+       
+        /// <summary>
+        /// 添加数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspGoosInfo_Add_Click(object sender, EventArgs e)
+        {
+            Frm_GoodsInfo frm_GoodsInfo = Frm_GoodsInfo.Create();
+            frm_GoodsInfo.ShowDialog();
+            frm_GoodsInfo.Focus();
+            //刷新商品管理页信息
+            this.dgvGoodSInfoManager.Tag = false;
+            tspLblGoodsManagerCount.Tag = "-1";
+            SearchGoodsManager();
+            GetDgv(SelectIndex);//刷新  这里暂时只能到第一页
+        }
+        /// <summary>
+        /// 编辑数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspGoodsInfo_Edit_Click(object sender, EventArgs e)
+        {
+            if (this.dgvGoodSInfoManager.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvGoodSInfoManager.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            // GoodsInfo goodInfo = DataManager.GoodsInfoBLL.GetEntityById(dataId);         ;
+            Frm_GoodsInfo frm_GoodsInfo = Frm_GoodsInfo.Create(dataId);
+            frm_GoodsInfo.ShowDialog();
+            frm_GoodsInfo.Focus();
+            this.dgvGoodSInfoManager.Tag = false;
+            tspLblGoodsManagerCount.Tag = "-1";
+            SearchGoodsManager();
+            GetDgv(SelectIndex);//刷新
+        }
+        /// <summary>
+        /// 移除数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspGoodsInfo_Remove_Click(object sender, EventArgs e)
+        {
+            if (this.dgvGoodSInfoManager.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvGoodSInfoManager.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            var isSuccess = DataManager.GoodsInfoBLL.Delete(dataId);
+            if (isSuccess)
+            {
+                MessageBox.Show("删除成功!", "删除", MessageBoxButtons.OK, MessageBoxIcon.None);
+                this.dgvGoodSInfoManager.Tag = false;
+                tspLblGoodsManagerCount.Tag = "-1";
+                SearchGoodsManager();
+                GetDgv(SelectIndex);//刷新
+            }
+            else
+            {
+                MessageBox.Show("删除不成功!", "删除", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        /// <summary>
+        /// 刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspGoodsInfo_ReLoad_Click(object sender, EventArgs e)
+        {
+            this.dgvGoodSInfoManager.Tag = false;
+            GetDgv(SelectIndex);//刷新
+        }
+        /// <summary>
+        /// 搜索数据
+        /// </summary>
+        /// <param name="startIndex"></param>
+        public void SearchGoodsManager(SearchModel searchModel=null, int startIndex = 0)
+        {
+            if (searchModel==null)
+            {
+                 searchModel = new SearchModel();
+                searchModel.ModelName = "GoodsInfo";
+                searchModel.PageCount = Seeting.GoodsManagerPageCount;            
+                searchModel.StartIndex = startIndex;//开始行                                            
+                var sortId = (cbxGIManager_Sort.SelectedValue).ToString();//类型
+                var unitId = (cbxGIManager_Unit.SelectedValue).ToString();//单位
+                var wholeSalerId = (cbxGIManager_WSaler.SelectedValue).ToString();//供货商
+                var goodsName = txtGIGoosName_Search.Text.Trim();
+                if (sortId != "0")
+                {
+                    searchModel.dic.Add("SortId", sortId);
+                }
+                if (unitId != "0")
+                {
+                    searchModel.dic.Add("UnitId", unitId);
+                }
+                if (wholeSalerId != "0")
+                {
+                    searchModel.dic.Add("WholeSalerId", wholeSalerId);
+                }
+                if (goodsName != "")
+                {
+                    searchModel.dic.Add("GoodsName", goodsName);
+                }
+
+                decimal mixMoney = 0;
+                decimal maxMoney = decimal.MaxValue;
+                var mixMoneyString = txtGIManager_MinPrice.Text.Trim();
+                var maxMoneyString = txtGIManager_MaxPrice.Text.Trim();
+                var isTrue = Common.CommonHelper.GetTrueSearchMoney(mixMoneyString, maxMoneyString, out mixMoney, out maxMoney);//用户输入价钱是区间是否合格               
+                if (isTrue)
+                {
+                    searchModel.dic.Add("GIM_MaxMoney", maxMoney.ToString());
+                    searchModel.dic.Add("GIM_MixMoney", mixMoney.ToString());
+                }
+                else
+                {
+                    InputWarngs("输入价格区间有误!!");
+                    return;
+                }
+
+            }
+
+            //下一页或者上一页
+            //利用Tag属性 ,标记是否需要再次更新数据
+            this.dgvGoodSInfoManager.Tag = false;//false 表示需要更新
+            GetDgv(2, searchModel);
+        }
+        private void btnGIManagerSearch_Click(object sender, EventArgs e)
+        {
+            tspLblGoodsManagerCount.Tag = "-1";//刷新状态栏
+            SearchGoodsManager();
+        }
+        /// <summary>
+        /// 加载状态条
+        /// </summary>
+        /// <param name="searchModel"></param>
+        public void LoadGoodsManagerStatus(SearchModel searchModel)
+        {
+            GIMSearchModel = searchModel;           
+            double pageSize = Seeting.GoodsManagerPageCount;
+            if (tspLblGoodsManagerCount.Tag.ToString() != "-1")
+            {
+                //重新更换搜索条件后
+                // 采用获取top 所有数据
+                SearchModel searchModel2 = new SearchModel(searchModel);
+                int count = DataManager.GoodsInfoBLL.GetDataTableCountByPammer(searchModel2);              
+                int pageSum = Convert.ToInt32(Math.Ceiling(count / pageSize));//总页数
+                tspGMPageNow.Text = "1";
+                if (pageSum==0)
+                {                   
+                    tspLblGoodsManagerCount.Text = "1";
+                }
+                else
+                {
+                    tspLblGoodsManagerCount.Text = pageSum.ToString();
+                }
+               
+                tspGMLastPage.Tag = -1;
+                if (pageSum <= 1)
+                {
+                    tspGMNextPage.Tag = -1;
+                }
+                else
+                {
+                    tspGMNextPage.Tag = GIMSearchModel.PageStartIndex[2];
+                }
+                tspLblGoodsManagerCount.Tag = "-1";
+            }
+            else
+            {
+                int pageNow = Convert.ToInt32(tspGMPageNow.Text);
+                tspGMLastPage.Tag = GIMSearchModel.PageStartIndex[pageNow-1];
+                tspGMNextPage.Tag = GIMSearchModel.PageStartIndex[pageNow+1];
+            }
+
+            
+        }
+        /// <summary>
+        /// 上一页
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspLblLastPage_Click(object sender, EventArgs e)
+        {
+            int pageSum = Convert.ToInt32(tspLblGoodsManagerCount.Text);
+            int pageNow = Convert.ToInt32(tspGMPageNow.Text);
+            int lastId = Convert.ToInt32(tspGMLastPage.Tag);
+            bool isTrue = CommonHelper.GetTruePage(pageSum, pageNow, lastId, false);
+            if (isTrue)
+            {
+                tspGMPageNow.Text = (pageNow - 1).ToString();
+                GIMSearchModel.StartIndex = lastId;
+                SearchGoodsManager(GIMSearchModel);
+                
+            }
+        }
+        /// <summary>
+        /// 下一页
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspLblNextPage_Click(object sender, EventArgs e)
+        {
+            int pageSum = Convert.ToInt32(tspLblGoodsManagerCount.Text);
+            int pageNow = Convert.ToInt32(tspGMPageNow.Text);
+            int nextId = Convert.ToInt32(tspGMNextPage.Tag);
+            bool isTrue = CommonHelper.GetTruePage(pageSum, pageNow, nextId, true);
+            if (isTrue)
+            {
+                tspGMPageNow.Text = (pageNow + 1).ToString();
+                GIMSearchModel.StartIndex = nextId;
+                SearchGoodsManager(GIMSearchModel);
+
+            }
+        }
+
+        #endregion
+
 
 
         #region 商品单位表
@@ -985,45 +1264,42 @@ namespace CashierSystem
             }
         }
         #endregion
-       
-        #region 所有订单展示
 
+        #region 所有订单展示
+        private static SearchModel allOrderSearchModel;
         /// <summary>
         /// 加载所有订单表
         /// </summary>
-        public void LoadAllOrderInfo(SearchModel allOrderSearch)
+        public void LoadAllOrderInfo( )
         {
             DateTime today = DateTime.Today;
             DateTime weekAgo = today - new TimeSpan(7, 0, 0, 0);
             today = DateTime.Now;//从一周前0.00 开始到现在的时间
-            dateAllOrderStartTime.Value = allOrderSearch.StartTime.Equals(new DateTime()) ? weekAgo : allOrderSearch.StartTime;
-            dateAllOrderEndTime.Value = allOrderSearch.EndTime.Equals(new DateTime()) ? today : allOrderSearch.EndTime;
-            string allOrderSearchGoodsName = "";
-            txtAllOrder_SearchName.Text = allOrderSearch.dic.TryGetValue("AllOrderSearchGoodsName", out allOrderSearchGoodsName) ? allOrderSearchGoodsName : "";
+            dateAllOrderStartTime.Value = weekAgo;
+            dateAllOrderEndTime.Value = today;            
+            txtAllOrder_SearchName.Text = "";
 
         }
         private void btnAllOrderInfo_Click(object sender, EventArgs e)
         {
+            tspLblOrderPageCount.Tag = "1";
             SearchAllOrderInfo();
         }
         /// <summary>
         /// 所有订单搜索
         /// </summary>
         /// <param name="startIndex"></param>
-        public void SearchAllOrderInfo(int startIndex = 0)
+        public void SearchAllOrderInfo(SearchModel searchModel=null, int startIndex = 0)
         {
-            SearchModel searchModel = new SearchModel();
-            searchModel.ModelName = "OrderInfo";
-            searchModel.count = 30;
-            searchModel.startIndex = startIndex;//开始行
-            searchModel.dic = new Dictionary<string, string>();
-
-            //搜索
-            if (startIndex == 0)
+            if (searchModel==null)
             {
+                 searchModel = new SearchModel();
+                searchModel.ModelName = "OrderInfo";
+                searchModel.PageCount = Seeting.AllOrderPageCount;              
+                searchModel.StartIndex = startIndex;//开始行
+                searchModel.dic = new Dictionary<string, string>();
                 var StartTime = dateAllOrderStartTime.Value;
                 var EndTime = dateAllOrderEndTime.Value;
-
                 if (StartTime > EndTime)
                 {
                     InputWarngs("输入时间有误!!!");
@@ -1036,52 +1312,130 @@ namespace CashierSystem
                 }
                 searchModel.StartTime = StartTime;
                 searchModel.EndTime = EndTime;
-
-            }
-            //下一页或者上一页
-            //利用Tag属性 ,标记是否需要再次更新数据
+            }            
             this.dgvAllOrder.Tag = false;//false 表示需要更新
             GetDgv(3, searchModel);
         }
+        /// <summary>
+        /// 加载订单状态栏
+        /// </summary>
+        /// <param name="searchModel"></param>
+        public  void  LoadAllOrderStatus(SearchModel searchModel)
+        {
+            allOrderSearchModel = searchModel; //静态变量赋值           
+            double pageSize = Seeting.AllOrderPageCount;
+            if (tspLblOrderPageCount.Tag.ToString() != "-1")
+            {
+                //重新更换搜索条件后
+                // 采用获取top 所有数据
+                //此处破坏了每页数量和下一页起始页ID
+                SearchModel searchModel2 = new SearchModel(searchModel);
+                int count = DataManager.OrderInfoBLL.GetDataTableCountByPammer(searchModel2);
+                this.lblOrderCount.Text= count.ToString();
+                int pageSum = Convert.ToInt32(Math.Ceiling(count / pageSize));//总页数
+                if (pageSum==0)
+                {
+                    tspLblOrderPageCount.Text = "1";
+                }
+                else
+                {
+                    tspLblOrderPageCount.Text = pageSum.ToString();
+                }                
+                tspLblOrderLastPage.Tag = -1;              
+                if (pageSum <= 1)
+                {
+                    tspLblOrderNextPage.Tag = -1;
+                }
+                else
+                {
+                    tspLblOrderNextPage.Tag = allOrderSearchModel.PageStartIndex[2];
+                }
+                tspLblOrderPageCount.Tag = "-1";
+            }
+            else
+            {
+                int pageNow = Convert.ToInt32(tspLblOrderPageNow.Text);
+                tspLblOrderLastPage.Tag = allOrderSearchModel.PageStartIndex[pageNow - 1];
+                tspLblOrderNextPage.Tag = allOrderSearchModel.PageStartIndex[pageNow + 1];
+            }
+           
+        }
+        /// <summary>
+        /// 订单下一页
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspLblOrderNextPage_Click(object sender, EventArgs e)
+        {
+            int pageSum = Convert.ToInt32(tspLblOrderPageCount.Text);
+            int pageNow = Convert.ToInt32(tspLblOrderPageNow.Text);
+            int nextId = Convert.ToInt32(tspLblOrderNextPage.Tag);
+            bool isTrue = CommonHelper.GetTruePage(pageSum, pageNow, nextId, true);
+            if (isTrue)
+            {
+                tspLblOrderPageNow.Text = (pageNow + 1).ToString();
+                allOrderSearchModel.StartIndex = nextId;
+                SearchAllOrderInfo(allOrderSearchModel);
+
+            }
+        }
+        /// <summary>
+        /// 订单上一页
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspLblOrderLastPage_Click(object sender, EventArgs e)
+        {
+            int pageSum = Convert.ToInt32(tspLblOrderPageCount.Text);
+            int pageNow = Convert.ToInt32(tspLblOrderPageNow.Text);
+            int lastId = Convert.ToInt32(tspLblOrderLastPage.Tag);
+            bool isTrue = CommonHelper.GetTruePage(pageSum, pageNow, lastId, false);
+            if (isTrue)
+            {
+                tspLblOrderPageNow.Text = (pageNow - 1).ToString();
+                allOrderSearchModel.StartIndex = lastId;
+                SearchAllOrderInfo(allOrderSearchModel);
+                
+            }
+        }
         #endregion
         #region 利润表展示
+        private static SearchModel profitSearchModel;
         /// <summary>
         /// 利润信息表
         /// </summary>
         /// <param name="profitsInfoSearch"></param>
-        public void LoadProfitsInfo(SearchModel profitsInfoSearch)
+        public void LoadProfitsInfo()
         {
             DateTime today = DateTime.Today;
             DateTime weekAgo = today - new TimeSpan(7, 0, 0, 0);
             today = DateTime.Now;//从一周前0.00 开始到现在的时间
-            dateProfitStartTime.Value = profitsInfoSearch.StartTime.Equals(new DateTime()) ? weekAgo : profitsInfoSearch.StartTime;
-            dateProfitEndTime.Value = profitsInfoSearch.EndTime.Equals(new DateTime()) ? today : profitsInfoSearch.EndTime;
-            string profitsOrderId = "";
-            txtProfits_SearchOrderId.Text = profitsInfoSearch.dic.TryGetValue("Profits_OrderId", out profitsOrderId) ? profitsOrderId : "";
+            dateProfitStartTime.Value = weekAgo ;
+            dateProfitEndTime.Value =  today ;
+            txtProfits_SearchOrderId.Text = "";
 
         }
         private void btnProfitSearch_Click(object sender, EventArgs e)
         {
+            tspLblProfitPageCount.Tag = "1";
             SearchProfitsInfo();
         }
         /// <summary>
         /// 利润信息表搜索
         /// </summary>
         /// <param name="startIndex"></param>
-        public void SearchProfitsInfo(int startIndex = 0)
+        public void SearchProfitsInfo(SearchModel searchModel=null,int startIndex = 0)
         {
-            SearchModel searchModel = new SearchModel();
-            searchModel.ModelName = "ProfitsInfo";
-            searchModel.count = 30;
-            searchModel.startIndex = startIndex;//开始行
-            searchModel.dic = new Dictionary<string, string>();
 
-            //搜索
-            if (startIndex == 0)
+            if (searchModel==null)
             {
+                searchModel = new SearchModel();
+                searchModel.ModelName = "ProfitsInfo";
+                searchModel.PageCount = Seeting.ProfitPageCount;
+                searchModel.StartIndex = startIndex;//开始行
+                searchModel.dic = new Dictionary<string, string>();          
                 var startTime = dateProfitStartTime.Value;
                 var endTime = dateProfitEndTime.Value;
-
                 if (startTime > endTime)
                 {
                     InputWarngs("输入时间有误!!!");
@@ -1094,13 +1448,100 @@ namespace CashierSystem
                 }
                 searchModel.StartTime = startTime;
                 searchModel.EndTime = endTime;
-
             }
+         
             //下一页或者上一页
             //利用Tag属性 ,标记是否需要再次更新数据
             this.dgvProfitsInfo.Tag = false;//false 表示需要更新
             GetDgv(4, searchModel);
 
+        }
+        /// <summary>
+        /// 加载利润表状态栏
+        /// </summary>
+        /// <param name="searchModel"></param>
+        public void LoadProfitStatus(SearchModel searchModel)
+        {
+            profitSearchModel = searchModel; //静态变量赋值           
+            double pageSize = Seeting.ProfitPageCount;
+            if (tspLblProfitPageCount.Tag.ToString() != "-1")
+            {
+                //重新更换搜索条件后,获取满足条件的 数据条数              
+                SearchModel searchModel2 = new SearchModel(searchModel);
+                int count = DataManager.ProfitsInfoBLL.GetDataTableCountByPammer(searchModel2);             
+                int pageSum = Convert.ToInt32(Math.Ceiling(count / pageSize));//总页数
+                if (pageSum==0)
+                {
+                    tspLblProfitPageNow.Text = "0";
+                }
+                tspLblProfitPageNow.Text = "1";
+                tspLblProfitPageCount.Text = pageSum.ToString();
+                tspProfitLastPage.Tag = -1;
+                if (pageSum <= 1)
+                {
+                    tspProfitNextPage.Tag = -1;
+                }
+                else
+                {
+                    tspProfitNextPage.Tag = profitSearchModel.PageStartIndex[2];
+                }
+                tspLblProfitPageCount.Tag = "-1";
+            }
+            else
+            {
+                int pageNow = Convert.ToInt32(tspLblProfitPageNow.Text);
+                tspProfitLastPage.Tag = profitSearchModel.PageStartIndex[pageNow - 1];
+                tspProfitNextPage.Tag = profitSearchModel.PageStartIndex[pageNow + 1];
+            }
+
+        }
+
+        public void LoadProfitRight(SearchModel searchModel)
+        {
+            searchModel.PageCount = int.MaxValue;
+            var list = DataManager.ProfitsInfoBLL.GetListByPammer(searchModel);
+            decimal noReceiveMoney=(decimal)0.0, allProfit=(decimal)0.0;
+            if (list != null)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    allProfit += list[i].Profit;
+                    
+
+                }
+
+            }
+
+
+        }
+        private void tspProfitLastPage_Click(object sender, EventArgs e)
+        {
+            int pageSum = Convert.ToInt32(tspLblProfitPageCount.Text);
+            int pageNow = Convert.ToInt32(tspLblProfitPageNow.Text);
+            int lastId = Convert.ToInt32(tspProfitLastPage.Tag);
+            bool isTrue = CommonHelper.GetTruePage(pageSum, pageNow, lastId, false);
+            if (isTrue)
+            {
+                tspLblProfitPageNow.Text = (pageNow - 1).ToString();
+                profitSearchModel.StartIndex = lastId;
+                SearchProfitsInfo(profitSearchModel);
+
+            }
+        }
+
+        private void tspProfitNextPage_Click(object sender, EventArgs e)
+        {
+            int pageSum = Convert.ToInt32(tspLblProfitPageCount.Text);
+            int pageNow = Convert.ToInt32(tspLblProfitPageNow.Text);
+            int nextId = Convert.ToInt32(tspProfitNextPage.Tag);
+            bool isTrue = CommonHelper.GetTruePage(pageSum, pageNow, nextId, true);
+            if (isTrue)
+            {
+                tspLblProfitPageNow.Text = (pageNow + 1).ToString();
+                profitSearchModel.StartIndex = nextId;
+                SearchProfitsInfo(profitSearchModel);
+
+            }
         }
         #endregion
         #region 待收账表信息
@@ -1143,8 +1584,8 @@ namespace CashierSystem
         {
             SearchModel searchModel = new SearchModel();
             searchModel.ModelName = "NoReceiveMoney";
-            searchModel.count = 30;
-            searchModel.startIndex = startIndex;//开始行
+            searchModel.PageCount = 30;
+            searchModel.StartIndex = startIndex;//开始行
             searchModel.dic = new Dictionary<string, string>();
 
             //搜索
@@ -1226,146 +1667,7 @@ namespace CashierSystem
         }
         #endregion
 
-        #region 商品管理表
-
-        public void LoadGoodsInfoManager()
-        {
-            cbxGIManager_Sort.ValueMember = "Id";
-            cbxGIManager_Sort.DisplayMember = "SortName";
-            cbxGIManager_Sort.DataSource = GetSortInfoList();
-            cbxGIManager_Unit.ValueMember = "Id";
-            cbxGIManager_Unit.DisplayMember = "UnitName";
-            cbxGIManager_Unit.DataSource = GetUnitInfoList();
-            cbxGIManager_WSaler.ValueMember = "Id";
-            cbxGIManager_WSaler.DisplayMember = "SupName";
-            cbxGIManager_WSaler.DataSource = GetWholeSalerList();        
-            cbxGIManager_Unit.SelectedValue = 0;
-            cbxGIManager_Sort.SelectedValue = 0;
-            cbxGIManager_WSaler.SelectedValue = 0;
-        }
-
-        private void tspGoosInfo_Add_Click(object sender, EventArgs e)
-        {
-            Frm_GoodsInfo frm_GoodsInfo = Frm_GoodsInfo.Create();
-            frm_GoodsInfo.ShowDialog();
-            frm_GoodsInfo.Focus();
-            //刷新商品管理页信息
-            this.dgvGoodSInfoManager.Tag = false;
-            LoadGoodsInfoManager();
-            GetDgv(SelectIndex);//刷新
-        }
-
-        private void tspGoodsInfo_Edit_Click(object sender, EventArgs e)
-        {
-            if (this.dgvGoodSInfoManager.SelectedRows.Count < 0)
-            {
-                UnSelectedTips();
-                return;
-            }
-            var dataRow = this.dgvGoodSInfoManager.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            // GoodsInfo goodInfo = DataManager.GoodsInfoBLL.GetEntityById(dataId);         ;
-            Frm_GoodsInfo frm_GoodsInfo = Frm_GoodsInfo.Create(dataId);
-            frm_GoodsInfo.ShowDialog();
-            frm_GoodsInfo.Focus();
-            this.dgvGoodSInfoManager.Tag = false;
-            GetDgv(SelectIndex);//刷新
-        }
-
-        private void tspGoodsInfo_Remove_Click(object sender, EventArgs e)
-        {
-            if (this.dgvGoodSInfoManager.SelectedRows.Count < 0)
-            {
-                UnSelectedTips();
-                return;
-            }
-            var dataRow = this.dgvGoodSInfoManager.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            var isSuccess = DataManager.GoodsInfoBLL.Delete(dataId);
-            if (isSuccess)
-            {
-                MessageBox.Show("删除成功!", "删除", MessageBoxButtons.OK, MessageBoxIcon.None);
-                this.dgvGoodSInfoManager.Tag = false;
-                GetDgv(SelectIndex);//刷新
-            }
-            else
-            {
-                MessageBox.Show("删除不成功!", "删除", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void tspGoodsInfo_ReLoad_Click(object sender, EventArgs e)
-        {
-            this.dgvGoodSInfoManager.Tag = false;
-            GetDgv(SelectIndex);//刷新
-        }
-        public void SearchGoodsInfo(int startIndex = 0)
-        {
-            SearchModel searchModel = new SearchModel();
-            searchModel.ModelName = "GoodsInfo";
-            searchModel.count = 30;
-            searchModel.startIndex = startIndex;//开始行
-            searchModel.dic = new Dictionary<string, string>();
-            //搜索
-
-            var sortId = (cbxGIManager_Sort.SelectedValue).ToString();//类型
-            var unitId = (cbxGIManager_Unit.SelectedValue).ToString();//单位
-            var wholeSalerId = (cbxGIManager_WSaler.SelectedValue).ToString();//供货商
-            var goodsName = txtGIGoosName_Search.Text.Trim();
-            if (sortId != "0")
-            {
-                searchModel.dic.Add("SortId", sortId);
-            }
-            if (unitId != "0")
-            {
-                searchModel.dic.Add("UnitId", unitId);
-            }
-            if (wholeSalerId != "0")
-            {
-                searchModel.dic.Add("WholeSalerId", wholeSalerId);
-            }
-            if (goodsName != "")
-            {
-                searchModel.dic.Add("GoodsName", goodsName);
-            }
-
-            decimal mixMoney = 0;
-            decimal maxMoney = decimal.MaxValue;
-            var mixMoneyString = txtGIManager_MinPrice.Text.Trim();
-            var maxMoneyString = txtGIManager_MaxPrice.Text.Trim();
-            var isTrue = Common.CommonHelper.GetTrueSearchMoney(mixMoneyString, maxMoneyString, out mixMoney, out maxMoney);//用户输入价钱是区间是否合格               
-            if (isTrue)
-            {
-                searchModel.dic.Add("GIM_MaxMoney", maxMoney.ToString());
-                searchModel.dic.Add("GIM_MixMoney", mixMoney.ToString());
-            }
-            else
-            {
-                InputWarngs("输入价格区间有误!!");
-                return;
-            }
-
-            //下一页或者上一页
-            //利用Tag属性 ,标记是否需要再次更新数据
-            this.dgvGoodSInfoManager.Tag = false;//false 表示需要更新
-            GetDgv(2, searchModel);
-        }
-        private void btnGIManagerSearch_Click(object sender, EventArgs e)
-        {
-            SearchGoodsInfo();
-        }
-
-        private void tspLblLastPage_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tspLblNextPage_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        #endregion
+       
         /// <summary>
         /// 获取单位表
         /// </summary>
@@ -1400,7 +1702,10 @@ namespace CashierSystem
             return list;
 
         }
-
+        /// <summary>
+        /// 获取供应商
+        /// </summary>
+        /// <returns></returns>
         public List<WholeSalerInfo> GetWholeSalerList()
         {
             var list = DataManager.WholeSalerInfoBLL.GetList();
@@ -1429,6 +1734,6 @@ namespace CashierSystem
             MessageBox.Show(messAge, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-      
+       
     }
 }

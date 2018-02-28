@@ -19,7 +19,7 @@ namespace Bll
         public DataTable GetDataTablebyPammer(SearchModel searchModel)
         {
             searchModel.ModelName = "NoReceiveMoney";
-            return new NoReceiveMoneyDal().GetDataTablebyPammer(searchModel.startIndex, searchModel.count, searchModel.IsAsc, searchModel.StartTime, searchModel.EndTime, searchModel.dic);
+            return new NoReceiveMoneyDal().GetDataTablebyPammer(searchModel.StartIndex, searchModel.PageCount, searchModel.IsAsc, searchModel.StartTime, searchModel.EndTime, searchModel.dic);
         }
     }
 }

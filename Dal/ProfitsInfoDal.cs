@@ -20,8 +20,13 @@ namespace Dal
         /// <param name="endTime">终止时间</param>
         /// <param name="dic">条件字典</param>
         /// <returns></returns>
-        public DataTable GetDataTablebyPammer(int startIndex = 0, int count = 30, bool idAsc = true, DateTime startTime = new DateTime(), DateTime endTime = new DateTime(), Dictionary<string, string> dic = null)
+        public DataTable GetDataTablebyPammer(SearchModel searchModel)
         {
+            var dataTable = new DataTable();
+           var  startTime = searchModel.StartTime;
+            var endTime = searchModel.EndTime;
+            var startIndex = searchModel.StartIndex;
+            var dic = searchModel.dic;
             DateTime dateTime = DateTime.Today;
             string timeStart = (dateTime - new TimeSpan(7, 0, 0, 0, 0)).ToString("yyyy-MM-dd 00:00:00");
             string timeEnd = dateTime.ToString("yyyy-MM-dd 00:00:00");
@@ -36,16 +41,11 @@ namespace Dal
             }
             try
             {
-                var flagString = ">=";
-                var paiXu = "asc";
-                if (!idAsc)
-                {
-                    flagString = "<=";
-                    paiXu = "desc";
-                }
-                string sql = @"Select *" +
+
+                string sql = @"Select  top " + searchModel.PageCount.ToString()+
+                   "    *  " +
                    "from [ProfitsInfo] Where [DelFlag]=False And [CreateTime]>=#" + timeStart + "# And [CreateTime] <=#" + timeEnd + "#"
-                     + " And  [ID]" + flagString + startIndex;
+                     + " And  [ID] >="  + startIndex;
 
                 string orderId = "";
                 if (dic.TryGetValue("Profits_OrderId", out orderId))
@@ -53,15 +53,31 @@ namespace Dal
                     sql += @" and ProfitsInfo." + "[OrderId]" + " like '%" + orderId + "%'";
 
                 }
-                sql += "   Order by [id] " + paiXu;
-                var dataTable = SqlHelper.GetDataTable(sql);
-                return dataTable;
+                sql += "  Order by [id] ";
+                dataTable = SqlHelper.GetDataTable(sql);
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+
+                    DataRow dr_first = dataTable.AsEnumerable().First<DataRow>();//获取最后一行
+                    var fitstid = Convert.ToInt32(dr_first[0].ToString());//最后一行 ID
+                    DataRow dr_last = dataTable.AsEnumerable().Last<DataRow>();//获取最后一行
+                    var lastid = Convert.ToInt32(dr_last[0].ToString());//最后一行 ID
+                                                                        //表示只有一个-1 ,即本次查询为第一页
+                    if (searchModel.PageStartIndex.Count == 1)
+                    {
+                        searchModel.PageStartIndex.Add(fitstid);//
+                    }
+                    searchModel.PageStartIndex.Add(lastid + 1);//下一页  
+                }
+
+           
             }
             catch (Exception ex)
             {
                 var e = ex.Message; ;
-                return null;
+              
             }
+            return dataTable;
         }
 
 
@@ -81,5 +97,44 @@ namespace Dal
             }
 
         }
+
+        public  List<ProfitsInfo> GetListByPammer(SearchModel searchModel)
+        {
+            
+            var dataTable = GetDataTablebyPammer(searchModel);
+            var listEntity = GetList(dataTable);
+            if (listEntity.Count == 1)
+            {
+                return listEntity;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public  List<ProfitsInfo> GetList(DataTable dataTable)
+        {
+
+            DataRow dr = null;
+            List<ProfitsInfo> Entitys = new List<ProfitsInfo>();
+            for (int i = 0; i < dataTable.Rows.Count; i++)
+            {
+                ProfitsInfo profitsInfo = new ProfitsInfo();
+                dr = dataTable.Rows[i];
+                profitsInfo.Id = Convert.ToInt32(dr["ID"]);
+                profitsInfo.OrderId = Convert.ToString(dr["OrderId"]);
+                profitsInfo.Profit = Convert.ToDecimal(dr["Profit"]);
+                profitsInfo.IsPay = Convert.ToBoolean(dr["IsPay"]);
+                profitsInfo.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
+                profitsInfo.Remark = Convert.ToString(dr["Remark"]);
+                Entitys.Add(profitsInfo);
+            }
+
+            return Entitys;
+        }
+
+
+
     }
 }
