@@ -12,7 +12,7 @@ namespace Model
         public static int GoodsManagerPageCount = 3;
         public static int AllOrderPageCount = 3;
         public  static int ProfitPageCount = 30;
-
+        public static int NoReceivePageCount = 3;
 
         public  void SetGoodsInfoPageCount(int data)
         {

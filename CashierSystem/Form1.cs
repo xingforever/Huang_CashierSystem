@@ -125,6 +125,7 @@ namespace CashierSystem
                 }
                 else if (i == 5)
                 {
+                    LoadNoReceiveMoneyInfo();
                     this.dgvNoReceiveMoney.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
                     this.dgvNoReceiveMoney = dataGridViewHelper.Init(this.dgvNoReceiveMoney, nameList, handerTxt, hideIndex);
                     GetDgv(4);
@@ -261,7 +262,7 @@ namespace CashierSystem
                     {
                         dataTable = DataManager.NoReceiveMoneyBLL.GetDataTablebyPammer(searchModel);
                         this.dgvNoReceiveMoney  = dataGridViewHelper.FillData(this.dgvNoReceiveMoney, dataTable);
-                        LoadNoReceiveMoneyInfo(searchModel);
+                        LoadNoRMoneyStatus(searchModel);
                         this.dgvNoReceiveMoney.Tag = true;
                     }
                     break;
@@ -1495,7 +1496,10 @@ namespace CashierSystem
             }
 
         }
-
+        /// <summary>
+        /// 利润信息
+        /// </summary>
+        /// <param name="searchModel"></param>
         public void LoadProfitRight(SearchModel searchModel)
         {
             searchModel.PageCount = int.MaxValue;
@@ -1514,6 +1518,11 @@ namespace CashierSystem
 
 
         }
+        /// <summary>
+        /// 上一页
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspProfitLastPage_Click(object sender, EventArgs e)
         {
             int pageSum = Convert.ToInt32(tspLblProfitPageCount.Text);
@@ -1528,6 +1537,11 @@ namespace CashierSystem
 
             }
         }
+        /// <summary>
+        /// 下一页
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void tspProfitNextPage_Click(object sender, EventArgs e)
         {
@@ -1545,52 +1559,49 @@ namespace CashierSystem
         }
         #endregion
         #region 待收账表信息
-
+        private static SearchModel noRMoneySearchModel;
         /// <summary>
         /// 待收账加载
         /// </summary>
         /// <param name="noReceiveMoneySearch"></param>
-        public void LoadNoReceiveMoneyInfo(SearchModel noReceiveMoneySearch)
-        {
-            string selectVlaue = "0";
+        public void LoadNoReceiveMoneyInfo()
+        {           
             cbxIsReceiveMoney.ValueMember = "Value";
             cbxIsReceiveMoney.DisplayMember = "Name";
-            cbxIsReceiveMoney.DataSource = NoReceiveMoney.GetCBXNoRecevicePart();
-            noReceiveMoneySearch.dic.TryGetValue("NoReceiveMoney_SelectValue", out selectVlaue);
-            if (selectVlaue!="0")
-            {
-                cbxIsReceiveMoney.SelectedIndex = 1;
-            }
+            cbxIsReceiveMoney.DataSource = NoReceiveMoney.GetCBXNoRecevicePart();           
             cbxIsReceiveMoney.SelectedIndex = 0;
                 DateTime today = DateTime.Today;
             DateTime weekAgo = today - new TimeSpan(7, 0, 0, 0);
-
             today = DateTime.Now;//从一周前0.00 开始到现在的时间
-            dateNoReceiveStartTime.Value = noReceiveMoneySearch.StartTime.Equals(new DateTime()) ? weekAgo : noReceiveMoneySearch.StartTime;
-            dateProfitEndTime.Value = noReceiveMoneySearch.EndTime.Equals(new DateTime()) ? today : noReceiveMoneySearch.EndTime;
-            string profitsOrderId = "";
-            txtProfits_SearchOrderId.Text = noReceiveMoneySearch.dic.TryGetValue("NoReceiveMoney_Name", out profitsOrderId) ? profitsOrderId : "";
+            dateNoReceiveStartTime.Value = weekAgo;
+            dateProfitEndTime.Value = today;          
+            txtProfits_SearchOrderId.Text = "";
 
         }
+        /// <summary>
+        /// 搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnNoReceiveMoneySearch_Click(object sender, EventArgs e)
         {
+            tspLblNoReceivePageCount.Tag = "1";
             SearchNoReceiveMoneyInfo();
         }
         /// <summary>
         /// 待收账表搜索
         /// </summary>
-        /// <param name="startIndex"></param>
-        public void SearchNoReceiveMoneyInfo(int startIndex = 0)
+        /// <param name="startIndex"></param>        
+        public void SearchNoReceiveMoneyInfo(SearchModel searchModel=null, int startIndex = 0)
         {
-            SearchModel searchModel = new SearchModel();
-            searchModel.ModelName = "NoReceiveMoney";
-            searchModel.PageCount = 30;
-            searchModel.StartIndex = startIndex;//开始行
-            searchModel.dic = new Dictionary<string, string>();
-
-            //搜索
-            if (startIndex == 0)
+            if (searchModel==null)
             {
+                searchModel = new SearchModel();
+                searchModel.ModelName = "NoReceiveMoney";
+                searchModel.PageCount = Seeting.NoReceivePageCount;
+                searchModel.StartIndex = startIndex;//开始行
+                searchModel.dic = new Dictionary<string, string>();
+
                 var startTime = dateNoReceiveStartTime.Value;
                 var endTime = dateNoReceiveEndTime.Value;
                 if (startTime > endTime)
@@ -1609,14 +1620,19 @@ namespace CashierSystem
 
                 var selectValue = cbxIsReceiveMoney.SelectedValue.ToString();
                 searchModel.dic.Add("NoReceiveMoney_SelectValue", selectValue);
-
             }
-            //下一页或者上一页
-            //利用Tag属性 ,标记是否需要再次更新数据
+            
+
+            
             this.dgvNoReceiveMoney.Tag = false;//false 表示需要更新
             GetDgv(5, searchModel);
 
         }
+        /// <summary>
+        /// 编辑
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspNoReceiveMoneyInfoEdit_Click(object sender, EventArgs e)
         {
             if (this.dgvNoReceiveMoney.SelectedRows.Count < 0)
@@ -1635,6 +1651,11 @@ namespace CashierSystem
 
 
         }
+        /// <summary>
+        /// 结账
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void tspNoM_Receive_Click(object sender, EventArgs e)
         {
@@ -1660,14 +1681,103 @@ namespace CashierSystem
             }
 
         }
+        /// <summary>
+        /// 刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspNoReceiveMoneyInfoReload_Click(object sender, EventArgs e)
         {
             this.dgvNoReceiveMoney.Tag = false;
             GetDgv(5);
         }
+        /// <summary>
+        /// 上一页
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspNoReceiveMoneyLastPage_Click(object sender, EventArgs e)
+        {
+            int pageSum = Convert.ToInt32(tspLblNoReceivePageCount.Text);
+            int pageNow = Convert.ToInt32(tspLblNoReceivePageNow.Text);
+            int lastId = Convert.ToInt32(tspNoReceiveMoneyLastPage.Tag);
+            bool isTrue = CommonHelper.GetTruePage(pageSum, pageNow, lastId, false);
+            if (isTrue)
+            {
+                tspLblNoReceivePageNow.Text = (pageNow - 1).ToString();
+                noRMoneySearchModel.StartIndex = lastId;
+                SearchNoReceiveMoneyInfo(noRMoneySearchModel);
+
+            }
+        }
+        /// <summary>
+        /// 下一页
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspNoReceiveMoneyNextPage_Click(object sender, EventArgs e)
+        {
+            int pageSum = Convert.ToInt32(tspLblNoReceivePageCount.Text);
+            int pageNow = Convert.ToInt32(tspLblNoReceivePageNow.Text);
+            int nextId = Convert.ToInt32(tspNoReceiveMoneyNextPage.Tag);
+            bool isTrue = CommonHelper.GetTruePage(pageSum, pageNow, nextId, true);
+            if (isTrue)
+            {
+                tspLblNoReceivePageNow.Text = (pageNow + 1).ToString();
+               noRMoneySearchModel.StartIndex = nextId;
+                SearchNoReceiveMoneyInfo(noRMoneySearchModel);
+
+            }
+        }
+        /// <summary>
+        /// 加载状态条
+        /// </summary>
+        /// <param name="searchModel"></param>
+        public void LoadNoRMoneyStatus(SearchModel searchModel)
+        {
+            noRMoneySearchModel = searchModel; //静态变量赋值           
+            double pageSize = Seeting.ProfitPageCount;
+            if (tspLblNoReceivePageCount.Tag.ToString() != "-1")
+            {
+                //重新更换搜索条件后,获取满足条件的 数据条数              
+                SearchModel searchModel2 = new SearchModel(searchModel);
+                searchModel.PageCount = int.MaxValue;
+                searchModel.StartIndex = 0;
+                int count = DataManager.NoReceiveMoneyBLL.GetDataTablebyPammer(searchModel2).Rows.Count;
+                int pageSum = Convert.ToInt32(Math.Ceiling(count / pageSize));//总页数
+                if (pageSum == 0)
+                {
+                    tspLblNoReceivePageCount.Text = "0";
+                    tspLblNoReceivePageNow.Text = "0";
+                }
+                else
+                {
+                    tspLblNoReceivePageCount.Text = pageSum.ToString();
+                    tspLblNoReceivePageNow.Text = "1";
+                }
+              
+                tspNoReceiveMoneyLastPage.Tag = -1;
+                if (pageSum <= 1)
+                {
+                    tspNoReceiveMoneyNextPage.Tag = -1;
+                }
+                else
+                {
+                    tspNoReceiveMoneyNextPage.Tag = noRMoneySearchModel.PageStartIndex[2];
+                }
+                tspLblNoReceivePageCount.Tag = "-1";
+            }
+            else
+            {
+                int pageNow = Convert.ToInt32(tspLblNoReceivePageNow.Text);
+                tspNoReceiveMoneyLastPage.Tag = noRMoneySearchModel.PageStartIndex[pageNow - 1];
+                tspNoReceiveMoneyNextPage.Tag = noRMoneySearchModel.PageStartIndex[pageNow + 1];
+            }
+
+        }
         #endregion
 
-       
+
         /// <summary>
         /// 获取单位表
         /// </summary>
@@ -1734,6 +1844,6 @@ namespace CashierSystem
             MessageBox.Show(messAge, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-       
+      
     }
 }

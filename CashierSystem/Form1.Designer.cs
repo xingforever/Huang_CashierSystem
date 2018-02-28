@@ -141,6 +141,9 @@
             this.toolStripStatusLabel60 = new System.Windows.Forms.ToolStripStatusLabel();
             this.dgvAllOrder = new System.Windows.Forms.DataGridView();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.lblOrderCount = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.panel11 = new System.Windows.Forms.Panel();
             this.label19 = new System.Windows.Forms.Label();
@@ -174,6 +177,8 @@
             this.tspGoodsInfo_ReLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel22 = new System.Windows.Forms.Panel();
+            this.lblGoodsCount = new System.Windows.Forms.Label();
+            this.lblGoodsWSalers = new System.Windows.Forms.Label();
             this.lblGoodsUnits = new System.Windows.Forms.Label();
             this.lblGoodsSorts = new System.Windows.Forms.Label();
             this.label70 = new System.Windows.Forms.Label();
@@ -293,6 +298,17 @@
             this.tspProfitNextPage = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel73 = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel16 = new System.Windows.Forms.Panel();
+            this.panel21 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.label54 = new System.Windows.Forms.Label();
+            this.label55 = new System.Windows.Forms.Label();
+            this.label56 = new System.Windows.Forms.Label();
+            this.label59 = new System.Windows.Forms.Label();
+            this.label60 = new System.Windows.Forms.Label();
+            this.label64 = new System.Windows.Forms.Label();
+            this.label65 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
             this.label48 = new System.Windows.Forms.Label();
             this.dateProfitEndTime = new System.Windows.Forms.DateTimePicker();
@@ -306,17 +322,17 @@
             this.dgvNoReceiveMoney = new System.Windows.Forms.DataGridView();
             this.statusStrip10 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel74 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel75 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tspNoReceiveMoneyLastPage = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel76 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel77 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel78 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tspLblNoReceivePageNow = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel79 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel80 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel81 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel82 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tspLblNoReceivePageCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel83 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel84 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel85 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tspNoReceiveMoneyNextPage = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel86 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip6 = new System.Windows.Forms.MenuStrip();
             this.tspNoReceiveMoneyInfoEdit = new System.Windows.Forms.ToolStripMenuItem();
@@ -334,22 +350,6 @@
             this.btnNoReceiveMoneySearch = new System.Windows.Forms.Button();
             this.label61 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
-            this.lblGoodsWSalers = new System.Windows.Forms.Label();
-            this.lblGoodsCount = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.lblOrderCount = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.panel21 = new System.Windows.Forms.Panel();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label46 = new System.Windows.Forms.Label();
-            this.label54 = new System.Windows.Forms.Label();
-            this.label55 = new System.Windows.Forms.Label();
-            this.label56 = new System.Windows.Forms.Label();
-            this.label57 = new System.Windows.Forms.Label();
-            this.label59 = new System.Windows.Forms.Label();
-            this.label64 = new System.Windows.Forms.Label();
-            this.label65 = new System.Windows.Forms.Label();
-            this.label60 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel14.SuspendLayout();
             this.tabUserInfoManager.SuspendLayout();
@@ -402,6 +402,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvProfitsInfo)).BeginInit();
             this.statusStrip9.SuspendLayout();
             this.panel16.SuspendLayout();
+            this.panel21.SuspendLayout();
             this.panel15.SuspendLayout();
             this.tabNoReceiveMoneyInfo.SuspendLayout();
             this.panel20.SuspendLayout();
@@ -409,7 +410,6 @@
             this.statusStrip10.SuspendLayout();
             this.menuStrip6.SuspendLayout();
             this.panel18.SuspendLayout();
-            this.panel21.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -1290,6 +1290,39 @@
             this.panel10.Size = new System.Drawing.Size(83, 312);
             this.panel10.TabIndex = 2;
             // 
+            // lblOrderCount
+            // 
+            this.lblOrderCount.AutoSize = true;
+            this.lblOrderCount.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblOrderCount.ForeColor = System.Drawing.Color.Red;
+            this.lblOrderCount.Location = new System.Drawing.Point(5, 148);
+            this.lblOrderCount.Name = "lblOrderCount";
+            this.lblOrderCount.Size = new System.Drawing.Size(48, 16);
+            this.lblOrderCount.TabIndex = 1;
+            this.lblOrderCount.Text = "10000";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.label22.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label22.Location = new System.Drawing.Point(26, 209);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(24, 16);
+            this.label22.TabIndex = 0;
+            this.label22.Text = "次";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.label20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label20.Location = new System.Drawing.Point(12, 106);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(56, 16);
+            this.label20.TabIndex = 0;
+            this.label20.Text = "共交易";
+            // 
             // panel8
             // 
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -1624,6 +1657,28 @@
             this.panel22.Name = "panel22";
             this.panel22.Size = new System.Drawing.Size(198, 317);
             this.panel22.TabIndex = 5;
+            // 
+            // lblGoodsCount
+            // 
+            this.lblGoodsCount.AutoSize = true;
+            this.lblGoodsCount.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblGoodsCount.ForeColor = System.Drawing.Color.Black;
+            this.lblGoodsCount.Location = new System.Drawing.Point(59, 261);
+            this.lblGoodsCount.Name = "lblGoodsCount";
+            this.lblGoodsCount.Size = new System.Drawing.Size(58, 24);
+            this.lblGoodsCount.TabIndex = 21;
+            this.lblGoodsCount.Text = "0.00";
+            // 
+            // lblGoodsWSalers
+            // 
+            this.lblGoodsWSalers.AutoSize = true;
+            this.lblGoodsWSalers.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblGoodsWSalers.ForeColor = System.Drawing.Color.Black;
+            this.lblGoodsWSalers.Location = new System.Drawing.Point(112, 174);
+            this.lblGoodsWSalers.Name = "lblGoodsWSalers";
+            this.lblGoodsWSalers.Size = new System.Drawing.Size(34, 24);
+            this.lblGoodsWSalers.TabIndex = 21;
+            this.lblGoodsWSalers.Text = "10";
             // 
             // lblGoodsUnits
             // 
@@ -2887,6 +2942,131 @@
             this.panel16.Size = new System.Drawing.Size(200, 312);
             this.panel16.TabIndex = 1;
             // 
+            // panel21
+            // 
+            this.panel21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel21.Controls.Add(this.textBox1);
+            this.panel21.Controls.Add(this.label21);
+            this.panel21.Controls.Add(this.label46);
+            this.panel21.Controls.Add(this.label54);
+            this.panel21.Controls.Add(this.label55);
+            this.panel21.Controls.Add(this.label56);
+            this.panel21.Controls.Add(this.label59);
+            this.panel21.Controls.Add(this.label60);
+            this.panel21.Controls.Add(this.label64);
+            this.panel21.Controls.Add(this.label65);
+            this.panel21.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel21.Location = new System.Drawing.Point(0, 0);
+            this.panel21.Name = "panel21";
+            this.panel21.Size = new System.Drawing.Size(200, 312);
+            this.panel21.TabIndex = 2;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox1.ForeColor = System.Drawing.Color.Red;
+            this.textBox1.Location = new System.Drawing.Point(33, 230);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(154, 59);
+            this.textBox1.TabIndex = 16;
+            this.textBox1.Text = "0.00";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label21.Location = new System.Drawing.Point(1, 238);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(19, 20);
+            this.label21.TabIndex = 13;
+            this.label21.Text = "¥";
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label46.Location = new System.Drawing.Point(5, 166);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(19, 20);
+            this.label46.TabIndex = 14;
+            this.label46.Text = "¥";
+            // 
+            // label54
+            // 
+            this.label54.AutoSize = true;
+            this.label54.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label54.Location = new System.Drawing.Point(5, 98);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(19, 20);
+            this.label54.TabIndex = 15;
+            this.label54.Text = "¥";
+            // 
+            // label55
+            // 
+            this.label55.AutoSize = true;
+            this.label55.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label55.ForeColor = System.Drawing.Color.Black;
+            this.label55.Location = new System.Drawing.Point(33, 162);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(58, 24);
+            this.label55.TabIndex = 10;
+            this.label55.Text = "0.00";
+            // 
+            // label56
+            // 
+            this.label56.AutoSize = true;
+            this.label56.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label56.ForeColor = System.Drawing.Color.Black;
+            this.label56.Location = new System.Drawing.Point(36, 98);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(58, 24);
+            this.label56.TabIndex = 11;
+            this.label56.Text = "0.00";
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label59.Location = new System.Drawing.Point(2, 199);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(64, 16);
+            this.label59.TabIndex = 5;
+            this.label59.Text = "净利润:";
+            // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label60.Location = new System.Drawing.Point(50, 23);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(94, 21);
+            this.label60.TabIndex = 6;
+            this.label60.Text = "利润信息";
+            // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label64.Location = new System.Drawing.Point(3, 132);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(64, 16);
+            this.label64.TabIndex = 7;
+            this.label64.Text = "待收款:";
+            // 
+            // label65
+            // 
+            this.label65.AutoSize = true;
+            this.label65.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label65.Location = new System.Drawing.Point(2, 61);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(64, 16);
+            this.label65.TabIndex = 8;
+            this.label65.Text = "共收款:";
+            // 
             // panel15
             // 
             this.panel15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -3010,17 +3190,17 @@
             // 
             this.statusStrip10.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel74,
-            this.toolStripStatusLabel75,
+            this.tspNoReceiveMoneyLastPage,
             this.toolStripStatusLabel76,
             this.toolStripStatusLabel77,
-            this.toolStripStatusLabel78,
+            this.tspLblNoReceivePageNow,
             this.toolStripStatusLabel79,
             this.toolStripStatusLabel80,
             this.toolStripStatusLabel81,
-            this.toolStripStatusLabel82,
+            this.tspLblNoReceivePageCount,
             this.toolStripStatusLabel83,
             this.toolStripStatusLabel84,
-            this.toolStripStatusLabel85,
+            this.tspNoReceiveMoneyNextPage,
             this.toolStripStatusLabel86});
             this.statusStrip10.Location = new System.Drawing.Point(0, 288);
             this.statusStrip10.Name = "statusStrip10";
@@ -3035,11 +3215,12 @@
             this.toolStripStatusLabel74.Size = new System.Drawing.Size(332, 17);
             this.toolStripStatusLabel74.Spring = true;
             // 
-            // toolStripStatusLabel75
+            // tspNoReceiveMoneyLastPage
             // 
-            this.toolStripStatusLabel75.Name = "toolStripStatusLabel75";
-            this.toolStripStatusLabel75.Size = new System.Drawing.Size(44, 17);
-            this.toolStripStatusLabel75.Text = "上一页";
+            this.tspNoReceiveMoneyLastPage.Name = "tspNoReceiveMoneyLastPage";
+            this.tspNoReceiveMoneyLastPage.Size = new System.Drawing.Size(44, 17);
+            this.tspNoReceiveMoneyLastPage.Text = "上一页";
+            this.tspNoReceiveMoneyLastPage.Click += new System.EventHandler(this.tspNoReceiveMoneyLastPage_Click);
             // 
             // toolStripStatusLabel76
             // 
@@ -3053,11 +3234,11 @@
             this.toolStripStatusLabel77.Size = new System.Drawing.Size(20, 17);
             this.toolStripStatusLabel77.Text = "第";
             // 
-            // toolStripStatusLabel78
+            // tspLblNoReceivePageNow
             // 
-            this.toolStripStatusLabel78.Name = "toolStripStatusLabel78";
-            this.toolStripStatusLabel78.Size = new System.Drawing.Size(15, 17);
-            this.toolStripStatusLabel78.Text = "1";
+            this.tspLblNoReceivePageNow.Name = "tspLblNoReceivePageNow";
+            this.tspLblNoReceivePageNow.Size = new System.Drawing.Size(15, 17);
+            this.tspLblNoReceivePageNow.Text = "1";
             // 
             // toolStripStatusLabel79
             // 
@@ -3077,11 +3258,12 @@
             this.toolStripStatusLabel81.Size = new System.Drawing.Size(20, 17);
             this.toolStripStatusLabel81.Text = "共";
             // 
-            // toolStripStatusLabel82
+            // tspLblNoReceivePageCount
             // 
-            this.toolStripStatusLabel82.Name = "toolStripStatusLabel82";
-            this.toolStripStatusLabel82.Size = new System.Drawing.Size(22, 17);
-            this.toolStripStatusLabel82.Text = "50";
+            this.tspLblNoReceivePageCount.Name = "tspLblNoReceivePageCount";
+            this.tspLblNoReceivePageCount.Size = new System.Drawing.Size(22, 17);
+            this.tspLblNoReceivePageCount.Tag = "1";
+            this.tspLblNoReceivePageCount.Text = "50";
             // 
             // toolStripStatusLabel83
             // 
@@ -3095,11 +3277,12 @@
             this.toolStripStatusLabel84.Size = new System.Drawing.Size(11, 17);
             this.toolStripStatusLabel84.Text = "|";
             // 
-            // toolStripStatusLabel85
+            // tspNoReceiveMoneyNextPage
             // 
-            this.toolStripStatusLabel85.Name = "toolStripStatusLabel85";
-            this.toolStripStatusLabel85.Size = new System.Drawing.Size(44, 17);
-            this.toolStripStatusLabel85.Text = "下一页";
+            this.tspNoReceiveMoneyNextPage.Name = "tspNoReceiveMoneyNextPage";
+            this.tspNoReceiveMoneyNextPage.Size = new System.Drawing.Size(44, 17);
+            this.tspNoReceiveMoneyNextPage.Text = "下一页";
+            this.tspNoReceiveMoneyNextPage.Click += new System.EventHandler(this.tspNoReceiveMoneyNextPage_Click);
             // 
             // toolStripStatusLabel86
             // 
@@ -3271,183 +3454,6 @@
             this.label53.TabIndex = 37;
             this.label53.Text = "客户姓名:";
             // 
-            // lblGoodsWSalers
-            // 
-            this.lblGoodsWSalers.AutoSize = true;
-            this.lblGoodsWSalers.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblGoodsWSalers.ForeColor = System.Drawing.Color.Black;
-            this.lblGoodsWSalers.Location = new System.Drawing.Point(112, 174);
-            this.lblGoodsWSalers.Name = "lblGoodsWSalers";
-            this.lblGoodsWSalers.Size = new System.Drawing.Size(34, 24);
-            this.lblGoodsWSalers.TabIndex = 21;
-            this.lblGoodsWSalers.Text = "10";
-            // 
-            // lblGoodsCount
-            // 
-            this.lblGoodsCount.AutoSize = true;
-            this.lblGoodsCount.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblGoodsCount.ForeColor = System.Drawing.Color.Black;
-            this.lblGoodsCount.Location = new System.Drawing.Point(59, 261);
-            this.lblGoodsCount.Name = "lblGoodsCount";
-            this.lblGoodsCount.Size = new System.Drawing.Size(58, 24);
-            this.lblGoodsCount.TabIndex = 21;
-            this.lblGoodsCount.Text = "0.00";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.label20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label20.Location = new System.Drawing.Point(12, 106);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(56, 16);
-            this.label20.TabIndex = 0;
-            this.label20.Text = "共交易";
-            // 
-            // lblOrderCount
-            // 
-            this.lblOrderCount.AutoSize = true;
-            this.lblOrderCount.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblOrderCount.ForeColor = System.Drawing.Color.Red;
-            this.lblOrderCount.Location = new System.Drawing.Point(5, 148);
-            this.lblOrderCount.Name = "lblOrderCount";
-            this.lblOrderCount.Size = new System.Drawing.Size(48, 16);
-            this.lblOrderCount.TabIndex = 1;
-            this.lblOrderCount.Text = "10000";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.label22.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label22.Location = new System.Drawing.Point(26, 209);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(24, 16);
-            this.label22.TabIndex = 0;
-            this.label22.Text = "次";
-            // 
-            // panel21
-            // 
-            this.panel21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel21.Controls.Add(this.label21);
-            this.panel21.Controls.Add(this.label46);
-            this.panel21.Controls.Add(this.label54);
-            this.panel21.Controls.Add(this.label55);
-            this.panel21.Controls.Add(this.label56);
-            this.panel21.Controls.Add(this.label57);
-            this.panel21.Controls.Add(this.label59);
-            this.panel21.Controls.Add(this.label60);
-            this.panel21.Controls.Add(this.label64);
-            this.panel21.Controls.Add(this.label65);
-            this.panel21.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel21.Location = new System.Drawing.Point(0, 0);
-            this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(200, 312);
-            this.panel21.TabIndex = 2;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label21.Location = new System.Drawing.Point(5, 248);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(19, 20);
-            this.label21.TabIndex = 13;
-            this.label21.Text = "¥";
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label46.Location = new System.Drawing.Point(5, 166);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(19, 20);
-            this.label46.TabIndex = 14;
-            this.label46.Text = "¥";
-            // 
-            // label54
-            // 
-            this.label54.AutoSize = true;
-            this.label54.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label54.Location = new System.Drawing.Point(5, 98);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(19, 20);
-            this.label54.TabIndex = 15;
-            this.label54.Text = "¥";
-            // 
-            // label55
-            // 
-            this.label55.AutoSize = true;
-            this.label55.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label55.ForeColor = System.Drawing.Color.Black;
-            this.label55.Location = new System.Drawing.Point(33, 162);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(58, 24);
-            this.label55.TabIndex = 10;
-            this.label55.Text = "0.00";
-            // 
-            // label56
-            // 
-            this.label56.AutoSize = true;
-            this.label56.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label56.ForeColor = System.Drawing.Color.Black;
-            this.label56.Location = new System.Drawing.Point(36, 98);
-            this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(58, 24);
-            this.label56.TabIndex = 11;
-            this.label56.Text = "0.00";
-            // 
-            // label57
-            // 
-            this.label57.AutoSize = true;
-            this.label57.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label57.ForeColor = System.Drawing.Color.Red;
-            this.label57.Location = new System.Drawing.Point(35, 240);
-            this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(73, 29);
-            this.label57.TabIndex = 12;
-            this.label57.Text = "0.00";
-            // 
-            // label59
-            // 
-            this.label59.AutoSize = true;
-            this.label59.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label59.Location = new System.Drawing.Point(2, 199);
-            this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(64, 16);
-            this.label59.TabIndex = 5;
-            this.label59.Text = "净利润:";
-            // 
-            // label64
-            // 
-            this.label64.AutoSize = true;
-            this.label64.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label64.Location = new System.Drawing.Point(3, 132);
-            this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(64, 16);
-            this.label64.TabIndex = 7;
-            this.label64.Text = "待收款:";
-            // 
-            // label65
-            // 
-            this.label65.AutoSize = true;
-            this.label65.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label65.Location = new System.Drawing.Point(2, 61);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(64, 16);
-            this.label65.TabIndex = 8;
-            this.label65.Text = "共收款:";
-            // 
-            // label60
-            // 
-            this.label60.AutoSize = true;
-            this.label60.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label60.Location = new System.Drawing.Point(50, 23);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(94, 21);
-            this.label60.TabIndex = 6;
-            this.label60.Text = "利润信息";
-            // 
             // Huang_System
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -3547,6 +3553,8 @@
             this.statusStrip9.ResumeLayout(false);
             this.statusStrip9.PerformLayout();
             this.panel16.ResumeLayout(false);
+            this.panel21.ResumeLayout(false);
+            this.panel21.PerformLayout();
             this.panel15.ResumeLayout(false);
             this.panel15.PerformLayout();
             this.tabNoReceiveMoneyInfo.ResumeLayout(false);
@@ -3559,8 +3567,6 @@
             this.menuStrip6.PerformLayout();
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
-            this.panel21.ResumeLayout(false);
-            this.panel21.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3814,17 +3820,17 @@
         private System.Windows.Forms.DataGridView dgvNoReceiveMoney;
         private System.Windows.Forms.StatusStrip statusStrip10;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel74;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel75;
+        private System.Windows.Forms.ToolStripStatusLabel tspNoReceiveMoneyLastPage;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel76;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel77;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel78;
+        private System.Windows.Forms.ToolStripStatusLabel tspLblNoReceivePageNow;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel79;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel80;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel81;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel82;
+        private System.Windows.Forms.ToolStripStatusLabel tspLblNoReceivePageCount;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel83;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel84;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel85;
+        private System.Windows.Forms.ToolStripStatusLabel tspNoReceiveMoneyNextPage;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel86;
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.ComboBox cbxIsReceiveMoney;
@@ -3856,11 +3862,11 @@
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.Label label57;
         private System.Windows.Forms.Label label59;
         private System.Windows.Forms.Label label60;
         private System.Windows.Forms.Label label64;
         private System.Windows.Forms.Label label65;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
