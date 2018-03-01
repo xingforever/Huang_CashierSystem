@@ -14,5 +14,10 @@ namespace Bll
         {
              this.CurrentDal=new UserInfoDal();
         }
+
+        public bool IsExistName(string name)
+        {
+            return new UserInfoDal().IsExistName(name);
+        }
     }
 }

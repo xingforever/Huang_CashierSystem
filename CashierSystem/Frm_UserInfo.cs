@@ -81,12 +81,14 @@ namespace CashierSystem
         {
             if (txtUserName.Text.Trim() == "" || txtPwd.Text.Trim() == "")
             {
+                lbltips.Visible = true;
                 lbltips.Text = "请检查数据,(*)数据不能为空";
                 lbltips.ForeColor = Color.Red;
                 return false;
             }
             else if (txtPwd.Text.Trim().Length < 6 || txtPwd.Text.Trim().Length > 20)
             {
+                lbltips.Visible = true;
                 lbltips.Text = "请检查数据,密码为6-20位";
                 lbltips.ForeColor = Color.Red;
                 return false;
@@ -111,15 +113,29 @@ namespace CashierSystem
             if (entityId == int.MaxValue)
             {
                 //添加
-                UserInfo userInfo = new UserInfo();
-                userInfo.UserName = txtUserName.Text.Trim();
-                userInfo.PassWord = Md5Helper.EncryptString(txtPwd.Text.Trim());
-                userInfo.Remark = txtRmark.Text.Trim();
-                var isSuccess = DataManager.UserInfoBLL.Add(userInfo);
-                if (!isSuccess)
+                //添加
+                var name = txtUserName.Text.Trim();
+                var isExist = DataManager.UserInfoBLL.IsExistName(name);
+                if (!isExist)
                 {
-                    MessageBox.Show("操作失败!");
+                    UserInfo userInfo = new UserInfo();
+                    userInfo.UserName = txtUserName.Text.Trim();
+                    userInfo.PassWord = Md5Helper.EncryptString(txtPwd.Text.Trim());
+                    userInfo.Remark = txtRmark.Text.Trim();
+                    var isSuccess = DataManager.UserInfoBLL.Add(userInfo);
+                    if (!isSuccess)
+                    {
+                        MessageBox.Show("操作失败!");
+                    }
                 }
+                else
+                {
+                    lbltips.Visible = true;
+                    lbltips.ForeColor = Color.Red;
+                    lbltips.Text = "存在相同用户名,请更换用户名";
+                }
+
+                
                 this.Close();
             }
             else

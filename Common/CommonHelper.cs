@@ -69,5 +69,37 @@ namespace Common
             }
             return true;
         }
+
+        public  static void StartCalc()
+        {
+            try
+            {
+                System.Diagnostics.ProcessStartInfo Info = new System.Diagnostics.ProcessStartInfo();
+                Info.FileName = "calc.exe ";//"calc.exe"为计算器，
+                System.Diagnostics.Process Proc = System.Diagnostics.Process.Start(Info);
+            }
+            catch 
+            {
+
+                ;
+            }
+          
+        }
+
+        public  static  void StartNotePad()
+        {
+            try
+            {
+                System.Diagnostics.ProcessStartInfo Info = new System.Diagnostics.ProcessStartInfo();
+                Info.FileName = "notepad.exe ";//""notepad.exe"为记事本
+                System.Diagnostics.Process Proc = System.Diagnostics.Process.Start(Info);
+            }
+            catch 
+            {
+
+                ;
+            }
+            
+        }
     }
 }

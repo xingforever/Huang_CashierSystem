@@ -27,9 +27,9 @@ namespace Dal
             var endTime = searchModel.EndTime;
             var startIndex = searchModel.StartIndex;
             var dic = searchModel.dic;
-            DateTime dateTime = DateTime.Today;
+            DateTime dateTime = DateTime.Now;
             string timeStart = (dateTime - new TimeSpan(7, 0, 0, 0, 0)).ToString("yyyy-MM-dd 00:00:00");
-            string timeEnd = dateTime.ToString("yyyy-MM-dd 00:00:00");
+            string timeEnd = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
             //操作员选择时间端
             if (!startTime.Equals(new DateTime()))
             {
@@ -98,22 +98,9 @@ namespace Dal
 
         }
 
-        public  List<ProfitsInfo> GetListByPammer(SearchModel searchModel)
-        {
-            
-            var dataTable = GetDataTablebyPammer(searchModel);
-            var listEntity = GetList(dataTable);
-            if (listEntity.Count == 1)
-            {
-                return listEntity;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        
 
-        public  List<ProfitsInfo> GetList(DataTable dataTable)
+        public  List<ProfitsInfo> GetListByDataTable(DataTable dataTable)
         {
 
             DataRow dr = null;
@@ -125,6 +112,8 @@ namespace Dal
                 profitsInfo.Id = Convert.ToInt32(dr["ID"]);
                 profitsInfo.OrderId = Convert.ToString(dr["OrderId"]);
                 profitsInfo.Profit = Convert.ToDecimal(dr["Profit"]);
+                profitsInfo.PayPrices = Convert.ToDecimal(dr["PayPrices"]);
+                profitsInfo.DisCount = Convert.ToDecimal(dr["DisCount"]);
                 profitsInfo.IsPay = Convert.ToBoolean(dr["IsPay"]);
                 profitsInfo.CreateTime = Convert.ToDateTime(dr["CreateTime"]);
                 profitsInfo.Remark = Convert.ToString(dr["Remark"]);

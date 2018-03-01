@@ -64,6 +64,12 @@
     <Compile Include="Frm_GoodsInfo.Designer.cs">
       <DependentUpon>Frm_GoodsInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frm_Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Login.Designer.cs">
+      <DependentUpon>Frm_Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="Frm_NoReceiveMoney.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,12 @@
     </Compile>
     <Compile Include="Frm_OrderInfoDIalog.Designer.cs">
       <DependentUpon>Frm_OrderInfoDIalog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Payment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Payment.Designer.cs">
+      <DependentUpon>Frm_Payment.cs</DependentUpon>
     </Compile>
     <Compile Include="Frm_SortInfo.cs">
       <SubType>Form</SubType>
@@ -117,6 +129,9 @@
     <EmbeddedResource Include="Frm_GoodsInfo.resx">
       <DependentUpon>Frm_GoodsInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Login.resx">
+      <DependentUpon>Frm_Login.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frm_NoReceiveMoney.resx">
       <DependentUpon>Frm_NoReceiveMoney.cs</DependentUpon>
     </EmbeddedResource>
@@ -125,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_OrderInfoDIalog.resx">
       <DependentUpon>Frm_OrderInfoDIalog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Payment.resx">
+      <DependentUpon>Frm_Payment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_SortInfo.resx">
       <DependentUpon>Frm_SortInfo.cs</DependentUpon>

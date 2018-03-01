@@ -37,9 +37,9 @@ namespace Bll
 
         }
 
-        public List<ProfitsInfo> GetListByPammer(SearchModel searchModel)
+        public List<ProfitsInfo> GetListByDataTable(DataTable dataTable)
         {
-            return profitsInfoDal.GetListByPammer(searchModel);
+            return profitsInfoDal.GetListByDataTable(dataTable);
         }
 
         public ProfitsInfo GetProfitsInfoByOrderId(string  orderId)

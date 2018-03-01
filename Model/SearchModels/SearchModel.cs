@@ -5,56 +5,57 @@ using System.Text;
 
 namespace Model
 {
-     public class SearchModel
+    public class SearchModel
     {
-        //表名
+        /// <summary>
+        /// 表名(没什么用 ,用于区别)
+        /// </summary>
         public string ModelName { get; set; }
-        //起始id
-        public  int StartIndex { get; set; }     
-        //个数
-        public  int PageCount { get; set; }
         /// <summary>
-        /// 排序
+        /// 查询起始ID
+        /// </summary>      
+        public int StartIndex { get; set; }       
+        /// <summary>
+        /// 每页数量
         /// </summary>
-        public  bool IsAsc { get; set; }
-
-        public  DateTime StartTime { get; set;  }
-
-        public  DateTime EndTime { get; set;  }
+        public int PageCount { get; set; }
+        /// <summary>
+        /// 查询开始时间
+        /// </summary>
+        public DateTime StartTime { get; set; }
+        /// <summary>
+        /// 查询终止时间
+        /// </summary>
+        public DateTime EndTime { get; set; }
         //条件列表
-        public Dictionary<string, string> dic { get; set; }
+        public Dictionary<string, string> dic { get; set; }      
         /// <summary>
-        /// 辅助变量(存储上下页任务)
+        /// 分页起始ID
         /// </summary>
-        public int Tag { get; set; }
-
         public List<int> PageStartIndex { get; set; }
 
-      public   SearchModel()
+        public SearchModel()
         {
             ModelName = "";
-            StartIndex = 0;          
+            StartIndex = 0;
             PageCount = 3;
-            IsAsc = true;
-            StartTime =new DateTime ();//0001/1/1 0:00:00
+            StartTime = new DateTime();//0001/1/1 0:00:00
             EndTime = new DateTime();
-            dic = new Dictionary<string, string>();
-            Tag = -1;
+            dic = new Dictionary<string, string>();          
             PageStartIndex = new List<int>();
             PageStartIndex.Add(-1);//默认第一位是-1
 
         }
 
-        public  SearchModel(SearchModel searchModel)
+        public SearchModel(SearchModel searchModel)
         {
             this.ModelName = searchModel.ModelName;
-            this.StartIndex = searchModel.StartIndex;          
+            this.StartIndex = searchModel.StartIndex;
             this.PageCount = searchModel.PageCount;
-            this.IsAsc = true;
             this.StartTime = searchModel.StartTime;
             this.EndTime = searchModel.EndTime;
             this.dic = searchModel.dic;
-            this.Tag = searchModel.Tag;
+           
             this.PageStartIndex = new List<int>();
             for (int i = 0; i < searchModel.PageStartIndex.Count; i++)
             {

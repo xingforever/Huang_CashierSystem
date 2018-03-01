@@ -13,5 +13,19 @@ namespace Dal
         {
 
         }
+
+        public  bool IsExistName( string name)
+        {
+           string sql= "Select * from [UserInfo] where [UserName]=" + name;
+            var data = SqlHelper.ExecuteNonQuery(sql);
+            if (data<=0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }

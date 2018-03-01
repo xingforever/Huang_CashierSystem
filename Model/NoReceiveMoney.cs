@@ -65,7 +65,7 @@ namespace Model
         {
             string sql = " Set [Remark]='" + this.Remark + "'," 
                 +" [CustomerName]='"+this.CustomerName+ "',"+
-                "[Phone]='" +this.Phone+
+                "[Phone]='" +this.Phone + "'," +
                   "[WaitPayPrice]='" + this.WaitPayPrice +
                 "'  Where [ID]=" + this.Id;
 

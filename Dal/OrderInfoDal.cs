@@ -36,9 +36,9 @@ namespace Dal
             Dictionary<string, string> dic = searchModel.dic;
             var startTime = searchModel.StartTime;
             var endTime = searchModel.EndTime;
-            DateTime dateTime = DateTime.Today;
+            DateTime dateTime = DateTime.Now;
             string timeStart = (dateTime-new TimeSpan(7,0,0,0,0)).ToString("yyyy-MM-dd 00:00:00");            
-            string timeEnd = dateTime.ToString("yyyy-MM-dd 00:00:00");
+            string timeEnd = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
             //操作员选择时间端
             if (!startTime.Equals(new DateTime()))
             {

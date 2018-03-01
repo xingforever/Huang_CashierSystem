@@ -20,8 +20,12 @@ namespace Dal
         /// <param name="endTime">终止时间</param>
         /// <param name="dic">条件字典</param>
         /// <returns></returns>
-        public DataTable GetDataTablebyPammer(int startIndex = 0, int count = 30, bool idAsc = true, DateTime startTime = new DateTime(), DateTime endTime = new DateTime(), Dictionary<string, string> dic = null)
+        public DataTable GetDataTablebyPammer(SearchModel searchModel)
         {
+            var startTime = searchModel.StartTime;
+            var endTime = searchModel.EndTime;
+            var dic = searchModel.dic;
+            var startIndex = searchModel.StartIndex;
             DateTime dateTime = DateTime.Now;
             string timeStart = (dateTime - new TimeSpan(7, 0, 0, 0, 0)).ToString("yyyy-MM-dd 00:00:00");
             string timeEnd = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
@@ -36,16 +40,21 @@ namespace Dal
             }
             try
             {
-                var flagString = ">=";
-                var paiXu = "asc";
-                if (!idAsc)
+                bool getDel = false;
+                if (dic.TryGetValue("NoReceiveMoney_SelectValue", out string data))
                 {
-                    flagString = "<=";
-                    paiXu = "desc";
+                    var isDel = int.Parse(data);
+                    if (isDel > 0)
+                    {
+                        getDel = true;
+                    }
                 }
-                string sql = @"Select * " +
-                   "from [NoReceiveMoney] Where [DelFlag]=False And [CreateTime]>=#" + timeStart + "# And [CreateTime] <=#" + timeEnd + "#"
-                     + " And  [ID]" + flagString + startIndex;
+
+                string sql = @"Select top  " + searchModel.PageCount+
+                     "  * " +
+                   "from [NoReceiveMoney] Where [DelFlag]=  " + getDel +
+                   "  And [CreateTime]>=#" + timeStart + "# And [CreateTime] <=#" + timeEnd + "#"
+                     + " And  [ID]  >= "  + startIndex;
 
                 string customerName = "";
                 if (dic.TryGetValue("NoReceiveMoney_Name", out customerName))
@@ -53,8 +62,23 @@ namespace Dal
                     sql += @" and " + "[CustomerName]" + " like '%" + customerName + "%'";
 
                 }
-                sql += "   Order by [id] " + paiXu;
+               
+                sql += "   Order by [id]  asc"; 
                 var dataTable = SqlHelper.GetDataTable(sql);
+                if (dataTable != null && dataTable.Rows.Count > 0)
+                {
+
+                    DataRow dr_first = dataTable.AsEnumerable().First<DataRow>();//获取最后一行
+                    var fitstid = Convert.ToInt32(dr_first[0].ToString());//最后一行 ID
+                    DataRow dr_last = dataTable.AsEnumerable().Last<DataRow>();//获取最后一行
+                    var lastid = Convert.ToInt32(dr_last[0].ToString());//最后一行 ID
+                                                                        //表示只有一个-1 ,即本次查询为第一页
+                    if (searchModel.PageStartIndex.Count == 1)
+                    {
+                        searchModel.PageStartIndex.Add(fitstid);//
+                    }
+                    searchModel.PageStartIndex.Add(lastid + 1);//下一页  
+                }
                 return dataTable;
             }
             catch (Exception ex)

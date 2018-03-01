@@ -88,8 +88,8 @@ namespace CashierSystem
             //添加时候 默认 id 为maxValue
             if (entityId == int.MaxValue)
             {
-                //添加
-
+                
+                
                 WholeSalerInfo wholeSalerInfo = new WholeSalerInfo();
                 wholeSalerInfo.SupName = txtSupName.Text.Trim();
                 wholeSalerInfo.Management = txtManagement.Text.Trim();
