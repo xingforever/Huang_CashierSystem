@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -39,6 +40,23 @@ namespace CashierSystem
         void Init()
         {
             //图片加载 
+            if (File.Exists(@"WeiXin.png"))
+            {
+                picWeiXin.BackgroundImage = Image.FromFile(@"WeiXin.png");
+            }
+            else
+            {
+                picWeiXin.BackgroundImage = Image.FromFile(@"AddPic.png");
+            }
+            if (File.Exists(@"ZhiHuBao.png"))
+            {
+                picZhiFuBao.BackgroundImage = Image.FromFile(@"ZhiHuBao.png");
+            }
+            else
+            {
+                picZhiFuBao.BackgroundImage = Image.FromFile(@"AddPic.png");
+            }
+            
             //钱加载
             if (_profitsInfo!=null)
             {
@@ -96,5 +114,75 @@ namespace CashierSystem
         {
             CommonHelper.StartCalc();
         }
+
+        private void picWeiXin_DoubleClick(object sender, EventArgs e)
+        {
+            OpenFileDialog pOpenFileDialog = new OpenFileDialog();
+            pOpenFileDialog.DefaultExt = "png";
+            pOpenFileDialog.Filter = "pic files (*.png)|*.png|(*.jpg)|*.jpg";
+            pOpenFileDialog.FilterIndex = 1;
+            pOpenFileDialog.Multiselect = false;
+            if (pOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var path = pOpenFileDialog.FileName;
+                try
+                {
+                    //读取图片 ,制作缩略图 将缩略图设置为pic图
+                    var WeiXinimage = Image.FromFile(path);
+                    var trueImage = PictureHelper.GetThumbnailImageKeepRatio(WeiXinimage, 255, 384);
+                    if (File.Exists(@"WeiXin.png"))
+                    {
+                        File.Delete(@"WeiXin.png");
+                    }
+                    trueImage.Save(@"WeiXin.png");
+                    picWeiXin.BackgroundImage = Image.FromFile(@"WeiXin.png");
+                    return;
+                }
+                catch (Exception es)
+                {
+
+                    MessageBox.Show("设置图片出错 " + es.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+
+            }
+        }
+
+        private void picZhiFuBao_DoubleClick(object sender, EventArgs e)
+        {
+            OpenFileDialog pOpenFileDialog = new OpenFileDialog();
+            pOpenFileDialog.DefaultExt = "png";
+            pOpenFileDialog.Filter = "pic files (*.png)|*.png|(*.jpg)|*.jpg";
+            pOpenFileDialog.FilterIndex = 1;
+            pOpenFileDialog.Multiselect = false;
+            if (pOpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var path = pOpenFileDialog.FileName;
+                try
+                {
+                    //读取图片 ,制作缩略图 将缩略图设置为pic图
+                    var ZhiHuBaoimage = Image.FromFile(path);
+                    var trueImage = PictureHelper.GetThumbnailImageKeepRatio(ZhiHuBaoimage, 255, 384);
+                    if (File.Exists(@"ZhiHuBao.png"))
+                    {
+                        File.Delete(@"ZhiHuBao.png");
+                    }
+                    trueImage.Save(@"ZhiHuBao.png");
+                    picZhiFuBao.BackgroundImage = Image.FromFile(@"ZhiHuBao.png");
+                    return;
+                }
+                catch (Exception es)
+                {
+
+                    MessageBox.Show("设置图片出错 " + es.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+
+            }
+        }
     }
-}
+
+       
+    }

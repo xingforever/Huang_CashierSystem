@@ -234,6 +234,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Frm_WholeSalerInfo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "供应商";
             this.Load += new System.EventHandler(this.Frm_WholeSalerInfo_Load);
             this.ResumeLayout(false);

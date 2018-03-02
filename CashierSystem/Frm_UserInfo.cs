@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace CashierSystem
@@ -53,7 +54,6 @@ namespace CashierSystem
 
                     this.Text = "添加";
                 }
-
                 //修改 3 为id
                 else if (_Tags.Count == 3)
                 {
@@ -115,7 +115,14 @@ namespace CashierSystem
                 //添加
                 //添加
                 var name = txtUserName.Text.Trim();
-                var isExist = DataManager.UserInfoBLL.IsExistName(name);
+                if (!IsContainsSpital(name))
+                {
+                    lbltips.Visible = true;
+                    lbltips.ForeColor = Color.Red;
+                    lbltips.Text = "用户名不能使用特殊字符";
+                    return;
+                }
+               var isExist = DataManager.UserInfoBLL.IsExistName(name);
                 if (!isExist)
                 {
                     UserInfo userInfo = new UserInfo();
@@ -127,6 +134,10 @@ namespace CashierSystem
                     {
                         MessageBox.Show("操作失败!");
                     }
+                    else
+                    {
+                        this.Close();
+                    }
                 }
                 else
                 {
@@ -134,14 +145,20 @@ namespace CashierSystem
                     lbltips.ForeColor = Color.Red;
                     lbltips.Text = "存在相同用户名,请更换用户名";
                 }
-
-                
-                this.Close();
             }
             else
             {
                 UserInfo userInfo = new UserInfo();
-                userInfo.UserName = txtUserName.Text.Trim();
+                var name = txtUserName.Text.Trim();
+            
+                if (!IsContainsSpital(name))
+                {
+                    lbltips.Visible = true;
+                    lbltips.ForeColor = Color.Red;
+                    lbltips.Text = "用户名不能使用特殊字符,修改失败";
+                    return;
+                }
+                userInfo.UserName = name;
                 if (txtPwd.Text.Trim() != "123456789")
                 {
                     userInfo.PassWord = Md5Helper.EncryptString(txtPwd.Text.Trim());
@@ -153,8 +170,6 @@ namespace CashierSystem
                     MessageBox.Show("操作失败!");
                 }
                 this.Close();
-
-
             }
             //属性界面
             f1.GetDgv(f1.SelectIndex);
@@ -164,6 +179,24 @@ namespace CashierSystem
         private void btnEsc_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        /// <summary>
+        /// 是否包含特殊字符
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public bool IsContainsSpital(string str)
+        {
+
+            char[] charKey = { '|', '#', '$', '^', '*', '(', ')', '+', '{', '}', '?', '[', ']', '.', '\\' ,' '};
+            foreach (var item in charKey)
+            {
+                if (str.Contains(item))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Bll
 {
    public  class UserInfoBll:BaseBll<UserInfo>
     {
-
+        public UserInfoDal dal = new UserInfoDal();
         public UserInfoBll()
         {
              this.CurrentDal=new UserInfoDal();
@@ -17,7 +17,12 @@ namespace Bll
 
         public bool IsExistName(string name)
         {
-            return new UserInfoDal().IsExistName(name);
+            return dal.IsExistName(name);
+        }
+
+        public  bool IsTrueNameAndPwd(string name,string pwd,out int  id)
+        {
+           return dal.IsTrueNameAndPwd( name,  pwd,out  id);
         }
     }
 }

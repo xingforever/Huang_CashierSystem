@@ -10,7 +10,8 @@ namespace Bll
 {
    public class NoReceiveMoneyBll:BaseBll<NoReceiveMoney>
     {
-        
+        public NoReceiveMoneyDal dal = new NoReceiveMoneyDal();
+
       public  NoReceiveMoneyBll()
         {
             this.CurrentDal = new NoReceiveMoneyDal();
@@ -19,7 +20,7 @@ namespace Bll
         public DataTable GetDataTablebyPammer(SearchModel searchModel)
         {
             searchModel.ModelName = "NoReceiveMoney";
-            return new NoReceiveMoneyDal().GetDataTablebyPammer(searchModel);
+            return dal.GetDataTablebyPammer(searchModel);
         }
     }
 }

@@ -52,6 +52,10 @@
     <Compile Include="WholeSalerInfoDal.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{089CBDBE-EF09-46E3-9507-0DC012175EDD}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{d468b658-61b0-4012-b4d5-c934d32b73e4}</Project>
       <Name>Model</Name>

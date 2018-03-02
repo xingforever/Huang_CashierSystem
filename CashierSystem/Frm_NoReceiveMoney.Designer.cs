@@ -162,7 +162,7 @@
             // lblNoM_Tips
             // 
             this.lblNoM_Tips.AutoSize = true;
-            this.lblNoM_Tips.Location = new System.Drawing.Point(38, 277);
+            this.lblNoM_Tips.Location = new System.Drawing.Point(108, 284);
             this.lblNoM_Tips.Name = "lblNoM_Tips";
             this.lblNoM_Tips.Size = new System.Drawing.Size(41, 12);
             this.lblNoM_Tips.TabIndex = 15;
@@ -189,6 +189,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Frm_NoReceiveMoney";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "待收账信息";

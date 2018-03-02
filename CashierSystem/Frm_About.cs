@@ -9,11 +9,16 @@ using System.Windows.Forms;
 
 namespace CashierSystem
 {
-    public partial class WeatherSetting : Form
+    public partial class Frm_About : Form
     {
-        public WeatherSetting()
+        public Frm_About()
         {
             InitializeComponent();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

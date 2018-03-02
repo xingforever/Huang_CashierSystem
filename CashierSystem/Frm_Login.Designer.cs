@@ -28,34 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtPwd = new System.Windows.Forms.TextBox();
+            this.txtName = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblAbout = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox2
+            // txtPwd
             // 
-            this.textBox2.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox2.Location = new System.Drawing.Point(155, 165);
-            this.textBox2.MaxLength = 16;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.PasswordChar = '*';
-            this.textBox2.Size = new System.Drawing.Size(172, 29);
-            this.textBox2.TabIndex = 11;
+            this.txtPwd.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtPwd.Location = new System.Drawing.Point(155, 165);
+            this.txtPwd.MaxLength = 16;
+            this.txtPwd.Name = "txtPwd";
+            this.txtPwd.PasswordChar = '*';
+            this.txtPwd.Size = new System.Drawing.Size(172, 29);
+            this.txtPwd.TabIndex = 11;
             // 
-            // textBox1
+            // txtName
             // 
-            this.textBox1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(155, 110);
-            this.textBox1.MaxLength = 16;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(172, 29);
-            this.textBox1.TabIndex = 10;
+            this.txtName.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtName.Location = new System.Drawing.Point(155, 110);
+            this.txtName.MaxLength = 16;
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(172, 29);
+            this.txtName.TabIndex = 10;
             // 
             // btnLogin
             // 
@@ -66,6 +66,7 @@
             this.btnLogin.TabIndex = 12;
             this.btnLogin.Text = "登录";
             this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // btnCancel
             // 
@@ -77,14 +78,14 @@
             this.btnCancel.Text = "重置";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // label1
+            // lblAbout
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(397, 313);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "关于";
+            this.lblAbout.AutoSize = true;
+            this.lblAbout.Location = new System.Drawing.Point(397, 313);
+            this.lblAbout.Name = "lblAbout";
+            this.lblAbout.Size = new System.Drawing.Size(29, 12);
+            this.lblAbout.TabIndex = 13;
+            this.lblAbout.Text = "关于";
             // 
             // label2
             // 
@@ -125,17 +126,18 @@
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblAbout);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnLogin);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtPwd);
+            this.Controls.Add(this.txtName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Frm_Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "登录";
+            this.Load += new System.EventHandler(this.Frm_Login_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,11 +145,11 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtPwd;
+        private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblAbout;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;

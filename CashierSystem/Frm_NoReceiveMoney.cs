@@ -98,6 +98,7 @@ namespace CashierSystem
                 {
                     ClearData();
                     this.Tag = "true";//通知父窗口 ,可以关闭
+
                     this.Close();
                 }
 

@@ -27,9 +27,9 @@ namespace Common_API
             return p;
         }
 
-        public  static MyWeather  GetWeather(string province="江西",string city="赣州" )
+        public  static MyWeather  GetWeather(string city="赣州" )
         {
-            
+            city = GetTrueCity(city);
             var s = weather.getWeatherbyCityName(city);
             if (s.Length==23&&s[8]!="")
             {
@@ -38,5 +38,30 @@ namespace Common_API
             return null;
          
         }
+        /// <summary>
+        /// 默认城市代码有编号
+        /// 去除编号
+        /// </summary>
+        /// <param name="city"></param>
+        /// <returns></returns>
+        public  static  string GetTrueCity(string city)
+        {
+            try
+            {
+                int end = city.IndexOf('(');
+                var result = city.Remove(end).Trim();
+                return result;
+            }
+            catch 
+            {
+
+                return city;
+            }
+           
+
+
+        }
+
+        
     }
 }

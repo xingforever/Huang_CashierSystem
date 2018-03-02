@@ -10,7 +10,7 @@ namespace Bll
 {
    public  class ProfitsInfoBll:BaseBll<ProfitsInfo>
     {
-        ProfitsInfoDal profitsInfoDal = new ProfitsInfoDal();
+        ProfitsInfoDal dal = new ProfitsInfoDal();
 
        public   ProfitsInfoBll()
         {
@@ -21,13 +21,13 @@ namespace Bll
         public DataTable GetDataTablebyPammer( SearchModel searchModel)
         {
             searchModel.ModelName = "ProfitsInfo";
-            return profitsInfoDal.GetDataTablebyPammer(searchModel);
+            return dal.GetDataTablebyPammer(searchModel);
         }
         public int GetDataTableCountByPammer(SearchModel searchModel)
         {
             searchModel.ModelName = "ProfitsInfo";
             searchModel.PageCount = int.MaxValue;
-            var table = profitsInfoDal.GetDataTablebyPammer(searchModel);
+            var table = dal.GetDataTablebyPammer(searchModel);
             if (table==null||table.Rows.Count==0)
             {
                 return 0;
@@ -39,7 +39,7 @@ namespace Bll
 
         public List<ProfitsInfo> GetListByDataTable(DataTable dataTable)
         {
-            return profitsInfoDal.GetListByDataTable(dataTable);
+            return dal.GetListByDataTable(dataTable);
         }
 
         public ProfitsInfo GetProfitsInfoByOrderId(string  orderId)

@@ -17,14 +17,15 @@ namespace CashierSystem
 {
     public partial class Huang_System : Form
     {
-        public Huang_System()
+        public Huang_System(int loginId)
         {
+            LoginId = loginId;
             InitializeComponent();
         }
         /// <summary>
         /// 登录操作员ID
         /// </summary>
-        public int loginId = int.MaxValue;
+        public int LoginId = int.MaxValue;
         /// <summary>
         /// 是否联网
         /// </summary>
@@ -57,12 +58,11 @@ namespace CashierSystem
         /// 操作员修改应收款数造成的折扣
         /// 并未对某项商品进行折扣
         /// </summary>
-        public decimal OrderDisCount = (decimal)0.0;
-      
+        public decimal OrderDisCount = (decimal)0.0;       
 
         private void Huang_System_Load(object sender, EventArgs e)
         {
-            Setting setting = Setting.GetSeeting();//获取默认设置
+            Setting TheSetting = Setting.GetSeeting();//获取默认设置
             isPingSuccess = IsConnectionNET.IsConnect();
             LoadAllDgv();//加载所有dgv
             LoadWeatherAndAlmanac();//加载天气和黄历
@@ -179,7 +179,52 @@ namespace CashierSystem
             lblTitle.Text= Setting.ProgramName; 
 
         }
-        
+        /// <summary>
+        /// 保存设置项修改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSaveSetting_Click(object sender, EventArgs e)
+        {
+            for (int i = 1; i < 6; i++)
+            {
+                var data = this.dgvSetting.Rows[i].Cells[1].Value.ToString().Trim();
+                var isTrue = int.TryParse(data, out int a);
+                if (!isTrue||a<=0)
+                {
+                    MessageBox.Show("设置失败,检查设置项是否正确");
+                    return;
+                }
+            }
+            if (this.dgvSetting.Rows[0].Cells[1].Value.ToString().Trim() == "")
+            {
+                MessageBox.Show("设置失败,标题项不能为空");
+                return;
+            }
+            Setting.ProgramName = this.dgvSetting.Rows[0].Cells[1].Value.ToString().Trim();
+            Setting.GoodsInfoPageCount = int.Parse(this.dgvSetting.Rows[1].Cells[1].Value.ToString().Trim());
+            Setting.GoodsManagerPageCount = int.Parse(this.dgvSetting.Rows[2].Cells[1].Value.ToString().Trim());
+            Setting.AllOrderPageCount = int.Parse(this.dgvSetting.Rows[3].Cells[1].Value.ToString().Trim());
+            Setting.ProfitPageCount = int.Parse(this.dgvSetting.Rows[4].Cells[1].Value.ToString().Trim());
+            Setting.NoReceivePageCount = int.Parse(this.dgvSetting.Rows[5].Cells[1].Value.ToString().Trim());
+            var dic = Setting.SettingToDic();
+            if (Common.XMLHelper.WriteXML(dic))
+            {
+                this.dgvGoodsInfo.Tag = false;
+                this.tspLblGoodsPageCount.Tag = "1";
+                this.dgvGoodSInfoManager.Tag = false;
+                this.tspLblGoodsManagerCount.Tag = "1";
+                this.dgvAllOrder.Tag = false;
+                this.tspLblOrderPageCount.Tag = "1";
+                this.dgvProfitsInfo.Tag = false;
+                this.tspLblProfitPageCount.Tag = "1";
+                this.dgvNoReceiveMoney.Tag = false;
+                this.tspLblNoReceivePageCount.Tag = "1";
+                this.lblTitle.Text = Setting.ProgramName;
+                MessageBox.Show("保存成功", "通知", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                return;
+            }
+        }
         /// <summary>
         /// 初始化,加载黄历与天气
         /// </summary>
@@ -188,46 +233,8 @@ namespace CashierSystem
             //如果联网成功
             if (isPingSuccess)
             {
-                try
-                {
-                    #region 黄历显示
-                    var myAlmanac = AlmanacApiHelper.GetAlmanac();
-                    if (myAlmanac.IsGetSuccess)
-                    {
-                        lblAlmamcDate.Text = myAlmanac.date;
-                        lblAlmamcNongli.Text = myAlmanac.nongli;
-                        lblAlmamcJi.Text = myAlmanac.ji;
-                        lblAlmamcYi.Text = myAlmanac.yi;
-                        lblAlmamcNongli = LabelHelper.GetAutoSizeLabel(lblAlmamcNongli, myAlmanac.nongli);
-                        lblAlmamcDate = LabelHelper.GetAutoSizeLabel(lblAlmamcDate, myAlmanac.date);
-                        lblAlmamcJi = LabelHelper.GetAutoSizeLabel(lblAlmamcJi, myAlmanac.ji);
-                        lblAlmamcYi = LabelHelper.GetAutoSizeLabel(lblAlmamcYi, myAlmanac.yi);
-
-                    }
-
-                    #endregion
-
-                    var weather = WeatherHelper.GetWeather();
-                    if (weather != null)
-                    {
-                        lblWeatherTime.Text = weather.TodayTime;
-                        lblWeatherTemperature.Text = weather.TodayTemperature;
-                        lblWeatherWind.Text = weather.TodayWind;
-
-                    }
-                }
-                catch
-                {
-                    //连接网络 ,但是可能是服务问题
-
-                    lblAlmamcDate.Text = "网络连接失败,";
-                    lblAlmamcNongli.Text = "黄历无法正常显示";
-                    lblAlmamcJi.Text = "";
-                    lblAlmamcYi.Text = "";
-                    lblWeatherTime.Text = DateTime.Today.ToShortDateString();
-                    lblWeatherTemperature.Text = "网络连接失败,";
-                    lblWeatherWind.Text = "天气无法正常显示";
-                }
+                LoadAlmanac();
+                LoadWeather();
             }
             else
             {
@@ -236,13 +243,71 @@ namespace CashierSystem
                 lblAlmamcNongli.Text = "黄历无法正常显示";
                 lblAlmamcJi.Text = "";
                 lblAlmamcYi.Text = "";
-                lblWeatherTime.Text = DateTime.Today.ToShortDateString();
-                lblWeatherTemperature.Text = "网络连接失败,";
-                lblWeatherWind.Text = "天气无法正常显示";
+               
 
             }
         }
+        /// <summary>
+        /// 加载农历
+        /// </summary>
+        public void LoadAlmanac()
+        {
+            var myAlmanac = AlmanacApiHelper.GetAlmanac();
+            if (myAlmanac.IsGetSuccess)
+            {
+                lblAlmamcDate.Text = myAlmanac.date;
+                lblAlmamcNongli.Text = myAlmanac.nongli;
+                lblAlmamcJi.Text = myAlmanac.ji;
+                lblAlmamcYi.Text = myAlmanac.yi;
+                lblAlmamcNongli = LabelHelper.GetAutoSizeLabel(lblAlmamcNongli, myAlmanac.nongli);
+                lblAlmamcDate = LabelHelper.GetAutoSizeLabel(lblAlmamcDate, myAlmanac.date);
+                lblAlmamcJi = LabelHelper.GetAutoSizeLabel(lblAlmamcJi, myAlmanac.ji);
+                lblAlmamcYi = LabelHelper.GetAutoSizeLabel(lblAlmamcYi, myAlmanac.yi);
 
+            }
+            else
+            {
+                lblAlmamcDate.Text = "网络连接失败,";
+                lblAlmamcNongli.Text = "黄历无法正常显示";
+                lblAlmamcJi.Text = "";
+                lblAlmamcYi.Text = "";
+            }
+        }
+        /// <summary>
+        /// 天气加载
+        /// </summary>
+        public void  LoadWeather()
+        {
+            var weather = WeatherHelper.GetWeather(Setting.City);
+            if (weather != null)
+            {
+                lblweathercity.Text = Setting.City;
+                lblWeatherTime.Text = weather.TodayTime;
+                lblWeatherTemperature.Text = weather.TodayTemperature;
+                lblWeatherWind.Text = weather.TodayWind;
+
+            }
+            else
+            {
+                lblWeatherTime.Text = DateTime.Today.ToShortDateString();
+                lblWeatherTemperature.Text = "网络连接失败,";
+                lblWeatherWind.Text = "天气无法正常显示";
+            }
+        }
+        /// <summary>
+        /// 地区天气设置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lblSettingWeather_Click(object sender, EventArgs e)
+        {
+            if (isPingSuccess)
+            {
+                Frm_WeatherSetting frm_WeatherSetting = new Frm_WeatherSetting();
+                frm_WeatherSetting.ShowDialog(this);
+                frm_WeatherSetting.Focus();
+            }
+        }
         /// <summary>
         /// 获取数据并展示在响应的标签页
         /// </summary>
@@ -273,7 +338,6 @@ namespace CashierSystem
                 case 1:
                     if (!(bool)this.dgvTodayOrder.Tag)
                     {
-
                         dataTable = DataManager.OrderInfoBLL.GetTodayDataTable(searchModel);
                         this.dgvTodayOrder = dataGridViewHelper.FillData(this.dgvTodayOrder, dataTable, false);
                         LoadToadyOrderProfit();
@@ -385,7 +449,7 @@ namespace CashierSystem
             myGoodInfoSearchModel = searchModel;//赋值给静态变量
             var pageStartIndex = searchModel.PageStartIndex;
             double pageSize = Setting.GoodsInfoPageCount;
-            if (tspGoodsPageCount.Tag.ToString() != "-1")
+            if (tspLblGoodsPageCount.Tag.ToString() != "-1")
             {
                 //重新更换搜索条件后
                 // 采用获取top 所有数据
@@ -393,7 +457,7 @@ namespace CashierSystem
                 SearchModel searchModel2 = new SearchModel(searchModel);
                 int count = DataManager.GoodsInfoBLL.GetDataTableCountByPammer(searchModel2);
                 int pageSum = Convert.ToInt32(Math.Ceiling(count / pageSize));//总页数
-                tspGoodsPageCount.Text = pageSum.ToString();
+                tspLblGoodsPageCount.Text = pageSum.ToString();
                 tspGoodsLastPage.Tag = -1;
                 if (pageSum <= 1)
                 {
@@ -404,7 +468,7 @@ namespace CashierSystem
                     tspGoodsNextPage.Tag = pageStartIndex[2];//有第二页
                 }
 
-                tspGoodsPageCount.Tag = "-1";
+                tspLblGoodsPageCount.Tag = "-1";
             }
             else
             {
@@ -422,7 +486,7 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspGoodsLastPage_Click(object sender, EventArgs e)
         {
-            int pageSum = Convert.ToInt32(tspGoodsPageCount.Text);
+            int pageSum = Convert.ToInt32(tspLblGoodsPageCount.Text);
             int pageNow = Convert.ToInt32(tspGoodsPage.Text);
             int lastId = Convert.ToInt32(tspGoodsLastPage.Tag);
             bool isTrue = CommonHelper.GetTruePage(pageSum, pageNow, lastId, false);
@@ -442,7 +506,7 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspGoodsNextPage_Click(object sender, EventArgs e)
         {
-            int pageSum = Convert.ToInt32(tspGoodsPageCount.Text);
+            int pageSum = Convert.ToInt32(tspLblGoodsPageCount.Text);
             int pageNow = Convert.ToInt32(tspGoodsPage.Text);
             int lastId = Convert.ToInt32(tspGoodsLastPage.Tag);
             int nextId = Convert.ToInt32(tspGoodsNextPage.Tag);
@@ -497,7 +561,7 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void btnGoodsSearch_Click(object sender, EventArgs e)
         {
-            tspGoodsPageCount.Tag = "1";//需要对状态栏进行修改
+            tspLblGoodsPageCount.Tag = "1";//需要对状态栏进行修改
             SearchLoadGoodsInfo();
 
         }
@@ -521,6 +585,265 @@ namespace CashierSystem
 
                 return;
             }
+
+        }
+        #endregion
+        #region 小订单表操作
+
+        /// <summary>
+        /// 小订单表加载
+        /// </summary>
+        public void LoadOrdersInfo()
+        {
+            var count = this.dgvOrdersInfo.Rows.Count;
+            var ddd = this.dgvOrdersInfo.ColumnCount;
+            this.dgvOrdersInfo.Rows.Clear();//清除数据
+            decimal AllMoney = (decimal)0.0;
+            foreach (OrderInfo order in OrdersInfo)
+            {
+                DataGridViewRow dataGridViewRow = new DataGridViewRow();
+                dataGridViewRow.CreateCells(dgvOrdersInfo);
+                dataGridViewRow.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                dataGridViewRow.Cells[0].Value = order.GoodsId;
+                dataGridViewRow.Cells[1].Value = order.GoodsName;
+                dataGridViewRow.Cells[2].Value = order.Count;
+                dataGridViewRow.Cells[3].Value = order.PayPrice;
+                dataGridViewRow.Cells[4].Value = order.DisCount;
+                dataGridViewRow.Cells[5].Value = order.Remark;
+                AllMoney += order.PayPrice;
+                this.dgvOrdersInfo.Rows.Add(dataGridViewRow);
+            }
+
+            this.lblOrderMoney.Text = AllMoney.ToString();
+        }
+        /// <summary>
+        /// 下单
+        /// </summary>
+        /// <param name="goodsId">商品ID</param>
+        /// <param name="count">数量</param>
+        /// <returns></returns>
+        public bool AddGoodsToOrder(int goodsId, int count = 1)
+        {
+            var goodsInfo = DataManager.GoodsInfoBLL.GetEntityById(goodsId);
+            var maxCount = goodsInfo.SurplusCount;//库存量
+            bool isHaveSame = false;//下单表中有相同商品
+                                    //20180211154701
+            if (OrdersInfo.Count == 0)
+            {
+                OrderId = DateTime.Now.ToString("yyyyMMddHHmmss");
+            }
+            //创建一个订单号  一个列表仅有一个
+
+            //将数据添加到下单表            
+            foreach (OrderInfo item in OrdersInfo)
+            {
+                if (item.GoodsId == goodsId)
+                {
+                    if ((item.Count + count) <= maxCount)
+                    {
+                        item.Count += count;//
+                        item.PayPrice = (goodsInfo.PayPrice * (decimal)item.Count) - item.DisCount;
+                        //利润
+                        item.Profit = item.PayPrice - ((goodsInfo.PurPrice) * (decimal)item.Count);
+                        isHaveSame = true;
+                    }
+                    else
+                    {
+                        return false;//库存不够
+                    }
+                }
+            }
+            //订单表中 无此商品 ,
+            if (!isHaveSame)
+            {
+                OrderInfo orderInfo = new OrderInfo();
+                orderInfo.GoodsInfo = goodsInfo;
+                orderInfo.GoodsId = goodsId;
+                orderInfo.OrderId = OrderId;
+                orderInfo.CreateTime = DateTime.Now;
+                orderInfo.Count = count;
+                orderInfo.GoodsName = goodsInfo.GoodsName;
+                orderInfo.PayPrice = (goodsInfo.PayPrice * (decimal)orderInfo.Count) - orderInfo.DisCount;//收款
+                orderInfo.Profit = orderInfo.PayPrice - ((goodsInfo.PurPrice) * (decimal)orderInfo.Count);//利润
+                if (count > maxCount)
+                {
+                    return false;
+                }
+                OrdersInfo.Add(orderInfo);
+            }
+            return true;
+
+        }
+        /// <summary>
+        /// 订单表行标题
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvOrdersInfo_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            //自动编号，与数据无关
+            Rectangle rectangle = new Rectangle(e.RowBounds.Location.X,
+               e.RowBounds.Location.Y,
+               this.dgvOrdersInfo.RowHeadersWidth - 4,
+               e.RowBounds.Height);
+            TextRenderer.DrawText(e.Graphics,
+                  (e.RowIndex + 1).ToString(),
+                  this.dgvOrdersInfo.RowHeadersDefaultCellStyle.Font,
+                   rectangle,
+                  this.dgvOrdersInfo.RowHeadersDefaultCellStyle.ForeColor,
+                   TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
+        }
+        /// <summary>
+        /// 下单操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOrder_Click(object sender, EventArgs e)
+        {
+            if (OrdersInfo.Count < 1)
+            {
+                MessageBox.Show("订单表中无商品,请双击商品信息表中信息添加商品", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            Frm_OrderInfoDIalog frm_Samll = Frm_OrderInfoDIalog.Create(this.lblOrderMoney.Text);
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+            //下单成功,确认下单窗口已经关闭
+            if (OrdersInfo.Count == 0)
+            {
+                this.dgvOrdersInfo.Rows.Clear();//清除数据
+                this.lblOrderMoney.Text = "0.000";//待收款清0
+                OrderDisCount = (decimal)0.0;//折扣 
+                this.dgvTodayOrder.Tag = false;//信息需要重新加载
+                this.tspLblGoodsPageCount.Tag = "1";//状态栏需要加载
+                SearchLoadGoodsInfo();//商品信息页重新加载(保留操作员上次操作)
+                                      //开始收款 ----
+                Frm_Payment frm_Payment = Frm_Payment.Create(TempProfit);
+                frm_Payment.ShowDialog(this);
+                frm_Payment.Focus();
+                TempProfit = null;//临时利润表清空
+
+            }
+            else
+            {
+                //未完成下单操作
+            }
+
+
+        }
+        /// <summary>
+        /// 双击 订单表数量修改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvOrdersInfo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                var dataRow = this.dgvOrdersInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取商品Id
+                OrderInfo orderInfo = null;
+                int index = int.MaxValue;
+                for (int i = 0; i < OrdersInfo.Count; i++)
+                {
+                    var orderinfo = OrdersInfo[i];
+                    if (orderinfo.GoodsId == dataId)
+                    {
+                        index = i;//传值,用于确定 小定单的位置
+                        orderInfo = orderinfo;
+                        break;
+                    }
+                }
+                if (orderInfo == null)
+                {
+                    MessageBox.Show("发生错误,联系开发人员");
+                    return;
+                }
+                Frm_OrderInfo frm_Samll = Frm_OrderInfo.Create(index);
+                frm_Samll.ShowDialog(this);
+                frm_Samll.Focus();
+                LoadOrdersInfo();
+
+            }
+            catch (Exception)
+            {
+
+                ;
+            }
+
+        }
+        /// <summary>
+        /// 订单应收款修改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnOrderEdit_Click(object sender, EventArgs e)
+        {
+            if (this.txtOrderMoney.Visible)
+            {
+                this.txtOrderMoney.Focus();
+                EditOrderMonry();
+            }
+            else
+            {
+                this.lblOrderMoney.Visible = false;
+                this.txtOrderMoney.Visible = true;
+                this.txtOrderMoney.Text = this.lblOrderMoney.Text;
+                this.txtOrderMoney.Focus();
+            }
+
+        }
+
+        /// <summary>
+        /// 订单修改完毕事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtOrderMoney_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                EditOrderMonry();
+            }
+        }
+        /// <summary>
+        /// 订单修改完毕
+        /// </summary>
+        public void EditOrderMonry()
+        {
+            this.txtOrderMoney.Visible = false;
+            var OldMoney = Convert.ToDecimal(this.lblOrderMoney.Text);
+            try
+            {
+                var newMoney = Convert.ToDecimal(this.txtOrderMoney.Text);
+                this.lblOrderMoney.Visible = true;
+                OrderDisCount = OldMoney - newMoney;//操作用修改应收款的折扣
+                this.lblOrderMoney.Text = this.txtOrderMoney.Text;
+                //
+                for (int i = 0; i < OrdersInfo.Count; i++)
+                {
+                    OrdersInfo[i].DisCount = Math.Round((OrderDisCount / OrdersInfo.Count));
+                    OrdersInfo[i].Remark = "该订单共已折扣" + Math.Round((OrderDisCount / OrdersInfo.Count), 4) + "元";
+                    OrdersInfo[i].PayPrice = OrdersInfo[i].PayPrice - Math.Round((OrderDisCount / OrdersInfo.Count), 4);
+                }
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("操作失误,总价格为数字", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+        }
+        /// <summary>
+        /// 清除小订单表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lblClearOrder_Click(object sender, EventArgs e)
+        {
+            this.dgvOrdersInfo.Rows.Clear();//清除数据
+            this.lblOrderMoney.Text = "0.000";//待收款清0
+            OrderDisCount = (decimal)0.0;//折扣 
 
         }
         #endregion
@@ -890,498 +1213,6 @@ namespace CashierSystem
         }
 
         #endregion
-
-
-
-        #region 商品单位表
-        /// <summary>
-        /// 单位表添加
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tspAddUnitInfo_Click(object sender, EventArgs e)
-        {
-
-            List<string> tags = new List<string>();
-            Frm_UnitInfo frm_Samll = Frm_UnitInfo.Create(tags);
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
-
-
-        }
-        /// <summary>
-        /// 单位表编辑
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tspEditUnitInfo_Click(object sender, EventArgs e)
-        {
-            if (this.dgvUnitInfo.SelectedRows.Count < 0)
-            {
-                UnSelectedTips();
-                return;
-            }
-            var dataRow = this.dgvUnitInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            UnitInfo unitInfo = DataManager.UnitInfoBLL.GetEntityById(dataId);
-            List<string> tags = new List<string>() { unitInfo.Id.ToString(), unitInfo.UnitName, unitInfo.Remark };
-            Frm_UnitInfo frm_Samll = Frm_UnitInfo.Create(tags);
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
-        }
-        /// <summary>
-        /// 单位表删除
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tspDeleteUnitInfo_Click(object sender, EventArgs e)
-        {
-            if (this.dgvUnitInfo.SelectedRows.Count < 0)
-            {
-                UnSelectedTips();
-                return;
-            }
-            var dataRow = this.dgvUnitInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            var result = MessageBox.Show("确认删除该商品单位?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-
-                var isDelete = DataManager.UnitInfoBLL.Delete(dataId);
-                if (!isDelete)
-                {
-                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                GetDgv(SelectIndex);//刷新
-            }
-            else
-            {
-                ;
-            }
-        }
-        /// <summary>
-        /// 单位表刷新
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tspReLoadUnitInfo_Click(object sender, EventArgs e)
-        {
-            GetDgv(SelectIndex);
-        }
-
-
-        #endregion
-        #region 商品类别表
-
-        private void tspAddSortinfo_Click(object sender, EventArgs e)
-        {
-
-            Frm_SortInfo frm_Samll = Frm_SortInfo.Create();
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
-        }
-
-        private void tspEidtSortInfo_Click(object sender, EventArgs e)
-        {
-            if (this.dgvSortInfo.SelectedRows.Count < 0)
-            {
-                UnSelectedTips();
-                return;
-            }
-            var dataRow = this.dgvSortInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            SortInfo sortInfo = DataManager.SortInfoBLL.GetEntityById(dataId);
-            List<string> tags = new List<string>() { sortInfo.Id.ToString(), sortInfo.SortName, sortInfo.Remark };
-            Frm_SortInfo frm_Samll = Frm_SortInfo.Create(tags);
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
-        }
-
-        private void tspDeleteSortInfo_Click(object sender, EventArgs e)
-        {
-            if (this.dgvSortInfo.SelectedRows.Count < 0)
-            {
-                UnSelectedTips();
-                return;
-            }
-            var dataRow = this.dgvSortInfo.SelectedRows[0];
-
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-
-                var isDelete = DataManager.SortInfoBLL.Delete(dataId);
-                if (!isDelete)
-                {
-                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                GetDgv(SelectIndex);//刷新
-            }
-            else
-            {
-                ;
-            }
-        }
-
-        private void tspReLoadSortInfo_Click(object sender, EventArgs e)
-        {
-            GetDgv(SelectIndex);//刷新
-        }
-        #endregion        
-        #region 供货信息表
-        private void tspAddWholeSalerInfo_Click(object sender, EventArgs e)
-        {
-
-            Frm_WholeSalerInfo frm_Samll = Frm_WholeSalerInfo.Create();
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
-        }
-
-        private void tspEditWholeSalerInfo_Click(object sender, EventArgs e)
-        {
-            if (this.dgvWholeSalerInfo.SelectedRows.Count < 0)
-            {
-                UnSelectedTips();
-                return;
-            }
-            var dataRow = this.dgvWholeSalerInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            WholeSalerInfo wholeSalerInfo = DataManager.WholeSalerInfoBLL.GetEntityById(dataId);
-            List<string> tags = new List<string>() { wholeSalerInfo.Id.ToString(), wholeSalerInfo.SupName, wholeSalerInfo.Management, wholeSalerInfo.TelePhone, wholeSalerInfo.AddressInfo, wholeSalerInfo.Remark };
-            Frm_WholeSalerInfo frm_Samll = Frm_WholeSalerInfo.Create(tags);
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
-        }
-
-        private void tspDeleteWholeSalerInfo_Click(object sender, EventArgs e)
-        {
-            if (this.dgvWholeSalerInfo.SelectedRows.Count < 0)
-            {
-                UnSelectedTips();
-                return;
-            }
-            var dataRow = this.dgvUnitInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-
-                var isDelete = DataManager.WholeSalerInfoBLL.Delete(dataId);
-                if (!isDelete)
-                {
-                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                GetDgv(SelectIndex);//刷新
-            }
-            else
-            {
-                ;
-            }
-        }
-
-        private void txtReLoadWholeSalerInfo_Click(object sender, EventArgs e)
-        {
-            GetDgv(SelectIndex);
-        }
-        #endregion
-        #region 管理员信息表
-        private void tspAddUserInfo_Click(object sender, EventArgs e)
-        {
-            Frm_UserInfo frm_Samll = Frm_UserInfo.Create();
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
-        }
-
-        private void tspEditUserInfo_Click(object sender, EventArgs e)
-        {
-            if (this.dgvUserInfo.SelectedRows.Count < 0)
-            {
-                UnSelectedTips();
-                return;
-            }
-            var dataRow = this.dgvUserInfo.SelectedRows[0];
-
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            UserInfo userInfo = DataManager.UserInfoBLL.GetEntityById(dataId);
-            List<string> tags = new List<string>() { userInfo.Id.ToString(), userInfo.UserName, userInfo.Remark };
-            Frm_UserInfo frm_Samll = Frm_UserInfo.Create(tags);
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
-        }
-
-        private void tspDeleteUserInfo_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("非管理员无权限删除");
-
-        }
-
-        private void tspReLoadUserInfo_Click(object sender, EventArgs e)
-        {
-            GetDgv(SelectIndex);
-        }
-        #endregion
-
-        #region 小订单表操作
-
-        /// <summary>
-        /// 小订单表加载
-        /// </summary>
-        public void LoadOrdersInfo()
-        {
-            var count = this.dgvOrdersInfo.Rows.Count;
-            var ddd = this.dgvOrdersInfo.ColumnCount;
-            this.dgvOrdersInfo.Rows.Clear();//清除数据
-            decimal AllMoney = (decimal)0.0;
-            foreach (OrderInfo order in OrdersInfo)
-            {
-                DataGridViewRow dataGridViewRow = new DataGridViewRow();
-                dataGridViewRow.CreateCells(dgvOrdersInfo);
-                dataGridViewRow.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                dataGridViewRow.Cells[0].Value = order.GoodsId;
-                dataGridViewRow.Cells[1].Value = order.GoodsName;
-                dataGridViewRow.Cells[2].Value = order.Count;
-                dataGridViewRow.Cells[3].Value = order.PayPrice;
-                dataGridViewRow.Cells[4].Value = order.DisCount;
-                dataGridViewRow.Cells[5].Value = order.Remark;
-                AllMoney += order.PayPrice;
-                this.dgvOrdersInfo.Rows.Add(dataGridViewRow);
-            }
-
-            this.lblOrderMoney.Text = AllMoney.ToString();
-        }
-        /// <summary>
-        /// 下单
-        /// </summary>
-        /// <param name="goodsId">商品ID</param>
-        /// <param name="count">数量</param>
-        /// <returns></returns>
-        public bool AddGoodsToOrder(int goodsId, int count = 1)
-        {
-            var goodsInfo = DataManager.GoodsInfoBLL.GetEntityById(goodsId);
-            var maxCount = goodsInfo.SurplusCount;//库存量
-            bool isHaveSame = false;//下单表中有相同商品
-                                    //20180211154701
-            if (OrdersInfo.Count == 0)
-            {
-                OrderId = DateTime.Now.ToString("yyyyMMddHHmmss");
-            }
-            //创建一个订单号  一个列表仅有一个
-
-            //将数据添加到下单表            
-            foreach (OrderInfo item in OrdersInfo)
-            {
-                if (item.GoodsId == goodsId)
-                {
-                    if ((item.Count + count) <= maxCount)
-                    {
-                        item.Count += count;//
-                        item.PayPrice = (goodsInfo.PayPrice * (decimal)item.Count) - item.DisCount;
-                        //利润
-                        item.Profit = item.PayPrice - ((goodsInfo.PurPrice) * (decimal)item.Count);
-                        isHaveSame = true;
-                    }
-                    else
-                    {
-                        return false;//库存不够
-                    }
-                }
-            }
-            //订单表中 无此商品 ,
-            if (!isHaveSame)
-            {
-                OrderInfo orderInfo = new OrderInfo();
-                orderInfo.GoodsInfo = goodsInfo;
-                orderInfo.GoodsId = goodsId;
-                orderInfo.OrderId = OrderId;
-                orderInfo.CreateTime = DateTime.Now;
-                orderInfo.Count = count;
-                orderInfo.GoodsName = goodsInfo.GoodsName;
-                orderInfo.PayPrice = (goodsInfo.PayPrice * (decimal)orderInfo.Count) - orderInfo.DisCount;//收款
-                orderInfo.Profit = orderInfo.PayPrice - ((goodsInfo.PurPrice) * (decimal)orderInfo.Count);//利润
-                if (count > maxCount)
-                {
-                    return false;
-                }
-                OrdersInfo.Add(orderInfo);
-            }
-            return true;
-
-        }
-        /// <summary>
-        /// 订单表行标题
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgvOrdersInfo_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
-        {
-            //自动编号，与数据无关
-            Rectangle rectangle = new Rectangle(e.RowBounds.Location.X,
-               e.RowBounds.Location.Y,
-               this.dgvOrdersInfo.RowHeadersWidth - 4,
-               e.RowBounds.Height);
-            TextRenderer.DrawText(e.Graphics,
-                  (e.RowIndex + 1).ToString(),
-                  this.dgvOrdersInfo.RowHeadersDefaultCellStyle.Font,
-                   rectangle,
-                  this.dgvOrdersInfo.RowHeadersDefaultCellStyle.ForeColor,
-                   TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
-        }
-        /// <summary>
-        /// 下单操作
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnOrder_Click(object sender, EventArgs e)
-        {
-            if (OrdersInfo.Count < 1)
-            {
-                MessageBox.Show("订单表中无商品,请双击商品信息表中信息添加商品", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-            Frm_OrderInfoDIalog frm_Samll = Frm_OrderInfoDIalog.Create(this.lblOrderMoney.Text);
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
-            //下单成功,确认下单窗口已经关闭
-            if (OrdersInfo.Count == 0)
-            {
-                this.dgvOrdersInfo.Rows.Clear();//清除数据
-                this.lblOrderMoney.Text = "0.000";//待收款清0
-                OrderDisCount = (decimal)0.0;//折扣 
-                this.dgvTodayOrder.Tag = false;//信息需要重新加载
-                this.tspGoodsPageCount.Tag = "1";//状态栏需要加载
-                SearchLoadGoodsInfo();//商品信息页重新加载(保留操作员上次操作)
-                                      //开始收款 ----
-                Frm_Payment frm_Payment = Frm_Payment.Create(TempProfit);
-                frm_Payment.ShowDialog(this);
-                frm_Payment.Focus();
-                TempProfit = null;//临时利润表清空
-
-            }
-            else
-            {
-                //未完成下单操作
-            }
-
-
-        }
-        /// <summary>
-        /// 双击 订单表数量修改
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgvOrdersInfo_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                var dataRow = this.dgvOrdersInfo.SelectedRows[0];
-                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取商品Id
-                OrderInfo orderInfo = null;
-                int index = int.MaxValue;
-                for (int i = 0; i < OrdersInfo.Count; i++)
-                {
-                    var orderinfo = OrdersInfo[i];
-                    if (orderinfo.GoodsId == dataId)
-                    {
-                        index = i;//传值,用于确定 小定单的位置
-                        orderInfo = orderinfo;
-                        break;
-                    }
-                }
-                if (orderInfo == null)
-                {
-                    MessageBox.Show("发生错误,联系开发人员");
-                    return;
-                }
-                Frm_OrderInfo frm_Samll = Frm_OrderInfo.Create(index);
-                frm_Samll.ShowDialog(this);
-                frm_Samll.Focus();
-                LoadOrdersInfo();
-
-            }
-            catch (Exception)
-            {
-
-                ;
-            }
-
-        }
-        /// <summary>
-        /// 订单应收款修改
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnOrderEdit_Click(object sender, EventArgs e)
-        {
-            if (this.txtOrderMoney.Visible)
-            {
-                this.txtOrderMoney.Focus();
-                EditOrderMonry();
-            }
-            else
-            {
-                this.lblOrderMoney.Visible = false;
-                this.txtOrderMoney.Visible = true;
-                this.txtOrderMoney.Text = this.lblOrderMoney.Text;
-                this.txtOrderMoney.Focus();
-            }
-
-        }
-
-        /// <summary>
-        /// 订单修改完毕事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void txtOrderMoney_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                EditOrderMonry();
-            }
-        }
-        /// <summary>
-        /// 订单修改完毕
-        /// </summary>
-        public void EditOrderMonry()
-        {
-            this.txtOrderMoney.Visible = false;
-            var OldMoney = Convert.ToDecimal(this.lblOrderMoney.Text);
-            try
-            {
-                var newMoney = Convert.ToDecimal(this.txtOrderMoney.Text);
-                this.lblOrderMoney.Visible = true;
-                OrderDisCount = OldMoney - newMoney;//操作用修改应收款的折扣
-                this.lblOrderMoney.Text = this.txtOrderMoney.Text;
-                //
-                for (int i = 0; i < OrdersInfo.Count; i++)
-                {
-                    OrdersInfo[i].DisCount = Math.Round((OrderDisCount / OrdersInfo.Count));
-                    OrdersInfo[i].Remark = "该订单共已折扣" + Math.Round((OrderDisCount / OrdersInfo.Count), 4) + "元";
-                    OrdersInfo[i].PayPrice = OrdersInfo[i].PayPrice - Math.Round((OrderDisCount / OrdersInfo.Count), 4);
-                }
-            }
-            catch (Exception)
-            {
-
-                MessageBox.Show("操作失误,总价格为数字", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            }
-        }
-        /// <summary>
-        /// 清除小订单表
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void lblClearOrder_Click(object sender, EventArgs e)
-        {
-            this.dgvOrdersInfo.Rows.Clear();//清除数据
-            this.lblOrderMoney.Text = "0.000";//待收款清0
-            OrderDisCount = (decimal)0.0;//折扣 
-
-        }
-        #endregion
-
         #region 所有订单展示
         private static SearchModel allOrderSearchModel;
         /// <summary>
@@ -1780,7 +1611,9 @@ namespace CashierSystem
             Frm_NoReceiveMoney frm_NoReceiveMoney = Frm_NoReceiveMoney.Create(dataId);
             frm_NoReceiveMoney.ShowDialog(this);
             frm_NoReceiveMoney.Focus();
-
+            //刷新 待收账人信息 和状态栏
+            this.dgvNoReceiveMoney.Tag = false;
+            this.tspLblNoReceivePageCount.Tag = "1";
 
 
         }
@@ -1910,7 +1743,232 @@ namespace CashierSystem
 
         }
         #endregion
+        #region 商品单位表
+        /// <summary>
+        /// 单位表添加
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspAddUnitInfo_Click(object sender, EventArgs e)
+        {
 
+            List<string> tags = new List<string>();
+            Frm_UnitInfo frm_Samll = Frm_UnitInfo.Create(tags);
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+
+
+        }
+        /// <summary>
+        /// 单位表编辑
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspEditUnitInfo_Click(object sender, EventArgs e)
+        {
+            if (this.dgvUnitInfo.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvUnitInfo.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            UnitInfo unitInfo = DataManager.UnitInfoBLL.GetEntityById(dataId);
+            List<string> tags = new List<string>() { unitInfo.Id.ToString(), unitInfo.UnitName, unitInfo.Remark };
+            Frm_UnitInfo frm_Samll = Frm_UnitInfo.Create(tags);
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+        }
+        /// <summary>
+        /// 单位表删除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspDeleteUnitInfo_Click(object sender, EventArgs e)
+        {
+            if (this.dgvUnitInfo.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvUnitInfo.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            var result = MessageBox.Show("确认删除该商品单位?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+
+                var isDelete = DataManager.UnitInfoBLL.Delete(dataId);
+                if (!isDelete)
+                {
+                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                GetDgv(SelectIndex);//刷新
+            }
+            else
+            {
+                ;
+            }
+        }
+        /// <summary>
+        /// 单位表刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspReLoadUnitInfo_Click(object sender, EventArgs e)
+        {
+            GetDgv(SelectIndex);
+        }
+
+
+        #endregion
+        #region 商品类别表
+
+        private void tspAddSortinfo_Click(object sender, EventArgs e)
+        {
+
+            Frm_SortInfo frm_Samll = Frm_SortInfo.Create();
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+        }
+
+        private void tspEidtSortInfo_Click(object sender, EventArgs e)
+        {
+            if (this.dgvSortInfo.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvSortInfo.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            SortInfo sortInfo = DataManager.SortInfoBLL.GetEntityById(dataId);
+            List<string> tags = new List<string>() { sortInfo.Id.ToString(), sortInfo.SortName, sortInfo.Remark };
+            Frm_SortInfo frm_Samll = Frm_SortInfo.Create(tags);
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+        }
+
+        private void tspDeleteSortInfo_Click(object sender, EventArgs e)
+        {
+            if (this.dgvSortInfo.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvSortInfo.SelectedRows[0];
+
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+
+                var isDelete = DataManager.SortInfoBLL.Delete(dataId);
+                if (!isDelete)
+                {
+                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                GetDgv(SelectIndex);//刷新
+            }
+            else
+            {
+                ;
+            }
+        }
+
+        private void tspReLoadSortInfo_Click(object sender, EventArgs e)
+        {
+            GetDgv(SelectIndex);//刷新
+        }
+        #endregion        
+        #region 供货信息表
+        private void tspAddWholeSalerInfo_Click(object sender, EventArgs e)
+        {
+
+            Frm_WholeSalerInfo frm_Samll = Frm_WholeSalerInfo.Create();
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+        }
+
+        private void tspEditWholeSalerInfo_Click(object sender, EventArgs e)
+        {
+            if (this.dgvWholeSalerInfo.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvWholeSalerInfo.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            WholeSalerInfo wholeSalerInfo = DataManager.WholeSalerInfoBLL.GetEntityById(dataId);
+            List<string> tags = new List<string>() { wholeSalerInfo.Id.ToString(), wholeSalerInfo.SupName, wholeSalerInfo.Management, wholeSalerInfo.TelePhone, wholeSalerInfo.AddressInfo, wholeSalerInfo.Remark };
+            Frm_WholeSalerInfo frm_Samll = Frm_WholeSalerInfo.Create(tags);
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+        }
+
+        private void tspDeleteWholeSalerInfo_Click(object sender, EventArgs e)
+        {
+            if (this.dgvWholeSalerInfo.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvUnitInfo.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+
+                var isDelete = DataManager.WholeSalerInfoBLL.Delete(dataId);
+                if (!isDelete)
+                {
+                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                GetDgv(SelectIndex);//刷新
+            }
+            else
+            {
+                ;
+            }
+        }
+
+        private void txtReLoadWholeSalerInfo_Click(object sender, EventArgs e)
+        {
+            GetDgv(SelectIndex);
+        }
+        #endregion
+        #region 管理员信息表
+        private void tspAddUserInfo_Click(object sender, EventArgs e)
+        {
+            Frm_UserInfo frm_Samll = Frm_UserInfo.Create();
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+        }
+
+        private void tspEditUserInfo_Click(object sender, EventArgs e)
+        {
+            var dataId = LoginId;
+            if (dataId==int.MaxValue)
+            {
+                return;
+            }
+            UserInfo userInfo = DataManager.UserInfoBLL.GetEntityById(dataId);
+            List<string> tags = new List<string>() { userInfo.Id.ToString(), userInfo.UserName, userInfo.Remark };
+            Frm_UserInfo frm_Samll = Frm_UserInfo.Create(tags);
+            frm_Samll.ShowDialog(this);
+            frm_Samll.Focus();
+        }
+
+        private void tspDeleteUserInfo_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("非管理员无权限删除");
+
+        }
+
+        private void tspReLoadUserInfo_Click(object sender, EventArgs e)
+        {
+            GetDgv(SelectIndex);
+        }
+        #endregion
+        
 
         /// <summary>
         /// 获取单位表
@@ -1978,12 +2036,7 @@ namespace CashierSystem
             MessageBox.Show(messAge, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-        private void lblSettingWeather_Click(object sender, EventArgs e)
-        {
-            if (isPingSuccess)
-            {
-
-            }
-        }
+       
+        
     }
 }

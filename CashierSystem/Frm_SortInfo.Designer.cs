@@ -130,6 +130,8 @@
             this.Controls.Add(this.lblThrid);
             this.Controls.Add(this.lblFirst);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Frm_SortInfo";
             this.Text = "商品类别";
             this.Load += new System.EventHandler(this.Frm_SortInfo_Load);

@@ -15,7 +15,7 @@ namespace CashierSystem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Huang_System());
+            Application.Run(new Huang_System(5));
         }
     }
 }

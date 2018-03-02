@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frm_Payment));
             this.panel1 = new System.Windows.Forms.Panel();
             this.calc = new System.Windows.Forms.Label();
             this.btnUnPay = new System.Windows.Forms.Button();
@@ -140,12 +139,12 @@
             // 
             this.picWeiXin.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.picWeiXin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picWeiXin.Image = ((System.Drawing.Image)(resources.GetObject("picWeiXin.Image")));
             this.picWeiXin.Location = new System.Drawing.Point(0, 0);
             this.picWeiXin.Name = "picWeiXin";
             this.picWeiXin.Size = new System.Drawing.Size(254, 393);
             this.picWeiXin.TabIndex = 2;
             this.picWeiXin.TabStop = false;
+            this.picWeiXin.DoubleClick += new System.EventHandler(this.picWeiXin_DoubleClick);
             // 
             // panel4
             // 
@@ -178,13 +177,14 @@
             // 
             // picZhiFuBao
             // 
+            this.picZhiFuBao.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.picZhiFuBao.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picZhiFuBao.Image = ((System.Drawing.Image)(resources.GetObject("picZhiFuBao.Image")));
             this.picZhiFuBao.Location = new System.Drawing.Point(0, 0);
             this.picZhiFuBao.Name = "picZhiFuBao";
             this.picZhiFuBao.Size = new System.Drawing.Size(254, 393);
             this.picZhiFuBao.TabIndex = 1;
             this.picZhiFuBao.TabStop = false;
+            this.picZhiFuBao.DoubleClick += new System.EventHandler(this.picZhiFuBao_DoubleClick);
             // 
             // panel5
             // 

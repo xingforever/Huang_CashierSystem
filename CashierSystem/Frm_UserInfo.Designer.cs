@@ -164,7 +164,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblFirst);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Frm_UserInfo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "用户";
             this.Load += new System.EventHandler(this.Frm_UserInfo_Load);
             this.ResumeLayout(false);
