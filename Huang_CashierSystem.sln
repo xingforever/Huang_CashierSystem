@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common_API", "Common_Api\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonAPI3.5", "CommonAPI3.5\CommonAPI3.5.csproj", "{9B91CD97-F61C-4E50-BA55-A02321EAF17B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "theTest", "theTest\theTest.csproj", "{62C0E962-332B-4098-A19C-FA5B3A9FDD79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,18 @@ Global
 		{9B91CD97-F61C-4E50-BA55-A02321EAF17B}.Release|x64.Build.0 = Release|Any CPU
 		{9B91CD97-F61C-4E50-BA55-A02321EAF17B}.Release|x86.ActiveCfg = Release|Any CPU
 		{9B91CD97-F61C-4E50-BA55-A02321EAF17B}.Release|x86.Build.0 = Release|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Debug|x64.Build.0 = Debug|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Debug|x86.Build.0 = Debug|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Release|x64.ActiveCfg = Release|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Release|x64.Build.0 = Release|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Release|x86.ActiveCfg = Release|Any CPU
+		{62C0E962-332B-4098-A19C-FA5B3A9FDD79}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

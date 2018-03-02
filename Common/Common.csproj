@@ -42,12 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonHelper.cs" />
-    <Compile Include="ConvertJson.cs" />
     <Compile Include="IsConnectionNET.cs" />
     <Compile Include="Md5Helper.cs" />
-    <Compile Include="PinyinHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RunCmd.cs" />
+    <Compile Include="XMLHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

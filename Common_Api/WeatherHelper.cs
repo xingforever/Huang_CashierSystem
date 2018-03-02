@@ -21,6 +21,11 @@ namespace Common_API
             var p = weather.getSupportProvince();
             return p;
         }
+        public static string[] GetSupportCity(string province)
+        {
+            var p = weather.getSupportCity(province);
+            return p;
+        }
 
         public  static MyWeather  GetWeather(string province="江西",string city="赣州" )
         {

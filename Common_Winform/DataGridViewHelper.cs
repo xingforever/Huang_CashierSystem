@@ -261,7 +261,7 @@ namespace Common_Winform
 
        
 
-        private static void ChangeColor(DataGridView dataGridView)
+        public  static void ChangeColor(DataGridView dataGridView)
         {
             for (int i = 0; i < dataGridView.RowCount; i++)
             {

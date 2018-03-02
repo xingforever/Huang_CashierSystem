@@ -230,11 +230,11 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtSupName);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Frm_WholeSalerInfo";
-            this.Text = "Frm_WholeSalerInfo";
+            this.Text = "供应商";
             this.Load += new System.EventHandler(this.Frm_WholeSalerInfo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -129,12 +129,12 @@
             this.Controls.Add(this.txtFirst);
             this.Controls.Add(this.lblThrid);
             this.Controls.Add(this.lblFirst);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Frm_UnitInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "UnitInfo";
+            this.Text = "商品单位";
             this.Load += new System.EventHandler(this.Frm_UnitInfo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
