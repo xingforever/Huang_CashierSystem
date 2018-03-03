@@ -33,9 +33,13 @@
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lblAbout = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.txtTitle = new System.Windows.Forms.TextBox();
+            this.lblTips = new System.Windows.Forms.Label();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtPwd
@@ -60,7 +64,7 @@
             // btnLogin
             // 
             this.btnLogin.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnLogin.Location = new System.Drawing.Point(83, 268);
+            this.btnLogin.Location = new System.Drawing.Point(65, 238);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(77, 32);
             this.btnLogin.TabIndex = 12;
@@ -71,32 +75,23 @@
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnCancel.Location = new System.Drawing.Point(270, 268);
+            this.btnCancel.Location = new System.Drawing.Point(252, 238);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 32);
             this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "重置";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // lblAbout
             // 
             this.lblAbout.AutoSize = true;
-            this.lblAbout.Location = new System.Drawing.Point(397, 313);
+            this.lblAbout.Location = new System.Drawing.Point(379, 283);
             this.lblAbout.Name = "lblAbout";
             this.lblAbout.Size = new System.Drawing.Size(29, 12);
             this.lblAbout.TabIndex = 13;
             this.lblAbout.Text = "关于";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.label2.Font = new System.Drawing.Font("宋体", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(149, 35);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(143, 33);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "收银系统";
+            this.lblAbout.Click += new System.EventHandler(this.lblAbout_Click);
             // 
             // label3
             // 
@@ -118,14 +113,57 @@
             this.label4.TabIndex = 15;
             this.label4.Text = "密码";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.txtTitle);
+            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(430, 64);
+            this.panel1.TabIndex = 16;
+            // 
+            // panel2
+            // 
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(430, 17);
+            this.panel2.TabIndex = 16;
+            // 
+            // txtTitle
+            // 
+            this.txtTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtTitle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtTitle.Font = new System.Drawing.Font("宋体", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtTitle.Location = new System.Drawing.Point(0, 17);
+            this.txtTitle.Name = "txtTitle";
+            this.txtTitle.ReadOnly = true;
+            this.txtTitle.Size = new System.Drawing.Size(430, 37);
+            this.txtTitle.TabIndex = 17;
+            this.txtTitle.Text = "收银系统";
+            this.txtTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // lblTips
+            // 
+            this.lblTips.AutoSize = true;
+            this.lblTips.ForeColor = System.Drawing.Color.Red;
+            this.lblTips.Location = new System.Drawing.Point(141, 288);
+            this.lblTips.Name = "lblTips";
+            this.lblTips.Size = new System.Drawing.Size(101, 12);
+            this.lblTips.TabIndex = 17;
+            this.lblTips.Text = "用户名或密码错误";
+            this.lblTips.Visible = false;
+            // 
             // Frm_Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(453, 334);
+            this.ClientSize = new System.Drawing.Size(430, 309);
+            this.Controls.Add(this.lblTips);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.lblAbout);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnLogin);
@@ -138,6 +176,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "登录";
             this.Load += new System.EventHandler(this.Frm_Login_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -150,8 +190,11 @@
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label lblAbout;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox txtTitle;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lblTips;
     }
 }

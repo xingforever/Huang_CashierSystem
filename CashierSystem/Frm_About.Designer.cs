@@ -51,13 +51,13 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(427, 117);
             this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "1, 软件开发者具有该软件所有权\r\n\r\n2.该软件需要进行机器码注册,体验用户有100次使用权\r\n账号密码为:均为admin\r\n\r\n3.有任何问题,可以联系开发者" +
-    ":QQ:2945873057";
+            this.textBox1.Text = "1, 软件开发者具有该软件所有权\r\n\r\n2.该软件 默认账号密码为:均为admin\r\n\r\n3.有任何问题,可以联系开发者:QQ:2945873057";
             // 
             // Frm_About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(504, 214);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);

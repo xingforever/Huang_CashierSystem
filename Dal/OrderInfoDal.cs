@@ -38,7 +38,7 @@ namespace Dal
             var endTime = searchModel.EndTime;
             DateTime dateTime = DateTime.Now;
             string timeStart = (dateTime-new TimeSpan(7,0,0,0,0)).ToString("yyyy-MM-dd 00:00:00");            
-            string timeEnd = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
+            string timeEnd = (dateTime + new TimeSpan(1, 0, 0, 0, 0)).ToString("yyyy-MM-dd HH:mm:ss");
             //操作员选择时间端
             if (!startTime.Equals(new DateTime()))
             {

@@ -54,6 +54,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.panel1.Controls.Add(this.calc);
             this.panel1.Controls.Add(this.btnUnPay);
             this.panel1.Controls.Add(this.btnPay);

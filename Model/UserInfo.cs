@@ -85,6 +85,7 @@ namespace Model
                 userInfo.Id = Convert.ToInt32(dr["ID"]);
                 userInfo.UserName = Convert.ToString(dr["UserName"]);
                 userInfo.Remark = Convert.ToString(dr["Remark"]);
+                userInfo.PassWord=Convert.ToString(dr["PassWord"]);
                 Entitys.Add(userInfo);
             }
             

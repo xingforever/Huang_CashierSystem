@@ -231,10 +231,23 @@ namespace CashierSystem
         public void LoadWeatherAndAlmanac()
         {
             //如果联网成功
+            //当电脑设置防火墙之类 可能无法访问
             if (isPingSuccess)
             {
-                LoadAlmanac();
-                LoadWeather();
+               var isSuccess= LoadAlmanac();
+                //因为天气加载巨慢, 所以采用黄历成功才加载天气
+                if (isSuccess)
+                {
+                    LoadWeather();
+                }
+                else
+                {
+                    lblweathercity.Text = Setting.City;
+                    lblWeatherTime.Text = DateTime.Today.ToShortDateString();
+                    lblWeatherTemperature.Text = "网络连接失败,";
+                    lblWeatherWind.Text = "天气无法正常显示";
+                }
+                isPingSuccess = false;
             }
             else
             {
@@ -243,14 +256,14 @@ namespace CashierSystem
                 lblAlmamcNongli.Text = "黄历无法正常显示";
                 lblAlmamcJi.Text = "";
                 lblAlmamcYi.Text = "";
-               
+                isPingSuccess = false;
 
             }
         }
         /// <summary>
         /// 加载农历
         /// </summary>
-        public void LoadAlmanac()
+        public bool  LoadAlmanac()
         {
             var myAlmanac = AlmanacApiHelper.GetAlmanac();
             if (myAlmanac.IsGetSuccess)
@@ -263,7 +276,7 @@ namespace CashierSystem
                 lblAlmamcDate = LabelHelper.GetAutoSizeLabel(lblAlmamcDate, myAlmanac.date);
                 lblAlmamcJi = LabelHelper.GetAutoSizeLabel(lblAlmamcJi, myAlmanac.ji);
                 lblAlmamcYi = LabelHelper.GetAutoSizeLabel(lblAlmamcYi, myAlmanac.yi);
-
+                return true;
             }
             else
             {
@@ -271,6 +284,7 @@ namespace CashierSystem
                 lblAlmamcNongli.Text = "黄历无法正常显示";
                 lblAlmamcJi.Text = "";
                 lblAlmamcYi.Text = "";
+                return false;
             }
         }
         /// <summary>
@@ -289,10 +303,16 @@ namespace CashierSystem
             }
             else
             {
+                lblweathercity.Text = Setting.City;
                 lblWeatherTime.Text = DateTime.Today.ToShortDateString();
                 lblWeatherTemperature.Text = "网络连接失败,";
                 lblWeatherWind.Text = "天气无法正常显示";
             }
+        }
+        private void lblReloadWeather_Click(object sender, EventArgs e)
+        {
+            isPingSuccess = IsConnectionNET.IsConnect();
+            LoadWeatherAndAlmanac();
         }
         /// <summary>
         /// 地区天气设置
@@ -367,6 +387,7 @@ namespace CashierSystem
                 case 4:
                     if (!(bool)this.dgvProfitsInfo.Tag)
                     {
+                        searchModel.PageCount = Setting.ProfitPageCount;
                         dataTable = DataManager.ProfitsInfoBLL.GetDataTablebyPammer(searchModel);
                         this.dgvProfitsInfo = dataGridViewHelper.FillData(this.dgvProfitsInfo, dataTable, false);
                         //可以排序 (排序后不能改颜色)
@@ -994,11 +1015,15 @@ namespace CashierSystem
             frm_GoodsInfo.ShowDialog();
             frm_GoodsInfo.Focus();
             //刷新商品管理页信息
-            this.dgvGoodSInfoManager.Tag = false;
-            tspLblGoodsManagerCount.Tag = "-1";
-            SearchGoodsManager();
-            GetDgv(SelectIndex);//刷新  这里暂时只能到第一页
-            LoadGoodsInfoManager();//重新初始化 右边边框
+            if ((Boolean)frm_GoodsInfo.Tag==true)
+            {
+                this.dgvGoodSInfoManager.Tag = false;
+                tspLblGoodsManagerCount.Tag = "1";
+                SearchGoodsManager();
+                GetDgv(SelectIndex);//刷新  这里暂时只能到第一页
+                LoadGoodsInfoManager();//重新初始化 右边边框
+            }
+          
         }
         /// <summary>
         /// 编辑数据
@@ -1017,10 +1042,14 @@ namespace CashierSystem
             Frm_GoodsInfo frm_GoodsInfo = Frm_GoodsInfo.Create(dataId);
             frm_GoodsInfo.ShowDialog();
             frm_GoodsInfo.Focus();
-            this.dgvGoodSInfoManager.Tag = false;
-            tspLblGoodsManagerCount.Tag = "-1";
-            SearchGoodsManager();
-            GetDgv(SelectIndex);//刷新
+            if ((Boolean)frm_GoodsInfo.Tag == true)
+            {
+                this.dgvGoodSInfoManager.Tag = false;
+                tspLblGoodsManagerCount.Tag = "1";
+                SearchGoodsManager();
+                GetDgv(SelectIndex);//刷新  这里暂时只能到第一页              
+            }
+          
         }
         /// <summary>
         /// 移除数据
@@ -1044,7 +1073,7 @@ namespace CashierSystem
                 {
                     MessageBox.Show("删除成功!", "删除", MessageBoxButtons.OK, MessageBoxIcon.None);
                     this.dgvGoodSInfoManager.Tag = false;
-                    tspLblGoodsManagerCount.Tag = "-1";
+                    tspLblGoodsManagerCount.Tag = "1";
                     SearchGoodsManager();
                     GetDgv(SelectIndex);//刷新
                     LoadGoodsInfoManager();//重新初始化 右边边框
@@ -1063,7 +1092,7 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspGoodsInfo_ReLoad_Click(object sender, EventArgs e)
         {
-            tspLblGoodsManagerCount.Tag = "-1";
+            tspLblGoodsManagerCount.Tag = "1";
             this.dgvGoodSInfoManager.Tag = false;
             SearchGoodsManager();//刷新
         }
@@ -1125,7 +1154,7 @@ namespace CashierSystem
         }
         private void btnGIManagerSearch_Click(object sender, EventArgs e)
         {
-            tspLblGoodsManagerCount.Tag = "-1";//刷新状态栏           
+            tspLblGoodsManagerCount.Tag = "1";//刷新状态栏           
             SearchGoodsManager();
         }
         /// <summary>
@@ -1246,9 +1275,10 @@ namespace CashierSystem
                 searchModel.PageCount = Setting.AllOrderPageCount;
                 searchModel.StartIndex = startIndex;//开始行
                 searchModel.dic = new Dictionary<string, string>();
-                var StartTime = dateAllOrderStartTime.Value;
-                var EndTime = dateAllOrderEndTime.Value;
-                if (StartTime > EndTime)
+                var startTime = dateAllOrderStartTime.Value;
+                var endTime = dateAllOrderEndTime.Value;
+                endTime = endTime + new TimeSpan(1, 0, 0, 0);//多加一天
+                if (startTime > endTime)
                 {
                     InputWarngs("输入时间有误!!!");
                     return;
@@ -1258,8 +1288,8 @@ namespace CashierSystem
                 {
                     searchModel.dic.Add("AllOrderSearchGoodsName", goodsName);
                 }
-                searchModel.StartTime = StartTime;
-                searchModel.EndTime = EndTime;
+                searchModel.StartTime = startTime;
+                searchModel.EndTime = endTime;
             }
             this.dgvAllOrder.Tag = false;//false 表示需要更新
             GetDgv(3, searchModel);
@@ -1384,6 +1414,7 @@ namespace CashierSystem
                 searchModel.dic = new Dictionary<string, string>();
                 var startTime = dateProfitStartTime.Value;
                 var endTime = dateProfitEndTime.Value;
+                endTime = endTime + new TimeSpan(1, 0, 0, 0);//多加一天
                 if (startTime > endTime)
                 {
                     InputWarngs("输入时间有误!!!");
@@ -1829,6 +1860,13 @@ namespace CashierSystem
             Frm_SortInfo frm_Samll = Frm_SortInfo.Create();
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
+            if ((Boolean)frm_Samll.Tag==true)
+            {
+                LoadGoodsInfoManager();
+                GetDgv(SelectIndex);//刷新
+            }
+          
+
         }
 
         private void tspEidtSortInfo_Click(object sender, EventArgs e)
@@ -1916,7 +1954,6 @@ namespace CashierSystem
             var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-
                 var isDelete = DataManager.WholeSalerInfoBLL.Delete(dataId);
                 if (!isDelete)
                 {
@@ -1959,7 +1996,32 @@ namespace CashierSystem
 
         private void tspDeleteUserInfo_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("非管理员无权限删除");
+            if (LoginId!=1)
+            {
+                MessageBox.Show("非管理员无权限删除");
+                return;
+            }
+            if (this.dgvUnitInfo.SelectedRows.Count < 0)
+            {
+                UnSelectedTips();
+                return;
+            }
+            var dataRow = this.dgvUnitInfo.SelectedRows[0];
+            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+            var result = MessageBox.Show("确认删除用户?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                var isDelete = DataManager.UserInfoBLL.Delete(dataId);
+                if (!isDelete)
+                {
+                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                GetDgv(SelectIndex);//刷新
+            }
+            else
+            {
+                ;
+            }
 
         }
 
@@ -2036,7 +2098,10 @@ namespace CashierSystem
             MessageBox.Show(messAge, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
-       
-        
+        private void Huang_System_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //当前应用程序退出,不仅仅关闭当前窗体
+            Application.Exit();
+        }
     }
 }

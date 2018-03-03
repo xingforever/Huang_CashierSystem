@@ -43,7 +43,7 @@ namespace CashierSystem
 
         public void InIt()
         {
-
+            this.Tag = false;
             entityId = int.MaxValue;
             txtFirst.Text = "";
             txtRmark.Text = "";
@@ -96,6 +96,8 @@ namespace CashierSystem
                 {
                     MessageBox.Show("操作失败!");
                 }
+                this.Tag = true;
+
                 this.Close();
 
 
@@ -111,6 +113,7 @@ namespace CashierSystem
                 {
                     MessageBox.Show("操作失败!");
                 }
+                this.Tag = true;
                 this.Close();
 
 

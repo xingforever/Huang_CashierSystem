@@ -29,7 +29,7 @@ namespace Dal
             var dic = searchModel.dic;
             DateTime dateTime = DateTime.Now;
             string timeStart = (dateTime - new TimeSpan(7, 0, 0, 0, 0)).ToString("yyyy-MM-dd 00:00:00");
-            string timeEnd = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
+            string timeEnd = (dateTime+ new TimeSpan(1, 0, 0, 0, 0)).ToString("yyyy-MM-dd 00:00:00");
             //操作员选择时间端
             if (!startTime.Equals(new DateTime()))
             {

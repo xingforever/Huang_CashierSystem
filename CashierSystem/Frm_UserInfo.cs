@@ -112,8 +112,7 @@ namespace CashierSystem
             //添加时候 默认 id 为maxValue
             if (entityId == int.MaxValue)
             {
-                //添加
-                //添加
+                //添加              
                 var name = txtUserName.Text.Trim();
                 if (!IsContainsSpital(name))
                 {
@@ -133,6 +132,7 @@ namespace CashierSystem
                     if (!isSuccess)
                     {
                         MessageBox.Show("操作失败!");
+                        return;
                     }
                     else
                     {
@@ -150,12 +150,21 @@ namespace CashierSystem
             {
                 UserInfo userInfo = new UserInfo();
                 var name = txtUserName.Text.Trim();
-            
+                //检查名称是否含有特殊字符
                 if (!IsContainsSpital(name))
                 {
                     lbltips.Visible = true;
                     lbltips.ForeColor = Color.Red;
                     lbltips.Text = "用户名不能使用特殊字符,修改失败";
+                    return;
+                }
+                //检查修改后名称是否符合要求
+                var isExist = DataManager.UserInfoBLL.IsExistName(name);
+                if (isExist)
+                {
+                    lbltips.Visible = true;
+                    lbltips.ForeColor = Color.Red;
+                    lbltips.Text = "存在相同用户名,请更换用户名";
                     return;
                 }
                 userInfo.UserName = name;
@@ -165,9 +174,11 @@ namespace CashierSystem
                 }
                 userInfo.Remark = txtRmark.Text.Trim();
                 userInfo.Id = entityId;
-                var isSuccess = DataManager.UserInfoBLL.Add(userInfo); if (!isSuccess)
+                var isSuccess = DataManager.UserInfoBLL.Edit(userInfo);
+                if (!isSuccess)
                 {
                     MessageBox.Show("操作失败!");
+                    return;
                 }
                 this.Close();
             }
