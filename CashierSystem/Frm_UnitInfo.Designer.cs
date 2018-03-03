@@ -60,9 +60,10 @@
             // 
             // txtFirst
             // 
+            this.txtFirst.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtFirst.Location = new System.Drawing.Point(138, 42);
             this.txtFirst.Name = "txtFirst";
-            this.txtFirst.Size = new System.Drawing.Size(199, 21);
+            this.txtFirst.Size = new System.Drawing.Size(199, 26);
             this.txtFirst.TabIndex = 2;
             // 
             // txtRmark
@@ -76,7 +77,7 @@
             // btnEnter
             // 
             this.btnEnter.BackColor = System.Drawing.Color.Transparent;
-            this.btnEnter.Location = new System.Drawing.Point(87, 201);
+            this.btnEnter.Location = new System.Drawing.Point(89, 189);
             this.btnEnter.Name = "btnEnter";
             this.btnEnter.Size = new System.Drawing.Size(86, 35);
             this.btnEnter.TabIndex = 3;
@@ -86,7 +87,7 @@
             // 
             // btnEsc
             // 
-            this.btnEsc.Location = new System.Drawing.Point(242, 201);
+            this.btnEsc.Location = new System.Drawing.Point(251, 189);
             this.btnEsc.Name = "btnEsc";
             this.btnEsc.Size = new System.Drawing.Size(86, 35);
             this.btnEsc.TabIndex = 3;
@@ -120,7 +121,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(417, 259);
+            this.ClientSize = new System.Drawing.Size(417, 243);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbltips);
             this.Controls.Add(this.btnEsc);

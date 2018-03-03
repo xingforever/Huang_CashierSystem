@@ -167,6 +167,7 @@
             this.lbltips.Size = new System.Drawing.Size(41, 12);
             this.lbltips.TabIndex = 9;
             this.lbltips.Text = "label6";
+            this.lbltips.Visible = false;
             // 
             // label6
             // 

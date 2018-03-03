@@ -112,10 +112,9 @@ namespace CashierSystem
                     goodsInfo.Id = entityId;
                     var isSuccess = DataManager.GoodsInfoBLL.Edit(goodsInfo);
                     if (isSuccess)
-                    {
+                    {                      
                         MessageBox.Show("修改商品信息成功!", "通知", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Clear();
-                        this.Tag = true;
+                        Clear();                       
                         this.Close();
                     }
                 }
@@ -131,6 +130,7 @@ namespace CashierSystem
                     var isSuccess = DataManager.GoodsInfoBLL.Add(goodsInfo);
                     if (isSuccess)
                     {
+                        this.Tag = true;
                         MessageBox.Show("添加商品信息成功!", "通知", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Clear();
                         this.Close();

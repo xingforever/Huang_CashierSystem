@@ -54,7 +54,7 @@
             // lbltips
             // 
             this.lbltips.AutoSize = true;
-            this.lbltips.Location = new System.Drawing.Point(218, 190);
+            this.lbltips.Location = new System.Drawing.Point(198, 176);
             this.lbltips.Name = "lbltips";
             this.lbltips.Size = new System.Drawing.Size(29, 12);
             this.lbltips.TabIndex = 19;
@@ -63,7 +63,7 @@
             // 
             // btnEsc
             // 
-            this.btnEsc.Location = new System.Drawing.Point(280, 216);
+            this.btnEsc.Location = new System.Drawing.Point(280, 201);
             this.btnEsc.Name = "btnEsc";
             this.btnEsc.Size = new System.Drawing.Size(86, 35);
             this.btnEsc.TabIndex = 17;
@@ -74,7 +74,7 @@
             // btnEnter
             // 
             this.btnEnter.BackColor = System.Drawing.Color.Transparent;
-            this.btnEnter.Location = new System.Drawing.Point(98, 216);
+            this.btnEnter.Location = new System.Drawing.Point(100, 201);
             this.btnEnter.Name = "btnEnter";
             this.btnEnter.Size = new System.Drawing.Size(86, 35);
             this.btnEnter.TabIndex = 18;
@@ -152,7 +152,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(421, 263);
+            this.ClientSize = new System.Drawing.Size(421, 250);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbltips);

@@ -51,7 +51,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(427, 117);
             this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "1, 软件开发者具有该软件所有权\r\n\r\n2.该软件 默认账号密码为:均为admin\r\n\r\n3.有任何问题,可以联系开发者:QQ:2945873057";
+            this.textBox1.Text = "1, 软件开发者具有该软件所有权\r\n\r\n2.该软件 默认账号密码为:均为Admins\r\n\r\n3.有任何问题,可以联系开发者:QQ:2945873057";
             // 
             // Frm_About
             // 

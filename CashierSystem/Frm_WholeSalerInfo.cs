@@ -45,7 +45,7 @@ namespace CashierSystem
 
         public void InIt()
         {
-
+            this.Tag = false;
             entityId = int.MaxValue;
             if (_Tags != null)
             {
@@ -101,6 +101,7 @@ namespace CashierSystem
                 {
                     MessageBox.Show("操作失败!");
                 }
+                this.Tag = true;
                 this.Close();
                 
             }

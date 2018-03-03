@@ -1014,9 +1014,11 @@ namespace CashierSystem
             Frm_GoodsInfo frm_GoodsInfo = Frm_GoodsInfo.Create();
             frm_GoodsInfo.ShowDialog();
             frm_GoodsInfo.Focus();
-            //刷新商品管理页信息
+            //刷新商品管理页信息,商品页
             if ((Boolean)frm_GoodsInfo.Tag==true)
             {
+                this.dgvGoodsInfo.Tag = false;
+                tspLblGoodsPageCount.Tag = "1";
                 this.dgvGoodSInfoManager.Tag = false;
                 tspLblGoodsManagerCount.Tag = "1";
                 SearchGoodsManager();
@@ -1075,7 +1077,9 @@ namespace CashierSystem
                     this.dgvGoodSInfoManager.Tag = false;
                     tspLblGoodsManagerCount.Tag = "1";
                     SearchGoodsManager();
-                    GetDgv(SelectIndex);//刷新
+                    this.dgvGoodsInfo.Tag = false;//商品展示页
+                    tspLblGoodsPageCount.Tag = "1";                 
+                    GetDgv(SelectIndex);//刷新  这里暂时只能到第一页
                     LoadGoodsInfoManager();//重新初始化 右边边框
                 }
                 else
@@ -1787,6 +1791,11 @@ namespace CashierSystem
             Frm_UnitInfo frm_Samll = Frm_UnitInfo.Create(tags);
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
+            if ((Boolean)frm_Samll.Tag==true)
+            {
+                LoadGoodsInfoManager();
+                GetDgv(SelectIndex);
+            }
 
 
         }
@@ -1833,6 +1842,7 @@ namespace CashierSystem
                 {
                     MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                LoadGoodsInfoManager();
                 GetDgv(SelectIndex);//刷新
             }
             else
@@ -1853,7 +1863,11 @@ namespace CashierSystem
 
         #endregion
         #region 商品类别表
-
+        /// <summary>
+        /// 商品类别表 添加
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspAddSortinfo_Click(object sender, EventArgs e)
         {
 
@@ -1868,7 +1882,11 @@ namespace CashierSystem
           
 
         }
-
+        /// <summary>
+        /// 商品类别表 编辑
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspEidtSortInfo_Click(object sender, EventArgs e)
         {
             if (this.dgvSortInfo.SelectedRows.Count < 0)
@@ -1884,7 +1902,11 @@ namespace CashierSystem
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
         }
-
+        /// <summary>
+        /// 商品类别表 删除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspDeleteSortInfo_Click(object sender, EventArgs e)
         {
             if (this.dgvSortInfo.SelectedRows.Count < 0)
@@ -1893,7 +1915,6 @@ namespace CashierSystem
                 return;
             }
             var dataRow = this.dgvSortInfo.SelectedRows[0];
-
             var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
             var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
@@ -1904,6 +1925,7 @@ namespace CashierSystem
                 {
                     MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                LoadGoodsInfoManager();
                 GetDgv(SelectIndex);//刷新
             }
             else
@@ -1911,21 +1933,39 @@ namespace CashierSystem
                 ;
             }
         }
-
+        /// <summary>
+        /// 商品类别表 删除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspReLoadSortInfo_Click(object sender, EventArgs e)
         {
             GetDgv(SelectIndex);//刷新
         }
         #endregion        
         #region 供货信息表
+        /// <summary>
+        /// 供货信息表 添加
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspAddWholeSalerInfo_Click(object sender, EventArgs e)
         {
 
             Frm_WholeSalerInfo frm_Samll = Frm_WholeSalerInfo.Create();
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
+            if ((Boolean)frm_Samll.Tag==true)
+            {
+                LoadGoodsInfoManager();
+                GetDgv(SelectIndex);//刷新
+            }
         }
-
+        /// <summary>
+        /// 供货信息表 编辑
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspEditWholeSalerInfo_Click(object sender, EventArgs e)
         {
             if (this.dgvWholeSalerInfo.SelectedRows.Count < 0)
@@ -1940,8 +1980,13 @@ namespace CashierSystem
             Frm_WholeSalerInfo frm_Samll = Frm_WholeSalerInfo.Create(tags);
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
+           
         }
-
+        /// <summary>
+        /// 供货信息表 删除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspDeleteWholeSalerInfo_Click(object sender, EventArgs e)
         {
             if (this.dgvWholeSalerInfo.SelectedRows.Count < 0)
@@ -1958,28 +2003,42 @@ namespace CashierSystem
                 if (!isDelete)
                 {
                     MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                GetDgv(SelectIndex);//刷新
+                }               
+               LoadGoodsInfoManager();
+               GetDgv(SelectIndex);//刷新
             }
             else
             {
                 ;
             }
         }
-
+        /// <summary>
+        /// 供货信息表 刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtReLoadWholeSalerInfo_Click(object sender, EventArgs e)
         {
             GetDgv(SelectIndex);
         }
         #endregion
         #region 管理员信息表
+        /// <summary>
+        /// 管理员信息表 添加
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspAddUserInfo_Click(object sender, EventArgs e)
         {
             Frm_UserInfo frm_Samll = Frm_UserInfo.Create();
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
         }
-
+        /// <summary>
+        /// 管理员信息表 编辑
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspEditUserInfo_Click(object sender, EventArgs e)
         {
             var dataId = LoginId;
@@ -1993,7 +2052,11 @@ namespace CashierSystem
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
         }
-
+        /// <summary>
+        /// 管理员信息表 删除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspDeleteUserInfo_Click(object sender, EventArgs e)
         {
             if (LoginId!=1)
@@ -2024,7 +2087,11 @@ namespace CashierSystem
             }
 
         }
-
+        /// <summary>
+        /// 管理员信息表 刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tspReLoadUserInfo_Click(object sender, EventArgs e)
         {
             GetDgv(SelectIndex);
