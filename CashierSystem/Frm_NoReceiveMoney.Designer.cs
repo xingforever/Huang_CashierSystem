@@ -194,6 +194,7 @@
             this.Name = "Frm_NoReceiveMoney";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "待收账信息";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Frm_NoReceiveMoney_FormClosing);
             this.Load += new System.EventHandler(this.Frm_NoReceiveMoney_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

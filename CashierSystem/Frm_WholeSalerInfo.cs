@@ -145,5 +145,10 @@ namespace CashierSystem
         {
             this.Close();
         }
+
+        private void Frm_WholeSalerInfo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _Tags = new List<string>();
+        }
     }
 }

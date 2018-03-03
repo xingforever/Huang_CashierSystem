@@ -136,6 +136,7 @@
             this.Name = "Frm_UnitInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "商品单位";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Frm_UnitInfo_FormClosing);
             this.Load += new System.EventHandler(this.Frm_UnitInfo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

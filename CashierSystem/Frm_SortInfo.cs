@@ -126,5 +126,10 @@ namespace CashierSystem
         {
             this.Close();
         }
+
+        private void Frm_SortInfo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _Tags = new List<string>();
+        }
     }
 }

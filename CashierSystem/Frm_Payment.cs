@@ -26,7 +26,7 @@ namespace CashierSystem
         {
             if (_form == null)
             {
-                _form = new Frm_Payment();              
+                _form = new Frm_Payment();
             }
             _profitsInfo = profitsInfo;
             return _form;
@@ -56,9 +56,9 @@ namespace CashierSystem
             {
                 picZhiFuBao.BackgroundImage = Image.FromFile(@"AddPic.png");
             }
-            
+
             //钱加载
-            if (_profitsInfo!=null)
+            if (_profitsInfo != null)
             {
                 this.lblMoney.Text = _profitsInfo.PayPrices.ToString();
             }
@@ -66,13 +66,13 @@ namespace CashierSystem
 
         private void btnPay_Click(object sender, EventArgs e)
         {
-            if (_profitsInfo!=null)
+            if (_profitsInfo != null)
             {
                 _profitsInfo.IsPay = true;
                 var isSuccess = DataManager.ProfitsInfoBLL.Add(_profitsInfo);
                 if (!isSuccess)
                 {
-                    MessageBox.Show("利润表数据添加失败,如多次失败请联系管理员");                   
+                    MessageBox.Show("利润表数据添加失败,如多次失败请联系管理员");
                 }
                 this.Close();
             }
@@ -93,9 +93,9 @@ namespace CashierSystem
                     MessageBox.Show("利润表数据添加失败,如多次失败请联系管理员");
                     return;
                 }
-              Frm_NoReceiveMoney frm_NoReceiveMoney = Frm_NoReceiveMoney.Create(_profitsInfo.OrderId, _profitsInfo.PayPrices.ToString());
-              frm_NoReceiveMoney.ShowDialog(this);
-              frm_NoReceiveMoney.Focus();
+                Frm_NoReceiveMoney frm_NoReceiveMoney = Frm_NoReceiveMoney.Create(_profitsInfo.OrderId, _profitsInfo.PayPrices.ToString());
+                frm_NoReceiveMoney.ShowDialog(this);
+                frm_NoReceiveMoney.Focus();
                 //如果登记成功 ,返回true ,可以
                 var isSucess = Boolean.Parse(frm_NoReceiveMoney.Tag.ToString());
                 if (isSuccess)
@@ -182,7 +182,12 @@ namespace CashierSystem
 
             }
         }
+
+        private void Frm_Payment_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _profitsInfo = null;
+        }
     }
 
-       
-    }
+
+}

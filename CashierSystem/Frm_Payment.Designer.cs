@@ -220,6 +220,7 @@
             this.Name = "Frm_Payment";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Frm_Payment";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Frm_Payment_FormClosing);
             this.Load += new System.EventHandler(this.Frm_Payment_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

@@ -35,9 +35,9 @@ namespace CashierSystem
         /// </summary>
         DataManager dataManager = new DataManager();
         /// <summary>
-        /// DataGridView类
+        /// DataGridView辅助类
         /// </summary>
-        DataGridViewHelper dataGridViewHelper = new DataGridViewHelper();
+        DataGridViewHelper dataGridViewHelper = new DataGridViewHelper();   
         /// <summary>
         /// 被选择表Index
         /// </summary>
@@ -58,18 +58,28 @@ namespace CashierSystem
         /// 操作员修改应收款数造成的折扣
         /// 并未对某项商品进行折扣
         /// </summary>
-        public decimal OrderDisCount = (decimal)0.0;      
+        public decimal OrderDisCount = (decimal)0.0;
 
         private void Huang_System_Load(object sender, EventArgs e)
-        {
-            Setting TheSetting = Setting.GetSeeting();//获取默认设置
-            isPingSuccess = IsConnectionNET.IsConnect();
+        {             
+             
+            Setting TheSetting = Setting.GetSeeting();//获取默认设置   
+            LoadSystemStatus();//加载系统状态栏
+            isPingSuccess = IsConnectionNET.IsConnect();//判断电脑是否联网
             LoadAllDgv();//加载所有dgv
             LoadWeatherAndAlmanac();//加载天气和黄历
             tabMain.SelectedIndex = 0;//默认第一页被选中
-            SelectIndex = 0;        
-
+            SelectIndex = 0;
         }
+        public void LoadSystemStatus()
+        {
+            this.tspLblSystemTime.Text = "系统当前时间：" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            this.systemTime.Interval = 1000;
+            this.systemTime.Start();
+            var user = DataManager.UserInfoBLL.GetEntityById(LoginId);
+            this.tspLblLoginName .Text="登录用户: "+ user.UserName;
+        }
+
         /// <summary>
         /// 初始化所有DataGridView样式
         /// </summary>
@@ -155,14 +165,14 @@ namespace CashierSystem
 
         }
         /// <summary>
-       /// 设置页
-       /// </summary>
+        /// 设置页
+        /// </summary>
         public void LoadSetting()
         {
             for (int i = 0; i < 6; i++)
             {
-               this.dgvSetting.Rows.Add();           
-             }
+                this.dgvSetting.Rows.Add();
+            }
             this.dgvSetting.Rows[0].Cells[0].Value = "标题名称";
             this.dgvSetting.Rows[0].Cells[1].Value = Setting.ProgramName;
             this.dgvSetting.Rows[1].Cells[0].Value = "商品信息每页数";
@@ -176,7 +186,7 @@ namespace CashierSystem
             this.dgvSetting.Rows[5].Cells[0].Value = "待收账信息每页数";
             this.dgvSetting.Rows[5].Cells[1].Value = Setting.NoReceivePageCount;
             DataGridViewHelper.ChangeColor(this.dgvSetting);
-            lblTitle.Text= Setting.ProgramName; 
+            lblTitle.Text = Setting.ProgramName;
 
         }
         /// <summary>
@@ -190,7 +200,7 @@ namespace CashierSystem
             {
                 var data = this.dgvSetting.Rows[i].Cells[1].Value.ToString().Trim();
                 var isTrue = int.TryParse(data, out int a);
-                if (!isTrue||a<=0)
+                if (!isTrue || a <= 0)
                 {
                     MessageBox.Show("设置失败,检查设置项是否正确");
                     return;
@@ -234,7 +244,7 @@ namespace CashierSystem
             //当电脑设置防火墙之类 可能无法访问
             if (isPingSuccess)
             {
-               var isSuccess= LoadAlmanac();
+                var isSuccess = LoadAlmanac();
                 //因为天气加载巨慢, 所以采用黄历成功才加载天气
                 if (isSuccess)
                 {
@@ -246,8 +256,9 @@ namespace CashierSystem
                     lblWeatherTime.Text = DateTime.Today.ToShortDateString();
                     lblWeatherTemperature.Text = "网络连接失败,";
                     lblWeatherWind.Text = "天气无法正常显示";
+                    isPingSuccess = false;
                 }
-                isPingSuccess = false;
+             
             }
             else
             {
@@ -263,7 +274,7 @@ namespace CashierSystem
         /// <summary>
         /// 加载农历
         /// </summary>
-        public bool  LoadAlmanac()
+        public bool LoadAlmanac()
         {
             var myAlmanac = AlmanacApiHelper.GetAlmanac();
             if (myAlmanac.IsGetSuccess)
@@ -290,7 +301,7 @@ namespace CashierSystem
         /// <summary>
         /// 天气加载
         /// </summary>
-        public void  LoadWeather()
+        public void LoadWeather()
         {
             var weather = WeatherHelper.GetWeather(Setting.City);
             if (weather != null)
@@ -311,8 +322,21 @@ namespace CashierSystem
         }
         private void lblReloadWeather_Click(object sender, EventArgs e)
         {
+            //天气服务可能会由于防火墙等 在有网络下
+            //无法获取服务,而且耗费时间巨多
+            //先测试 黄历能否正常加载 ,再进行天气刷新
             isPingSuccess = IsConnectionNET.IsConnect();
-            LoadWeatherAndAlmanac();
+            if (isPingSuccess)
+            {
+                var myAlmanac = AlmanacApiHelper.GetAlmanac();
+                if (myAlmanac.IsGetSuccess)
+                {
+                    LoadWeather();
+                }
+
+            }
+
+
         }
         /// <summary>
         /// 地区天气设置
@@ -479,14 +503,14 @@ namespace CashierSystem
                 int count = DataManager.GoodsInfoBLL.GetDataTableCountByPammer(searchModel2);
                 int pageSum = Convert.ToInt32(Math.Ceiling(count / pageSize));//总页数
                 tspGoodsPage.Text = "1";
-                if (pageSum<=0)
+                if (pageSum <= 0)
                 {
                     tspLblGoodsPageCount.Text = "1";
                 }
                 else
                 {
                     tspLblGoodsPageCount.Text = pageSum.ToString();
-                }              
+                }
                 tspGoodsLastPage.Tag = -1;
                 if (pageSum <= 1)
                 {
@@ -496,7 +520,7 @@ namespace CashierSystem
                 {
                     tspGoodsNextPage.Tag = pageStartIndex[2];//有第二页
                 }
-               
+
                 tspLblGoodsPageCount.Tag = "-1";
             }
             else
@@ -919,7 +943,7 @@ namespace CashierSystem
         {
             SearchModel searchModel = new SearchModel();
             searchModel.ModelName = "OrderInfo";
-            
+
             searchModel.StartIndex = startIndex;//开始行
             searchModel.dic = new Dictionary<string, string>();
             var StartTime = dateTodayOrderStartTime.Value;
@@ -1028,7 +1052,7 @@ namespace CashierSystem
             frm_GoodsInfo.ShowDialog();
             frm_GoodsInfo.Focus();
             //刷新商品管理页信息,商品页
-            if ((Boolean)frm_GoodsInfo.Tag==true)
+            if ((Boolean)frm_GoodsInfo.Tag == true)
             {
                 this.dgvGoodsInfo.Tag = false;
                 tspLblGoodsPageCount.Tag = "1";
@@ -1038,7 +1062,7 @@ namespace CashierSystem
                 GetDgv(SelectIndex);//刷新  这里暂时只能到第一页
                 LoadGoodsInfoManager();//重新初始化 右边边框
             }
-          
+
         }
         /// <summary>
         /// 编辑数据
@@ -1047,24 +1071,30 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspGoodsInfo_Edit_Click(object sender, EventArgs e)
         {
-            if (this.dgvGoodSInfoManager.SelectedRows.Count < 0)
+
+            try
             {
+                var dataRow = this.dgvGoodSInfoManager.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id               ;
+                Frm_GoodsInfo frm_GoodsInfo = Frm_GoodsInfo.Create(dataId);
+                frm_GoodsInfo.ShowDialog();
+                frm_GoodsInfo.Focus();
+                if ((Boolean)frm_GoodsInfo.Tag == true)
+                {
+                    this.dgvGoodSInfoManager.Tag = false;
+                    tspLblGoodsManagerCount.Tag = "1";
+                    SearchGoodsManager();
+                    GetDgv(SelectIndex);//刷新  这里暂时只能到第一页              
+                }
+            }
+            catch (Exception)
+            {
+
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvGoodSInfoManager.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id               ;
-            Frm_GoodsInfo frm_GoodsInfo = Frm_GoodsInfo.Create(dataId);
-            frm_GoodsInfo.ShowDialog();
-            frm_GoodsInfo.Focus();
-            if ((Boolean)frm_GoodsInfo.Tag == true)
-            {
-                this.dgvGoodSInfoManager.Tag = false;
-                tspLblGoodsManagerCount.Tag = "1";
-                SearchGoodsManager();
-                GetDgv(SelectIndex);//刷新  这里暂时只能到第一页              
-            }
-          
+
+
         }
         /// <summary>
         /// 移除数据
@@ -1073,33 +1103,38 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspGoodsInfo_Remove_Click(object sender, EventArgs e)
         {
-            if (this.dgvGoodSInfoManager.SelectedRows.Count < 0)
+
+            try
+            {
+                var result = MessageBox.Show("是否删除选中数据?", "删除", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.OK)
+                {
+                    var dataRow = this.dgvGoodSInfoManager.SelectedRows[0];
+                    var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                    var isSuccess = DataManager.GoodsInfoBLL.Delete(dataId);
+                    if (isSuccess)
+                    {
+                        MessageBox.Show("删除成功!", "删除", MessageBoxButtons.OK, MessageBoxIcon.None);
+                        this.dgvGoodSInfoManager.Tag = false;
+                        tspLblGoodsManagerCount.Tag = "1";
+                        SearchGoodsManager();
+                        this.dgvGoodsInfo.Tag = false;//商品展示页
+                        tspLblGoodsPageCount.Tag = "1";
+                        GetDgv(SelectIndex);//刷新  这里暂时只能到第一页
+                        LoadGoodsInfoManager();//重新初始化 右边边框
+                    }
+                    else
+                    {
+                        MessageBox.Show("删除不成功!", "删除", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception)
             {
                 UnSelectedTips();
                 return;
             }
-            var result = MessageBox.Show("是否删除选中数据?", "删除", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if (result == DialogResult.OK)
-            {
-                var dataRow = this.dgvGoodSInfoManager.SelectedRows[0];
-                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-                var isSuccess = DataManager.GoodsInfoBLL.Delete(dataId);
-                if (isSuccess)
-                {
-                    MessageBox.Show("删除成功!", "删除", MessageBoxButtons.OK, MessageBoxIcon.None);
-                    this.dgvGoodSInfoManager.Tag = false;
-                    tspLblGoodsManagerCount.Tag = "1";
-                    SearchGoodsManager();
-                    this.dgvGoodsInfo.Tag = false;//商品展示页
-                    tspLblGoodsPageCount.Tag = "1";                 
-                    GetDgv(SelectIndex);//刷新  这里暂时只能到第一页
-                    LoadGoodsInfoManager();//重新初始化 右边边框
-                }
-                else
-                {
-                    MessageBox.Show("删除不成功!", "删除", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+
 
         }
         /// <summary>
@@ -1647,21 +1682,28 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspNoReceiveMoneyInfoEdit_Click(object sender, EventArgs e)
         {
-            if (this.dgvNoReceiveMoney.SelectedRows.Count < 0)
+
+            try
             {
+                var dataRow = this.dgvNoReceiveMoney.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(dataId);
+                List<string> tags = new List<string>();
+                Frm_NoReceiveMoney frm_NoReceiveMoney = Frm_NoReceiveMoney.Create(dataId);
+                frm_NoReceiveMoney.ShowDialog(this);
+                frm_NoReceiveMoney.Focus();
+                //刷新 待收账人信息 和状态栏
+                this.dgvNoReceiveMoney.Tag = false;
+                this.tspLblNoReceivePageCount.Tag = "1";
+
+            }
+            catch (Exception)
+            {
+
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvNoReceiveMoney.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(dataId);
-            List<string> tags = new List<string>();
-            Frm_NoReceiveMoney frm_NoReceiveMoney = Frm_NoReceiveMoney.Create(dataId);
-            frm_NoReceiveMoney.ShowDialog(this);
-            frm_NoReceiveMoney.Focus();
-            //刷新 待收账人信息 和状态栏
-            this.dgvNoReceiveMoney.Tag = false;
-            this.tspLblNoReceivePageCount.Tag = "1";
+
 
 
         }
@@ -1673,26 +1715,31 @@ namespace CashierSystem
 
         private void tspNoM_Receive_Click(object sender, EventArgs e)
         {
-            if (this.dgvNoReceiveMoney.SelectedRows.Count < 0)
+
+            try
+            {
+                var dataRow = this.dgvNoReceiveMoney.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                var result = MessageBox.Show("改账单已经结清?", "询问", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.OK)
+                {
+                    NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(dataId);
+                    var profists = DataManager.ProfitsInfoBLL.GetProfitsInfoByOrderId(noReceiveMoney.OrderId);
+                    profists.IsPay = true;
+                    var isFail = !(DataManager.ProfitsInfoBLL.Edit(profists));
+                    var isFail2 = !(DataManager.NoReceiveMoneyBLL.Delete(dataId));
+                    if (isFail || isFail2)
+                    {
+                        MessageBox.Show("未知错误!!");
+                    }
+                }
+            }
+            catch (Exception)
             {
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvNoReceiveMoney.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            var result = MessageBox.Show("改账单已经结清?", "询问", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if (result == DialogResult.OK)
-            {
-                NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(dataId);
-                var profists = DataManager.ProfitsInfoBLL.GetProfitsInfoByOrderId(noReceiveMoney.OrderId);
-                profists.IsPay = true;
-                var isFail = !(DataManager.ProfitsInfoBLL.Edit(profists));
-                var isFail2 = !(DataManager.NoReceiveMoneyBLL.Delete(dataId));
-                if (isFail || isFail2)
-                {
-                    MessageBox.Show("未知错误!!");
-                }
-            }
+
 
         }
         /// <summary>
@@ -1804,7 +1851,7 @@ namespace CashierSystem
             Frm_UnitInfo frm_Samll = Frm_UnitInfo.Create(tags);
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
-            if ((Boolean)frm_Samll.Tag==true)
+            if ((Boolean)frm_Samll.Tag == true)
             {
                 LoadGoodsInfoManager();
                 GetDgv(SelectIndex);
@@ -1819,18 +1866,23 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspEditUnitInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvUnitInfo.SelectedRows.Count < 0)
+
+            try
+            {
+                var dataRow = this.dgvUnitInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                UnitInfo unitInfo = DataManager.UnitInfoBLL.GetEntityById(dataId);
+                List<string> tags = new List<string>() { unitInfo.Id.ToString(), unitInfo.UnitName, unitInfo.Remark };
+                Frm_UnitInfo frm_Samll = Frm_UnitInfo.Create(tags);
+                frm_Samll.ShowDialog(this);
+                frm_Samll.Focus();
+            }
+            catch (Exception)
             {
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvUnitInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            UnitInfo unitInfo = DataManager.UnitInfoBLL.GetEntityById(dataId);
-            List<string> tags = new List<string>() { unitInfo.Id.ToString(), unitInfo.UnitName, unitInfo.Remark };
-            Frm_UnitInfo frm_Samll = Frm_UnitInfo.Create(tags);
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
+
         }
         /// <summary>
         /// 单位表删除
@@ -1839,29 +1891,35 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspDeleteUnitInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvUnitInfo.SelectedRows.Count < 0)
+
+            try
             {
+                var dataRow = this.dgvUnitInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                var result = MessageBox.Show("确认删除该商品单位?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+
+                    var isDelete = DataManager.UnitInfoBLL.Delete(dataId);
+                    if (!isDelete)
+                    {
+                        MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    LoadGoodsInfoManager();
+                    GetDgv(SelectIndex);//刷新
+                }
+                else
+                {
+                    ;
+                }
+            }
+            catch (Exception)
+            {
+
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvUnitInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            var result = MessageBox.Show("确认删除该商品单位?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
 
-                var isDelete = DataManager.UnitInfoBLL.Delete(dataId);
-                if (!isDelete)
-                {
-                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                LoadGoodsInfoManager();
-                GetDgv(SelectIndex);//刷新
-            }
-            else
-            {
-                ;
-            }
         }
         /// <summary>
         /// 单位表刷新
@@ -1887,12 +1945,12 @@ namespace CashierSystem
             Frm_SortInfo frm_Samll = Frm_SortInfo.Create();
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
-            if ((Boolean)frm_Samll.Tag==true)
+            if ((Boolean)frm_Samll.Tag == true)
             {
                 LoadGoodsInfoManager();
                 GetDgv(SelectIndex);//刷新
             }
-          
+
 
         }
         /// <summary>
@@ -1902,18 +1960,23 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspEidtSortInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvSortInfo.SelectedRows.Count < 0)
+
+            try
+            {
+                var dataRow = this.dgvSortInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                SortInfo sortInfo = DataManager.SortInfoBLL.GetEntityById(dataId);
+                List<string> tags = new List<string>() { sortInfo.Id.ToString(), sortInfo.SortName, sortInfo.Remark };
+                Frm_SortInfo frm_Samll = Frm_SortInfo.Create(tags);
+                frm_Samll.ShowDialog(this);
+                frm_Samll.Focus();
+            }
+            catch
             {
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvSortInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            SortInfo sortInfo = DataManager.SortInfoBLL.GetEntityById(dataId);
-            List<string> tags = new List<string>() { sortInfo.Id.ToString(), sortInfo.SortName, sortInfo.Remark };
-            Frm_SortInfo frm_Samll = Frm_SortInfo.Create(tags);
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
+
         }
         /// <summary>
         /// 商品类别表 删除
@@ -1922,32 +1985,37 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspDeleteSortInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvSortInfo.SelectedRows.Count < 0)
+
+            try
+            {
+                var dataRow = this.dgvSortInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+
+                    var isDelete = DataManager.SortInfoBLL.Delete(dataId);
+                    if (!isDelete)
+                    {
+                        MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    LoadGoodsInfoManager();
+                    GetDgv(SelectIndex);//刷新
+                }
+                else
+                {
+                    ;
+                }
+            }
+            catch (Exception)
             {
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvSortInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
 
-                var isDelete = DataManager.SortInfoBLL.Delete(dataId);
-                if (!isDelete)
-                {
-                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                LoadGoodsInfoManager();
-                GetDgv(SelectIndex);//刷新
-            }
-            else
-            {
-                ;
-            }
         }
         /// <summary>
-        /// 商品类别表 删除
+        /// 商品类别表  刷新
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1968,7 +2036,7 @@ namespace CashierSystem
             Frm_WholeSalerInfo frm_Samll = Frm_WholeSalerInfo.Create();
             frm_Samll.ShowDialog(this);
             frm_Samll.Focus();
-            if ((Boolean)frm_Samll.Tag==true)
+            if ((Boolean)frm_Samll.Tag == true)
             {
                 LoadGoodsInfoManager();
                 GetDgv(SelectIndex);//刷新
@@ -1981,19 +2049,24 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspEditWholeSalerInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvWholeSalerInfo.SelectedRows.Count < 0)
+
+            try
+            {
+                var dataRow = this.dgvWholeSalerInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                WholeSalerInfo wholeSalerInfo = DataManager.WholeSalerInfoBLL.GetEntityById(dataId);
+                List<string> tags = new List<string>() { wholeSalerInfo.Id.ToString(), wholeSalerInfo.SupName, wholeSalerInfo.Management, wholeSalerInfo.TelePhone, wholeSalerInfo.AddressInfo, wholeSalerInfo.Remark };
+                Frm_WholeSalerInfo frm_Samll = Frm_WholeSalerInfo.Create(tags);
+                frm_Samll.ShowDialog(this);
+                frm_Samll.Focus();
+            }
+            catch
             {
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvWholeSalerInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            WholeSalerInfo wholeSalerInfo = DataManager.WholeSalerInfoBLL.GetEntityById(dataId);
-            List<string> tags = new List<string>() { wholeSalerInfo.Id.ToString(), wholeSalerInfo.SupName, wholeSalerInfo.Management, wholeSalerInfo.TelePhone, wholeSalerInfo.AddressInfo, wholeSalerInfo.Remark };
-            Frm_WholeSalerInfo frm_Samll = Frm_WholeSalerInfo.Create(tags);
-            frm_Samll.ShowDialog(this);
-            frm_Samll.Focus();
-           
+
+
         }
         /// <summary>
         /// 供货信息表 删除
@@ -2002,28 +2075,34 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspDeleteWholeSalerInfo_Click(object sender, EventArgs e)
         {
-            if (this.dgvWholeSalerInfo.SelectedRows.Count < 0)
+            try
             {
+                var dataRow = this.dgvWholeSalerInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    var isDelete = DataManager.WholeSalerInfoBLL.Delete(dataId);
+                    if (!isDelete)
+                    {
+                        MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    LoadGoodsInfoManager();
+                    GetDgv(SelectIndex);//刷新
+                }
+                else
+                {
+                    ;
+                }
+            }
+            catch (Exception)
+            {
+
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvUnitInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            var result = MessageBox.Show("确认删除该商品类别?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                var isDelete = DataManager.WholeSalerInfoBLL.Delete(dataId);
-                if (!isDelete)
-                {
-                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }               
-               LoadGoodsInfoManager();
-               GetDgv(SelectIndex);//刷新
-            }
-            else
-            {
-                ;
-            }
+
+
         }
         /// <summary>
         /// 供货信息表 刷新
@@ -2055,10 +2134,11 @@ namespace CashierSystem
         private void tspEditUserInfo_Click(object sender, EventArgs e)
         {
             var dataId = LoginId;
-            if (dataId==int.MaxValue)
+            if (dataId == int.MaxValue)
             {
                 return;
             }
+
             UserInfo userInfo = DataManager.UserInfoBLL.GetEntityById(dataId);
             List<string> tags = new List<string>() { userInfo.Id.ToString(), userInfo.UserName, userInfo.Remark };
             Frm_UserInfo frm_Samll = Frm_UserInfo.Create(tags);
@@ -2072,32 +2152,37 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspDeleteUserInfo_Click(object sender, EventArgs e)
         {
-            if (LoginId!=1)
+            if (LoginId != 1)
             {
                 MessageBox.Show("非管理员无权限删除");
                 return;
             }
-            if (this.dgvUnitInfo.SelectedRows.Count < 0)
+            try
             {
+                var dataRow = this.dgvUserInfo.SelectedRows[0];
+                var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
+                var result = MessageBox.Show("确认删除用户?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    var isDelete = DataManager.UserInfoBLL.Delete(dataId);
+                    if (!isDelete)
+                    {
+                        MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    GetDgv(SelectIndex);//刷新
+                }
+                else
+                {
+                    ;
+                }
+            }
+            catch (Exception)
+            {
+
                 UnSelectedTips();
                 return;
             }
-            var dataRow = this.dgvUnitInfo.SelectedRows[0];
-            var dataId = Convert.ToInt32(dataRow.Cells[0].Value);//获取Id
-            var result = MessageBox.Show("确认删除用户?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                var isDelete = DataManager.UserInfoBLL.Delete(dataId);
-                if (!isDelete)
-                {
-                    MessageBox.Show("删除失败,请稍后重试", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                GetDgv(SelectIndex);//刷新
-            }
-            else
-            {
-                ;
-            }
+
 
         }
         /// <summary>
@@ -2118,7 +2203,7 @@ namespace CashierSystem
         private List<UnitInfo> GetUnitInfoList()
         {
             var list = DataManager.UnitInfoBLL.GetList();
-            if (list==null)
+            if (list == null)
             {
                 list = new List<UnitInfo>();
             }
@@ -2139,7 +2224,7 @@ namespace CashierSystem
         {
 
             var list = DataManager.SortInfoBLL.GetList();
-            if (list==null)
+            if (list == null)
             {
                 list = new List<SortInfo>();
             }
@@ -2159,7 +2244,7 @@ namespace CashierSystem
         public List<WholeSalerInfo> GetWholeSalerList()
         {
             var list = DataManager.WholeSalerInfoBLL.GetList();
-            if (list==null)
+            if (list == null)
             {
                 list = new List<WholeSalerInfo>();
             }
@@ -2177,7 +2262,7 @@ namespace CashierSystem
         /// </summary>
         public void UnSelectedTips()
         {
-            MessageBox.Show("未选中行,请单击表格某行 ", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("未选中有效行,请单击表格某行 ", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         /// <summary>
         /// 输入信息不符合要求警告
@@ -2196,6 +2281,11 @@ namespace CashierSystem
         {
             //当前应用程序退出,不仅仅关闭当前窗体
             Application.Exit();
+        }
+
+        private void systemTime_Tick(object sender, EventArgs e)
+        {
+            this.tspLblSystemTime.Text = "系统当前时间：" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
         }
     }
 }

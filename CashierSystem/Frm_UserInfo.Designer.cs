@@ -170,6 +170,7 @@
             this.Name = "Frm_UserInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "用户";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Frm_UserInfo_FormClosing);
             this.Load += new System.EventHandler(this.Frm_UserInfo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

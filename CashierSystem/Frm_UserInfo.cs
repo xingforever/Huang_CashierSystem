@@ -209,5 +209,10 @@ namespace CashierSystem
             }
             return true;
         }
+
+        private void Frm_UserInfo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _Tags = new List<string> ();
+        }
     }
 }

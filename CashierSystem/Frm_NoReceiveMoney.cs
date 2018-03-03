@@ -194,5 +194,10 @@ namespace CashierSystem
             this.Tag = "false";//通知父窗口 ,不可以关闭
             this.Close();
         }
+
+        private void Frm_NoReceiveMoney_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+        }
     }
 }

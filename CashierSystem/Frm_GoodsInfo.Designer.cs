@@ -391,6 +391,7 @@
             this.Name = "Frm_GoodsInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "商品信息";
+  
             this.Load += new System.EventHandler(this.Frm_GoodsInfo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -238,6 +238,7 @@
             this.Name = "Frm_WholeSalerInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "供应商";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Frm_WholeSalerInfo_FormClosing);
             this.Load += new System.EventHandler(this.Frm_WholeSalerInfo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

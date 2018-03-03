@@ -46,63 +46,76 @@ namespace CashierSystem
         {
             this.Tag = false;
             //cbx 初始化
-            var unitList = DataManager.UnitInfoBLL.GetList();
-            if (unitList==null)
+            try
             {
-                unitList = new List<UnitInfo>();
-            }
-            var sortList = DataManager.SortInfoBLL.GetList();
-            if (sortList==null)
-            {
-                sortList = new List<SortInfo>();
-            }
-            var wholeSalerList = DataManager.WholeSalerInfoBLL.GetList();
-            if (wholeSalerList==null)
-            {
-                wholeSalerList = new List<WholeSalerInfo>();
-            }
-            cbxGood_Sort.ValueMember = "Id";
-            cbxGood_Sort.DisplayMember = "SortName";
-            cbxGood_Sort.DataSource = sortList;
-            cbxGoods_Unit.ValueMember = "Id";
-            cbxGoods_Unit.DisplayMember = "UnitName";
-            cbxGoods_Unit.DataSource = unitList;
-            cbxGood_WholerSaler.ValueMember = "Id";
-            cbxGood_WholerSaler.DisplayMember = "SupName";
-            cbxGood_WholerSaler.DataSource = wholeSalerList;
-            //编辑
-            if (entityId != int.MaxValue)
-            {
-                var goodsInfo = DataManager.GoodsInfoBLL.GetEntityById(entityId);
-                cbxGoods_Unit.SelectedValue = goodsInfo.UnitId;
-                cbxGood_Sort.SelectedValue = goodsInfo.SortId;
-                cbxGood_WholerSaler.SelectedValue = goodsInfo.WholeSalerId;
-                txtGoods_Name.Text = goodsInfo.GoodsName;
-                txtGoods_Payprice.Text = goodsInfo.PayPrice.ToString();
-                txtGoods_Purprice.Text = goodsInfo.PurPrice.ToString();
-                txtGoods_Remark.Text = goodsInfo.Remark;
-                txtGoos_Type.Text = goodsInfo.GoodsType;
-                txtGoods_Total.Text = goodsInfo.Total.ToString();
-                try
+                var unitList = DataManager.UnitInfoBLL.GetList();
+                if (unitList == null)
                 {
-
-                    dateLast.Value = goodsInfo.LastTime;
+                    unitList = new List<UnitInfo>();
                 }
-                catch
+                var sortList = DataManager.SortInfoBLL.GetList();
+                if (sortList == null)
                 {
-                    dateLast.Value = DateTime.Today + new TimeSpan(365, 0, 0, 0);
+                    sortList = new List<SortInfo>();
+                }
+                var wholeSalerList = DataManager.WholeSalerInfoBLL.GetList();
+                if (wholeSalerList == null)
+                {
+                    wholeSalerList = new List<WholeSalerInfo>();
+                }
+                cbxGood_Sort.ValueMember = "Id";
+                cbxGood_Sort.DisplayMember = "SortName";
+                cbxGood_Sort.DataSource = sortList;
+                cbxGoods_Unit.ValueMember = "Id";
+                cbxGoods_Unit.DisplayMember = "UnitName";
+                cbxGoods_Unit.DataSource = unitList;
+                cbxGood_WholerSaler.ValueMember = "Id";
+                cbxGood_WholerSaler.DisplayMember = "SupName";
+                cbxGood_WholerSaler.DataSource = wholeSalerList;
+                //编辑
+                if (entityId != int.MaxValue)
+                {
+                    var goodsInfo = DataManager.GoodsInfoBLL.GetEntityById(entityId);
+                    cbxGoods_Unit.SelectedValue = goodsInfo.UnitId;
+                    cbxGood_Sort.SelectedValue = goodsInfo.SortId;
+                    cbxGood_WholerSaler.SelectedValue = goodsInfo.WholeSalerId;
+                    txtGoods_Name.Text = goodsInfo.GoodsName;
+                    txtGoods_Payprice.Text = goodsInfo.PayPrice.ToString();
+                    txtGoods_Purprice.Text = goodsInfo.PurPrice.ToString();
+                    txtGoods_Remark.Text = goodsInfo.Remark;
+                    txtGoos_Type.Text = goodsInfo.GoodsType;
+                    txtGoods_Total.Text = goodsInfo.Total.ToString();
+                    try
+                    {
+
+                        dateLast.Value = goodsInfo.LastTime;
+                    }
+                    catch
+                    {
+                        dateLast.Value = DateTime.Today + new TimeSpan(365, 0, 0, 0);
+
+                    }
 
                 }
-
+                //添加
+                else
+                {
+                    cbxGoods_Unit.SelectedIndex = 0;
+                    cbxGood_Sort.SelectedIndex = 0;
+                    cbxGood_WholerSaler.SelectedIndex = 0;
+                    dateLast.Value = DateTime.Today + new TimeSpan(365, 0, 0, 0);//默认保质期为1年
+                }
             }
-            //添加
-            else
+            catch (Exception)
             {
-                cbxGoods_Unit.SelectedIndex = 0;
-                cbxGood_Sort.SelectedIndex = 0;
-                cbxGood_WholerSaler.SelectedIndex = 0;
-                dateLast.Value = DateTime.Today + new TimeSpan(365, 0, 0, 0);//默认保质期为1年
+
+               var result= MessageBox.Show("操作异常,请检查商品表,商品单位表,供货商表数据是否合格!!!","错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                if (result==DialogResult.OK)
+                {
+                    this.Close();
+                }
             }
+           
         }
         private void btnGoodsEnter_Click(object sender, EventArgs e)
         {
@@ -207,5 +220,7 @@ namespace CashierSystem
             cbxGood_Sort.SelectedIndex = 0;
             cbxGood_WholerSaler.SelectedIndex = 0;
         }
+
+       
     }
 }
