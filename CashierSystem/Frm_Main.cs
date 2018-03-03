@@ -782,7 +782,7 @@ namespace CashierSystem
             }
             else
             {
-                //未完成下单操作
+                ;//未完成下单操作
             }
 
 
@@ -2164,6 +2164,11 @@ namespace CashierSystem
                 var result = MessageBox.Show("确认删除用户?", "删除", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
+                    if (dataId==1)
+                    {
+                        MessageBox.Show("不能删除管理员!!!");
+                        return;
+                    }
                     var isDelete = DataManager.UserInfoBLL.Delete(dataId);
                     if (!isDelete)
                     {
