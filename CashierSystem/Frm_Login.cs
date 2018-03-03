@@ -76,5 +76,11 @@ namespace CashierSystem
             txtName.Text = "";
             txtPwd.Text = "";
         }
+
+        private void Frm_Login_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //当前应用程序退出,不仅仅关闭当前窗体
+            Application.Exit();
+        }
     }
 }

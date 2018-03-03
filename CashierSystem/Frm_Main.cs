@@ -58,7 +58,7 @@ namespace CashierSystem
         /// 操作员修改应收款数造成的折扣
         /// 并未对某项商品进行折扣
         /// </summary>
-        public decimal OrderDisCount = (decimal)0.0;       
+        public decimal OrderDisCount = (decimal)0.0;      
 
         private void Huang_System_Load(object sender, EventArgs e)
         {
@@ -478,7 +478,15 @@ namespace CashierSystem
                 SearchModel searchModel2 = new SearchModel(searchModel);
                 int count = DataManager.GoodsInfoBLL.GetDataTableCountByPammer(searchModel2);
                 int pageSum = Convert.ToInt32(Math.Ceiling(count / pageSize));//总页数
-                tspLblGoodsPageCount.Text = pageSum.ToString();
+                tspGoodsPage.Text = "1";
+                if (pageSum<=0)
+                {
+                    tspLblGoodsPageCount.Text = "1";
+                }
+                else
+                {
+                    tspLblGoodsPageCount.Text = pageSum.ToString();
+                }              
                 tspGoodsLastPage.Tag = -1;
                 if (pageSum <= 1)
                 {
@@ -488,7 +496,7 @@ namespace CashierSystem
                 {
                     tspGoodsNextPage.Tag = pageStartIndex[2];//有第二页
                 }
-
+               
                 tspLblGoodsPageCount.Tag = "-1";
             }
             else
@@ -735,15 +743,18 @@ namespace CashierSystem
                 this.dgvOrdersInfo.Rows.Clear();//清除数据
                 this.lblOrderMoney.Text = "0.000";//待收款清0
                 OrderDisCount = (decimal)0.0;//折扣 
-                this.dgvTodayOrder.Tag = false;//信息需要重新加载
+                this.dgvTodayOrder.Tag = false;//今日销售信息需要重新加载
                 this.tspLblGoodsPageCount.Tag = "1";//状态栏需要加载
                 SearchLoadGoodsInfo();//商品信息页重新加载(保留操作员上次操作)
-                                      //开始收款 ----
+                //开始收款 ----
                 Frm_Payment frm_Payment = Frm_Payment.Create(TempProfit);
                 frm_Payment.ShowDialog(this);
                 frm_Payment.Focus();
                 TempProfit = null;//临时利润表清空
-
+                this.dgvAllOrder.Tag = false;//历史订单表需要 处理
+                this.tspLblOrderPageCount.Tag = "1";
+                this.dgvProfitsInfo.Tag = false;//利润表信息刷新
+                this.tspLblProfitPageCount.Tag = "1";
             }
             else
             {
@@ -943,7 +954,9 @@ namespace CashierSystem
             this.dgvTodayOrder.Tag = false;//false 表示需要更新
             GetDgv(1, searchModel);
         }
-
+        /// <summary>
+        /// 加载今日利润
+        /// </summary>
         public void LoadToadyOrderProfit()
         {
             SearchModel searchModel2 = new SearchModel();
@@ -2106,6 +2119,10 @@ namespace CashierSystem
         private List<UnitInfo> GetUnitInfoList()
         {
             var list = DataManager.UnitInfoBLL.GetList();
+            if (list==null)
+            {
+                list = new List<UnitInfo>();
+            }
             list.Insert(0, new UnitInfo()
             {
                 Id = 0,
@@ -2124,6 +2141,10 @@ namespace CashierSystem
         {
 
             var list = DataManager.SortInfoBLL.GetList();
+            if (list==null)
+            {
+                list = new List<SortInfo>();
+            }
             list.Insert(0, new SortInfo()
             {
                 Id = 0,
@@ -2140,6 +2161,10 @@ namespace CashierSystem
         public List<WholeSalerInfo> GetWholeSalerList()
         {
             var list = DataManager.WholeSalerInfoBLL.GetList();
+            if (list==null)
+            {
+                list = new List<WholeSalerInfo>();
+            }
             list.Insert(0, new WholeSalerInfo()
             {
                 Id = 0,
@@ -2164,7 +2189,11 @@ namespace CashierSystem
         {
             MessageBox.Show(messAge, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
-
+        /// <summary>
+        /// 关闭程序
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Huang_System_FormClosed(object sender, FormClosedEventArgs e)
         {
             //当前应用程序退出,不仅仅关闭当前窗体

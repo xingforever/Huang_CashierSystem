@@ -36,8 +36,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.txtTitle = new System.Windows.Forms.TextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.lblTips = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -123,14 +123,6 @@
             this.panel1.Size = new System.Drawing.Size(430, 64);
             this.panel1.TabIndex = 16;
             // 
-            // panel2
-            // 
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(430, 17);
-            this.panel2.TabIndex = 16;
-            // 
             // txtTitle
             // 
             this.txtTitle.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -143,6 +135,14 @@
             this.txtTitle.TabIndex = 17;
             this.txtTitle.Text = "收银系统";
             this.txtTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // panel2
+            // 
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(430, 17);
+            this.panel2.TabIndex = 16;
             // 
             // lblTips
             // 
@@ -175,6 +175,7 @@
             this.Name = "Frm_Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "登录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Frm_Login_FormClosing);
             this.Load += new System.EventHandler(this.Frm_Login_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

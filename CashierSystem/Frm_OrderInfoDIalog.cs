@@ -51,8 +51,8 @@ namespace CashierSystem
             {
                 //下订单
                 var goodsInfo = DataManager.GoodsInfoBLL.GetEntityById(OrdersInfo[i].GoodsId);
-                var salesCount = goodsInfo.SalesCount + OrdersInfo[i].Count;
-                var surplusCount= goodsInfo.SurplusCount- OrdersInfo[i].Count; 
+                var salesCount = goodsInfo.SalesCount + OrdersInfo[i].Count;//卖出数量
+                var surplusCount= goodsInfo.SurplusCount- OrdersInfo[i].Count; //剩余数量
                 var isSucess= DataManager.OrderInfoBLL.Add(OrdersInfo[i]);
                 if (!isSucess)
                 {

@@ -48,9 +48,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bll\Bll.csproj">
+      <Project>{b94443df-cba5-4e66-9b62-9089bbafe7e0}</Project>
+      <Name>Bll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CashierSystem\CashierSystem.csproj">
+      <Project>{c75d871f-6437-4a0f-a0af-0349e0aaeefb}</Project>
+      <Name>CashierSystem</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{089cbdbe-ef09-46e3-9507-0dc012175edd}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{d468b658-61b0-4012-b4d5-c934d32b73e4}</Project>
+      <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
