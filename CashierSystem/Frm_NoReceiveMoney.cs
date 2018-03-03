@@ -57,62 +57,65 @@ namespace CashierSystem
 
         private void btnNoMEnter_Click(object sender, EventArgs e)
         {
-            if (!CheckData())
+            try
             {
-                return;
-            }
-           
-            //修改数据
-            if (_entityId != int.MaxValue)
-            {
-                NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(_entityId);
-                if (noReceiveMoney!=null)
+                if (!CheckData())
                 {
-                  
-                    noReceiveMoney.CustomerName = this.txtNoM_CustomerName.Text;
-                    noReceiveMoney.Phone = this.txtNoM_Phone.Text;
+                    return;
+                }
+
+                //修改数据
+                if (_entityId != int.MaxValue)
+                {
+                    NoReceiveMoney noReceiveMoney = DataManager.NoReceiveMoneyBLL.GetEntityById(_entityId);
+                    if (noReceiveMoney != null)
+                    {
+
+                        noReceiveMoney.CustomerName = this.txtNoM_CustomerName.Text;
+                        noReceiveMoney.Phone = this.txtNoM_Phone.Text;
+                        noReceiveMoney.Remark = this.txtNoM_Remark.Text;
+                        var isSuccess = DataManager.NoReceiveMoneyBLL.Edit(noReceiveMoney);
+                        if (isSuccess)
+                        {
+                            ClearData();
+                            this.Tag = "true";//通知父窗口 ,可以关闭
+                            this.Close();
+                        }
+
+
+                    }
+                }
+                //添加数据
+                else if (_orderId != null)
+                {
+                    NoReceiveMoney noReceiveMoney = new NoReceiveMoney();
+                    noReceiveMoney.OrderId = _orderId;
+                    noReceiveMoney.CustomerName = this.txtNoM_CustomerName.Text.Trim();
+                    noReceiveMoney.Phone = this.txtNoM_Phone.Text.Trim();
+                    noReceiveMoney.WaitPayPrice = Convert.ToDecimal(this.txtNoM_Money.Text.Trim());
+                    noReceiveMoney.CreateTime = DateTime.Now;
                     noReceiveMoney.Remark = this.txtNoM_Remark.Text;
-                    var isSuccess=  DataManager.NoReceiveMoneyBLL.Edit(noReceiveMoney);
+                    var isSuccess = DataManager.NoReceiveMoneyBLL.Add(noReceiveMoney);
                     if (isSuccess)
                     {
                         ClearData();
                         this.Tag = "true";//通知父窗口 ,可以关闭
                         this.Close();
                     }
-                   
-
                 }
-            }
-            //添加数据
-            else if (_orderId!=null)
-            {
-                NoReceiveMoney noReceiveMoney = new NoReceiveMoney();
-                noReceiveMoney.OrderId = _orderId;
-                noReceiveMoney.CustomerName = this.txtNoM_CustomerName.Text.Trim();
-                noReceiveMoney.Phone = this.txtNoM_Phone.Text.Trim();
-                noReceiveMoney.WaitPayPrice = Convert.ToDecimal(this.txtNoM_Money.Text.Trim());
-                noReceiveMoney.CreateTime = DateTime.Now;
-                noReceiveMoney.Remark = this.txtNoM_Remark.Text;
-                var isSuccess = DataManager.NoReceiveMoneyBLL.Add(noReceiveMoney);
-                if (isSuccess)
+                else
                 {
-                    ClearData();
-                    this.Tag = "true";//通知父窗口 ,可以关闭
-
-                    this.Close();
+                    MessageBox.Show("操作失败");
+                    this.Tag = "false";//通知父窗口 ,不可以关闭
                 }
-
             }
-            else
+            catch (Exception)
             {
-                MessageBox.Show("操作失败");
-                this.Tag = "false";//通知父窗口 ,不可以关闭
+
+                MessageBox.Show("操作失败,请检查信息是否正确!!");
+                return;
             }
            
-
-
-
-
 
         }
 

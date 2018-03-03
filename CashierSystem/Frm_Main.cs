@@ -2109,8 +2109,7 @@ namespace CashierSystem
         {
             GetDgv(SelectIndex);
         }
-        #endregion
-        
+        #endregion        
 
         /// <summary>
         /// 获取单位表
@@ -2132,7 +2131,6 @@ namespace CashierSystem
             return list;
 
         }
-
         /// <summary>
         /// 获取类别
         /// </summary>
