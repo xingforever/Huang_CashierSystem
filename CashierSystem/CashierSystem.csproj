@@ -118,6 +118,7 @@
     <Compile Include="Frm_WholeSalerInfo.Designer.cs">
       <DependentUpon>Frm_WholeSalerInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="InitGoodsData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Frm_WeatherSetting.cs">

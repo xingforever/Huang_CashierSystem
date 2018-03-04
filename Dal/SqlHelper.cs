@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Data.OleDb;
+using Microsoft.Office.Interop.Access.Dao;
 
 namespace Dal
 {
@@ -137,5 +138,94 @@ namespace Dal
                 Connection.Close();
             }
         }
+
+
+        ////批量数据的插入
+        //public static void insertToStockDataByBatch(String[] sqlArray)
+        //{
+        //    try
+        //    {
+        //        OleDbConnection aConnection = Connection;
+        //        aConnection.Open();
+        //        OleDbTransaction transaction = aConnection.BeginTransaction();
+
+        //        OleDbCommand aCommand = new OleDbCommand();
+        //        aCommand.Connection = aConnection;
+        //        aCommand.Transaction = transaction;
+        //        for (int i = 0; i < sqlArray.Length; i++)
+        //        {
+        //            aCommand.CommandText = sqlArray[i];
+        //            aCommand.ExecuteNonQuery();
+        //            LogHelper.log(Convert.ToString(i));
+        //        }
+        //        transaction.Commit();
+        //        aConnection.Close();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        LogHelper.log(e.Message);
+        //    }
+        //}
+
+        ////产生sql语句，为批量执行做准备
+        //public static String generateSQLSentence(String stockCode, String transDate, String open,
+        //                                    String close, String high, String low, String turn, String volume)
+        //{
+        //    String sql = "INSERT INTO stockData ( stockCode, transDate, [open], [close], high, low, turn, volume ) " +
+        //                "VALUES (\"" + stockCode + "\"" +
+        //                       ",\"" + transDate + "\"" +
+        //                       ",\"" + open + "\"" +
+        //                       ",\"" + close + "\"" +
+        //                       ",\"" + high + "\"" +
+        //                       ",\"" + low + "\"" +
+        //                       ",\"" + turn + "\"" +
+        //                       ",\"" + volume + "\")";
+        //    return sql;
+        //}
+
+        //public  static void  AddAllData()
+        //{
+        //    DAO.DBEngine dbEngine = new DAO.DBEngine();
+        //    DAO.Database db = dbEngine.OpenDatabase(databasePath);
+
+        //    DAO.Recordset rs = db.OpenRecordset("Table");
+        //    DAO.Field[] myFields = new DAO.Field[9];
+        //    myFields[0] = rs.Fields["F_TYPE"];
+        //    myFields[1] = rs.Fields["F_TAG"];
+        //    myFields[2] = rs.Fields["F_RULEID"];
+        //    myFields[3] = rs.Fields["F_SOURCEID"];
+        //    myFields[4] = rs.Fields["F_TAGID"];
+        //    myFields[5] = rs.Fields["F_DESCRIPTION"];
+        //    myFields[6] = rs.Fields["F_TASKID"];
+        //    myFields[7] = rs.Fields["F_RULEGROUP"];
+        //    myFields[8] = rs.Fields["F_RULENAME"];
+
+        //    int strTagKey = -1;
+        //    for (int i = 0; i < sList.Count; i++)
+        //    {
+        //        int key;
+        //        if (int.TryParse(sList[i].TagKey, out key))
+        //            strTagKey = string.IsNullOrEmpty(sList[i].TagKey) ? -1 : int.Parse(sList[i].TagKey);
+
+        //        rs.AddNew();
+
+        //        myFields[0].Value = sList[i].RuleGroup;
+        //        myFields[1].Value = sList[i].Tag;
+        //        myFields[2].Value = sList[i].CheckRule.Key;
+        //        myFields[3].Value = strTagKey;
+        //        myFields[4].Value = strTagKey;
+        //        myFields[5].Value = sList[i].Description;
+        //        myFields[6].Value = nTaskID;
+        //        myFields[7].Value = sList[i].RuleGroup;
+        //        myFields[8].Value = sList[i].RuleName;
+
+        //        rs.Update();
+
+        //    }
+        //    rs.Close();
+        //    db.Close();
+
+        //    return true;
+        //}
     }
 }
