@@ -10,15 +10,15 @@ namespace Model
          /// <summary>
         /// 单位
         /// </summary>
-        public string  UnitId { get; set; }
+        public string  UnitName { get; set; }
         /// <summary>
         /// 类型
         /// </summary>
-        public string  SortId { get; set; }
+        public string  SortName { get; set; }
         /// <summary>
         /// 供应商信息
         /// </summary>
-        public string  WholeSalerId { get; set; }
+        public string  WholeSalerName { get; set; }
 
         /// <summary>
         /// 商品名
@@ -55,15 +55,37 @@ namespace Model
         ///过期时间(报废)
         /// </summary>
         public DateTime LastTime { get; set; }
+        /// <summary>
+         /// 备注
+         /// </summary>
+         public string Remark { get; set; }
 
-
-
-
-        public  GoodsInfoHelper GetGoodsInfoHelper(string goodsName,string sortName)
+        public GoodsInfoHelper()
         {
-
-            return null;
+            //默认一年
+            this.LastTime = DateTime.Now + new TimeSpan(365, 0, 0, 0);
         }
+
+
+
+        public GoodsInfoHelper(string goodsName,string sortName,string unitName,double  total,double  saleCount,double surplusCount,decimal purPrice,decimal payPrice,string wholeSalesName,DateTime lastTime,string reamark)
+        {
+            this.GoodsName = goodsName;
+            this.SortName = sortName;
+            this.UnitName = unitName;
+            this.Total = total;
+            this.SalesCount = saleCount;
+            this.SurplusCount = surplusCount;
+            this.PurPrice = purPrice;
+            this.PayPrice = payPrice;
+            this.WholeSalerName = wholeSalesName;
+            this.LastTime = lastTime;
+            this.Remark = reamark;
+            this.CreateTime = DateTime.Now;
+            
+        }
+
+      
 
     }
 }

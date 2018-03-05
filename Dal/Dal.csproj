@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDal.cs" />
+    <Compile Include="GoodHelperDal.cs" />
     <Compile Include="GoodsInfoDal.cs" />
     <Compile Include="NoReceiveMoneyDal.cs" />
     <Compile Include="OrderInfoDal.cs" />

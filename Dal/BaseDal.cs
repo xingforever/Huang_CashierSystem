@@ -28,6 +28,24 @@ namespace Dal
             }
             return (affected == 1);
         }
+        public int  GetIdByAdd(T entity)
+        {
+            //表名字
+            int id = 0;
+            string modelName = entity.GetModelName();           
+            string sqls = entity.GetSql();
+            string pamerSql = entity.GetAddSql();
+            string sql = "Insert into " + "[" + modelName + "]" + sqls + pamerSql;
+            try
+            {
+                id = SqlHelper.ExecuteNonQuery(sql);
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+            return id;
+        }
 
         public bool Edit(T entity)
         {

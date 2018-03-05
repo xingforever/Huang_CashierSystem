@@ -37,12 +37,15 @@ namespace Dal
 
         public static int ExecuteNonQuery(string safeSql)
        {
-
+            int id = 0;
             OleDbCommand cmd = new OleDbCommand(safeSql, Connection);
             try
             {
 
                 cmd.ExecuteNonQuery();
+                cmd.CommandText = "select @@identity as id";
+                cmd.Parameters.Clear();
+                id = Convert.ToInt32(cmd.ExecuteScalar());
             }
             catch (Exception ex)
             {
@@ -54,7 +57,7 @@ namespace Dal
                 cmd.Dispose();
                 Connection.Close();
             }
-            return 1;
+            return id;
 
         }
 
@@ -138,34 +141,41 @@ namespace Dal
                 Connection.Close();
             }
         }
-
-
-        ////批量数据的插入
-        //public static void insertToStockDataByBatch(String[] sqlArray)
-        //{
-        //    try
-        //    {
-        //        OleDbConnection aConnection = Connection;
-        //        aConnection.Open();
-        //        OleDbTransaction transaction = aConnection.BeginTransaction();
-
-        //        OleDbCommand aCommand = new OleDbCommand();
-        //        aCommand.Connection = aConnection;
-        //        aCommand.Transaction = transaction;
-        //        for (int i = 0; i < sqlArray.Length; i++)
-        //        {
-        //            aCommand.CommandText = sqlArray[i];
-        //            aCommand.ExecuteNonQuery();
-        //            LogHelper.log(Convert.ToString(i));
-        //        }
-        //        transaction.Commit();
-        //        aConnection.Close();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        LogHelper.log(e.Message);
-        //    }
-        //}
+        /// <summary>
+        /// 快速插入
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="dt"></param>
+        public static bool ExcuteTableSql(string tableName, DataTable dt, out string error)
+        {
+            error = "错误";
+            try
+            {
+                List<string> columnList = new List<string>();
+                foreach (DataColumn one in dt.Columns)
+                {
+                    columnList.Add(one.ColumnName);
+                }
+                OleDbDataAdapter adapter = new OleDbDataAdapter();
+                adapter.SelectCommand = new OleDbCommand("select * from " + tableName, connection);
+                using (OleDbCommandBuilder builder = new OleDbCommandBuilder(adapter))
+                {
+                    adapter.InsertCommand = builder.GetInsertCommand();
+                    foreach (string one in columnList)
+                    {
+                        adapter.InsertCommand.Parameters.Add(new OleDbParameter(one, dt.Columns[one].DataType));
+                    }
+                    adapter.Update(dt);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+                return false;
+            }
+           
+        }
 
         ////产生sql语句，为批量执行做准备
         //public static String generateSQLSentence(String stockCode, String transDate, String open,

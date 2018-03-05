@@ -235,6 +235,12 @@ namespace CashierSystem
                 return;
             }
         }
+        private void btnInitGoodsInfo_Click(object sender, EventArgs e)
+        {
+            Frm_InitData frm_InitData = new Frm_InitData();
+            frm_InitData.ShowDialog();
+           
+        }
         /// <summary>
         /// 初始化,加载黄历与天气
         /// </summary>
@@ -2292,5 +2298,7 @@ namespace CashierSystem
         {
             this.tspLblSystemTime.Text = "系统当前时间：" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
         }
+
+        
     }
 }

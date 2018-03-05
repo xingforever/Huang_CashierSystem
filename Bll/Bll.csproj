@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseBll.cs" />
+    <Compile Include="GoodsInfoHelperBll.cs" />
     <Compile Include="GoodsInfoBll.cs" />
     <Compile Include="NoReceiveMoneyBll.cs" />
     <Compile Include="OrderInfoBll.cs" />
