@@ -39,5 +39,9 @@ namespace Bll
         {
             return goodHelperDal.InsertData(dataTable ,out error);
         }
+        public bool InsertData(List<GoodsInfo>GoodIndoList, out List<string> error)
+        {
+            return goodHelperDal.InsertData2(GoodIndoList, out error);
+        }
     }
 }

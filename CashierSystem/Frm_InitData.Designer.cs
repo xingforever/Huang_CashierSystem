@@ -75,7 +75,7 @@
             this.btnUpLoadDataTable.Name = "btnUpLoadDataTable";
             this.btnUpLoadDataTable.Size = new System.Drawing.Size(137, 33);
             this.btnUpLoadDataTable.TabIndex = 2;
-            this.btnUpLoadDataTable.Text = "上次商品数据表";
+            this.btnUpLoadDataTable.Text = "上传商品数据表";
             this.btnUpLoadDataTable.UseVisualStyleBackColor = true;
             this.btnUpLoadDataTable.Click += new System.EventHandler(this.btnUpLoadDataTable_Click);
             // 

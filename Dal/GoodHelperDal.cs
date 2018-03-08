@@ -151,7 +151,8 @@ namespace Dal
                 goodsInfoHelper.SalesCount = Convert.ToDouble(dataRow[5].ToString());
                 goodsInfoHelper.SurplusCount = Convert.ToDouble(dataRow[6].ToString());
                 goodsInfoHelper.PurPrice=Convert.ToDecimal(dataRow[7].ToString());
-                goodsInfoHelper.PayPrice = Convert.ToDecimal(dataRow[8].ToString());              
+                goodsInfoHelper.PayPrice = Convert.ToDecimal(dataRow[8].ToString());
+                goodsInfoHelper.CreateTime = DateTime.Now;
                 if (dataRow[9].ToString()=="")
                 {
                     goodsInfoHelper.WholeSalerName = "未知";
@@ -186,10 +187,25 @@ namespace Dal
         public DataTable GetDataTableByGoodsInfoList(List<GoodsInfo> goodInfosList)
         {
             DataTable dataTable = new DataTable();
-            for (int i = 0; i < 13; i++)
+           
             {
-                dataTable.Columns.Add();
+                dataTable.Columns.Add("GoodsName");
+                dataTable.Columns.Add("SortId");
+                dataTable.Columns.Add("UnitId");
+                dataTable.Columns.Add("GoodsType");
+                dataTable.Columns.Add("PurPrice");
+                dataTable.Columns.Add("PayPrice");
+                dataTable.Columns.Add("Total");
+                dataTable.Columns.Add("SalesCount");
+                dataTable.Columns.Add("SurplusCount");
+                dataTable.Columns.Add("WholeSalerId");
+                dataTable.Columns.Add("CreateTime");
+                dataTable.Columns.Add("LastTime");
+                dataTable.Columns.Add("Remark");
+                dataTable.Columns.Add("DelFlag");
+             
             }
+            
             for (int i = 0; i < goodInfosList.Count; i++)
             {
                 var goodinfo = goodInfosList[i];
@@ -203,10 +219,11 @@ namespace Dal
                 dataTable.Rows[i][6] = goodinfo.Total;
                 dataTable.Rows[i][7] = goodinfo.SalesCount;
                 dataTable.Rows[i][8] = goodinfo.SurplusCount;
-                dataTable.Rows[i][9] = goodinfo.CreateTime;
-                dataTable.Rows[i][10] = goodinfo.LastTime;
-                dataTable.Rows[i][11] = goodinfo.Remark;
-                dataTable.Rows[i][12] = goodinfo.DelFlag;
+                dataTable.Rows[i][9] = goodinfo.WholeSalerId;
+                dataTable.Rows[i][10] = goodinfo.CreateTime;
+                dataTable.Rows[i][11] = goodinfo.LastTime;
+                dataTable.Rows[i][12] = goodinfo.Remark;
+                dataTable.Rows[i][13] = goodinfo.DelFlag;
                 var dd = dataTable.Rows[i];
                 var dfdf = dataTable.Rows[i][0];
             }
@@ -222,11 +239,18 @@ namespace Dal
             string tableName = "GoodsInfo";
              error = "";
             return  SqlHelper.ExcuteTableSql(tableName, dataTable, out error);
+            
+        }
+        public bool InsertData2(List<GoodsInfo >goodInfoList, out List<string> error)
+        {
+            string tableName = "GoodsInfo";
+            error = new List<string>();
+            return SqlHelper.ExcuteTableSql2(tableName, goodInfoList, out error);
 
 
 
         }
 
-        
+
     }
 }

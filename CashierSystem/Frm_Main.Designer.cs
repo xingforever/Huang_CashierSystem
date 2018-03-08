@@ -54,12 +54,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle52 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle53 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle54 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle58 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle60 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle55 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle56 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle57 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle58 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle59 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle60 = new System.Windows.Forms.DataGridViewCellStyle();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel23 = new System.Windows.Forms.Panel();
@@ -180,6 +180,7 @@
             this.tspGoodsInfo_Remove = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
             this.tspGoodsInfo_ReLoad = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspGoodIndo_Export = new System.Windows.Forms.ToolStripMenuItem();
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel22 = new System.Windows.Forms.Panel();
             this.lblGoodsCount = new System.Windows.Forms.Label();
@@ -360,9 +361,9 @@
             this.SetingName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SettingValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel19 = new System.Windows.Forms.Panel();
+            this.btnInitGoodsInfo = new System.Windows.Forms.Button();
             this.btnSaveSetting = new System.Windows.Forms.Button();
             this.systemTime = new System.Windows.Forms.Timer(this.components);
-            this.btnInitGoodsInfo = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel23.SuspendLayout();
             this.panel14.SuspendLayout();
@@ -496,36 +497,32 @@
             this.lblweathercity.AutoSize = true;
             this.lblweathercity.Location = new System.Drawing.Point(133, 4);
             this.lblweathercity.Name = "lblweathercity";
-            this.lblweathercity.Size = new System.Drawing.Size(29, 12);
+            this.lblweathercity.Size = new System.Drawing.Size(0, 12);
             this.lblweathercity.TabIndex = 8;
-            this.lblweathercity.Text = "city";
             // 
             // lblWeatherTemperature
             // 
             this.lblWeatherTemperature.AutoSize = true;
             this.lblWeatherTemperature.Location = new System.Drawing.Point(45, 44);
             this.lblWeatherTemperature.Name = "lblWeatherTemperature";
-            this.lblWeatherTemperature.Size = new System.Drawing.Size(113, 12);
+            this.lblWeatherTemperature.Size = new System.Drawing.Size(0, 12);
             this.lblWeatherTemperature.TabIndex = 7;
-            this.lblWeatherTemperature.Text = "WeatherTemperature";
             // 
             // lblWeatherWind
             // 
             this.lblWeatherWind.AutoSize = true;
             this.lblWeatherWind.Location = new System.Drawing.Point(240, 23);
             this.lblWeatherWind.Name = "lblWeatherWind";
-            this.lblWeatherWind.Size = new System.Drawing.Size(71, 12);
+            this.lblWeatherWind.Size = new System.Drawing.Size(0, 12);
             this.lblWeatherWind.TabIndex = 7;
-            this.lblWeatherWind.Text = "WeatherWind";
             // 
             // lblWeatherTime
             // 
             this.lblWeatherTime.AutoSize = true;
             this.lblWeatherTime.Location = new System.Drawing.Point(45, 23);
             this.lblWeatherTime.Name = "lblWeatherTime";
-            this.lblWeatherTime.Size = new System.Drawing.Size(53, 12);
+            this.lblWeatherTime.Size = new System.Drawing.Size(0, 12);
             this.lblWeatherTime.TabIndex = 7;
-            this.lblWeatherTime.Text = "dateTime";
             // 
             // lblSettingWeather
             // 
@@ -1615,8 +1612,9 @@
             this.tspGoosInfo_Add,
             this.tspGoodsInfo_Edit,
             this.tspGoodsInfo_Remove,
-            this.toolStripMenuItem11,
-            this.tspGoodsInfo_ReLoad});
+            this.tspGoodsInfo_ReLoad,
+            this.tspGoodIndo_Export,
+            this.toolStripMenuItem11});
             this.menuStrip5.Location = new System.Drawing.Point(3, 46);
             this.menuStrip5.Name = "menuStrip5";
             this.menuStrip5.Size = new System.Drawing.Size(862, 25);
@@ -1662,6 +1660,14 @@
             this.tspGoodsInfo_ReLoad.Size = new System.Drawing.Size(60, 21);
             this.tspGoodsInfo_ReLoad.Text = "刷新";
             this.tspGoodsInfo_ReLoad.Click += new System.EventHandler(this.tspGoodsInfo_ReLoad_Click);
+            // 
+            // tspGoodIndo_Export
+            // 
+            this.tspGoodIndo_Export.Image = ((System.Drawing.Image)(resources.GetObject("tspGoodIndo_Export.Image")));
+            this.tspGoodIndo_Export.Name = "tspGoodIndo_Export";
+            this.tspGoodIndo_Export.Size = new System.Drawing.Size(60, 21);
+            this.tspGoodIndo_Export.Text = "导出";
+            this.tspGoodIndo_Export.Click += new System.EventHandler(this.tspGoodIndo_Export_Click);
             // 
             // panel9
             // 
@@ -2415,34 +2421,34 @@
             // dgvTodayOrder
             // 
             this.dgvTodayOrder.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle58.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle58.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle58.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle58.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle58.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle58.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle58.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvTodayOrder.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle58;
+            dataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle55.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle55.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle55.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle55.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle55.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle55.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvTodayOrder.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle55;
             this.dgvTodayOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle59.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle59.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle59.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle59.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle59.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle59.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvTodayOrder.DefaultCellStyle = dataGridViewCellStyle59;
+            dataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle56.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle56.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle56.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle56.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle56.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle56.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvTodayOrder.DefaultCellStyle = dataGridViewCellStyle56;
             this.dgvTodayOrder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvTodayOrder.Location = new System.Drawing.Point(3, 51);
             this.dgvTodayOrder.Name = "dgvTodayOrder";
-            dataGridViewCellStyle60.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle60.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle60.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle60.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle60.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle60.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle60.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvTodayOrder.RowHeadersDefaultCellStyle = dataGridViewCellStyle60;
+            dataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle57.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle57.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle57.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle57.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle57.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle57.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvTodayOrder.RowHeadersDefaultCellStyle = dataGridViewCellStyle57;
             this.dgvTodayOrder.RowTemplate.Height = 23;
             this.dgvTodayOrder.Size = new System.Drawing.Size(862, 313);
             this.dgvTodayOrder.TabIndex = 5;
@@ -3506,14 +3512,14 @@
             // dgvSetting
             // 
             this.dgvSetting.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle55.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle55.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle55.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle55.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle55.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle55.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle55.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSetting.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle55;
+            dataGridViewCellStyle58.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle58.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle58.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle58.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle58.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle58.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle58.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSetting.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle58;
             this.dgvSetting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvSetting.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.SetingName,
@@ -3528,9 +3534,9 @@
             // SetingName
             // 
             this.SetingName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle56.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle56.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.SetingName.DefaultCellStyle = dataGridViewCellStyle56;
+            dataGridViewCellStyle59.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle59.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SetingName.DefaultCellStyle = dataGridViewCellStyle59;
             this.SetingName.HeaderText = "设置项目";
             this.SetingName.Name = "SetingName";
             this.SetingName.ReadOnly = true;
@@ -3539,9 +3545,9 @@
             // SettingValue
             // 
             this.SettingValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle57.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle57.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.SettingValue.DefaultCellStyle = dataGridViewCellStyle57;
+            dataGridViewCellStyle60.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle60.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SettingValue.DefaultCellStyle = dataGridViewCellStyle60;
             this.SettingValue.HeaderText = "设置值";
             this.SettingValue.Name = "SettingValue";
             this.SettingValue.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -3556,8 +3562,21 @@
             this.panel19.Size = new System.Drawing.Size(1062, 53);
             this.panel19.TabIndex = 0;
             // 
+            // btnInitGoodsInfo
+            // 
+            this.btnInitGoodsInfo.Location = new System.Drawing.Point(14, 18);
+            this.btnInitGoodsInfo.Name = "btnInitGoodsInfo";
+            this.btnInitGoodsInfo.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.btnInitGoodsInfo.Size = new System.Drawing.Size(172, 32);
+            this.btnInitGoodsInfo.TabIndex = 0;
+            this.btnInitGoodsInfo.Text = "批量初始化添加数据";
+            this.btnInitGoodsInfo.UseVisualStyleBackColor = true;
+            this.btnInitGoodsInfo.Click += new System.EventHandler(this.btnInitGoodsInfo_Click);
+            // 
             // btnSaveSetting
             // 
+            this.btnSaveSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveSetting.AutoSize = true;
             this.btnSaveSetting.Location = new System.Drawing.Point(942, 18);
             this.btnSaveSetting.Name = "btnSaveSetting";
             this.btnSaveSetting.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
@@ -3571,17 +3590,6 @@
             // 
             this.systemTime.Interval = 1000;
             this.systemTime.Tick += new System.EventHandler(this.systemTime_Tick);
-            // 
-            // btnInitGoodsInfo
-            // 
-            this.btnInitGoodsInfo.Location = new System.Drawing.Point(14, 18);
-            this.btnInitGoodsInfo.Name = "btnInitGoodsInfo";
-            this.btnInitGoodsInfo.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.btnInitGoodsInfo.Size = new System.Drawing.Size(172, 32);
-            this.btnInitGoodsInfo.TabIndex = 0;
-            this.btnInitGoodsInfo.Text = "批量初始化添加数据";
-            this.btnInitGoodsInfo.UseVisualStyleBackColor = true;
-            this.btnInitGoodsInfo.Click += new System.EventHandler(this.btnInitGoodsInfo_Click);
             // 
             // Huang_System
             // 
@@ -3704,6 +3712,7 @@
             this.tabSetting.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSetting)).EndInit();
             this.panel19.ResumeLayout(false);
+            this.panel19.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -4013,6 +4022,7 @@
         private System.Windows.Forms.ToolStripStatusLabel tspLblSystemTime;
         private System.Windows.Forms.Timer systemTime;
         private System.Windows.Forms.Button btnInitGoodsInfo;
+        private System.Windows.Forms.ToolStripMenuItem tspGoodIndo_Export;
     }
 }
 

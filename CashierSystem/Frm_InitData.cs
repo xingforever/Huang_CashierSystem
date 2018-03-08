@@ -68,13 +68,21 @@ namespace CashierSystem
                 {
                     if (errorMessage.Count!=0)
                     {
+                        //Excel文件信息
+                        FileInfo fileInfo = new FileInfo(filePath);//关于文件信息
+                        var fileDic = fileInfo.Directory;
+                        var errorMessagePath = fileDic + "/Error.Txt";
                         //保存错误信息
+                        File.WriteAllLines(errorMessagePath, errorMessage.ToArray());
                     }
+                    MessageBox.Show("保存成功!");
+                    this.Close();
+
                 }
                 else
                 {
                     MessageBox.Show("数据导入成功!!");
-                    return;
+                    this.Close();
                 }
             }
             else

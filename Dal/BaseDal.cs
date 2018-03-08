@@ -14,19 +14,19 @@ namespace Dal
         {
             //表名字
             string modelName = entity.GetModelName();
-            int affected = 0;
+           
             string sqls = entity.GetSql();
             string pamerSql = entity.GetAddSql();
             string sql = "Insert into " + "[" + modelName + "]" + sqls + pamerSql;
             try
             {
-                affected = SqlHelper.ExecuteNonQuery(sql);
+                return SqlHelper.ExecuteNonQuery(sql);
             }
             catch (Exception ex)
             {
                 return false;
             }
-            return (affected == 1);
+            
         }
         public int  GetIdByAdd(T entity)
         {
@@ -38,7 +38,7 @@ namespace Dal
             string sql = "Insert into " + "[" + modelName + "]" + sqls + pamerSql;
             try
             {
-                id = SqlHelper.ExecuteNonQuery(sql);
+                id = SqlHelper.ExecuteQueryId(sql);
             }
             catch (Exception ex)
             {
@@ -49,24 +49,18 @@ namespace Dal
 
         public bool Edit(T entity)
         {
-            string modelName = entity.GetModelName();
-            int affected = 0;
-
+            string modelName = entity.GetModelName();           
             string pamerSql = entity.GetEditSql();
             string sql = "Update [" + modelName + "]" + pamerSql;
             try
             {
-                affected = SqlHelper.ExecuteNonQuery(sql);
+              return SqlHelper.ExecuteNonQuery(sql);
             }
             catch (Exception ex)
             {
                 return false;
             }
-            if (affected<1)
-            {
-                return false;
-            }
-            return true;
+          
 
         }
 
@@ -168,15 +162,8 @@ namespace Dal
             try
             {
                 string sql = "Update  [" + entity.GetModelName() + "] Set [DelFlag]= "+true+" Where [ID]=" + id + "";
-                var affected = SqlHelper.ExecuteNonQuery(sql);
-                if (affected > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+               return  SqlHelper.ExecuteNonQuery(sql);
+               
             }
             catch
             {
@@ -188,15 +175,8 @@ namespace Dal
             try
             {
                 string sql = "Update  [" + entity.GetModelName() + "] Set [DelFlag]=" + true + "  Where [ID]=" + entity.Id + "";
-                var affected = SqlHelper.ExecuteNonQuery(sql);
-                if (affected > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return  SqlHelper.ExecuteNonQuery(sql);
+               
             }
             catch
             {

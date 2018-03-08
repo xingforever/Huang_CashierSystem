@@ -5,11 +5,16 @@ using System.Text;
 using System.Data;
 using System.Data.OleDb;
 using Microsoft.Office.Interop.Access.Dao;
+using Model;
 
 namespace Dal
 {
     public class SqlHelper
     {
+     //64位机器用
+     //Provider = Microsoft.ACE.OLEDB.12.0; Data Source = 文件路径; HDR=YES;
+     //32位机器用
+     //Provider = Microsoft.Jet.OLEDB.4.0; Data Source = 文件路径; HDR=YES
         private static string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=Sales.mdb;Persist Security Info=False";
         private static OleDbConnection connection;
 
@@ -35,8 +40,28 @@ namespace Dal
             }
         }
 
-        public static int ExecuteNonQuery(string safeSql)
-       {
+
+        public static bool  ExecuteNonQuery(string safeSql)
+        {
+            OleDbCommand cmd = new OleDbCommand(safeSql, Connection);
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                string d = ex.Message;
+                return false;
+            }
+            finally
+            {
+                cmd.Dispose();
+                Connection.Close();
+            }
+            return true ;
+        }
+        public static int ExecuteQueryId(string safeSql)
+        {
             int id = 0;
             OleDbCommand cmd = new OleDbCommand(safeSql, Connection);
             try
@@ -174,68 +199,76 @@ namespace Dal
                 error = e.Message;
                 return false;
             }
-           
+
         }
 
-        ////产生sql语句，为批量执行做准备
-        //public static String generateSQLSentence(String stockCode, String transDate, String open,
-        //                                    String close, String high, String low, String turn, String volume)
-        //{
-        //    String sql = "INSERT INTO stockData ( stockCode, transDate, [open], [close], high, low, turn, volume ) " +
-        //                "VALUES (\"" + stockCode + "\"" +
-        //                       ",\"" + transDate + "\"" +
-        //                       ",\"" + open + "\"" +
-        //                       ",\"" + close + "\"" +
-        //                       ",\"" + high + "\"" +
-        //                       ",\"" + low + "\"" +
-        //                       ",\"" + turn + "\"" +
-        //                       ",\"" + volume + "\")";
-        //    return sql;
-        //}
+        public void InsertDataByDAOEngine(DataTable dt)
+        {
+            // DAO.DBEngine dbEngine = new DAO.DBEngine();
+            //DAO.Database db = dbEngine.OpenDatabase(DbPath);
+            //DAO.Recordset rs = db.OpenRecordset(TableName);
+            //DAO.Field[] fields = new DAO.Field[dt.Columns.Count];
+            //int i = 0;
+            //foreach (DataColumn one in dt.Columns)
+            //{
+            //    fields[i++] = rs.Fields[one.ColumnName];
+            //}
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    rs.AddNew();
+            //    for (int j = 0; j < fields.Length; j++)
+            //    {
+            //        fields[j].Value = dr[j];
+            //    }
+            //    rs.Update();
+            //}
 
-        //public  static void  AddAllData()
-        //{
-        //    DAO.DBEngine dbEngine = new DAO.DBEngine();
-        //    DAO.Database db = dbEngine.OpenDatabase(databasePath);
+            //rs.Close();
+            //db.Close();
+        }
+        public static bool ExcuteTableSql2(string tableName, List<GoodsInfo> GoodsInfoList, out List<string> errors)
+        {
+            errors = new List<string>();
+            OleDbTransaction tran = null;
+            int index = 0;
+            try
+            {
+                //开始事务
+                tran = Connection.BeginTransaction();
+                OleDbCommand cmd = Connection.CreateCommand();
+                cmd.Transaction = tran;
+                for (int i = 0; i < GoodsInfoList.Count; i++)
+                {
+                    index = i;
+                    GoodsInfo goodInfo = GoodsInfoList[i];
+                    string modelName = goodInfo.GetModelName();
+                    string sqls = goodInfo.GetSql();
+                    string pamerSql = goodInfo.GetAddSql();
+                    string sql_insert = "Insert into " + "[" + modelName + "]" + sqls + pamerSql;
+                    cmd.CommandText = sql_insert;
+                    cmd.ExecuteNonQuery();
+                }
+                tran.Commit();//提交事务
+                return true;
 
-        //    DAO.Recordset rs = db.OpenRecordset("Table");
-        //    DAO.Field[] myFields = new DAO.Field[9];
-        //    myFields[0] = rs.Fields["F_TYPE"];
-        //    myFields[1] = rs.Fields["F_TAG"];
-        //    myFields[2] = rs.Fields["F_RULEID"];
-        //    myFields[3] = rs.Fields["F_SOURCEID"];
-        //    myFields[4] = rs.Fields["F_TAGID"];
-        //    myFields[5] = rs.Fields["F_DESCRIPTION"];
-        //    myFields[6] = rs.Fields["F_TASKID"];
-        //    myFields[7] = rs.Fields["F_RULEGROUP"];
-        //    myFields[8] = rs.Fields["F_RULENAME"];
+            }
+            catch (Exception e)
+            {
+                errors.Add("第" + index + "数据出错,错误信息:" + e.Message);
+                tran.Rollback();
+                return false;
+            }
+            finally
+            {
+                
+               
+                Connection.Close();
+            }
 
-        //    int strTagKey = -1;
-        //    for (int i = 0; i < sList.Count; i++)
-        //    {
-        //        int key;
-        //        if (int.TryParse(sList[i].TagKey, out key))
-        //            strTagKey = string.IsNullOrEmpty(sList[i].TagKey) ? -1 : int.Parse(sList[i].TagKey);
+        }
 
-        //        rs.AddNew();
 
-        //        myFields[0].Value = sList[i].RuleGroup;
-        //        myFields[1].Value = sList[i].Tag;
-        //        myFields[2].Value = sList[i].CheckRule.Key;
-        //        myFields[3].Value = strTagKey;
-        //        myFields[4].Value = strTagKey;
-        //        myFields[5].Value = sList[i].Description;
-        //        myFields[6].Value = nTaskID;
-        //        myFields[7].Value = sList[i].RuleGroup;
-        //        myFields[8].Value = sList[i].RuleName;
 
-        //        rs.Update();
-
-        //    }
-        //    rs.Close();
-        //    db.Close();
-
-        //    return true;
-        //}
+        
     }
 }

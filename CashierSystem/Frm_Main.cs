@@ -96,6 +96,7 @@ namespace CashierSystem
                 if (i == 0)
                 {
                     LoadGoodsInfo();//加载条件框
+                    //与商品管理相比,商品展示 没有商品单价显示                    
                     this.dgvGoodsInfo.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
                     this.dgvGoodsInfo = dataGridViewHelper.Init(this.dgvGoodsInfo, nameList, handerTxt, hideIndex);
                     GetDgv(0);
@@ -110,6 +111,8 @@ namespace CashierSystem
                 else if (i == 2)
                 {
                     LoadGoodsInfoManager();
+                    //与商品管理相比,商品展示 没有商品单价显示  
+                    hideIndex.RemoveAt(1);//第二项为隐藏单价
                     this.dgvGoodSInfoManager.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
                     this.dgvGoodSInfoManager = dataGridViewHelper.Init(this.dgvGoodSInfoManager, nameList, handerTxt, hideIndex);
                     GetDgv(2);
@@ -1077,7 +1080,19 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspGoodsInfo_Edit_Click(object sender, EventArgs e)
         {
-
+            //编辑数据时候不会修改搜索条件
+            //此时 可以根据SearchModel  获取当前页数的起始ID
+            int startIndex = 0;
+            try
+            {
+                //获取当前页起始ID
+                var pageNow = Convert.ToInt32(tspGMPageNow.Text);
+                startIndex = GIMSearchModel.PageStartIndex[pageNow];
+            }
+            catch 
+            {
+                startIndex = 0;
+            }
             try
             {
                 var dataRow = this.dgvGoodSInfoManager.SelectedRows[0];
@@ -1087,9 +1102,10 @@ namespace CashierSystem
                 frm_GoodsInfo.Focus();
                 if ((Boolean)frm_GoodsInfo.Tag == true)
                 {
+                   
                     this.dgvGoodSInfoManager.Tag = false;
                     tspLblGoodsManagerCount.Tag = "1";
-                    SearchGoodsManager();
+                    SearchGoodsManager(GIMSearchModel,startIndex);
                     GetDgv(SelectIndex);//刷新  这里暂时只能到第一页              
                 }
             }
@@ -1140,6 +1156,16 @@ namespace CashierSystem
                 UnSelectedTips();
                 return;
             }
+
+
+        }
+        /// <summary>
+        ///导出数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspGoodIndo_Export_Click(object sender, EventArgs e)
+        {
 
 
         }
@@ -2299,6 +2325,8 @@ namespace CashierSystem
             this.tspLblSystemTime.Text = "系统当前时间：" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
         }
 
-        
+       
+
+       
     }
 }
