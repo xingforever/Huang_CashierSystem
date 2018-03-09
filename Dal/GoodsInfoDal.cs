@@ -39,7 +39,7 @@ namespace Dal
             int count = searchModel.PageCount;
             Dictionary<string, string> dic = searchModel.dic;
             string sql1 = "select top " + count.ToString();//筛选一定量数据
-            string sql2 = @"  goods.Id,goods.GoodsName,sort.SortName as SortName ,unit.UnitName as UnitName,goods.GoodsType, goods.PurPrice,goods.PayPrice ,goods.SurplusCount, wsoles.SupName as WholeSalerName,goods.Remark
+            string sql2 = @"  goods.Id,goods.GoodsName,sort.SortName as SortName ,unit.UnitName as UnitName,goods.GoodsType, goods.PurPrice,goods.PayPrice,goods.Total,goods.SurplusCount, wsoles.SupName as WholeSalerName,goods.Remark
                from ((GoodsInfo as goods
                 inner join SortInfo as sort
                 on goods.SortId=sort.Id)
@@ -50,7 +50,6 @@ namespace Dal
                 where goods.DelFlag= false and goods.id  ";
             //顺序排序
             sql2 += ">=" + startIndex.ToString();
-
             string sql3 = " order by goods.id ";
             string sql = sql1 + sql2;//排序
             //限制条件
@@ -101,7 +100,12 @@ namespace Dal
                 {
                     searchModel.PageStartIndex.Add(fitstid);//
                 }
-                searchModel.PageStartIndex.Add(lastid + 1);//下一页  
+                //如果该集合中不存在
+                if (!searchModel.PageStartIndex.Contains(lastid+1))
+                {
+                    searchModel.PageStartIndex.Add(lastid + 1);//下一页  
+                }
+              
             }
 
             return dataTable;

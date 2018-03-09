@@ -112,7 +112,8 @@ namespace CashierSystem
                 {
                     LoadGoodsInfoManager();
                     //与商品管理相比,商品展示 没有商品单价显示  
-                    hideIndex.RemoveAt(1);//第二项为隐藏单价
+                    hideIndex.RemoveAt(1);//该项为隐藏单价
+                    hideIndex.RemoveAt(1);//该项为隐藏总量
                     this.dgvGoodSInfoManager.Tag = false;//false 表示需要更新数据  true 表示不需要更新数据
                     this.dgvGoodSInfoManager = dataGridViewHelper.Init(this.dgvGoodSInfoManager, nameList, handerTxt, hideIndex);
                     GetDgv(2);
@@ -364,8 +365,10 @@ namespace CashierSystem
         /// <summary>
         /// 获取数据并展示在响应的标签页
         /// </summary>
-        /// <param name="id"></param>
-        public void GetDgv(int id, SearchModel searchModel = null)
+        /// <param name="id">查询表</param>
+        /// <param name="searchModel">搜索条件</param>
+        /// <param name="isExport">是否导出</param>
+        public void GetDgv(int id, SearchModel searchModel = null,bool isExport=false)
         {
             DataTable dataTable = new DataTable();
             if (searchModel == null)
@@ -392,66 +395,154 @@ namespace CashierSystem
                     if (!(bool)this.dgvTodayOrder.Tag)
                     {
                         dataTable = DataManager.OrderInfoBLL.GetTodayDataTable(searchModel);
-                        this.dgvTodayOrder = dataGridViewHelper.FillData(this.dgvTodayOrder, dataTable, false);
-                        LoadToadyOrderProfit();
-                        this.dgvTodayOrder.Tag = true;
+                        if (!isExport)
+                        {
+                            this.dgvTodayOrder = dataGridViewHelper.FillData(this.dgvTodayOrder, dataTable, false);
+                            LoadToadyOrderProfit();
+                            this.dgvTodayOrder.Tag = true;
+                        }
+                        else
+                        {
+                            //保存数据表
+                            SaveDataTable(dataTable);
+                        }
+                       
                     }
                     break;
                 case 2:
                     if (!(bool)this.dgvGoodSInfoManager.Tag)
                     {
-                        searchModel.PageCount = Setting.GoodsManagerPageCount;
+                        //导出数据
+                        if (isExport)
+                        {
+                            searchModel.PageCount = int.MaxValue;
+                        }
+                        else
+                        {
+                            searchModel.PageCount = Setting.GoodsManagerPageCount;
+                        }                        
                         dataTable = DataManager.GoodsInfoBLL.GetDataTablebyPammer(searchModel);
-                        this.dgvGoodSInfoManager = dataGridViewHelper.FillData(this.dgvGoodSInfoManager, dataTable);
-                        LoadGoodsManagerStatus(searchModel);//加载状态栏
-                        this.dgvGoodSInfoManager.Tag = true;
+                        if (!isExport)
+                        {
+                            this.dgvGoodSInfoManager = dataGridViewHelper.FillData(this.dgvGoodSInfoManager, dataTable);
+                            LoadGoodsManagerStatus(searchModel);//加载状态栏
+                            this.dgvGoodSInfoManager.Tag = true;
+                        }
+                        else
+                        {
+                            //保存数据表
+                            SaveDataTable(dataTable);
+                        }
                     }
                     break;
                 case 3:
                     if (!(bool)this.dgvAllOrder.Tag)
                     {
-                        searchModel.PageCount = Setting.AllOrderPageCount;
+                        if (isExport)
+                        {
+                            searchModel.PageCount = int.MaxValue;
+                        }
+                        else
+                        {
+                            searchModel.PageCount = Setting.AllOrderPageCount;
+                        }                       
                         dataTable = DataManager.OrderInfoBLL.GetDataTableByPammer(searchModel);
-                        this.dgvAllOrder = dataGridViewHelper.FillData(this.dgvAllOrder, dataTable, false);
-                        LoadAllOrderStatus(searchModel);
-                        this.dgvAllOrder.Tag = true;
+                        if (!isExport)
+                        {
+                            this.dgvAllOrder = dataGridViewHelper.FillData(this.dgvAllOrder, dataTable, false);
+                            LoadAllOrderStatus(searchModel);
+                            this.dgvAllOrder.Tag = true;
+                        }
+                        else
+                        {
+                            //保存数据表
+                            SaveDataTable(dataTable);
+                        }
                     }
                     break;
                 case 4:
                     if (!(bool)this.dgvProfitsInfo.Tag)
                     {
-                        searchModel.PageCount = Setting.ProfitPageCount;
+                        if (isExport)
+                        {
+                            searchModel.PageCount = int.MaxValue;
+                        }
+                        else
+                        {
+                            searchModel.PageCount = Setting.ProfitPageCount;
+                        }                       
                         dataTable = DataManager.ProfitsInfoBLL.GetDataTablebyPammer(searchModel);
-                        this.dgvProfitsInfo = dataGridViewHelper.FillData(this.dgvProfitsInfo, dataTable, false);
-                        //可以排序 (排序后不能改颜色)
-                        this.dgvProfitsInfo.Columns["IsPay"].SortMode = DataGridViewColumnSortMode.Automatic;
-                        LoadProfitStatus(searchModel);
-                        this.dgvProfitsInfo.Tag = true;
+                        if (!isExport)
+                        {
+                            this.dgvProfitsInfo = dataGridViewHelper.FillData(this.dgvProfitsInfo, dataTable, false);
+                            //可以排序 (排序后不能改颜色)
+                            this.dgvProfitsInfo.Columns["IsPay"].SortMode = DataGridViewColumnSortMode.Automatic;
+                            LoadProfitStatus(searchModel);
+                            this.dgvProfitsInfo.Tag = true;
+                        }
+                        else
+                        {
+                            //保存数据表
+                            SaveDataTable(dataTable);
+                        }
                     }
                     break;
                 case 5:
                     if (!(bool)this.dgvNoReceiveMoney.Tag)
                     {
-                        dataTable = DataManager.NoReceiveMoneyBLL.GetDataTablebyPammer(searchModel);
-                        this.dgvNoReceiveMoney = dataGridViewHelper.FillData(this.dgvNoReceiveMoney, dataTable, false);
-                        LoadNoRMoneyStatus(searchModel);
-                        this.dgvNoReceiveMoney.Tag = true;
+                        if (!isExport)
+                        {
+                            dataTable = DataManager.NoReceiveMoneyBLL.GetDataTablebyPammer(searchModel);
+                            this.dgvNoReceiveMoney = dataGridViewHelper.FillData(this.dgvNoReceiveMoney, dataTable, false);
+                            LoadNoRMoneyStatus(searchModel);
+                            this.dgvNoReceiveMoney.Tag = true;
+                        }
+                        else
+                        {
+                            //保存数据表
+                            SaveDataTable(dataTable);
+                        }
                     }
                     break;
                 case 6:
                     dataTable = DataManager.UnitInfoBLL.GetDataTable();
-                    this.dgvUnitInfo = dataGridViewHelper.FillData(this.dgvUnitInfo, dataTable);
-                    this.tspUnitInfoCount.Text = dataTable.Rows.Count.ToString();
+                    if (!isExport)
+                    {
+                        this.dgvUnitInfo = dataGridViewHelper.FillData(this.dgvUnitInfo, dataTable);
+                        this.tspUnitInfoCount.Text = dataTable.Rows.Count.ToString();
+                    }
+                    else
+                    {
+                        //保存数据表
+                        SaveDataTable(dataTable);
+                    }
+
                     break;
                 case 7:
                     dataTable = DataManager.SortInfoBLL.GetDataTable();
-                    this.dgvSortInfo = dataGridViewHelper.FillData(this.dgvSortInfo, dataTable);
-                    this.tspSortInfoCount.Text = dataTable.Rows.Count.ToString();
+                    if (!isExport)
+                    {
+                        this.dgvSortInfo = dataGridViewHelper.FillData(this.dgvSortInfo, dataTable);
+                        this.tspSortInfoCount.Text = dataTable.Rows.Count.ToString();
+                    }
+                    else
+                    {
+                        //保存数据表
+                        SaveDataTable(dataTable);
+                    }
                     break;
                 case 8:
                     dataTable = DataManager.WholeSalerInfoBLL.GetDataTable();
-                    this.dgvWholeSalerInfo = dataGridViewHelper.FillData(this.dgvWholeSalerInfo, dataTable);
-                    this.tspWholeSalerInfoCount.Text = dataTable.Rows.Count.ToString();
+                    if (!isExport)
+                    {
+                        this.dgvWholeSalerInfo = dataGridViewHelper.FillData(this.dgvWholeSalerInfo, dataTable);
+                        this.tspWholeSalerInfoCount.Text = dataTable.Rows.Count.ToString();
+                    }
+                    else
+                    {
+                        //保存数据表
+                        SaveDataTable(dataTable);
+                    }
                     break;
                 case 9:
                     dataTable = DataManager.UserInfoBLL.GetDataTable();
@@ -913,7 +1004,7 @@ namespace CashierSystem
         }
         #endregion
         #region 今日订单展示
-
+        
         /// <summary>
         /// 初始化今日订单表
         /// </summary>
@@ -944,49 +1035,56 @@ namespace CashierSystem
         {
             SearchTodayOrderInfo();
         }
+        private void btnExportTodayOrder_Click(object sender, EventArgs e)
+        {
+            //搜索并保存数据
+            SearchTodayOrderInfo(0,true);
+        }
         /// <summary>
         /// 订单搜索
         /// </summary>
         /// <param name="startIndex"></param>
-        public void SearchTodayOrderInfo(int startIndex = 0)
+        public void SearchTodayOrderInfo( int startIndex = 0,bool isExport=false)
         {
-            SearchModel searchModel = new SearchModel();
-            searchModel.ModelName = "OrderInfo";
-
-            searchModel.StartIndex = startIndex;//开始行
-            searchModel.dic = new Dictionary<string, string>();
-            var StartTime = dateTodayOrderStartTime.Value;
-            var EndTime = dateTodayOrderEndTime.Value;
-            decimal mixMoney = 0;
-            decimal maxMoney = decimal.MaxValue;
-            var mixMoneyString = txtTodaySearchMixMoney.Text.Trim();
-            var maxMoneyString = txtTodaySearchMaxMoney.Text.Trim();
-            //输入价钱是区间是否合格               
-            var isTrue = Common.CommonHelper.GetTrueSearchMoney(mixMoneyString, maxMoneyString, out mixMoney, out maxMoney);
-            if (!isTrue)
-            {
-                InputWarngs("输入价格区间有误!!");
-                return;
-            }
-            if (StartTime > EndTime)
-            {
-                InputWarngs("输入时间有误!!!");
-                return;
-            }
-            var goodsName = txtGoodsNameSearch.Text.Trim();
-            if (goodsName != "")
-            {
-                searchModel.dic.Add("TodaySearchGoodsName", goodsName);
-            }
-            searchModel.StartTime = StartTime;
-            searchModel.EndTime = EndTime;
-            searchModel.dic.Add("TodaySearchMaxMoney", maxMoney.ToString());
-            searchModel.dic.Add("TodaySearchMixMoney", mixMoney.ToString());
+               SearchModel  searchModel = new SearchModel();
+                searchModel.ModelName = "OrderInfo";
+                searchModel.StartIndex = startIndex;//开始行
+                searchModel.dic = new Dictionary<string, string>();
+                var StartTime = dateTodayOrderStartTime.Value;
+                var EndTime = dateTodayOrderEndTime.Value;
+                decimal mixMoney = 0;
+                decimal maxMoney = decimal.MaxValue;
+                var mixMoneyString = txtTodaySearchMixMoney.Text.Trim();
+                var maxMoneyString = txtTodaySearchMaxMoney.Text.Trim();
+                //输入价钱是区间是否合格               
+                var isTrue = Common.CommonHelper.GetTrueSearchMoney(mixMoneyString, maxMoneyString, out mixMoney, out maxMoney);
+                if (!isTrue)
+                {
+                    InputWarngs("输入价格区间有误!!");
+                    return;
+                }
+                if (StartTime > EndTime)
+                {
+                    InputWarngs("输入时间有误!!!");
+                    return;
+                }
+                var goodsName = txtGoodsNameSearch.Text.Trim();
+                if (goodsName != "")
+                {
+                    searchModel.dic.Add("TodaySearchGoodsName", goodsName);
+                }
+                searchModel.StartTime = StartTime;
+                searchModel.EndTime = EndTime;
+                searchModel.dic.Add("TodaySearchMaxMoney", maxMoney.ToString());
+                searchModel.dic.Add("TodaySearchMixMoney", mixMoney.ToString());
+            
+            
 
             //利用Tag属性 ,标记是否需要再次更新数据
             this.dgvTodayOrder.Tag = false;//false 表示需要更新
-            GetDgv(1, searchModel);
+            GetDgv(1, searchModel,isExport);
         }
+       
         /// <summary>
         /// 加载今日利润
         /// </summary>
@@ -1166,8 +1264,10 @@ namespace CashierSystem
         /// <param name="e"></param>
         private void tspGoodIndo_Export_Click(object sender, EventArgs e)
         {
+            //导出商品信息表
 
-
+            this.dgvGoodSInfoManager.Tag = false;
+            GetDgv(2, GIMSearchModel, true);
         }
         /// <summary>
         /// 刷新
@@ -1236,6 +1336,11 @@ namespace CashierSystem
             this.dgvGoodSInfoManager.Tag = false;//false 表示需要更新
             GetDgv(2, searchModel);
         }
+        /// <summary>
+        /// 商品管理搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnGIManagerSearch_Click(object sender, EventArgs e)
         {
             tspLblGoodsManagerCount.Tag = "1";//刷新状态栏           
@@ -1341,6 +1446,11 @@ namespace CashierSystem
             txtAllOrder_SearchName.Text = "";
 
         }
+        /// <summary>
+        /// 订单搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAllOrderInfo_Click(object sender, EventArgs e)
         {
             tspLblOrderPageCount.Tag = "1";
@@ -1377,6 +1487,16 @@ namespace CashierSystem
             }
             this.dgvAllOrder.Tag = false;//false 表示需要更新
             GetDgv(3, searchModel);
+        }
+        /// <summary>
+        /// 导出数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportOrderInfo_Click(object sender, EventArgs e)
+        {
+            this.dgvAllOrder.Tag = false;
+            GetDgv(3, allOrderSearchModel, true);
         }
         /// <summary>
         /// 加载订单状态栏
@@ -1477,6 +1597,11 @@ namespace CashierSystem
             txtProfits_SearchOrderId.Text = "";
 
         }
+        /// <summary>
+        /// 利润表搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnProfitSearch_Click(object sender, EventArgs e)
         {
             tspLblProfitPageCount.Tag = "1";
@@ -1518,6 +1643,11 @@ namespace CashierSystem
             this.dgvProfitsInfo.Tag = false;//false 表示需要更新
             GetDgv(4, searchModel);
 
+        }
+        private void btnExportProfit_Click(object sender, EventArgs e)
+        {
+            this.dgvProfitsInfo.Tag = false;
+            GetDgv(4, profitSearchModel, true);
         }
         /// <summary>
         /// 加载利润表状态栏
@@ -1621,7 +1751,6 @@ namespace CashierSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void tspProfitNextPage_Click(object sender, EventArgs e)
         {
             int pageSum = Convert.ToInt32(tspLblProfitPageCount.Text);
@@ -1744,7 +1873,6 @@ namespace CashierSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void tspNoM_Receive_Click(object sender, EventArgs e)
         {
 
@@ -1784,6 +1912,11 @@ namespace CashierSystem
             this.dgvNoReceiveMoney.Tag = false;
             tspLblNoReceivePageCount.Tag = "1";
             SearchNoReceiveMoneyInfo();
+        }
+        private void tspExportNoMoney_Click(object sender, EventArgs e)
+        {
+            this.dgvNoReceiveMoney.Tag = false;
+            GetDgv(5, noRMoneySearchModel, true);
         }
         /// <summary>
         /// 上一页
@@ -1962,7 +2095,15 @@ namespace CashierSystem
         {
             GetDgv(SelectIndex);
         }
-
+        /// <summary>
+        /// 单位表数据导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspExportSortInfo_Click(object sender, EventArgs e)
+        {
+            GetDgv(SelectIndex,null,true);
+        }
 
         #endregion
         #region 商品类别表
@@ -2055,6 +2196,15 @@ namespace CashierSystem
         {
             GetDgv(SelectIndex);//刷新
         }
+        /// <summary>
+        /// 商品类别表 导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspExportUnitInfo_Click(object sender, EventArgs e)
+        {
+            GetDgv(SelectIndex,null,true);//导出数据
+        }
         #endregion        
         #region 供货信息表
         /// <summary>
@@ -2144,6 +2294,15 @@ namespace CashierSystem
         private void txtReLoadWholeSalerInfo_Click(object sender, EventArgs e)
         {
             GetDgv(SelectIndex);
+        }
+        /// <summary>
+        /// 供货信息表 导出
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tspExportWholeSalerInfo_Click(object sender, EventArgs e)
+        {
+            GetDgv(SelectIndex,null,true);
         }
         #endregion
         #region 管理员信息表
@@ -2319,13 +2478,53 @@ namespace CashierSystem
             //当前应用程序退出,不仅仅关闭当前窗体
             Application.Exit();
         }
-
+        /// <summary>
+        /// 系统时间
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void systemTime_Tick(object sender, EventArgs e)
         {
             this.tspLblSystemTime.Text = "系统当前时间：" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
         }
+        /// <summary>
+        /// 保存数据表
+        /// </summary>
+        /// <param name="dataTable"></param>
+        private  void  SaveDataTable(DataTable dataTable)
+        {
+            try
+            {
+                SaveFileDialog save = new SaveFileDialog();
+                save.Title = "保存数据表";
+                save.Filter = "Excel文件(*.xlsx)|*.xlsx|Excel文件(*.xls)|*.xls";
 
-       
+                //关闭窗口
+                if (save.ShowDialog() != DialogResult.OK)
+                {
+                    return ;
+                }
+                //获取文件地址
+                string targetPath = save.FileName;
+                var isSuccess = ExcelHelper.WriteExcel(targetPath, dataTable, false);
+                if (isSuccess)
+                {
+                    System.Windows.Forms.MessageBox.Show("保存成功!");
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("保存失败!");
+                }
+            
+            }
+            catch (Exception e1)
+            {
+                System.Windows.Forms.MessageBox.Show(e1.Message);
+                
+
+            }
+           
+        }
 
        
     }

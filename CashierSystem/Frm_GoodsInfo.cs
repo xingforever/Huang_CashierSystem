@@ -140,6 +140,7 @@ namespace CashierSystem
                         var isSuccess = DataManager.GoodsInfoBLL.Edit(goodsInfo);
                         if (isSuccess)
                         {
+                            this.Tag = true;
                             MessageBox.Show("修改商品信息成功!", "通知", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Clear();
                             this.Close();

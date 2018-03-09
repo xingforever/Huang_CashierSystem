@@ -77,7 +77,12 @@ namespace Dal
                     {
                         searchModel.PageStartIndex.Add(fitstid);//
                     }
-                    searchModel.PageStartIndex.Add(lastid + 1);//下一页  
+                    //如果该集合中不存在
+                    if (!searchModel.PageStartIndex.Contains(lastid + 1))
+                    {
+                        searchModel.PageStartIndex.Add(lastid + 1);//下一页  
+                    }
+                   
                 }
                 return dataTable;
             }

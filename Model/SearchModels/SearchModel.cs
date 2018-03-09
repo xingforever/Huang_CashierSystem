@@ -38,7 +38,7 @@ namespace Model
         {
             ModelName = "";
             StartIndex = 0;
-            PageCount = 3;
+            PageCount = 20;
             StartTime = new DateTime();//0001/1/1 0:00:00
             EndTime = new DateTime();
             dic = new Dictionary<string, string>();          

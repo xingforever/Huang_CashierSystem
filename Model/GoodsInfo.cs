@@ -159,7 +159,7 @@ namespace Model
         {
             //DgvName
             // return new List<string> { "ID","GoodsName", "SortName", "UnitName", "GoodsType", "PurPrice", "PayPrice", "Total", "SalesCount", "SurplusCount", "WholeSalerName", "CreateTime", "LastTime", "Remark", "DelFlag" }; 
-            return new List<string> { "ID","GoodsName", "SortName", "UnitName", "GoodsType", "PurPrice" ,"PayPrice",  "SurplusCount", "WholeSalerName", "Remark" }; ;
+            return new List<string> { "ID","GoodsName", "SortName", "UnitName", "GoodsType", "PurPrice" ,"PayPrice", "Total","SurplusCount", "WholeSalerName", "Remark" }; ;
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Model
         {
            
            //DgvDisPlayName
-            return new List<string> { "ID编号", "商品名", "类别", "单位", "规格","单价","售价", "库存", "供货商", "备注" }; ;
+            return new List<string> { "ID编号", "商品名", "类别", "单位", "规格","单价","售价", "总量","库存", "供货商", "备注" }; ;
         }
         /// <summary>
         /// 获取隐藏数据位置
@@ -179,7 +179,7 @@ namespace Model
         public override List<int> GetHideIndex()
         {
             //默认 隐藏的数据
-            return  new List<int>() { 0,5}; 
+            return  new List<int>() { 0,5,7}; 
         }
 
 

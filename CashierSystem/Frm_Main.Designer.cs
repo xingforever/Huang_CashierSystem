@@ -104,6 +104,7 @@
             this.tspEditWholeSalerInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tspDeleteWholeSalerInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.txtReLoadWholeSalerInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspExportWholeSalerInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGoodSort = new System.Windows.Forms.TabPage();
             this.statusStrip3 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -116,6 +117,7 @@
             this.tspEidtSortInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tspDeleteSortInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tspReLoadSortInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspExportUnitInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tabGoodsUnit = new System.Windows.Forms.TabPage();
             this.dgvUnitInfo = new System.Windows.Forms.DataGridView();
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
@@ -129,6 +131,7 @@
             this.tspEditUnitInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tspDeleteUnitInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tspReLoadUnitInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspExportSortInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSales = new System.Windows.Forms.TabPage();
             this.statusStrip8 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel48 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -156,6 +159,7 @@
             this.dateAllOrderStartTime = new System.Windows.Forms.DateTimePicker();
             this.label17 = new System.Windows.Forms.Label();
             this.txtAllOrder_SearchName = new System.Windows.Forms.TextBox();
+            this.btnExportAllOrderInfo = new System.Windows.Forms.Button();
             this.btnAllOrderInfo = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.tabGoodsManager = new System.Windows.Forms.TabPage();
@@ -178,9 +182,9 @@
             this.tspGoosInfo_Add = new System.Windows.Forms.ToolStripMenuItem();
             this.tspGoodsInfo_Edit = new System.Windows.Forms.ToolStripMenuItem();
             this.tspGoodsInfo_Remove = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
             this.tspGoodsInfo_ReLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.tspGoodIndo_Export = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel22 = new System.Windows.Forms.Panel();
             this.lblGoodsCount = new System.Windows.Forms.Label();
@@ -276,6 +280,7 @@
             this.label33 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.btnExportTodayOrder = new System.Windows.Forms.Button();
             this.dateTodayOrderEndTime = new System.Windows.Forms.DateTimePicker();
             this.dateTodayOrderStartTime = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
@@ -317,6 +322,7 @@
             this.label64 = new System.Windows.Forms.Label();
             this.label65 = new System.Windows.Forms.Label();
             this.panel15 = new System.Windows.Forms.Panel();
+            this.btnExportProfit = new System.Windows.Forms.Button();
             this.label48 = new System.Windows.Forms.Label();
             this.dateProfitEndTime = new System.Windows.Forms.DateTimePicker();
             this.dateProfitStartTime = new System.Windows.Forms.DateTimePicker();
@@ -346,6 +352,7 @@
             this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripMenuItem();
             this.tspNoM_Receive = new System.Windows.Forms.ToolStripMenuItem();
             this.tspNoReceiveMoneyInfoReload = new System.Windows.Forms.ToolStripMenuItem();
+            this.tspExportNoMoney = new System.Windows.Forms.ToolStripMenuItem();
             this.panel18 = new System.Windows.Forms.Panel();
             this.cbxIsReceiveMoney = new System.Windows.Forms.ComboBox();
             this.label51 = new System.Windows.Forms.Label();
@@ -833,7 +840,8 @@
             this.tspAddWholeSalerInfo,
             this.tspEditWholeSalerInfo,
             this.tspDeleteWholeSalerInfo,
-            this.txtReLoadWholeSalerInfo});
+            this.txtReLoadWholeSalerInfo,
+            this.tspExportWholeSalerInfo});
             this.menuStrip3.Location = new System.Drawing.Point(3, 3);
             this.menuStrip3.Name = "menuStrip3";
             this.menuStrip3.Size = new System.Drawing.Size(1062, 25);
@@ -872,6 +880,14 @@
             this.txtReLoadWholeSalerInfo.Size = new System.Drawing.Size(60, 21);
             this.txtReLoadWholeSalerInfo.Text = "刷新";
             this.txtReLoadWholeSalerInfo.Click += new System.EventHandler(this.txtReLoadWholeSalerInfo_Click);
+            // 
+            // tspExportWholeSalerInfo
+            // 
+            this.tspExportWholeSalerInfo.Image = ((System.Drawing.Image)(resources.GetObject("tspExportWholeSalerInfo.Image")));
+            this.tspExportWholeSalerInfo.Name = "tspExportWholeSalerInfo";
+            this.tspExportWholeSalerInfo.Size = new System.Drawing.Size(60, 21);
+            this.tspExportWholeSalerInfo.Text = "导出";
+            this.tspExportWholeSalerInfo.Click += new System.EventHandler(this.tspExportWholeSalerInfo_Click);
             // 
             // tabGoodSort
             // 
@@ -965,7 +981,8 @@
             this.tspAddSortinfo,
             this.tspEidtSortInfo,
             this.tspDeleteSortInfo,
-            this.tspReLoadSortInfo});
+            this.tspReLoadSortInfo,
+            this.tspExportUnitInfo});
             this.menuStrip2.Location = new System.Drawing.Point(3, 3);
             this.menuStrip2.Name = "menuStrip2";
             this.menuStrip2.Size = new System.Drawing.Size(1062, 25);
@@ -1004,6 +1021,14 @@
             this.tspReLoadSortInfo.Size = new System.Drawing.Size(60, 21);
             this.tspReLoadSortInfo.Text = "刷新";
             this.tspReLoadSortInfo.Click += new System.EventHandler(this.tspReLoadSortInfo_Click);
+            // 
+            // tspExportUnitInfo
+            // 
+            this.tspExportUnitInfo.Image = ((System.Drawing.Image)(resources.GetObject("tspExportUnitInfo.Image")));
+            this.tspExportUnitInfo.Name = "tspExportUnitInfo";
+            this.tspExportUnitInfo.Size = new System.Drawing.Size(60, 21);
+            this.tspExportUnitInfo.Text = "导出";
+            this.tspExportUnitInfo.Click += new System.EventHandler(this.tspExportUnitInfo_Click);
             // 
             // tabGoodsUnit
             // 
@@ -1107,7 +1132,8 @@
             this.tspAddUnitInfo,
             this.tspEditUnitInfo,
             this.tspDeleteUnitInfo,
-            this.tspReLoadUnitInfo});
+            this.tspReLoadUnitInfo,
+            this.tspExportSortInfo});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1060, 25);
@@ -1146,6 +1172,14 @@
             this.tspReLoadUnitInfo.Size = new System.Drawing.Size(60, 21);
             this.tspReLoadUnitInfo.Text = "刷新";
             this.tspReLoadUnitInfo.Click += new System.EventHandler(this.tspReLoadUnitInfo_Click);
+            // 
+            // tspExportSortInfo
+            // 
+            this.tspExportSortInfo.Image = ((System.Drawing.Image)(resources.GetObject("tspExportSortInfo.Image")));
+            this.tspExportSortInfo.Name = "tspExportSortInfo";
+            this.tspExportSortInfo.Size = new System.Drawing.Size(60, 21);
+            this.tspExportSortInfo.Text = "导出";
+            this.tspExportSortInfo.Click += new System.EventHandler(this.tspExportSortInfo_Click);
             // 
             // tabSales
             // 
@@ -1370,6 +1404,7 @@
             this.panel11.Controls.Add(this.dateAllOrderStartTime);
             this.panel11.Controls.Add(this.label17);
             this.panel11.Controls.Add(this.txtAllOrder_SearchName);
+            this.panel11.Controls.Add(this.btnExportAllOrderInfo);
             this.panel11.Controls.Add(this.btnAllOrderInfo);
             this.panel11.Controls.Add(this.label18);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1419,15 +1454,26 @@
             // txtAllOrder_SearchName
             // 
             this.txtAllOrder_SearchName.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtAllOrder_SearchName.Location = new System.Drawing.Point(494, 9);
+            this.txtAllOrder_SearchName.Location = new System.Drawing.Point(471, 11);
             this.txtAllOrder_SearchName.Name = "txtAllOrder_SearchName";
-            this.txtAllOrder_SearchName.Size = new System.Drawing.Size(134, 26);
+            this.txtAllOrder_SearchName.Size = new System.Drawing.Size(163, 26);
             this.txtAllOrder_SearchName.TabIndex = 23;
+            // 
+            // btnExportAllOrderInfo
+            // 
+            this.btnExportAllOrderInfo.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnExportAllOrderInfo.Location = new System.Drawing.Point(780, 11);
+            this.btnExportAllOrderInfo.Name = "btnExportAllOrderInfo";
+            this.btnExportAllOrderInfo.Size = new System.Drawing.Size(88, 25);
+            this.btnExportAllOrderInfo.TabIndex = 22;
+            this.btnExportAllOrderInfo.Text = "导出";
+            this.btnExportAllOrderInfo.UseVisualStyleBackColor = true;
+            this.btnExportAllOrderInfo.Click += new System.EventHandler(this.btnExportOrderInfo_Click);
             // 
             // btnAllOrderInfo
             // 
             this.btnAllOrderInfo.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnAllOrderInfo.Location = new System.Drawing.Point(672, 10);
+            this.btnAllOrderInfo.Location = new System.Drawing.Point(669, 12);
             this.btnAllOrderInfo.Name = "btnAllOrderInfo";
             this.btnAllOrderInfo.Size = new System.Drawing.Size(88, 25);
             this.btnAllOrderInfo.TabIndex = 22;
@@ -1442,7 +1488,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(421, 13);
+            this.label18.Location = new System.Drawing.Point(382, 17);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(72, 16);
             this.label18.TabIndex = 16;
@@ -1646,13 +1692,6 @@
             this.tspGoodsInfo_Remove.Text = "删除";
             this.tspGoodsInfo_Remove.Click += new System.EventHandler(this.tspGoodsInfo_Remove_Click);
             // 
-            // toolStripMenuItem11
-            // 
-            this.toolStripMenuItem11.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(120, 21);
-            this.toolStripMenuItem11.Text = "                         ";
-            // 
             // tspGoodsInfo_ReLoad
             // 
             this.tspGoodsInfo_ReLoad.Image = ((System.Drawing.Image)(resources.GetObject("tspGoodsInfo_ReLoad.Image")));
@@ -1668,6 +1707,13 @@
             this.tspGoodIndo_Export.Size = new System.Drawing.Size(60, 21);
             this.tspGoodIndo_Export.Text = "导出";
             this.tspGoodIndo_Export.Click += new System.EventHandler(this.tspGoodIndo_Export_Click);
+            // 
+            // toolStripMenuItem11
+            // 
+            this.toolStripMenuItem11.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(120, 21);
+            this.toolStripMenuItem11.Text = "                         ";
             // 
             // panel9
             // 
@@ -2104,14 +2150,14 @@
             // 
             // txtGoodsNameSearch
             // 
-            this.txtGoodsNameSearch.Location = new System.Drawing.Point(434, 19);
+            this.txtGoodsNameSearch.Location = new System.Drawing.Point(423, 23);
             this.txtGoodsNameSearch.Name = "txtGoodsNameSearch";
             this.txtGoodsNameSearch.Size = new System.Drawing.Size(134, 23);
             this.txtGoodsNameSearch.TabIndex = 4;
             // 
             // btnGoodsSearch
             // 
-            this.btnGoodsSearch.Location = new System.Drawing.Point(597, 18);
+            this.btnGoodsSearch.Location = new System.Drawing.Point(582, 20);
             this.btnGoodsSearch.Name = "btnGoodsSearch";
             this.btnGoodsSearch.Size = new System.Drawing.Size(63, 25);
             this.btnGoodsSearch.TabIndex = 3;
@@ -2146,7 +2192,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(356, 23);
+            this.label3.Location = new System.Drawing.Point(336, 26);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 16);
             this.label3.TabIndex = 0;
@@ -2712,6 +2758,7 @@
             // panel5
             // 
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.btnExportTodayOrder);
             this.panel5.Controls.Add(this.dateTodayOrderEndTime);
             this.panel5.Controls.Add(this.dateTodayOrderStartTime);
             this.panel5.Controls.Add(this.label7);
@@ -2728,6 +2775,17 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(1062, 48);
             this.panel5.TabIndex = 0;
+            // 
+            // btnExportTodayOrder
+            // 
+            this.btnExportTodayOrder.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnExportTodayOrder.Location = new System.Drawing.Point(953, 17);
+            this.btnExportTodayOrder.Name = "btnExportTodayOrder";
+            this.btnExportTodayOrder.Size = new System.Drawing.Size(70, 25);
+            this.btnExportTodayOrder.TabIndex = 23;
+            this.btnExportTodayOrder.Text = "导出";
+            this.btnExportTodayOrder.UseVisualStyleBackColor = true;
+            this.btnExportTodayOrder.Click += new System.EventHandler(this.btnExportTodayOrder_Click);
             // 
             // dateTodayOrderEndTime
             // 
@@ -2753,7 +2811,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("宋体", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(186, 21);
+            this.label7.Location = new System.Drawing.Point(176, 23);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(22, 24);
             this.label7.TabIndex = 15;
@@ -2772,7 +2830,7 @@
             // txtTodaySearchMaxMoney
             // 
             this.txtTodaySearchMaxMoney.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtTodaySearchMaxMoney.Location = new System.Drawing.Point(489, 14);
+            this.txtTodaySearchMaxMoney.Location = new System.Drawing.Point(481, 16);
             this.txtTodaySearchMaxMoney.Name = "txtTodaySearchMaxMoney";
             this.txtTodaySearchMaxMoney.Size = new System.Drawing.Size(88, 26);
             this.txtTodaySearchMaxMoney.TabIndex = 13;
@@ -2789,7 +2847,7 @@
             // txtTodayOrder_SearchName
             // 
             this.txtTodayOrder_SearchName.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtTodayOrder_SearchName.Location = new System.Drawing.Point(698, 14);
+            this.txtTodayOrder_SearchName.Location = new System.Drawing.Point(669, 16);
             this.txtTodayOrder_SearchName.Name = "txtTodayOrder_SearchName";
             this.txtTodayOrder_SearchName.Size = new System.Drawing.Size(163, 26);
             this.txtTodayOrder_SearchName.TabIndex = 12;
@@ -2797,9 +2855,9 @@
             // btnTodayOrder
             // 
             this.btnTodayOrder.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnTodayOrder.Location = new System.Drawing.Point(911, 12);
+            this.btnTodayOrder.Location = new System.Drawing.Point(854, 17);
             this.btnTodayOrder.Name = "btnTodayOrder";
-            this.btnTodayOrder.Size = new System.Drawing.Size(88, 25);
+            this.btnTodayOrder.Size = new System.Drawing.Size(75, 25);
             this.btnTodayOrder.TabIndex = 11;
             this.btnTodayOrder.Text = "搜索";
             this.btnTodayOrder.UseVisualStyleBackColor = true;
@@ -2812,7 +2870,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(592, 21);
+            this.label5.Location = new System.Drawing.Point(584, 21);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(72, 16);
             this.label5.TabIndex = 5;
@@ -3122,6 +3180,7 @@
             // panel15
             // 
             this.panel15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel15.Controls.Add(this.btnExportProfit);
             this.panel15.Controls.Add(this.label48);
             this.panel15.Controls.Add(this.dateProfitEndTime);
             this.panel15.Controls.Add(this.dateProfitStartTime);
@@ -3134,6 +3193,17 @@
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(1062, 49);
             this.panel15.TabIndex = 0;
+            // 
+            // btnExportProfit
+            // 
+            this.btnExportProfit.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnExportProfit.Location = new System.Drawing.Point(807, 17);
+            this.btnExportProfit.Name = "btnExportProfit";
+            this.btnExportProfit.Size = new System.Drawing.Size(88, 25);
+            this.btnExportProfit.TabIndex = 37;
+            this.btnExportProfit.Text = "导出";
+            this.btnExportProfit.UseVisualStyleBackColor = true;
+            this.btnExportProfit.Click += new System.EventHandler(this.btnExportProfit_Click);
             // 
             // label48
             // 
@@ -3174,9 +3244,9 @@
             // txtProfits_SearchOrderId
             // 
             this.txtProfits_SearchOrderId.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtProfits_SearchOrderId.Location = new System.Drawing.Point(507, 14);
+            this.txtProfits_SearchOrderId.Location = new System.Drawing.Point(486, 14);
             this.txtProfits_SearchOrderId.Name = "txtProfits_SearchOrderId";
-            this.txtProfits_SearchOrderId.Size = new System.Drawing.Size(134, 26);
+            this.txtProfits_SearchOrderId.Size = new System.Drawing.Size(155, 26);
             this.txtProfits_SearchOrderId.TabIndex = 32;
             // 
             // btnProfitSearch
@@ -3197,7 +3267,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label50.AutoSize = true;
             this.label50.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label50.Location = new System.Drawing.Point(428, 21);
+            this.label50.Location = new System.Drawing.Point(408, 21);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(56, 16);
             this.label50.TabIndex = 30;
@@ -3348,7 +3418,8 @@
             this.tspNoReceiveMoneyInfoEdit,
             this.toolStripMenuItem19,
             this.tspNoM_Receive,
-            this.tspNoReceiveMoneyInfoReload});
+            this.tspNoReceiveMoneyInfoReload,
+            this.tspExportNoMoney});
             this.menuStrip6.Location = new System.Drawing.Point(0, 0);
             this.menuStrip6.Name = "menuStrip6";
             this.menuStrip6.Size = new System.Drawing.Size(1060, 25);
@@ -3385,6 +3456,14 @@
             this.tspNoReceiveMoneyInfoReload.Size = new System.Drawing.Size(60, 21);
             this.tspNoReceiveMoneyInfoReload.Text = "刷新";
             this.tspNoReceiveMoneyInfoReload.Click += new System.EventHandler(this.tspNoReceiveMoneyInfoReload_Click);
+            // 
+            // tspExportNoMoney
+            // 
+            this.tspExportNoMoney.Image = ((System.Drawing.Image)(resources.GetObject("tspExportNoMoney.Image")));
+            this.tspExportNoMoney.Name = "tspExportNoMoney";
+            this.tspExportNoMoney.Size = new System.Drawing.Size(60, 21);
+            this.tspExportNoMoney.Text = "导出";
+            this.tspExportNoMoney.Click += new System.EventHandler(this.tspExportNoMoney_Click);
             // 
             // panel18
             // 
@@ -3465,7 +3544,7 @@
             this.btnNoReceiveMoneySearch.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnNoReceiveMoneySearch.Location = new System.Drawing.Point(861, 13);
             this.btnNoReceiveMoneySearch.Name = "btnNoReceiveMoneySearch";
-            this.btnNoReceiveMoneySearch.Size = new System.Drawing.Size(88, 25);
+            this.btnNoReceiveMoneySearch.Size = new System.Drawing.Size(78, 25);
             this.btnNoReceiveMoneySearch.TabIndex = 38;
             this.btnNoReceiveMoneySearch.Text = "搜索";
             this.btnNoReceiveMoneySearch.UseVisualStyleBackColor = true;
@@ -4023,6 +4102,13 @@
         private System.Windows.Forms.Timer systemTime;
         private System.Windows.Forms.Button btnInitGoodsInfo;
         private System.Windows.Forms.ToolStripMenuItem tspGoodIndo_Export;
+        private System.Windows.Forms.Button btnExportAllOrderInfo;
+        private System.Windows.Forms.ToolStripMenuItem tspExportWholeSalerInfo;
+        private System.Windows.Forms.ToolStripMenuItem tspExportUnitInfo;
+        private System.Windows.Forms.ToolStripMenuItem tspExportSortInfo;
+        private System.Windows.Forms.Button btnExportTodayOrder;
+        private System.Windows.Forms.Button btnExportProfit;
+        private System.Windows.Forms.ToolStripMenuItem tspExportNoMoney;
     }
 }
 
