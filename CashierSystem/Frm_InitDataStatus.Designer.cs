@@ -57,8 +57,10 @@
             this.ClientSize = new System.Drawing.Size(434, 210);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Frm_InitDataProgressBar";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "读取数据中";
             this.Load += new System.EventHandler(this.Frm_InitDataProgressBar_Load);
             this.Shown += new System.EventHandler(this.Frm_InitDataProgressBar_Shown);

@@ -15,7 +15,7 @@ namespace CashierSystem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Frm_InitDataProgressBar());
+            Application.Run(new Frm_Login());
         }
     }
 }

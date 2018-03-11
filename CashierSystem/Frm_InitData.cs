@@ -62,50 +62,57 @@ namespace CashierSystem
             string filePath = opfialog.FileName;
             DataTable dataTable = new DataTable();
             //读取数据
+            ThreadStart();//开启线程 显示数据导入页面
             var isSucess=  ExcelHelper.ReadExcel(filePath, dataTable, true);
             if (isSucess)
-            {
-                ThreadStart();//开启线程 显示数据导入页面
-                InitGoodsData initGoodsData = new InitGoodsData();
-              if( initGoodsData.AddGoodsData(dataTable, out List<string> changeMessage,out List<string>insertDataMessage))
+            {               
+                InitGoodsData initGoodsData = new InitGoodsData();                
+                if ( initGoodsData.AddGoodsData(dataTable, out List<string> changeMessage,out List<string>insertDataMessage))
                 {
-                    if (changeMessage.Count!=0)
-                    {
-                        //Excel文件信息
-                        FileInfo fileInfo = new FileInfo(filePath);//关于文件信息
-                        var fileDic = fileInfo.Directory;
-                        var errorMessagePath = fileDic + "/读取数据报告.Txt";
-                        //保存错误信息
-                        File.WriteAllLines(errorMessagePath, changeMessage.ToArray());
-                    }
-                    if (insertDataMessage.Count!=0)
-                    {
-                       
-                        FileInfo fileInfo = new FileInfo(filePath);//关于文件信息
-                        var fileDic = fileInfo.Directory;
-                        var errorMessagePath = fileDic + "/数据导入报告.Txt";                      
-                        File.WriteAllLines(errorMessagePath, insertDataMessage.ToArray());
-                    }
-
-                    MessageBox.Show("保存成功!");
+                   
+                    ThreadEnd();//关闭线程
+                    MessageBox.Show("保存成功!,请查看导入日志");
+                    SaveMessage(filePath, changeMessage, insertDataMessage);//写入日志 并打开
                     this.Close();
-
+                   
                 }
                 else
                 {
                     ThreadEnd();//关闭线程
-                    MessageBox.Show("数据导入成功!!");
+                    MessageBox.Show("数据导入失败");
+                    SaveMessage(filePath, changeMessage, insertDataMessage);//写入日志 并打开
                     this.Close();
                 }
             }
             else
             {
+                ThreadEnd();//关闭线程
                 MessageBox.Show("读取数据失败!!");
                 return;
             }
 
         }
 
+        private void SaveMessage(string filePath, List<string> changeMessage,  List<string> insertDataMessage)
+        {
+            FileInfo fileInfo = new FileInfo(filePath);//关于文件信息
+            DirectoryInfo fileDic = fileInfo.Directory;//Excel 文件所件位置
+            if (changeMessage.Count != 0)
+            {
+
+                var errorMessagePath = fileDic + "/读取数据报告.Txt";
+                //保存错误信息
+                File.WriteAllLines(errorMessagePath, changeMessage.ToArray());
+            }
+            if (insertDataMessage.Count != 0)
+            {
+
+                var errorMessagePath = fileDic + "/数据导入报告.Txt";
+                File.WriteAllLines(errorMessagePath, insertDataMessage.ToArray());
+            }
+            string path = fileDic.ToString();//打开导入日志
+            System.Diagnostics.Process.Start("explorer.exe", path);
+        }
 
         private void ThreadStart()
         {

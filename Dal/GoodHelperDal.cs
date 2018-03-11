@@ -97,7 +97,7 @@ namespace Dal
              errorMessage = new List<string>();
             if (dataTable.Rows.Count <= 1 || dataTable.Columns.Count != 12)
             {
-                errorMessage.Add("读取失败,请检查文件(文件格式必须为标准表格式)");
+                errorMessage.Add("读取失败,请检查文件(文件格式必须为标准表格式,请从程序下载商品表进行数据填写)");
                 return null;
             }
             List<GoodsInfoHelper> GoodInfoHelperList = new List<GoodsInfoHelper>();
@@ -107,10 +107,13 @@ namespace Dal
                 GoodsInfoHelper goodsInfoHelper;
                 try
                 {
-                    goodsInfoHelper = GetGoodsInfoHelperByDataRow(dr);
+                    string message = "";
+                    //数据转换
+                    goodsInfoHelper = GetGoodsInfoHelperByDataRow(dr,out message);
                     if (goodsInfoHelper == null)
                     {
-                        string error = "在表中第 " + i + "信息添加失败";
+                        var name = dr[0].ToString();
+                        string error = "在表中第 " + i + "信息 "+ name + " 添加失败: "+ message;
                         //错误信息添加
                         errorMessage.Add(error);
                     }
@@ -138,8 +141,9 @@ namespace Dal
         /// </summary>
         /// <param name="dataRow"></param>
         /// <returns></returns>
-        public GoodsInfoHelper GetGoodsInfoHelperByDataRow(DataRow dataRow)
+        public GoodsInfoHelper GetGoodsInfoHelperByDataRow(DataRow dataRow,out  string errorMessage)
         {
+            errorMessage = "";
             GoodsInfoHelper goodsInfoHelper = new GoodsInfoHelper();
             try
             {
@@ -170,8 +174,9 @@ namespace Dal
                 goodsInfoHelper.Remark = dataRow[11].ToString();
                 return goodsInfoHelper;
               }
-            catch 
+            catch (Exception error)
             {
+                errorMessage = error.Message;
                 //该行有数据出错
                 return null;
             }

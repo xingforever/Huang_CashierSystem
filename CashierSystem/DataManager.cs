@@ -67,38 +67,13 @@ namespace CashierSystem
         {
            return  baseBll.GetDataTable();
         }
-        /// <summary>
-        /// 加载表的默认数据
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static DataTable LoadBySelectId(int id)
-        {
-           
-            switch (id)
-            {
-                case 0:
-                  return   GoodsInfoBLL.GetDataTable();                    
-                case 1:
-                    return OrderInfoBLL.GetDataTable();
-                case 2:
-                   return GoodsInfoBLL.GetDataTable();
-                case 3:
-                    return ProfitsInfoBLL.GetDataTable();
-                case 4:
-                    return UnitInfoBLL.GetDataTable();
-                case 5:
-                    return SortInfoBLL.GetDataTable();
-                case 6:
-                    return  WholeSalerInfoBLL.GetDataTable();
-                case 7:
-                    return UserInfoBLL.GetDataTable();
-                default:
-                    break;
-            }
-            return null;
-        }
-
+      /// <summary>
+      /// 获取默认的表名
+      /// </summary>
+      /// <param name="id"></param>
+      /// <param name="name">表名</param>
+      /// <param name="handText">列名</param>
+      /// <param name="hideIndex">隐藏列</param>
         public static void GetHandTxtAndHideIndex(int id, ref List<string> name,ref List<string> handText,  ref List<int> hideIndex)
         {
             switch (id)

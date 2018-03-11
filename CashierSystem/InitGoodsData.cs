@@ -9,7 +9,7 @@ using System.Text;
 namespace CashierSystem
 {
    /// <summary>
-   /// 初始化数据
+   /// 批量初始化数据
    /// </summary>
     public  class InitGoodsData
     {
@@ -30,16 +30,18 @@ namespace CashierSystem
         /// <returns></returns>
         public   bool AddGoodsData(DataTable dataTble , out List<string> changeMessages,out List<string>insertDataMessage)
         {
+            //数据转化为标准数据的信息
             changeMessages = new List<string>();
+            //数据插入数据库信息
             insertDataMessage = new List<string>();
             //从DataTable 获取商品帮助表
             readData = dataTble.Rows.Count;
-            List<GoodsInfoHelper> goodinfosHelper = GoodsInfoHelperBll.GetGoodsInfoHelperByTable(dataTble,out changeMessages);
-            trueData = goodinfosHelper.Count;
+            List<GoodsInfoHelper> goodinfosHelper = GoodsInfoHelperBll.GetGoodsInfoHelperByTable(dataTble,out changeMessages);            
             if (goodinfosHelper==null)
             {
                 return false;
             }
+            trueData = goodinfosHelper.Count;
             //将商品帮助表转换为标准商品信息表
             List<GoodsInfo> goodindoList = GoodsInfoHelperBll.GetGoodsInfoList(goodinfosHelper);
             successData = goodindoList.Count;         
@@ -47,7 +49,9 @@ namespace CashierSystem
             var isSucess = GoodsInfoHelperBll.InsertData(goodindoList, out insertDataMessage);
             if (isSucess)
             {
+                insertDataMessage.Insert(0, "数据导入报告");
                 insertDataMessage.Add("共读取数据" + readData + "条, " + "符合条件数据 " + trueData + "条, " + "导入成功" + successData + "条");
+                insertDataMessage.Add(DateTime.Now.ToString() + "生成");
                 return true;
 
             }
