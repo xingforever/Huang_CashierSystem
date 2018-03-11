@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace CashierSystem
@@ -14,6 +15,7 @@ namespace CashierSystem
     public partial class Frm_InitData : Form
     {
         ExcelHelper excelHelper = new ExcelHelper();
+        Thread thread;
         public Frm_InitData()
         {
             InitializeComponent();
@@ -63,24 +65,35 @@ namespace CashierSystem
             var isSucess=  ExcelHelper.ReadExcel(filePath, dataTable, true);
             if (isSucess)
             {
+                ThreadStart();//开启线程 显示数据导入页面
                 InitGoodsData initGoodsData = new InitGoodsData();
-              if( initGoodsData.AddGoodsData(dataTable, out List<string> errorMessage))
+              if( initGoodsData.AddGoodsData(dataTable, out List<string> changeMessage,out List<string>insertDataMessage))
                 {
-                    if (errorMessage.Count!=0)
+                    if (changeMessage.Count!=0)
                     {
                         //Excel文件信息
                         FileInfo fileInfo = new FileInfo(filePath);//关于文件信息
                         var fileDic = fileInfo.Directory;
-                        var errorMessagePath = fileDic + "/Error.Txt";
+                        var errorMessagePath = fileDic + "/读取数据报告.Txt";
                         //保存错误信息
-                        File.WriteAllLines(errorMessagePath, errorMessage.ToArray());
+                        File.WriteAllLines(errorMessagePath, changeMessage.ToArray());
                     }
+                    if (insertDataMessage.Count!=0)
+                    {
+                       
+                        FileInfo fileInfo = new FileInfo(filePath);//关于文件信息
+                        var fileDic = fileInfo.Directory;
+                        var errorMessagePath = fileDic + "/数据导入报告.Txt";                      
+                        File.WriteAllLines(errorMessagePath, insertDataMessage.ToArray());
+                    }
+
                     MessageBox.Show("保存成功!");
                     this.Close();
 
                 }
                 else
                 {
+                    ThreadEnd();//关闭线程
                     MessageBox.Show("数据导入成功!!");
                     this.Close();
                 }
@@ -92,5 +105,32 @@ namespace CashierSystem
             }
 
         }
+
+
+        private void ThreadStart()
+        {
+            ThreadStart threadStart = new ThreadStart(CreateInitDataProcessBar);//创建加载数据状态框
+             thread = new Thread(threadStart);
+            thread.IsBackground = true;//设置为后台线程
+            thread.Start(); //启动新线程
+            
+        }
+
+        private void ThreadEnd()
+        {
+            if (thread != null)
+            {
+                thread.Abort();//关闭线程
+            }
+        }
+
+        private void CreateInitDataProcessBar()
+        {
+            Frm_InitDataProgressBar frm_InitDataProgressBar = new Frm_InitDataProgressBar();
+            frm_InitDataProgressBar.ShowDialog();
+        }
+
+      
+
     }
 }
