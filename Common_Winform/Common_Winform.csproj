@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="LabelHelper.cs" />
     <Compile Include="DataGridViewHelper.cs" />
-    <Compile Include="DoubleClick_DataGridViewCellEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

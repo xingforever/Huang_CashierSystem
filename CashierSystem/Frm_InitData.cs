@@ -137,7 +137,9 @@ namespace CashierSystem
             frm_InitDataProgressBar.ShowDialog();
         }
 
-      
-
+        private void Frm_InitData_Shown(object sender, EventArgs e)
+        {
+            this.label1.Focus();
+        }
     }
 }

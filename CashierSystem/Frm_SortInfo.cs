@@ -113,6 +113,8 @@ namespace CashierSystem
                 {
                     MessageBox.Show("操作失败!");
                 }
+                lbltips.Text = "";
+                lbltips.Visible = false;
                 this.Tag = true;
                 this.Close();
 
@@ -124,6 +126,8 @@ namespace CashierSystem
 
         private void btnEsc_Click(object sender, EventArgs e)
         {
+            lbltips.Text = "";
+            lbltips.Visible = false;
             this.Close();
         }
 

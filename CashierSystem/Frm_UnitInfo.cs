@@ -94,13 +94,15 @@ namespace CashierSystem
                     unitInfo.UnitName = txtFirst.Text.Trim();
                     unitInfo.Remark = txtRmark.Text.Trim().Replace(';','.');//替换';'
                 //后期 英文";"有作用
-                  var isSuccess=  DataManager.UnitInfoBLL.Add(unitInfo);
+                   var isSuccess=  DataManager.UnitInfoBLL.Add(unitInfo);
                     if (!isSuccess)
                     {
                         MessageBox.Show("操作失败!");
                     }
                     this.Tag = true;
-                    this.Close();
+                this.lbltips.Visible = false;
+                this.lbltips.Text = "";
+                this.Close();
                 
 
             }
@@ -127,6 +129,8 @@ namespace CashierSystem
 
         private void btnEsc_Click(object sender, EventArgs e)
         {
+            this.lbltips.Visible = false;
+            this.lbltips.Text = "";
             this.Close();
 
         }

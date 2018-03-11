@@ -187,11 +187,16 @@ namespace CashierSystem
                 this.lblNoM_Tips.Text = "请输入数字";
                 this.lblNoM_Tips.Visible = true;
             }
+            this.lblNoM_Tips.Text = "";
+            this.lblNoM_Tips.Visible = false;
         }
 
         private void btnNoMCancel_Click(object sender, EventArgs e)
         {
             this.Tag = "false";//通知父窗口 ,不可以关闭
+            this.lblNoM_Tips.Text = "";
+            this.lblNoM_Tips.Visible = false;
+
             this.Close();
         }
 

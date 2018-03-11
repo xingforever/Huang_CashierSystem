@@ -132,6 +132,8 @@ namespace CashierSystem
 
         private void btnOrderCancel_Click(object sender, EventArgs e)
         {
+            lblTips.Text = "";
+            lblTips.Visible = false;
             this.Close();
         }
 

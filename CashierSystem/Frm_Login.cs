@@ -49,6 +49,15 @@ namespace CashierSystem
                     this.Close();
                 }
             }
+            var isHaveExcel = SoftHelper.CheckExcel();
+            if (!isHaveExcel)
+            {
+                var result = MessageBox.Show("本软件需要配合Office Excel;,请下载安装Office Excel,或者下载Office2010正式版以后版本", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (result == DialogResult.OK)
+                {
+                    this.Close();
+                }
+            }
             try
             {
                 Setting TheSetting = Setting.GetSeeting();//获取默认设置

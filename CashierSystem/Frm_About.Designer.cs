@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // label1
+            // lblTitle
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(164, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 19);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "关于本软件的事宜";
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblTitle.Location = new System.Drawing.Point(164, 21);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(161, 19);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "关于本软件的事宜";
             // 
             // textBox1
             // 
@@ -61,12 +61,13 @@
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(504, 214);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.Name = "Frm_About";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "关于";
+            this.Shown += new System.EventHandler(this.Frm_About_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -74,7 +75,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.TextBox textBox1;
     }
 }

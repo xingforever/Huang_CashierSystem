@@ -16,6 +16,9 @@ namespace CashierSystem
             InitializeComponent();
         }
 
-      
+        private void Frm_About_Shown(object sender, EventArgs e)
+        {
+            this.lblTitle.Focus();
+        }
     }
 }

@@ -136,6 +136,8 @@ namespace CashierSystem
                     }
                     else
                     {
+                        this.lbltips.Visible = false;
+                        this.lbltips.Text = "";
                         this.Close();
                     }
                 }
@@ -189,6 +191,8 @@ namespace CashierSystem
 
         private void btnEsc_Click(object sender, EventArgs e)
         {
+            this.lbltips.Visible = false;
+            this.lbltips.Text = "";
             this.Close();
         }
         /// <summary>

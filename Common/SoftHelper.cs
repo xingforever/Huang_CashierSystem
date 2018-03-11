@@ -29,5 +29,15 @@ namespace Common
             }
             return false;
         }
+        /// <summary>
+        /// 确认是否安装Excle
+        /// </summary>
+        /// <returns></returns>
+
+        public static  bool CheckExcel()
+        {
+            Type type = Type.GetTypeFromProgID("Excel.Application");
+            return type != null;
+        }
     }
 }
