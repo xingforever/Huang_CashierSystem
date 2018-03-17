@@ -130,9 +130,9 @@ namespace CashierSystem
                     //读取图片 ,制作缩略图 将缩略图设置为pic图
                     var WeiXinimage = Image.FromFile(path);
                     var trueImage = PictureHelper.GetThumbnailImageKeepRatio(WeiXinimage, 255, 384);
-                    if (File.Exists(@"WeiXin.png"))
+                    if (File.Exists(@"../../fileWeiXin.png"))
                     {
-                        File.Delete(@"WeiXin.png");
+                        File.Delete(@"../../fileWeiXin.png");
                     }
                     trueImage.Save(@"WeiXin.png");
                     picWeiXin.BackgroundImage = Image.FromFile(@"WeiXin.png");

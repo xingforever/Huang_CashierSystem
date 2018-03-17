@@ -93,6 +93,7 @@
             this.Name = "Frm_InitData";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Frm_InitData";
+            this.Load += new System.EventHandler(this.Frm_InitData_Load);
             this.Shown += new System.EventHandler(this.Frm_InitData_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

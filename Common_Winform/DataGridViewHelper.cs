@@ -105,11 +105,7 @@ namespace Common_Winform
             BindingSource bs = new BindingSource();
             bs.DataSource = dataTable;
             MyDataGridView.DataSource = bs;//填充数据
-            if (isChangeColor)
-            {
-                ChangeColor(MyDataGridView);
-
-            }
+            
             return MyDataGridView;
         }
 

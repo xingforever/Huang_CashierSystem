@@ -26,10 +26,10 @@ namespace CashierSystem
             var isTure= DataManager.UserInfoBLL.IsTrueNameAndPwd(userName, userpwd,out int id);
             if (isTure)
             {
-                Huang_System huang_System = new Huang_System(id);
-                huang_System.Show();
-                huang_System.Focus();
                 this.Hide();//隐藏当前
+                Huang_System huang_System = new Huang_System(id);
+                huang_System.ShowDialog();                
+             
             }
             else
             {
@@ -43,8 +43,8 @@ namespace CashierSystem
             var isHaveAccess = SoftHelper.CheckAccess();
             if (!isHaveAccess)
             {
-             var  result=   MessageBox.Show("本软件需要配合Office Access数据库使用,请下载安装Office Access,或者下载Office2010正式版以后版本", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                if (result==DialogResult.OK)
+                var result = MessageBox.Show("本软件需要配合Office Access数据库使用,请下载安装Office Access,或者下载Office2010正式版以后版本", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (result == DialogResult.OK)
                 {
                     this.Close();
                 }
@@ -66,7 +66,7 @@ namespace CashierSystem
             }
             catch 
             {
-                ;
+                MessageBox.Show("读取配置文件错误");
                 
             }
            

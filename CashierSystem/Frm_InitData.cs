@@ -16,6 +16,7 @@ namespace CashierSystem
     {
         ExcelHelper excelHelper = new ExcelHelper();
         Thread thread;
+        Frm_InitDataProgressBar frm_InitDataProgressBar = new Frm_InitDataProgressBar();
         public Frm_InitData()
         {
             InitializeComponent();
@@ -59,7 +60,7 @@ namespace CashierSystem
             {
                 return;
             }
-            string filePath = opfialog.FileName;
+            string filePath = opfialog.FileName;           
             DataTable dataTable = new DataTable();
             //读取数据
             ThreadStart();//开启线程 显示数据导入页面
@@ -69,25 +70,27 @@ namespace CashierSystem
                 InitGoodsData initGoodsData = new InitGoodsData();                
                 if ( initGoodsData.AddGoodsData(dataTable, out List<string> changeMessage,out List<string>insertDataMessage))
                 {
-                   
+                    CloseInitDataProcessBar();//关闭等待框
                     ThreadEnd();//关闭线程
-                    MessageBox.Show("保存成功!,请查看导入日志");
+                    MessageBox.Show("保存成功!,请查看导入日志");                  
                     SaveMessage(filePath, changeMessage, insertDataMessage);//写入日志 并打开
                     this.Close();
                    
                 }
                 else
                 {
+                    CloseInitDataProcessBar();//关闭等待框
                     ThreadEnd();//关闭线程
-                    MessageBox.Show("数据导入失败");
+                    MessageBox.Show("数据导入失败");                  
                     SaveMessage(filePath, changeMessage, insertDataMessage);//写入日志 并打开
                     this.Close();
                 }
             }
             else
             {
+                CloseInitDataProcessBar();
                 ThreadEnd();//关闭线程
-                MessageBox.Show("读取数据失败!!");
+                MessageBox.Show("读取数据失败!!");              
                 return;
             }
 
@@ -96,18 +99,19 @@ namespace CashierSystem
         private void SaveMessage(string filePath, List<string> changeMessage,  List<string> insertDataMessage)
         {
             FileInfo fileInfo = new FileInfo(filePath);//关于文件信息
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
             DirectoryInfo fileDic = fileInfo.Directory;//Excel 文件所件位置
             if (changeMessage.Count != 0)
             {
-
-                var errorMessagePath = fileDic + "/读取数据报告.Txt";
+                var second = DateTime.Now.Second.ToString();                
+                var errorMessagePath = fileDic + "/读取数据报告"+ fileName + ".Txt";
                 //保存错误信息
                 File.WriteAllLines(errorMessagePath, changeMessage.ToArray());
             }
             if (insertDataMessage.Count != 0)
             {
-
-                var errorMessagePath = fileDic + "/数据导入报告.Txt";
+                var second = DateTime.Now.Second.ToString();
+                var errorMessagePath = fileDic + "/数据导入报告" + fileName + ".Txt";
                 File.WriteAllLines(errorMessagePath, insertDataMessage.ToArray());
             }
             string path = fileDic.ToString();//打开导入日志
@@ -120,7 +124,7 @@ namespace CashierSystem
              thread = new Thread(threadStart);
             thread.IsBackground = true;//设置为后台线程
             thread.Start(); //启动新线程
-            
+          
         }
 
         private void ThreadEnd()
@@ -133,13 +137,23 @@ namespace CashierSystem
 
         private void CreateInitDataProcessBar()
         {
-            Frm_InitDataProgressBar frm_InitDataProgressBar = new Frm_InitDataProgressBar();
             frm_InitDataProgressBar.ShowDialog();
-        }
 
+        }
+      
+        private void CloseInitDataProcessBar()
+        {
+           
+            frm_InitDataProgressBar.Close();
+        }
         private void Frm_InitData_Shown(object sender, EventArgs e)
         {
             this.label1.Focus();
+        }
+
+        private void Frm_InitData_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

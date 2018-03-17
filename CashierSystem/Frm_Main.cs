@@ -188,8 +188,7 @@ namespace CashierSystem
             this.dgvSetting.Rows[4].Cells[0].Value = "利润信息每页数";
             this.dgvSetting.Rows[4].Cells[1].Value = Setting.ProfitPageCount;
             this.dgvSetting.Rows[5].Cells[0].Value = "待收账信息每页数";
-            this.dgvSetting.Rows[5].Cells[1].Value = Setting.NoReceivePageCount;
-            DataGridViewHelper.ChangeColor(this.dgvSetting);
+            this.dgvSetting.Rows[5].Cells[1].Value = Setting.NoReceivePageCount;          
             lblTitle.Text = Setting.ProgramName;
 
         }
@@ -258,15 +257,15 @@ namespace CashierSystem
                 //因为天气加载巨慢, 所以采用黄历成功才加载天气
                 if (isSuccess)
                 {
-                    LoadWeather();
+                   //LoadWeather();
                 }
                 else
                 {
-                    lblweathercity.Text = Setting.City;
-                    lblWeatherTime.Text = DateTime.Today.ToShortDateString();
-                    lblWeatherTemperature.Text = "网络连接失败,";
-                    lblWeatherWind.Text = "天气无法正常显示";
-                    isPingSuccess = false;
+                    //lblweathercity.Text = Setting.City;
+                    //lblWeatherTime.Text = DateTime.Today.ToShortDateString();
+                    //lblWeatherTemperature.Text = "网络连接失败,";
+                    //lblWeatherWind.Text = "天气无法正常显示";
+                    //isPingSuccess = false;
                 }
              
             }
@@ -313,22 +312,22 @@ namespace CashierSystem
         /// </summary>
         public void LoadWeather()
         {
-            var weather = WeatherHelper.GetWeather(Setting.City);
-            if (weather != null)
-            {
-                lblweathercity.Text = Setting.City;
-                lblWeatherTime.Text = weather.TodayTime;
-                lblWeatherTemperature.Text = weather.TodayTemperature;
-                lblWeatherWind.Text = weather.TodayWind;
+            //var weather = WeatherHelper.GetWeather(Setting.City);
+            //if (weather != null)
+            //{
+            //    lblweathercity.Text = Setting.City;
+            //    lblWeatherTime.Text = weather.TodayTime;
+            //    lblWeatherTemperature.Text = weather.TodayTemperature;
+            //    lblWeatherWind.Text = weather.TodayWind;
 
-            }
-            else
-            {
-                lblweathercity.Text = Setting.City;
-                lblWeatherTime.Text = DateTime.Today.ToShortDateString();
-                lblWeatherTemperature.Text = "网络连接失败,";
-                lblWeatherWind.Text = "天气无法正常显示";
-            }
+            //}
+            //else
+            //{
+            //    lblweathercity.Text = Setting.City;
+            //    lblWeatherTime.Text = DateTime.Today.ToShortDateString();
+            //    lblWeatherTemperature.Text = "网络连接失败,";
+            //    lblWeatherWind.Text = "天气无法正常显示";
+            //}
         }
         private void lblReloadWeather_Click(object sender, EventArgs e)
         {
@@ -341,7 +340,8 @@ namespace CashierSystem
                 var myAlmanac = AlmanacApiHelper.GetAlmanac();
                 if (myAlmanac.IsGetSuccess)
                 {
-                    LoadWeather();
+                    //删除天气服务
+                    //LoadWeather();
                 }
 
             }
@@ -386,6 +386,8 @@ namespace CashierSystem
                         searchModel.PageCount = Setting.GoodsInfoPageCount;
                         dataTable = DataManager.GoodsInfoBLL.GetDataTablebyPammer(searchModel);
                         this.dgvGoodsInfo = dataGridViewHelper.FillData(this.dgvGoodsInfo, dataTable);
+                        //库存可以排序
+                        this.dgvGoodsInfo.Columns["SurplusCount"].SortMode = DataGridViewColumnSortMode.Automatic;
                         LoadGoodsInfoStatus(searchModel);//加载状态栏
                         this.dgvGoodsInfo.Tag = true;
                     }
@@ -425,6 +427,9 @@ namespace CashierSystem
                         if (!isExport)
                         {
                             this.dgvGoodSInfoManager = dataGridViewHelper.FillData(this.dgvGoodSInfoManager, dataTable);
+                            //可以排序 (排序后不能改颜色)
+                            this.dgvGoodSInfoManager.Columns["Total"].SortMode = DataGridViewColumnSortMode.Automatic;
+                            this.dgvGoodSInfoManager.Columns["SurplusCount"].SortMode = DataGridViewColumnSortMode.Automatic;
                             LoadGoodsManagerStatus(searchModel);//加载状态栏
                             this.dgvGoodSInfoManager.Tag = true;
                         }
@@ -879,6 +884,8 @@ namespace CashierSystem
                 this.tspLblOrderPageCount.Tag = "1";
                 this.dgvProfitsInfo.Tag = false;//利润表信息刷新
                 this.tspLblProfitPageCount.Tag = "1";
+                this.dgvNoReceiveMoney.Tag = false;//待收账信息更新
+                this.tspLblNoReceivePageCount.Tag = "1";
             }
             else
             {
@@ -998,6 +1005,7 @@ namespace CashierSystem
         private void lblClearOrder_Click(object sender, EventArgs e)
         {
             this.dgvOrdersInfo.Rows.Clear();//清除数据
+            OrdersInfo = new List<OrderInfo>();
             this.lblOrderMoney.Text = "0.000";//待收款清0
             OrderDisCount = (decimal)0.0;//折扣 
 
@@ -2358,6 +2366,11 @@ namespace CashierSystem
                     if (dataId==1)
                     {
                         MessageBox.Show("不能删除管理员!!!");
+                        return;
+                    }
+                    if (dataId==LoginId)
+                    {
+                        MessageBox.Show("登录操作员不能删除本账户!!!");
                         return;
                     }
                     var isDelete = DataManager.UserInfoBLL.Delete(dataId);

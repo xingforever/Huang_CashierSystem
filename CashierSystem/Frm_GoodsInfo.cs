@@ -85,16 +85,8 @@ namespace CashierSystem
                     txtGoods_Remark.Text = goodsInfo.Remark;
                     txtGoos_Type.Text = goodsInfo.GoodsType;
                     txtGoods_Total.Text = goodsInfo.Total.ToString();
-                    try
-                    {
-
-                        dateLast.Value = goodsInfo.LastTime;
-                    }
-                    catch
-                    {
-                        dateLast.Value = DateTime.Today + new TimeSpan(365, 0, 0, 0);
-
-                    }
+                    txtSalesCount.Text = goodsInfo.SalesCount.ToString();
+                    txtSurplusCount.Text = goodsInfo.SurplusCount.ToString();
 
                 }
                 //添加
@@ -103,7 +95,7 @@ namespace CashierSystem
                     cbxGoods_Unit.SelectedIndex = 0;
                     cbxGood_Sort.SelectedIndex = 0;
                     cbxGood_WholerSaler.SelectedIndex = 0;
-                    dateLast.Value = DateTime.Today + new TimeSpan(365, 0, 0, 0);//默认保质期为1年
+                   
                 }
             }
             catch (Exception)
@@ -121,23 +113,35 @@ namespace CashierSystem
         {
             try
             {
-                GoodsInfo goodsInfo = new GoodsInfo();
-                goodsInfo.GoodsName = txtGoods_Name.Text.Trim();
-                goodsInfo.UnitId = Convert.ToInt32(cbxGoods_Unit.SelectedValue.ToString().Trim());
-                goodsInfo.SortId = Convert.ToInt32(cbxGood_Sort.SelectedValue.ToString().Trim());
-                goodsInfo.WholeSalerId = Convert.ToInt32(cbxGood_WholerSaler.SelectedValue.ToString().Trim());
-                goodsInfo.GoodsType = txtGoos_Type.Text.Trim();
-                goodsInfo.Remark = txtGoods_Remark.Text;
-                goodsInfo.LastTime = dateLast.Value;
+
+                
                 if (entityId != int.MaxValue)
                 {
+                    var Oldgoodsinfo = DataManager.GoodsInfoBLL.GetEntityById(entityId);
+
                     if (CheckData())
                     {
-                        goodsInfo.Total = Convert.ToDouble(txtGoods_Total.Text.Trim());
-                        goodsInfo.PurPrice = Convert.ToDecimal(txtGoods_Purprice.Text.Trim());
-                        goodsInfo.PayPrice = Convert.ToDecimal(txtGoods_Payprice.Text.Trim());
-                        goodsInfo.Id = entityId;
-                        var isSuccess = DataManager.GoodsInfoBLL.Edit(goodsInfo);
+                        
+                        Oldgoodsinfo.Total = Convert.ToDouble(txtGoods_Total.Text.Trim());
+                        //更新库存
+                        Oldgoodsinfo.SurplusCount = Convert.ToDouble(txtSurplusCount.Text.ToString());
+                        Oldgoodsinfo.SalesCount = Convert.ToDouble(txtSalesCount.Text.ToString());
+                        Oldgoodsinfo.PurPrice = Convert.ToDecimal(txtGoods_Purprice.Text.Trim());
+                        Oldgoodsinfo.PayPrice = Convert.ToDecimal(txtGoods_Payprice.Text.Trim());
+                        Oldgoodsinfo.GoodsName = txtGoods_Name.Text.Trim();
+                        Oldgoodsinfo.UnitId = Convert.ToInt32(cbxGoods_Unit.SelectedValue.ToString().Trim());
+                        Oldgoodsinfo.SortId = Convert.ToInt32(cbxGood_Sort.SelectedValue.ToString().Trim());
+                        Oldgoodsinfo.WholeSalerId = Convert.ToInt32(cbxGood_WholerSaler.SelectedValue.ToString().Trim());
+                        Oldgoodsinfo.GoodsType = txtGoos_Type.Text.Trim();
+                        Oldgoodsinfo.Remark = txtGoods_Remark.Text;
+
+                        if ((Oldgoodsinfo.SalesCount + Oldgoodsinfo.SurplusCount) != Oldgoodsinfo.Total)
+                        {
+                            MessageBox.Show("商品数量出错!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        var isSuccess = DataManager.GoodsInfoBLL.Edit(Oldgoodsinfo);
                         if (isSuccess)
                         {
                             this.Tag = true;
@@ -151,14 +155,28 @@ namespace CashierSystem
                 {
                     if (CheckData())
                     {
+                        GoodsInfo goodsInfo = new GoodsInfo();
+                        goodsInfo.GoodsName = txtGoods_Name.Text.Trim();
+                        goodsInfo.UnitId = Convert.ToInt32(cbxGoods_Unit.SelectedValue.ToString().Trim());
+                        goodsInfo.SortId = Convert.ToInt32(cbxGood_Sort.SelectedValue.ToString().Trim());
+                        goodsInfo.WholeSalerId = Convert.ToInt32(cbxGood_WholerSaler.SelectedValue.ToString().Trim());
+                        goodsInfo.GoodsType = txtGoos_Type.Text.Trim();
+                        goodsInfo.Remark = txtGoods_Remark.Text;
+                        goodsInfo.SalesCount = Convert.ToDouble(txtSalesCount.Text.Trim());
+                        goodsInfo.SurplusCount = Convert.ToDouble(txtSurplusCount.Text.Trim());
                         goodsInfo.Total = Convert.ToDouble(txtGoods_Total.Text.Trim());
                         goodsInfo.PurPrice = Convert.ToDecimal(txtGoods_Purprice.Text.Trim());
                         goodsInfo.PayPrice = Convert.ToDecimal(txtGoods_Payprice.Text.Trim());
-
+                        if ((goodsInfo.SalesCount + goodsInfo.SurplusCount)!= goodsInfo.Total)
+                        {
+                            MessageBox.Show("商品数量出错!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                         var isSuccess = DataManager.GoodsInfoBLL.Add(goodsInfo);
                         if (isSuccess)
                         {
                             this.Tag = true;
+                            
                             MessageBox.Show("添加商品信息成功!", "通知", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             Clear();
                             this.Close();

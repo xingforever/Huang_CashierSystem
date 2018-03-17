@@ -33,9 +33,9 @@ namespace CashierSystem
 
         private void btnEnter_Click(object sender, EventArgs e)
         {
-            Huang_System f1 = (Huang_System)this.Owner;//将本窗体的拥有者强制设为Form1类的实例
-            Setting.City = cbxCity.SelectedValue.ToString();
-            f1.LoadWeather();
+            Huang_System f1 = (Huang_System)this.Owner;//本窗体的拥有者强制设为Form1类的实例
+          
+         
             var dic = Setting.SettingToDic();
             Common.XMLHelper.WriteXML(dic);
             this.Close();

@@ -50,7 +50,6 @@
             this.btnGoodsCancel = new System.Windows.Forms.Button();
             this.lblTips = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.dateLast = new System.Windows.Forms.DateTimePicker();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -58,6 +57,11 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.txtSurplusCount = new System.Windows.Forms.TextBox();
+            this.txtSalesCount = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtGoods_Name
@@ -178,7 +182,7 @@
             // 
             this.lbltotal.AutoSize = true;
             this.lbltotal.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbltotal.Location = new System.Drawing.Point(20, 204);
+            this.lbltotal.Location = new System.Drawing.Point(20, 197);
             this.lbltotal.Name = "lbltotal";
             this.lbltotal.Size = new System.Drawing.Size(40, 16);
             this.lbltotal.TabIndex = 13;
@@ -188,7 +192,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(302, 201);
+            this.label8.Location = new System.Drawing.Point(302, 249);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(40, 16);
             this.label8.TabIndex = 13;
@@ -197,7 +201,7 @@
             // txtGoods_Total
             // 
             this.txtGoods_Total.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtGoods_Total.Location = new System.Drawing.Point(107, 201);
+            this.txtGoods_Total.Location = new System.Drawing.Point(107, 191);
             this.txtGoods_Total.Name = "txtGoods_Total";
             this.txtGoods_Total.Size = new System.Drawing.Size(151, 26);
             this.txtGoods_Total.TabIndex = 14;
@@ -205,7 +209,7 @@
             // txtGoos_Type
             // 
             this.txtGoos_Type.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtGoos_Type.Location = new System.Drawing.Point(370, 201);
+            this.txtGoos_Type.Location = new System.Drawing.Point(370, 246);
             this.txtGoos_Type.Name = "txtGoos_Type";
             this.txtGoos_Type.Size = new System.Drawing.Size(151, 26);
             this.txtGoos_Type.TabIndex = 14;
@@ -214,7 +218,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(20, 283);
+            this.label9.Location = new System.Drawing.Point(20, 298);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(40, 16);
             this.label9.TabIndex = 13;
@@ -266,18 +270,11 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(20, 249);
+            this.label7.Location = new System.Drawing.Point(20, 242);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(56, 16);
+            this.label7.Size = new System.Drawing.Size(40, 16);
             this.label7.TabIndex = 13;
-            this.label7.Text = "保质期";
-            // 
-            // dateLast
-            // 
-            this.dateLast.Location = new System.Drawing.Point(107, 249);
-            this.dateLast.Name = "dateLast";
-            this.dateLast.Size = new System.Drawing.Size(200, 21);
-            this.dateLast.TabIndex = 18;
+            this.label7.Text = "库存";
             // 
             // label10
             // 
@@ -343,11 +340,57 @@
             // 
             this.label16.AutoSize = true;
             this.label16.ForeColor = System.Drawing.Color.Red;
-            this.label16.Location = new System.Drawing.Point(3, 205);
+            this.label16.Location = new System.Drawing.Point(3, 201);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(11, 12);
             this.label16.TabIndex = 19;
             this.label16.Text = "*";
+            // 
+            // txtSurplusCount
+            // 
+            this.txtSurplusCount.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtSurplusCount.Location = new System.Drawing.Point(107, 239);
+            this.txtSurplusCount.Name = "txtSurplusCount";
+            this.txtSurplusCount.Size = new System.Drawing.Size(151, 26);
+            this.txtSurplusCount.TabIndex = 14;
+            // 
+            // txtSalesCount
+            // 
+            this.txtSalesCount.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtSalesCount.Location = new System.Drawing.Point(370, 194);
+            this.txtSalesCount.Name = "txtSalesCount";
+            this.txtSalesCount.Size = new System.Drawing.Size(151, 26);
+            this.txtSalesCount.TabIndex = 14;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label18.Location = new System.Drawing.Point(302, 194);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(40, 16);
+            this.label18.TabIndex = 13;
+            this.label18.Text = "售出";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.ForeColor = System.Drawing.Color.Red;
+            this.label19.Location = new System.Drawing.Point(3, 246);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(11, 12);
+            this.label19.TabIndex = 19;
+            this.label19.Text = "*";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.ForeColor = System.Drawing.Color.Red;
+            this.label17.Location = new System.Drawing.Point(285, 198);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(11, 12);
+            this.label17.TabIndex = 19;
+            this.label17.Text = "*";
             // 
             // Frm_GoodsInfo
             // 
@@ -356,27 +399,31 @@
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(556, 438);
             this.Controls.Add(this.label15);
+            this.Controls.Add(this.label17);
             this.Controls.Add(this.label14);
+            this.Controls.Add(this.label19);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.dateLast);
             this.Controls.Add(this.lblTips);
             this.Controls.Add(this.btnGoodsCancel);
             this.Controls.Add(this.btnGoodsEnter);
             this.Controls.Add(this.cbxGood_WholerSaler);
             this.Controls.Add(this.cbxGoods_Unit);
             this.Controls.Add(this.cbxGood_Sort);
+            this.Controls.Add(this.txtSalesCount);
             this.Controls.Add(this.txtGoods_Payprice);
             this.Controls.Add(this.txtGoos_Type);
             this.Controls.Add(this.txtGoods_Remark);
+            this.Controls.Add(this.txtSurplusCount);
             this.Controls.Add(this.txtGoods_Total);
             this.Controls.Add(this.txtGoods_Purprice);
             this.Controls.Add(this.txtGoods_Name);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.label18);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label7);
@@ -391,7 +438,6 @@
             this.Name = "Frm_GoodsInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "商品信息";
-  
             this.Load += new System.EventHandler(this.Frm_GoodsInfo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -422,7 +468,6 @@
         private System.Windows.Forms.Button btnGoodsCancel;
         private System.Windows.Forms.Label lblTips;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DateTimePicker dateLast;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
@@ -430,5 +475,10 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtSurplusCount;
+        private System.Windows.Forms.TextBox txtSalesCount;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label17;
     }
 }
